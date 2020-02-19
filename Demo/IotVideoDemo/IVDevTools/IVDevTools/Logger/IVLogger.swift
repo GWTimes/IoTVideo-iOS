@@ -59,7 +59,7 @@ fileprivate class Log: NSObject {
     
     // 2019-05-17 08:30:53.004 [D] <BaseViewController.m:22> -[BaseViewController dealloc] 控制器销毁 MineController
     override var description: String {
-        return briefDescription
+        return detailDescription
     }
     
     var briefDescription: String {
@@ -73,13 +73,13 @@ fileprivate class Log: NSObject {
     }
 
     var detailDescription: String {
-    #if DEBUG
-        let location = " <\(file):\(line)> \(function) "
-        return dateDesc + level.description + location + message
-    #else
+//    #if DEBUG
+//        let location = " <\(file):\(line)> \(function) "
+//        return dateDesc + level.description + location + message
+//    #else
         let location = " <\(file):\(line)> "
         return dateDesc + location + message
-    #endif
+//    #endif
     }
 
     static func == (lhs: Log, rhs: Log) -> Bool {

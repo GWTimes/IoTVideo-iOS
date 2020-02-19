@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class IVDevToolsAssistant: UIWindow {
+public class IVDevToolsAssistant: UIView {
   
     public static let shared = IVDevToolsAssistant(frame: CGRect(x: -32, y: 100, width: 64, height: 64))
         
@@ -25,7 +25,18 @@ public class IVDevToolsAssistant: UIWindow {
         case suspend    // 悬浮
         case fullscreen // 全屏
     }
-    var dispStyle = DispStyle.minimize
+    var dispStyle = DispStyle.minimize {
+        didSet {
+            switch dispStyle {
+            case .minimize:
+                rootView = nil
+            case .suspend:
+                rootView = suspendVC.view
+            case .fullscreen:
+                rootView = developerVC.view
+            }
+        }
+    }
     
     lazy var logo: UILabel = {
         let lb = UILabel(frame: self.bounds)
@@ -46,7 +57,7 @@ public class IVDevToolsAssistant: UIWindow {
 
     var active: Bool = false {
         didSet {
-            if active == oldValue { return }
+//            if active == oldValue { return }
             let delay: DispatchTime = .now() + (active ? 0 : 1)
             DispatchQueue.main.asyncAfter(deadline: delay, execute: {[weak self] in
                 guard let `self` = self else { return }
@@ -57,34 +68,45 @@ public class IVDevToolsAssistant: UIWindow {
         }
     }
 
-    lazy var developerVC: UIViewController = {
+    let developerVC: UIViewController = {
         let storyboard = UIStoryboard(name: "IVDeveloperViewController", bundle: IVFileLogger.resourceBundle)
         let vc = storyboard.instantiateInitialViewController() as! UINavigationController
         vc.modalPresentationStyle = .overFullScreen
+        vc.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         return vc
     }()
 
-    lazy var suspendVC = IVSuspendViewController()
+    let suspendVC: IVSuspendViewController = {
+        let vc = IVSuspendViewController()
+        vc.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        vc.view.alpha = 0.6
+        return vc
+    }()
+
+    var rootView: UIView? {
+        didSet {
+            oldValue?.removeFromSuperview()
+            
+            if let newView = rootView {
+                newView.frame = self.bounds
+                insertSubview(newView, at: 0)
+            }
+        }
+    }
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-       
-        windowLevel = .alert-1
-        
-        rootViewController = developerVC
-        rootViewController?.view.isHidden = true
-        backgroundColor = UIColor.init(white: 0, alpha: 1)
-        alpha = 0.2
+               
+        backgroundColor = UIColor.init(white: 0, alpha: 0.5)
         layer.cornerRadius = frame.size.width / 2
         layer.masksToBounds = true
-        isHidden = false
-        
         addSubview(logo)
-        logo.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        
+                
         addGestureRecognizer(tapGes)
         addGestureRecognizer(panGes)
         addGestureRecognizer(longPressGes)
+        
+        minimize()
     }
     
     required init?(coder: NSCoder) {
@@ -123,57 +145,39 @@ public class IVDevToolsAssistant: UIWindow {
             break
         }
     }
-    
-    public override var rootViewController: UIViewController? {
-        didSet {
-            rootViewController?.view.frame = self.bounds
-            bringSubviewToFront(logo) 
-        }
-    }
-            
+                
     func minimize() {
-        dispStyle = .minimize
         UIView.animate(withDuration: 0.3, animations: {
             self.frame = CGRect(x: -32, y: 100, width: 64, height: 64)
             self.layer.cornerRadius = self.frame.size.width / 2
             self.layer.masksToBounds = true
             self.tapGes.isEnabled = true
             self.panGes.isEnabled = true
-            self.longPressGes.isEnabled = false
             self.logo.alpha = 1.0
             self.active = false
-        }) { (_) in
-            self.rootViewController?.view.isHidden = true
+        }) { _ in
+            self.dispStyle = .minimize
         }
     }
     
     func suspend(content: LogContent) {
         dispStyle = .suspend
-        rootViewController = suspendVC
         UIView.animate(withDuration: 0.3) {
             let W: CGFloat = UIScreen.main.bounds.width*0.9, H: CGFloat = W*3/4
             self.frame = CGRect(x: UIScreen.main.bounds.width - W, y: 0, width: W, height: H)
-            self.rootViewController?.view.frame = self.bounds
-            self.rootViewController?.view.isHidden = false
             self.tapGes.isEnabled = false
             self.panGes.isEnabled = true
-            self.longPressGes.isEnabled = true
-            self.alpha = 0.4
         }
     }
 
     func fullscreen() {
         dispStyle = .fullscreen
-        rootViewController = developerVC
         UIView.animate(withDuration: 0.3) {
             self.frame = UIScreen.main.bounds
-            self.rootViewController?.view.frame = self.bounds
-            self.rootViewController?.view.isHidden = false
             self.layer.cornerRadius = 0
             self.tapGes.isEnabled = false
             self.panGes.isEnabled = false
-            self.longPressGes.isEnabled = false
-            self.logo.alpha = 0.03
+            self.logo.alpha = 0.1
             self.active = true
         }
     }

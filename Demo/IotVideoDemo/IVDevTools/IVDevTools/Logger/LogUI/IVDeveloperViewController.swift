@@ -10,7 +10,7 @@ import UIKit
 
 func makeToast(_ msg: String) {
     let alert = UIAlertController(title: nil, message: msg, preferredStyle: .alert)
-    IVDevToolsAssistant.shared.rootViewController?.present(alert, animated: true)
+    IVDevToolsAssistant.shared.developerVC.present(alert, animated: true)
     DispatchQueue.main.asyncAfter(deadline: .now()+1, execute: {
         alert.dismiss(animated: true)
     })
@@ -20,6 +20,7 @@ class IVDeveloperViewController: UITableViewController {
       
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "最小化", style: .plain, target: self, action: #selector(closeClicked))
     }
         
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -30,6 +31,13 @@ class IVDeveloperViewController: UITableViewController {
             IVDevToolsAssistant.shared.suspend(content: .url(IVFileLogger.shared.currLogFileURL))
         }
     }
+    
+    
+    @objc func closeClicked() {
+        IVDevToolsAssistant.shared.minimize()
+    }
+    
+
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation

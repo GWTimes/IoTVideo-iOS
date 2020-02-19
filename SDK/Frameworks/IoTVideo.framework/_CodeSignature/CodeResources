@@ -10,7 +10,7 @@
 		</data>
 		<key>Headers/IVAVDefine.h</key>
 		<data>
-		qXF23xKNNtClYr3bVoUEfJDspgo=
+		0/vocMC7jalGAAfq0SKJ//XiSqY=
 		</data>
 		<key>Headers/IVLanNetConfig.h</key>
 		<data>
@@ -18,7 +18,7 @@
 		</data>
 		<key>Headers/IVLivePlayer.h</key>
 		<data>
-		uPG4yqH5E0pCHDEr2IPEHRLtTdE=
+		tiYUAWNeZjxJQ0QSqX3FGRPle8E=
 		</data>
 		<key>Headers/IVLog.h</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>Headers/IVMonitorPlayer.h</key>
 		<data>
-		N+3YcCfgP6/ickXdduS819QUfU4=
+		qSnNBInim9FJgUNilW+0ZybAG3w=
 		</data>
 		<key>Headers/IVNetConfig.h</key>
 		<data>
@@ -38,11 +38,11 @@
 		</data>
 		<key>Headers/IVPlaybackPlayer.h</key>
 		<data>
-		q2S3ZL1xY6S8L1lFmhjxZbgJlDw=
+		gAdzUIf1RqbIH9mA7yg5Ohb9vNE=
 		</data>
 		<key>Headers/IVPlayer.h</key>
 		<data>
-		AYkWjYOGqG2tNi1+G+qetVARlqg=
+		sAOtp+maor/9+DiNLlSTYJK3dQs=
 		</data>
 		<key>Headers/IVQRCodeHelper.h</key>
 		<data>
@@ -54,31 +54,55 @@
 		</data>
 		<key>Headers/IoTVideo-Swift.h</key>
 		<data>
-		yjJG9xCw1Uh+EbCSaWrQByRG5OA=
+		R6F6YlKZ5MC3Ugdp1Lkc6QgQyvE=
 		</data>
 		<key>Headers/IoTVideo.h</key>
 		<data>
-		mjxSROq+MrGajFj7OXGlnibSIwo=
+		c1RCqNc8WQz6nQLP3JvQzfWiEWM=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		cDazY5KtBqMnIASouwldIcoDxg0=
+		JWv/dMk8GKLWJdFsyRTucJwnZ14=
+		</data>
+		<key>Modules/IoTVideo.swiftmodule/arm.swiftdoc</key>
+		<data>
+		hoxEY8n00bP7/+PKqaG8CdUVYYs=
+		</data>
+		<key>Modules/IoTVideo.swiftmodule/arm.swiftmodule</key>
+		<data>
+		wNJYzubx/Ehnu7C5kTVIW5K1Z+A=
 		</data>
 		<key>Modules/IoTVideo.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		rhnAJvRpkj2P7jCMFUSJ1Lz5SYw=
+		MagKYVFTseV1LToqrV859JXSUE8=
 		</data>
 		<key>Modules/IoTVideo.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		CkWCDFm8nAyYe7ZpVWQqh1GvPyg=
+		MFbS54tsQYgj2HGjJRdEHiqERNs=
 		</data>
 		<key>Modules/IoTVideo.swiftmodule/arm64.swiftdoc</key>
 		<data>
-		rhnAJvRpkj2P7jCMFUSJ1Lz5SYw=
+		MagKYVFTseV1LToqrV859JXSUE8=
 		</data>
 		<key>Modules/IoTVideo.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		CkWCDFm8nAyYe7ZpVWQqh1GvPyg=
+		MFbS54tsQYgj2HGjJRdEHiqERNs=
+		</data>
+		<key>Modules/IoTVideo.swiftmodule/armv7-apple-ios.swiftdoc</key>
+		<data>
+		hoxEY8n00bP7/+PKqaG8CdUVYYs=
+		</data>
+		<key>Modules/IoTVideo.swiftmodule/armv7-apple-ios.swiftmodule</key>
+		<data>
+		wNJYzubx/Ehnu7C5kTVIW5K1Z+A=
+		</data>
+		<key>Modules/IoTVideo.swiftmodule/armv7.swiftdoc</key>
+		<data>
+		hoxEY8n00bP7/+PKqaG8CdUVYYs=
+		</data>
+		<key>Modules/IoTVideo.swiftmodule/armv7.swiftmodule</key>
+		<data>
+		wNJYzubx/Ehnu7C5kTVIW5K1Z+A=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -102,11 +126,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			qXF23xKNNtClYr3bVoUEfJDspgo=
+			0/vocMC7jalGAAfq0SKJ//XiSqY=
 			</data>
 			<key>hash2</key>
 			<data>
-			CfEX13je7XSV5CNDEmBLgUaX7ZOGhPNVpp8KndL9J8o=
+			eOMW3YCJZTsZBjCmF69pXAvqq+TtJjV+CaFkc6vW37Q=
 			</data>
 		</dict>
 		<key>Headers/IVLanNetConfig.h</key>
@@ -124,11 +148,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			uPG4yqH5E0pCHDEr2IPEHRLtTdE=
+			tiYUAWNeZjxJQ0QSqX3FGRPle8E=
 			</data>
 			<key>hash2</key>
 			<data>
-			MDZNCdca0n+SV34t2In2GIeBhbtk02ieNEi2CKR2Abs=
+			2KRAxWM/J1e9LiM2NHXw+k9CuffHmfxkaZ98CtZOZWE=
 			</data>
 		</dict>
 		<key>Headers/IVLog.h</key>
@@ -157,11 +181,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			N+3YcCfgP6/ickXdduS819QUfU4=
+			qSnNBInim9FJgUNilW+0ZybAG3w=
 			</data>
 			<key>hash2</key>
 			<data>
-			+rs2DRHtR+OfV+sGyR/mWu6ENJzwXjXEuErrQv8VG8U=
+			bmVYaCAiqxx9q19qiexlpjqfHCRrKsCYRsrWAS8isY4=
 			</data>
 		</dict>
 		<key>Headers/IVNetConfig.h</key>
@@ -179,22 +203,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			q2S3ZL1xY6S8L1lFmhjxZbgJlDw=
+			gAdzUIf1RqbIH9mA7yg5Ohb9vNE=
 			</data>
 			<key>hash2</key>
 			<data>
-			Qt7oPAmPkCUMUV9NRaD3v02MvA6riGgAP3sbyCwGYuc=
+			DQ7NkfjH3T/xxc99fgS8rvEaOqLhZcGrASIG5bZL1oc=
 			</data>
 		</dict>
 		<key>Headers/IVPlayer.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			AYkWjYOGqG2tNi1+G+qetVARlqg=
+			sAOtp+maor/9+DiNLlSTYJK3dQs=
 			</data>
 			<key>hash2</key>
 			<data>
-			j+FwgOIdqQRB8DdTnAIs8Xo0TM40PE5thodoDSae9wc=
+			3wH/+6rnoCnzFHhfTjgdkGwkLn6mWI0Zbks4+zn2Gf8=
 			</data>
 		</dict>
 		<key>Headers/IVQRCodeHelper.h</key>
@@ -223,66 +247,132 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			yjJG9xCw1Uh+EbCSaWrQByRG5OA=
+			R6F6YlKZ5MC3Ugdp1Lkc6QgQyvE=
 			</data>
 			<key>hash2</key>
 			<data>
-			3irjRRmvXx4tUywpnpeQJmTkeJxPPGTwhi5S4/vmkNs=
+			OqbNv/SbfqeJQyWlVSNQczHdtM5PtHAlPi2MLLHSqEk=
 			</data>
 		</dict>
 		<key>Headers/IoTVideo.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			mjxSROq+MrGajFj7OXGlnibSIwo=
+			c1RCqNc8WQz6nQLP3JvQzfWiEWM=
 			</data>
 			<key>hash2</key>
 			<data>
-			ghl2c46qV4C+uqzygEOoFv9ye9xAIeSFhjBxhyO+akQ=
+			yBSeIU63RUnpOlB/4Of9MCvEtb5al2KFVpCVLI3FO0A=
+			</data>
+		</dict>
+		<key>Modules/IoTVideo.swiftmodule/arm.swiftdoc</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			hoxEY8n00bP7/+PKqaG8CdUVYYs=
+			</data>
+			<key>hash2</key>
+			<data>
+			TL5FumJWlc4b32wBQP7Llz3H/rAR03JTrc6hoRRVkFI=
+			</data>
+		</dict>
+		<key>Modules/IoTVideo.swiftmodule/arm.swiftmodule</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			wNJYzubx/Ehnu7C5kTVIW5K1Z+A=
+			</data>
+			<key>hash2</key>
+			<data>
+			0fS2ExGjg9cXQDZDoOtT3iBKwrXDWgfk1YtQDFhOjKY=
 			</data>
 		</dict>
 		<key>Modules/IoTVideo.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			rhnAJvRpkj2P7jCMFUSJ1Lz5SYw=
+			MagKYVFTseV1LToqrV859JXSUE8=
 			</data>
 			<key>hash2</key>
 			<data>
-			R6Y7SZg+kMPBJVtAaDlunLIsdU+FAGeP++HUIOnwpyg=
+			9TSHnr/3IoYEnOvTunGEDxE6eFzHYVvESGN4mnWTDy4=
 			</data>
 		</dict>
 		<key>Modules/IoTVideo.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			CkWCDFm8nAyYe7ZpVWQqh1GvPyg=
+			MFbS54tsQYgj2HGjJRdEHiqERNs=
 			</data>
 			<key>hash2</key>
 			<data>
-			JEmYvG+ipATXDFZHwZydOivhavkvcsNuAhu+WRslr90=
+			nHexLffQO8n5IdB+ns9v0XqylS2vJVyLXT7XtvrGKs8=
 			</data>
 		</dict>
 		<key>Modules/IoTVideo.swiftmodule/arm64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			rhnAJvRpkj2P7jCMFUSJ1Lz5SYw=
+			MagKYVFTseV1LToqrV859JXSUE8=
 			</data>
 			<key>hash2</key>
 			<data>
-			R6Y7SZg+kMPBJVtAaDlunLIsdU+FAGeP++HUIOnwpyg=
+			9TSHnr/3IoYEnOvTunGEDxE6eFzHYVvESGN4mnWTDy4=
 			</data>
 		</dict>
 		<key>Modules/IoTVideo.swiftmodule/arm64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			CkWCDFm8nAyYe7ZpVWQqh1GvPyg=
+			MFbS54tsQYgj2HGjJRdEHiqERNs=
 			</data>
 			<key>hash2</key>
 			<data>
-			JEmYvG+ipATXDFZHwZydOivhavkvcsNuAhu+WRslr90=
+			nHexLffQO8n5IdB+ns9v0XqylS2vJVyLXT7XtvrGKs8=
+			</data>
+		</dict>
+		<key>Modules/IoTVideo.swiftmodule/armv7-apple-ios.swiftdoc</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			hoxEY8n00bP7/+PKqaG8CdUVYYs=
+			</data>
+			<key>hash2</key>
+			<data>
+			TL5FumJWlc4b32wBQP7Llz3H/rAR03JTrc6hoRRVkFI=
+			</data>
+		</dict>
+		<key>Modules/IoTVideo.swiftmodule/armv7-apple-ios.swiftmodule</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			wNJYzubx/Ehnu7C5kTVIW5K1Z+A=
+			</data>
+			<key>hash2</key>
+			<data>
+			0fS2ExGjg9cXQDZDoOtT3iBKwrXDWgfk1YtQDFhOjKY=
+			</data>
+		</dict>
+		<key>Modules/IoTVideo.swiftmodule/armv7.swiftdoc</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			hoxEY8n00bP7/+PKqaG8CdUVYYs=
+			</data>
+			<key>hash2</key>
+			<data>
+			TL5FumJWlc4b32wBQP7Llz3H/rAR03JTrc6hoRRVkFI=
+			</data>
+		</dict>
+		<key>Modules/IoTVideo.swiftmodule/armv7.swiftmodule</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			wNJYzubx/Ehnu7C5kTVIW5K1Z+A=
+			</data>
+			<key>hash2</key>
+			<data>
+			0fS2ExGjg9cXQDZDoOtT3iBKwrXDWgfk1YtQDFhOjKY=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

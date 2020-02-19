@@ -11,6 +11,7 @@ import IoTVideo
 import UserNotifications
 import IVDevTools
 
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -37,10 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        2、userinfo kIoTVideoHostKey -> p2p 使用传入的地址 web，云回放等均未内置 正式 服务器
 //        3、userinfo kIoTVideoHostType 0 -> p2p,web，云回放等均使用内置 测试 服务器  不为0，为其他则和 （1、） 保持一致
         if let type = IVConfigMgr.allConfigs.filter({$0.enable && $0.key == kIoTVideoHostType}).first?.value {
-             IoTVideo.sharedInstance.register(withProductId: "440234147841", ivCid: "103", userInfo: [kIoTVideoHostType: type])
+             IoTVideo.sharedInstance.setupIvCid("103", productId: "440234147841", userInfo: [kIoTVideoHostType: type])
         } else {
-            //默认正式服务器
-            IoTVideo.sharedInstance.register(withProductId: "440234147841", ivCid: "103", userInfo: nil)
+            //默认测试服务器
+            IoTVideo.sharedInstance.setupIvCid("103", productId: "440234147841", userInfo: [kIoTVideoHostType: "0"])
         }
         
         IoTVideo.sharedInstance.logCallback = logMessage
@@ -80,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let token = deviceToken.reduce("", {$0 + String(format: "%02x", $1)})
         
         UserDefaults.standard.setValue(token, forKey: demo_deviceToken)
-        guard IoTVideo.sharedInstance.ivToken != nil else {
+        guard IoTVideo.sharedInstance.accessToken != nil else {
             return
         }
         

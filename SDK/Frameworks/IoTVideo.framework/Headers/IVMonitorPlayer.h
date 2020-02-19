@@ -11,18 +11,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IVMonitorPlayer : IVPlayer
+@interface IVMonitorPlayer : IVPlayer <IVPlayerTalkable>
 
+/// 创建播放器
+/// @param deviceId 设备ID
 - (instancetype)initWithDeviceId:(NSString *)deviceId;
-
-/// 是否正在对讲
-@property (nonatomic, assign, readonly) BOOL isTalking;
-
-/// 开启对讲
-- (void)startTalk;
-
-/// 关闭对讲
-- (void)stopTalk;
 
 @end
 

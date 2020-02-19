@@ -95,7 +95,7 @@ typedef struct IVVideoFrame {
     uint32_t    linesize[3];
     uint32_t    width;
     uint32_t    height;
-    uint64_t    pts;
+    uint64_t    pts; // 毫秒
 } IVVideoFrame;
 
 /// 音频原始帧
@@ -103,7 +103,7 @@ typedef struct IVAudioFrame {
     IVAudioFormat type;
     uint8_t    *data;
     uint32_t    size;
-    uint64_t    pts;
+    uint64_t    pts; // 毫秒
 } IVAudioFrame;
 
 /// 视频数据包
@@ -112,8 +112,8 @@ typedef struct IVVideoPacket {
     uint8_t    *data;
     int         size;
     bool        keyFrame;
-    uint64_t    dts;
-    uint64_t    pts;
+    uint64_t    dts; // 毫秒
+    uint64_t    pts; // 毫秒
 } IVVideoPacket;
 
 /// 音频数据包
@@ -121,7 +121,7 @@ typedef struct IVAudioPacket {
     IVAudioCodecType type;
     uint8_t    *data;
     int         size;
-    uint64_t    pts;
+    uint64_t    pts; // 毫秒
 } IVAudioPacket;
 
 /// 摄像头方位

@@ -10,6 +10,7 @@ import UIKit
 import IoTVideo
 import IVAccountMgr
 import SwiftyJSON
+import IVVAS
 
 class IVDeviceTableViewController: UITableViewController {
     
@@ -31,11 +32,11 @@ class IVDeviceTableViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if IoTVideo.sharedInstance.ivToken?.isEmpty ?? true {
+        if IoTVideo.sharedInstance.accessToken?.isEmpty ?? true {
             return
         }
         let hud = ivLoadingHud()
-        if IoTVideo.sharedInstance.ivToken != nil {
+        if IoTVideo.sharedInstance.accessToken != nil {
             IVAccountMgr.shared.deviceList { (json, error) in
                 hud.hide()
                 if let error = error {
@@ -50,6 +51,16 @@ class IVDeviceTableViewController: UITableViewController {
                         dev.online = JSON(parseJSON: json).value("stVal")?.boolValue
                     }
                 }
+            }
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        if indexPath.section == 3  && indexPath.row == 0 {
+            IVVAS.shared.testP2PRequest { (json, error) in
+                IVLog.logInfo("\(String(describing: json)),\(String(describing: error))")
+                showAlert(msg: "\(String(describing: json)),\(String(describing: error))")
             }
         }
     }

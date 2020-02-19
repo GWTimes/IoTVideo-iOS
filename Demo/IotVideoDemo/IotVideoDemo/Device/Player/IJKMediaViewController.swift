@@ -49,7 +49,14 @@ class IJKMediaViewController: UIViewController {
         
     }
     
-    func initWithURL(_ url: URL?) {
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        mediaPlayer?.shutdown()
+        NotificationCenter.default.removeObserver(self)
+        timer.invalidate()
+    }
+
+    private func initWithURL(_ url: URL?) {
         guard let url = url else { return }
         self.url = url
         mediaPlayer = IJKFFMoviePlayerController(contentURL: url, with: IJKFFOptions.byDefault())
@@ -64,13 +71,6 @@ class IJKMediaViewController: UIViewController {
         mediaPlayer.prepareToPlay()
         timer.fire()
         self.activityIndicatorView.startAnimating()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        mediaPlayer?.shutdown()
-        NotificationCenter.default.removeObserver(self)
-        timer.invalidate()
     }
     
     @objc func refreshProgressSlider() {

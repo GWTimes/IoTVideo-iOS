@@ -10,7 +10,7 @@ import UIKit
 import IVAccountMgr
 import IoTVideo
 
-let demo_ivTokenKey    = "IOT_VIDEO_DEMO_IVTOKEN"
+let demo_accessTokenKey    = "IOT_VIDEO_DEMO_accessToken"
 let demo_accessIdKey   = "IOT_VIDEO_DEMO_ACCESSID"
 let demo_expireTimeKey = "IOT_VIDEO_DEMO_EXPIRE_TIME"
 let demo_userName      = "IOT_VIDEO_DEMO_USER_NAME"
@@ -39,19 +39,19 @@ class IVLoginVC: UIViewController {
                 return
             }
             let model = IVJson.decode(json: json!, type: IVModel<LoginModel>.self)
-            if let ivToken = model?.data?.ivToken, let accessId = model?.data?.accessId {
-                IoTVideo.sharedInstance.setupToken(ivToken, accessId: accessId)
+            if let accessToken = model?.data?.accessToken, let accessId = model?.data?.accessId {
+                IoTVideo.sharedInstance.register(withAccessId: accessId, accessToken: accessToken)
                 let expireTime = model?.data?.expireTime
                 let userName = model?.data?.nick
                 UserDefaults.standard.do {
-                    $0.set(ivToken,    forKey: demo_ivTokenKey)
+                    $0.set(accessToken,    forKey: demo_accessTokenKey)
                     $0.set(accessId,   forKey: demo_accessIdKey)
                     $0.set(expireTime, forKey: demo_expireTimeKey)
                     $0.set(userName,   forKey: demo_userName)
                 }
                 
                 let token = UserDefaults.standard.string(forKey: demo_deviceToken)
-                IVNetwork.shared.request(methodType: .PUT, urlString: "user/pushTokenBind", params: ["xingeToken": token]) { (json, error) in
+                IVNetwork.shared.request(methodType: .PUT, urlString: "user/pushTokenBind", params: ["xingeToken": token ?? ""]) { (json, error) in
                     
                 }
                 self.dismiss(animated: true, completion: nil)
@@ -87,7 +87,7 @@ class IVLoginVC: UIViewController {
 struct LoginModel: Codable {
     var headUrl: String?
     var nick: String?
-    var ivToken: String?
+    var accessToken: String?
     var accessId: String?
     var expireTime: Int = 0
 }

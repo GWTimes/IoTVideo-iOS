@@ -8,18 +8,22 @@
 
 import UIKit
 import IoTVideo
-import Photos
 
 class IVPlaybackViewController: IVDevicePlayerViewController {
     
-    @IBOutlet weak var videoView: UIView!
-    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
-    @IBOutlet weak var playBtn: UIButton!
-    @IBOutlet weak var speakerBtn: UIButton!
-    @IBOutlet weak var recordBtn: UIButton!
-    @IBOutlet weak var screenshotBtn: UIButton!
-    @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var timelineView: IVTimelineView?
+    @IBOutlet weak var seekTimeLabel: UILabel!
+    
+    var playbackList: [IVPlaybackItem] = [] {
+        didSet {
+            let list = playbackList.map({ IVTimelineItem(startTime: $0.startTime,
+                                                         endTime: $0.endTime,
+                                                         duration: $0.endTime-$0.startTime,
+                                                         type: $0.type,
+                                                         color: .random) })
+            timelineView?.appendItems(list)
+        }
+    }
     
     var playbackPlayer: IVPlaybackPlayer {
         get { return player as! IVPlaybackPlayer }
@@ -28,42 +32,25 @@ class IVPlaybackViewController: IVDevicePlayerViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        playbackPlayer = IVPlaybackPlayer(deviceId: device.deviceID, startTime: 0)
-        playbackPlayer.delegate = self
-        videoView.insertSubview(playbackPlayer.videoView!, at: 0)
+        playbackPlayer = IVPlaybackPlayer(deviceId: device.deviceID)
         
-        timelineView?.items = [
-            [
-                IVTimelineItem(),
-                IVTimelineItem(),
-                IVTimelineItem(),
-                IVTimelineItem(),
-                IVTimelineItem()
-            ],
-            [
-                IVTimelineItem(),
-                IVTimelineItem(),
-                IVTimelineItem(),
-                IVTimelineItem(),
-                IVTimelineItem(),
-                IVTimelineItem(),
-                IVTimelineItem(),
-                IVTimelineItem(),
-                IVTimelineItem(),
-                IVTimelineItem()
-            ],
-            [
-                IVTimelineItem(),
-                IVTimelineItem(),
-                IVTimelineItem()
-            ]
-        ]
+        timelineView?.delegate = self
+        seekTimeLabel.isHidden = true
+
+        IVPlaybackPlayer.getPlaybackList(ofDevice: device.deviceID, pageIndex: 0, countPerPage: 50, startTime: 0, endTime: Date().timeIntervalSince1970, completionHandler: { (page, err) in
+            guard let items = page?.items else {
+                logError(err as Any)
+                return
+            }
+            logInfo(items)
+            self.playbackList += items
+        })
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         AppDelegate.shared.allowRotation = true
-        playbackPlayer.play()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -72,101 +59,48 @@ class IVPlaybackViewController: IVDevicePlayerViewController {
         UIDevice.setOrientation(.portrait)
         playbackPlayer.stop()
     }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        playbackPlayer.videoView?.frame = videoView.bounds
-    }
-
-    deinit {
-        print(self.classForCoder, #function)
-    }
-
-    // MARK: - 点击事件
-
-    @IBAction func playClicked(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
-        if sender.isSelected {
-            playbackPlayer.play()
+    
+    @IBAction func deviceRecordClicked(_ sender: UIButton) {
+        let data: Data
+        if !sender.isSelected {
+            data = "record_start".data(using: .utf8)!
         } else {
-            playbackPlayer.pause()
+            data = "record_stop".data(using: .utf8)!
         }
-    }
-    
-    @IBAction func speakerClicked(_ sender: UIButton) {
-        sender.isSelected = !sender.isSelected
-        playbackPlayer.mute = sender.isSelected
-    }
-    
-    @IBAction func recordClicked(_ sender: UIButton) {
-        if sender.isSelected {
-            playbackPlayer.stopRecord()
-        } else {
-            let docPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-            let mp4Path = docPath + "/hahaha.mp4"
-            playbackPlayer.startRecord(mp4Path) { (savePath, error) in
-                guard let savePath = savePath else {
-                    print("录像失败", error as Any)
-                    return
-                }
-                print("录像成功", savePath)
-                let url = URL(fileURLWithPath: savePath)
-                PHPhotoLibrary.shared().performChanges({
-                    PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: url)
-                }) { (success, error) in
-                    guard success == true else {
-                        print("视频保存到相册失败", error as Any)
-                        return
-                    }
-                    print("视频保存到相册成功", url)
-                }
-            }
-        }
-        sender.isSelected = !sender.isSelected
-    }
-    
-    @IBAction func screenshotClicked(_ sender: UIButton) {
-        playbackPlayer.takeScreenshot({ (image) in
-            guard let image = image else { return }
-            DispatchQueue.main.sync {
-                let imgW: CGFloat = 150
-                let imgH = imgW / image.size.width * image.size.height
-                let imgVrect = CGRect(x: 8, y: self.videoView.bounds.size.height - imgH - 8, width: imgW, height: imgH)
-                let imgView = UIImageView(frame: imgVrect)
-                imgView.image = image
-                self.videoView.addSubview(imgView)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    imgView.removeFromSuperview()
-                }
+        sender.isEnabled = false
+        IVMessageMgr.sharedInstance.sendData(toDevice: device.deviceID, data: data, withoutResponse: { _, err in
+            if let err = err {
+                showAlert(msg: err.localizedDescription)
+            } else {
+                showAlert(msg: "发送成功")
+                sender.isSelected = !sender.isSelected
+                sender.isEnabled = true
             }
         })
     }
-    
-    @IBAction func playbackListClicked(_ sender: UIButton) {
-        
-    }
 }
 
-extension IVPlaybackViewController: IVPlayerDelegate {
-    func player(_ player: IVPlayer, didUpdate status: IVPlayerStatus) {
-        status == .loading ? activityIndicatorView.startAnimating() : activityIndicatorView.stopAnimating()
-        playBtn.isSelected = (status == .playing)
-        speakerBtn.isSelected = playbackPlayer.mute
+extension IVPlaybackViewController: IVTimelineViewDelegate {
+    
+    func timelineView(_ timelineView: IVTimelineView, didSelect item: IVTimelineItem, at time: TimeInterval) {
+        seekTimeLabel.isHidden = false
+        seekTimeLabel.text = "\(Int64(time))"
+        DispatchQueue.main.asyncAfter(deadline: .now()+1) {
+            self.seekTimeLabel.isHidden = true
+        }
+        if let playbackItem = playbackList.first(where: { $0.startTime == item.startTime }) {
+            if playbackPlayer.status == .stoped {
+                playbackPlayer.setPlaybackItem(playbackItem, seekToTime: time)
+                playbackPlayer.play()
+            } else {
+                playbackPlayer.seek(toTime: time, playbackItem: playbackItem)
+            }
+            activityIndicatorView.startAnimating()
+        }
     }
     
-    func player(_ player: IVPlayer, didUpdatePTS PTS: TimeInterval) {
-        logVerbose(PTS)
-    }
-    
-    func player(_ player: IVPlayer, didReceiveError error: Error) {
-        logError(error)
-    }
-    
-    func player(_ player: IVPlayer, didReceive avHeader: IVAVHeader) {
-//        logInfo(avHeader)
-    }
-    
-    func player(_ player: IVPlayer, didReceiveUserData userData: Data) {
-        logInfo(userData)
+    override func player(_ player: IVPlayer, didUpdatePTS PTS: TimeInterval) {
+        super.player(player, didUpdatePTS: PTS)
+        timelineView?.currentTime = PTS
     }
 }

@@ -38,7 +38,7 @@ class IVMsgSetVC: UITableViewController, IVDeviceAccessable {
             let json = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
             jsonData = json as! [String: AnyHashable]
             let keyArray  = [String](jsonData.keys).sorted()
-            let canUseKeys = ["CO", "SP"]
+            let canUseKeys = ["Action", "ProWritable"]
             for key in keyArray {
                 if canUseKeys.contains(key) {
                     dataSource.append(["key": key, "value": [String]((jsonData[key] as! [String: AnyHashable]).keys).sorted()])

@@ -89,7 +89,7 @@ class IVDeviceAccessVC: UITableViewController, IVDeviceAccessable {
                 IVPopupView(title: "透传数据给设备", input: ["data"], actions: [.cancel(), .confirm({ v in
                     let data = v.inputFields[0].text?.data(using: .utf8) ?? Data()
                     let hud = ivLoadingHud()
-                    IVMessageMgr.sharedInstance.sendData(toDevice: self.device.deviceID, data: data, withResponse: { (data, err) in
+                    IVMessageMgr.sharedInstance.sendData(toDevice: self.device.deviceID, data: data, withoutResponse: { (data, err) in
                         hud.hide()
                         let message = data?.string(with: .utf8) ?? err?.localizedDescription ?? "[msg]"
                         showAlert(msg: message)

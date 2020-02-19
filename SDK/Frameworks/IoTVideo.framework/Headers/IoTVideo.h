@@ -34,7 +34,7 @@ extern NSString *kIoTVideoHostType;
 @property (class, nonatomic, strong, readonly) IoTVideo *sharedInstance;
 
 @property (nonatomic, strong, nullable, readonly) NSString *ivCid;
-@property (nonatomic, strong, nullable, readonly) NSString *ivToken;
+@property (nonatomic, strong, nullable, readonly) NSString *accessToken;
 @property (nonatomic, strong, nullable, readonly) NSString *accessId;
 @property (nonatomic, strong, nullable, readonly) NSString *productId;
 @property (nonatomic, strong, nullable, readonly) NSDictionary *userInfo;
@@ -47,29 +47,26 @@ extern NSString *kIoTVideoHostType;
 @property (nonatomic, copy, nullable) IVLogCallback logCallback;
 
 /// SDK初始化
-/// @param productId  app的产品id(从平台注册时获取)
 /// @param ivCid      客户id(从平台注册时获取)
+/// @param productId  app的产品id(从平台注册时获取)
 /// @param userInfo  其他信息，默认传nil
 /// @code
 /// [self setupToken]
 /// @endcode
 /// @remark 录成功服务器
-- (void)registerWithProductId:(NSString *)productId ivCid:(NSString *)ivCid userInfo:(nullable NSDictionary *)userInfo;
+- (void)setupIvCid:(NSString *)ivCid productId:(NSString *)productId  userInfo:(nullable NSDictionary *)userInfo;
 
-/// 设置当前用户信息
-/// @param ivToken   登录成功服务器返回的`ivToken`
+/// 设置当前用户信息，登录成功调用
 /// @param accessId  是外部访问IotVideo云平台的唯一性身份标识，所有 OpenAPI 接口都需要传入这个头部参数。
-- (void)setupToken:(NSString *)ivToken accessId:(NSString *)accessId;
+/// @param accessToken   登录成功服务器返回的`accessToken`
+- (void)registerWithAccessId:(NSString *)accessId accessToken:(NSString *)accessToken;
 
-///退出登录时调用
-- (void)removeTokenAndAccessId;
+/// 刷新accessToken
+/// @param accessToken 登录成功服务器返回的`accessToken`
+- (void)updateToken:(NSString *)accessToken;
 
-/// 刷新ivToken
-/// @param ivToken 登录成功服务器返回的`ivToken`
-- (void)updateToken:(NSString *)ivToken;
-
-/// SDK反初始化
-//- (void)unregister;
+/// SDK反注册，退出登录时调用
+- (void)unregister;
 
 @end
 

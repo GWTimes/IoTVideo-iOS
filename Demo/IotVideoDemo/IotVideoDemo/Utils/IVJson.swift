@@ -66,8 +66,12 @@ extension JSON {
         } else if subpaths.count > 1 {
             let leaf = String(subpaths[0])
             let newpath = String(subpaths[1])
-            let newjson = json[leaf]
-            return newjson.value(newpath)
+            if !json[leaf].exists() {
+                return json.value(newpath)
+            } else {
+                let newjson = json[leaf]
+                return newjson.value(newpath)
+            }
         } else {
             return nil
         }

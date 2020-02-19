@@ -11,6 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import "IVAVCodecable.h"
+#import "IVMessageMgr.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,12 +30,38 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// 播放器代理协议
 @protocol IVPlayerDelegate <NSObject>
+/// 播放器状态回调
+/// @param player 播放器实例
+/// @param status 状态值
 - (void)player:(IVPlayer *)player didUpdateStatus:(IVPlayerStatus)status;
+/// 播放时间回调
+/// @param player 播放器实例
+/// @param PTS 时间戳
 - (void)player:(IVPlayer *)player didUpdatePTS:(NSTimeInterval)PTS;
+/// 播放错误回调
+/// @param player 播放器实例
+/// @param error 错误实例
 - (void)player:(IVPlayer *)player didReceiveError:(NSError *)error;
 
+/// 音视频头信息回调
+/// @param player  播放器实例
+/// @param avHeader 音视频头信息
 - (void)player:(IVPlayer *)player didReceiveAVHeader:(IVAVHeader)avHeader;
+/// 用户数据回调
+/// @param player 播放器实例
+/// @param userData 用户数据
 - (void)player:(IVPlayer *)player didReceiveUserData:(NSData *)userData;
+@end
+
+
+/// 播放器对讲协议
+@protocol IVPlayerTalkable <NSObject>
+/// 是否正在对讲
+@property (nonatomic, assign, readonly) BOOL isTalking;
+/// 开启对讲
+- (void)startTalk;
+/// 关闭对讲
+- (void)stopTalk;
 @end
 
 /// 核心播放器
@@ -68,7 +95,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// 解码器信息头
 @property (nonatomic, assign, readonly) IVAVHeader avheader;
 
-/// 视频时间戳
+/// 视频时间戳（秒）
 @property (nonatomic, assign, readonly) NSTimeInterval pts;
 
 /// 视频清晰度
@@ -107,7 +134,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - 发送数据
 
 /// 数据发送接口
-- (int)sendUserData:(NSData *)data;
+- (int)sendUserData:(NSData *)data responseHandler:(nullable IVMsgDataCallback)responseHandler;
 
 
 @end
