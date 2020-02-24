@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		9B3DA75C9528BB7110B59A1E /* Pods_IotVideoDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F2057A9D56E920A4E39BA18 /* Pods_IotVideoDemo.framework */; };
-		D57E1E532403890E0061D6A8 /* IVNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D57E1E522403890E0061D6A8 /* IVNetwork.framework */; };
 		D59BF32223A27B1E007270B1 /* WoodPeckeriOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D59BF32023A27B14007270B1 /* WoodPeckeriOS.framework */; };
 		D59BF32323A27B1E007270B1 /* WoodPeckeriOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D59BF32023A27B14007270B1 /* WoodPeckeriOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D5E4B3E523975C7200DDA80A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5E4B3E423975C7200DDA80A /* AudioToolbox.framework */; };
 		D5E4B3E723975C7A00DDA80A /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5E4B3E623975C7A00DDA80A /* CoreMedia.framework */; };
 		D5E4B3E923975C8600DDA80A /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5E4B3E823975C8600DDA80A /* VideoToolbox.framework */; };
+		EA5D1D7D2403B389006BD4F2 /* IVNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D57E1E522403890E0061D6A8 /* IVNetwork.framework */; };
+		EA5D1D7E2403B389006BD4F2 /* IVNetwork.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D57E1E522403890E0061D6A8 /* IVNetwork.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EAB78DAA23CC3E81004B130E /* IVDevTools.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAF055B323CC233200432559 /* IVDevTools.framework */; };
 		EAB78DAB23CC3E81004B130E /* IVDevTools.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EAF055B323CC233200432559 /* IVDevTools.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		EAE59C4223BA320100808D31 /* IoTVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAE59C2E23BA31CA00808D31 /* IoTVideo.framework */; };
@@ -96,6 +97,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				EA5D1D7E2403B389006BD4F2 /* IVNetwork.framework in Embed Frameworks */,
 				EAE59C4723BA320100808D31 /* IVVAS.framework in Embed Frameworks */,
 				EAE59C4523BA320100808D31 /* IVAccountMgr.framework in Embed Frameworks */,
 				D59BF32323A27B1E007270B1 /* WoodPeckeriOS.framework in Embed Frameworks */,
@@ -191,7 +193,7 @@
 				EAE59C4623BA320100808D31 /* IVVAS.framework in Frameworks */,
 				EAF0563F23CC274C00432559 /* IJKMediaFramework.framework in Frameworks */,
 				D5E4B3E723975C7A00DDA80A /* CoreMedia.framework in Frameworks */,
-				D57E1E532403890E0061D6A8 /* IVNetwork.framework in Frameworks */,
+				EA5D1D7D2403B389006BD4F2 /* IVNetwork.framework in Frameworks */,
 				D5E4B3E923975C8600DDA80A /* VideoToolbox.framework in Frameworks */,
 				D59BF32223A27B1E007270B1 /* WoodPeckeriOS.framework in Frameworks */,
 				D5E4B3E523975C7200DDA80A /* AudioToolbox.framework in Frameworks */,
@@ -733,6 +735,7 @@
 					"$(PROJECT_DIR)",
 					"$(SRCROOT)/../../SDK/Frameworks",
 					"$(PROJECT_DIR)/IotVideoDemo",
+					"$(USER_LIBRARY_DIR)/Mobile\\ Documents/com~apple~CloudDocs/IotVideo/SDK/Frameworks",
 				);
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
 					"$(inherited)",
@@ -771,6 +774,7 @@
 					"$(PROJECT_DIR)",
 					"$(SRCROOT)/../../SDK/Frameworks",
 					"$(PROJECT_DIR)/IotVideoDemo",
+					"$(USER_LIBRARY_DIR)/Mobile\\ Documents/com~apple~CloudDocs/IotVideo/SDK/Frameworks",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/IotVideoDemo/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
