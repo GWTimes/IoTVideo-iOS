@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		9B3DA75C9528BB7110B59A1E /* Pods_IotVideoDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F2057A9D56E920A4E39BA18 /* Pods_IotVideoDemo.framework */; };
+		D57E1E532403890E0061D6A8 /* IVNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D57E1E522403890E0061D6A8 /* IVNetwork.framework */; };
 		D59BF32223A27B1E007270B1 /* WoodPeckeriOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D59BF32023A27B14007270B1 /* WoodPeckeriOS.framework */; };
 		D59BF32323A27B1E007270B1 /* WoodPeckeriOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D59BF32023A27B14007270B1 /* WoodPeckeriOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D5E4B3E523975C7200DDA80A /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5E4B3E423975C7200DDA80A /* AudioToolbox.framework */; };
@@ -111,6 +112,7 @@
 		2160A463823060A34070D379 /* Pods-IotVideoTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IotVideoTest.release.xcconfig"; path = "../../../Pods/Target Support Files/Pods-IotVideoTest/Pods-IotVideoTest.release.xcconfig"; sourceTree = "<group>"; };
 		2F2057A9D56E920A4E39BA18 /* Pods_IotVideoDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_IotVideoDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DF004ACBB39C6212BA81A65 /* Pods-IotVideoAccontMgrDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IotVideoAccontMgrDemo.release.xcconfig"; path = "Target Support Files/Pods-IotVideoAccontMgrDemo/Pods-IotVideoAccontMgrDemo.release.xcconfig"; sourceTree = "<group>"; };
+		D57E1E522403890E0061D6A8 /* IVNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IVNetwork.framework; path = ../../SDK/Frameworks/IVNetwork.framework; sourceTree = "<group>"; };
 		D59BF32023A27B14007270B1 /* WoodPeckeriOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WoodPeckeriOS.framework; sourceTree = "<group>"; };
 		D5C7222D23839B9600585D33 /* IotVideoDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IotVideoDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5E4B3E423975C7200DDA80A /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -189,6 +191,7 @@
 				EAE59C4623BA320100808D31 /* IVVAS.framework in Frameworks */,
 				EAF0563F23CC274C00432559 /* IJKMediaFramework.framework in Frameworks */,
 				D5E4B3E723975C7A00DDA80A /* CoreMedia.framework in Frameworks */,
+				D57E1E532403890E0061D6A8 /* IVNetwork.framework in Frameworks */,
 				D5E4B3E923975C8600DDA80A /* VideoToolbox.framework in Frameworks */,
 				D59BF32223A27B1E007270B1 /* WoodPeckeriOS.framework in Frameworks */,
 				D5E4B3E523975C7200DDA80A /* AudioToolbox.framework in Frameworks */,
@@ -202,6 +205,7 @@
 		32412E4E8AB189944425730E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D57E1E522403890E0061D6A8 /* IVNetwork.framework */,
 				EAF0563D23CC273E00432559 /* IJKMediaFramework.framework */,
 				EAF055AD23CC233200432559 /* IVDevTools.xcodeproj */,
 				EAE59C2E23BA31CA00808D31 /* IoTVideo.framework */,
@@ -646,7 +650,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -701,7 +705,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;

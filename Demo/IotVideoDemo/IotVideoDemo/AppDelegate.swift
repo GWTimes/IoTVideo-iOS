@@ -10,7 +10,7 @@ import UIKit
 import IoTVideo
 import UserNotifications
 import IVDevTools
-
+import IVNetwork
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

@@ -198,7 +198,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_attribute(external_source_symbol)
 # pragma push_macro("any")
 # undef any
-# pragma clang attribute push(__attribute__((external_source_symbol(language="Swift", defined_in="IoTVideo",generated_declaration))), apply_to=any(function,enum,objc_interface,objc_category,objc_protocol))
+# pragma clang attribute push(__attribute__((external_source_symbol(language="Swift", defined_in="IVNetwork",generated_declaration))), apply_to=any(function,enum,objc_interface,objc_category,objc_protocol))
 # pragma pop_macro("any")
 #endif
 
@@ -208,7 +208,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @class NSURLSessionConfiguration;
 @class NSCoder;
 
-SWIFT_CLASS("_TtC8IoTVideo9IVNetwork")
+SWIFT_CLASS("_TtC9IVNetwork9IVNetwork")
 @interface IVNetwork : AFHTTPSessionManager
 /// 网络请求实例
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) IVNetwork * _Nonnull shareInstance;)
@@ -226,7 +226,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) IVNetwork * 
 
 @class NSError;
 
-@interface IVNetwork (SWIFT_EXTENSION(IoTVideo))
+@interface IVNetwork (SWIFT_EXTENSION(IVNetwork))
 /// OC专用网络请求
 /// \param methodType 请求方式: “GET”、“POST”、“PUT”
 ///
@@ -443,7 +443,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_attribute(external_source_symbol)
 # pragma push_macro("any")
 # undef any
-# pragma clang attribute push(__attribute__((external_source_symbol(language="Swift", defined_in="IoTVideo",generated_declaration))), apply_to=any(function,enum,objc_interface,objc_category,objc_protocol))
+# pragma clang attribute push(__attribute__((external_source_symbol(language="Swift", defined_in="IVNetwork",generated_declaration))), apply_to=any(function,enum,objc_interface,objc_category,objc_protocol))
 # pragma pop_macro("any")
 #endif
 
@@ -453,7 +453,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 @class NSURLSessionConfiguration;
 @class NSCoder;
 
-SWIFT_CLASS("_TtC8IoTVideo9IVNetwork")
+SWIFT_CLASS("_TtC9IVNetwork9IVNetwork")
 @interface IVNetwork : AFHTTPSessionManager
 /// 网络请求实例
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) IVNetwork * _Nonnull shareInstance;)
@@ -471,7 +471,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) IVNetwork * 
 
 @class NSError;
 
-@interface IVNetwork (SWIFT_EXTENSION(IoTVideo))
+@interface IVNetwork (SWIFT_EXTENSION(IVNetwork))
 /// OC专用网络请求
 /// \param methodType 请求方式: “GET”、“POST”、“PUT”
 ///

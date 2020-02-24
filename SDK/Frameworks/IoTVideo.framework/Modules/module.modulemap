@@ -4,8 +4,3 @@ framework module IoTVideo {
   export *
   module * { export * }
 }
-
-module IoTVideo.Swift {
-    header "IoTVideo-Swift.h"
-    requires objc
-}

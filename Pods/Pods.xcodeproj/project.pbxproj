@@ -10,14 +10,12 @@
 		0254EABA2D0AACFBFA5E2BAD753C5E2D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E7AECE564DFBD0F6308A3906D8FBD6F /* Foundation.framework */; };
 		0264AD1A5DC608A5A2DA09AC7C032D93 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = DAAA8966E567AA1CAE42D02D9E66BBD2 /* AFURLSessionManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		033825875FC6F64720D288730E73E6E2 /* UIButton+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 28EDA94B90972A89A88BAC8DE9B4A790 /* UIButton+AFNetworking.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		0679604B61B80D6E586CC3E18C79A25D /* Pods-IoTVideo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E9F0EFAFF6D4B9FA44615A77C520E8F5 /* Pods-IoTVideo-dummy.m */; };
 		095547A88EE037F12395713A469C9B60 /* ConstraintLayoutSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3153D29A27DD478C502E68A38EBEF0FE /* ConstraintLayoutSupport.swift */; };
 		09E2F57C3C2B897ACC8AF5C49F1E9592 /* UIImage+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 30234B45B732B1C176AC04CFD87633CC /* UIImage+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		09E785555B549DE5974C744DB8324B91 /* UIRefreshControl+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 64107980F18D43044FDD3D00CAAF697F /* UIRefreshControl+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0D7A7F3919AE48736753181756DE8AE8 /* Typealiases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 708A7029588E72C0CC4A86882DA53803 /* Typealiases.swift */; };
 		0E23FDE8934944DB60E48C1602DF01E1 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = CF71E351CA6EFF85AEC7B571061D2D20 /* UIRefreshControl+AFNetworking.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		0FA8E62C7A4A6DA9BB841007B5E16CD4 /* ConstraintMakerFinalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C20B9B05E72DDAF7E522EFF4F8F2B80A /* ConstraintMakerFinalizable.swift */; };
-		12C4896C0BC4F7D5B90BD4FA535540DC /* Pods-IoTVideo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 74416FA7FE2B27D877897E569259C75C /* Pods-IoTVideo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		14E9ACC5796C5E35C84DD6659BEB788F /* ConstraintPriorityTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AC894DD03D8B57195CA1A509EFC16B /* ConstraintPriorityTarget.swift */; };
 		169B3FC2BD33B8FBC2D4C35A1C1DC6BF /* AFHTTPSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 35D19F16436200E62841BCE4B1B910BF /* AFHTTPSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		17D6A066C5F987FEFF8B89D7EFDFD375 /* AFURLRequestSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = A758BA65627E3C566083BCC69F6CD5A8 /* AFURLRequestSerialization.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -49,7 +47,6 @@
 		64F46B6A8DBA885AF570A54A082D1BAA /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A90A88F5CCA4CEBDCB2FA63394BC4AD /* QuartzCore.framework */; };
 		67776864843D84DC929C1B66FF8C94F6 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E7AECE564DFBD0F6308A3906D8FBD6F /* Foundation.framework */; };
 		6B43F2F53DD6C161CF414A9BF67550C5 /* ConstraintDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C732DA48D9673F789283AC48BE9E97D /* ConstraintDSL.swift */; };
-		6C06D7A28E55FC0ABC281AD939DB3045 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E7AECE564DFBD0F6308A3906D8FBD6F /* Foundation.framework */; };
 		6C14AB970BB1DDAF58E38E6611214C3F /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FE82B522F7D29F2A1C2FFA2168D6BE98 /* AFNetworkActivityIndicatorManager.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		6F6C4414DE96E08267712DA4C17C3CBB /* UIImageView+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = C79D083C467108CF0675227A5D2EB941 /* UIImageView+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		72C2B5D60A24B4B663C8994276A962B6 /* ConstraintOffsetTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE76784F7E4C20669B12E3618002141 /* ConstraintOffsetTarget.swift */; };
@@ -60,16 +57,20 @@
 		7F372985CE80B69B5524CC3277E1C1AF /* AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = E72DE5E6EC8BBD31993C7307E6CE8FC0 /* AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		80790383D4AC4172346ADD8C3437F390 /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 745C4CC87AC366A3482E06FC1F2E5DE2 /* AFURLResponseSerialization.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		81B9E2F21B1EF9FE4E769103108DEA8A /* MBProgressHUD-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F13D9423299FC80B14D592F33058DED3 /* MBProgressHUD-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		828CD2C47AAAC987FC6044FDD9EF9D48 /* Pods-IotVideoDemo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7F3979D03CC2BD9E7F67129F94AA1115 /* Pods-IotVideoDemo-dummy.m */; };
+		828CD2C47AAAC987FC6044FDD9EF9D48 /* Pods-IotVideoDemo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 514BBFDE97A8BB0546FA6D49DED6891D /* Pods-IotVideoDemo-dummy.m */; };
+		84F579CBDD98C390F65B4E0006AA4B9F /* Pods-IoTVideo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BCF3AAA2698E9485C05AFF0F27B0D5A /* Pods-IoTVideo-dummy.m */; };
 		870044029B3BA449A0932AAE3A495DE9 /* AFAutoPurgingImageCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 9B43EE6CB5009533B0FD0BFCB27239EA /* AFAutoPurgingImageCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		88715FC702C0CF88A1386DC0BBC0ECBD /* AFAutoPurgingImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 400F53E52093D614AD92E4648CBE090F /* AFAutoPurgingImageCache.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		8B8BE709B46663F60DB6A661A3B2A28A /* ConstraintMakerPriortizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 736FA362F8B94B337E8492282344A8CE /* ConstraintMakerPriortizable.swift */; };
 		8CA19B3C581B7BB9A242E9572EF5CDB8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E7AECE564DFBD0F6308A3906D8FBD6F /* Foundation.framework */; };
 		9432185152350A4A90F6DD19C33AC057 /* Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB07BF08DD348A829E94CC5CBA32333A /* Debugging.swift */; };
+		97AB9E85966E6B825E17BFC9D16FC361 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E7AECE564DFBD0F6308A3906D8FBD6F /* Foundation.framework */; };
 		98AE4E2F24A858A47B5A1B405CEAD8FD /* UILayoutSupport+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B055A56EF375BD9E52F04FF47EACEF60 /* UILayoutSupport+Extensions.swift */; };
 		9B41316D2DE09092FA0143B33A74B769 /* UIKit+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FCE85AB652B61F93EB4FF59FEE6EC7D /* UIKit+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9D90768C315C34E7310A90325E66B7CB /* Pods-IVNetwork-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 21CCB236C7BEE96B6307859337D4B7E2 /* Pods-IVNetwork-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9E6184458532BFF2E3E3F804C54BD0E7 /* ConstraintDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10C579F446F6877E34C3B626AFAD210B /* ConstraintDescription.swift */; };
 		9EE2D363A721ACFA89B5B899E1987633 /* ConstraintConstantTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8490F1D5C3F2894D95C72CBA35494F /* ConstraintConstantTarget.swift */; };
+		9FE6888909ECC7BA1871CF3A43683FA9 /* Pods-IoTVideo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A8E8FBEFF0522910CE177B48BE1975B /* Pods-IoTVideo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A04D46C4C48247D004BAE5C7AD6E05A3 /* ConstraintConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3EB60DF98A1961CF8DCE1173752940 /* ConstraintConfig.swift */; };
 		A3DEA82F229FDF7C9444CEFEE3D9AB84 /* ConstraintMultiplierTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92DAB722A2F37FF3C8284BA77BF28C1 /* ConstraintMultiplierTarget.swift */; };
 		A4070B8C9BD30965648B2876CD3C1C43 /* ConstraintAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3136B19D3CE62B14C9FA8C5CEA8A3BE6 /* ConstraintAttributes.swift */; };
@@ -79,11 +80,13 @@
 		A93BD560DD062BA5B515267570761CBE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0A7F2249E1A12F677C13EE8E6B2DCBA /* Security.framework */; };
 		A9E429ECAF059D9D471F3AE5C1BAC2B0 /* AFNetworkReachabilityManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 108DDCCBEF4A5580C2ECD45A55165DAF /* AFNetworkReachabilityManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AEA4CF8EE7E08C13B4A71A634F9F3B5B /* UIButton+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 864E7DF9AD9F4B1156805BE1BA767F15 /* UIButton+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B09CC54652CFF0562A768C554AE4732C /* Pods-IVNetwork-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E51DE646BFB591F8434A07879DD0BC4 /* Pods-IVNetwork-dummy.m */; };
 		B26EDD2D9A9BC8CDDEADEA8DBEC606A7 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80DDCF9DFF6A41CB0FE8E59323C01C18 /* SystemConfiguration.framework */; };
 		B5AD0B8F0F9304975A01978B2908B62F /* UIActivityIndicatorView+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D0B70AD8769A42AD5AAED46FC6292DD /* UIActivityIndicatorView+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B758B3668F7C63A9DDBE888C31C8155C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E7AECE564DFBD0F6308A3906D8FBD6F /* Foundation.framework */; };
 		BF7843175A0FB0180B6F4C0249B8874A /* LayoutConstraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C416856F3F6EBE87305AB30ED244A6E3 /* LayoutConstraint.swift */; };
 		C1C2B61E08DAD3B59BA5D82964D39C3C /* ConstraintRelation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54D1DC90F00B9DAD3CA336B59F474E1 /* ConstraintRelation.swift */; };
-		C4EA95B9E83E4C008C2A195B810E041F /* Pods-IotVideoDemo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F9FA90E1EB40363E7556951FA887E69 /* Pods-IotVideoDemo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4EA95B9E83E4C008C2A195B810E041F /* Pods-IotVideoDemo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D66430B8755135CD494416D3D4ACC49 /* Pods-IotVideoDemo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CA0FAE669FAB7067D09F7007AD838E19 /* ConstraintItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9B272DB1BD2A5A440A32BF5B792B0F9 /* ConstraintItem.swift */; };
 		CB08C4C4639ED06BD4635B128F7FBBE3 /* AFImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 7A475BC8198782A280ECEC534A9BA549 /* AFImageDownloader.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		CB27A06C7EAFBFA04873E499B2030BA3 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 45A8A6BC04015A26FB09F3A0001B7243 /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -116,19 +119,19 @@
 			remoteGlobalIDString = C17AEFC79E770A2906EFAAB1A3757406;
 			remoteInfo = Then;
 		};
+		394F1E80474399D57A60B55BF0D9940B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0130B3724283586C0E9D2A112D4F2AA1;
+			remoteInfo = AFNetworking;
+		};
 		734ADDBF13E5879605EC9E4AF9A6FAFE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 19622742EBA51E823D6DAE3F8CDBFAD4;
 			remoteInfo = SnapKit;
-		};
-		80F9D34BDFCADA1EE40E1B936FA73CE7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0130B3724283586C0E9D2A112D4F2AA1;
-			remoteInfo = AFNetworking;
 		};
 		A341C1092FFBC0EA7BA1E6146E03F0DA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -155,19 +158,25 @@
 
 /* Begin PBXFileReference section */
 		02566FBE0A81553269EF364D54DDE9B1 /* SwiftyJSON-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyJSON-prefix.pch"; sourceTree = "<group>"; };
-		073A716B3AE3CBA88F9343676D0FC5E3 /* Pods-IoTVideo.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-IoTVideo.modulemap"; sourceTree = "<group>"; };
+		07B05FBCF01591824D209A8C087A285F /* Pods-IoTVideo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-IoTVideo-acknowledgements.markdown"; sourceTree = "<group>"; };
+		0A8E8FBEFF0522910CE177B48BE1975B /* Pods-IoTVideo-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-IoTVideo-umbrella.h"; sourceTree = "<group>"; };
 		0BE76784F7E4C20669B12E3618002141 /* ConstraintOffsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintOffsetTarget.swift; path = Source/ConstraintOffsetTarget.swift; sourceTree = "<group>"; };
 		0C732DA48D9673F789283AC48BE9E97D /* ConstraintDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDSL.swift; path = Source/ConstraintDSL.swift; sourceTree = "<group>"; };
 		0CB0E1442770A30F2FD8EA7DC7981D13 /* ConstraintRelatableTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintRelatableTarget.swift; path = Source/ConstraintRelatableTarget.swift; sourceTree = "<group>"; };
+		0DFB5232AA89F79107AA48A5C8B558C3 /* Pods-IotVideoDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-IotVideoDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		1014B435888AED2BB11BB4537398A548 /* MBProgressHUD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD-dummy.m"; sourceTree = "<group>"; };
+		10425A052854BA2496AA0899349813ED /* Pods-IoTVideo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-IoTVideo-acknowledgements.plist"; sourceTree = "<group>"; };
 		108DDCCBEF4A5580C2ECD45A55165DAF /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworkReachabilityManager.h; path = AFNetworking/AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
 		10C579F446F6877E34C3B626AFAD210B /* ConstraintDescription.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintDescription.swift; path = Source/ConstraintDescription.swift; sourceTree = "<group>"; };
 		173619BE8811CC88C96C4E941D9E2997 /* AFNetworking.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AFNetworking.xcconfig; sourceTree = "<group>"; };
-		1D02056F1F9993A40F22C06D4736C8D5 /* Pods-IotVideoDemo-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-IotVideoDemo-Info.plist"; sourceTree = "<group>"; };
+		18B2E629A072610C3EE10CADB5C1E532 /* Pods-IVNetwork.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-IVNetwork.release.xcconfig"; sourceTree = "<group>"; };
+		1BCE103E83F3062C4EF2A5C6D9F85931 /* Pods-IotVideoDemo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-IotVideoDemo-frameworks.sh"; sourceTree = "<group>"; };
+		1D66430B8755135CD494416D3D4ACC49 /* Pods-IotVideoDemo-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-IotVideoDemo-umbrella.h"; sourceTree = "<group>"; };
+		1E51DE646BFB591F8434A07879DD0BC4 /* Pods-IVNetwork-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-IVNetwork-dummy.m"; sourceTree = "<group>"; };
 		1F0B602016379D5CC82E15D4877CB983 /* Constraint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Constraint.swift; path = Source/Constraint.swift; sourceTree = "<group>"; };
 		1FD4676471D3338E66CE56A64BB89CAD /* SwiftyJSON-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SwiftyJSON-Info.plist"; sourceTree = "<group>"; };
 		1FE7C911376FD1CA656F29C3E662C484 /* Then-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Then-umbrella.h"; sourceTree = "<group>"; };
-		23A16E567990B27B85C47F039E859D69 /* Pods-IotVideoDemo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-IotVideoDemo-acknowledgements.plist"; sourceTree = "<group>"; };
+		21CCB236C7BEE96B6307859337D4B7E2 /* Pods-IVNetwork-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-IVNetwork-umbrella.h"; sourceTree = "<group>"; };
 		242E1280B641D37B10B81B0FE3C14ACD /* Pods_IoTVideo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_IoTVideo.framework; path = "Pods-IoTVideo.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		277FA64A0A99AD4D1D1CA337465B4ECE /* MBProgressHUD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		28EDA94B90972A89A88BAC8DE9B4A790 /* UIButton+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIButton+AFNetworking.m"; path = "UIKit+AFNetworking/UIButton+AFNetworking.m"; sourceTree = "<group>"; };
@@ -177,12 +186,15 @@
 		2DD2B822EA0450E51D2412D50E586378 /* AFNetworking-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AFNetworking-dummy.m"; sourceTree = "<group>"; };
 		2FCE85AB652B61F93EB4FF59FEE6EC7D /* UIKit+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIKit+AFNetworking.h"; path = "UIKit+AFNetworking/UIKit+AFNetworking.h"; sourceTree = "<group>"; };
 		30234B45B732B1C176AC04CFD87633CC /* UIImage+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+AFNetworking.h"; path = "UIKit+AFNetworking/UIImage+AFNetworking.h"; sourceTree = "<group>"; };
+		30C915DD7690C7EC604714753A040D1C /* Pods-IVNetwork-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-IVNetwork-acknowledgements.plist"; sourceTree = "<group>"; };
 		3136B19D3CE62B14C9FA8C5CEA8A3BE6 /* ConstraintAttributes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintAttributes.swift; path = Source/ConstraintAttributes.swift; sourceTree = "<group>"; };
 		3153D29A27DD478C502E68A38EBEF0FE /* ConstraintLayoutSupport.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutSupport.swift; path = Source/ConstraintLayoutSupport.swift; sourceTree = "<group>"; };
 		326D6CCA1AADF6F64F442C479980A5E7 /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIWebView+AFNetworking.m"; path = "UIKit+AFNetworking/UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		359B8539E06875E39CA83C458F3D35EC /* SwiftyJSON.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Source/SwiftyJSON/SwiftyJSON.swift; sourceTree = "<group>"; };
 		35D19F16436200E62841BCE4B1B910BF /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFHTTPSessionManager.h; path = AFNetworking/AFHTTPSessionManager.h; sourceTree = "<group>"; };
+		378363090C48F204ED53838FACCC236A /* Pods-IotVideoDemo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-IotVideoDemo-acknowledgements.plist"; sourceTree = "<group>"; };
 		3BCF9E58823E64EC5961241566F03CF2 /* ConstraintMakerEditable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerEditable.swift; path = Source/ConstraintMakerEditable.swift; sourceTree = "<group>"; };
+		3D67374B358B24ECD7B65860C6DF53AB /* Pods_IVNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_IVNetwork.framework; path = "Pods-IVNetwork.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		400F53E52093D614AD92E4648CBE090F /* AFAutoPurgingImageCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFAutoPurgingImageCache.m; path = "UIKit+AFNetworking/AFAutoPurgingImageCache.m"; sourceTree = "<group>"; };
 		45580E2956ED6DAB3BA01D2225A82592 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworkActivityIndicatorManager.h; path = "UIKit+AFNetworking/AFNetworkActivityIndicatorManager.h"; sourceTree = "<group>"; };
 		45A8A6BC04015A26FB09F3A0001B7243 /* MBProgressHUD.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
@@ -190,24 +202,25 @@
 		4E10BAB19D3A4E5992DBD3BD420F6DD4 /* AFNetworking.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = AFNetworking.modulemap; sourceTree = "<group>"; };
 		4FC7D25D0A3BAB32DD5796EA7B6F3D5A /* AFSecurityPolicy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFSecurityPolicy.m; path = AFNetworking/AFSecurityPolicy.m; sourceTree = "<group>"; };
 		506A4D66DB30E7BD3E9741991E3162DD /* SwiftyJSON-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftyJSON-umbrella.h"; sourceTree = "<group>"; };
+		514BBFDE97A8BB0546FA6D49DED6891D /* Pods-IotVideoDemo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-IotVideoDemo-dummy.m"; sourceTree = "<group>"; };
 		516BEA84A5347104A375E9C83644A94E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		5477A6F735D65088B4B0C06A48F16F4C /* Pods-IVNetwork.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-IVNetwork.modulemap"; sourceTree = "<group>"; };
 		56FC4D27E1B858BB65E98744A794D296 /* Then.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Then.xcconfig; sourceTree = "<group>"; };
-		57951E8D67C8E5A308B9BE8904959B94 /* Pods-IoTVideo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-IoTVideo.debug.xcconfig"; sourceTree = "<group>"; };
 		58DC976EAA8491BEC4FCF3D8C5E43C0B /* ConstraintLayoutGuideDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutGuideDSL.swift; path = Source/ConstraintLayoutGuideDSL.swift; sourceTree = "<group>"; };
 		5E7AECE564DFBD0F6308A3906D8FBD6F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		5EA69A1A989C70B67EEAB0D30CD8959B /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLRequestSerialization.m; path = AFNetworking/AFURLRequestSerialization.m; sourceTree = "<group>"; };
 		5F1B0F1C4864217172D74447D7CCA822 /* AFURLSessionManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLSessionManager.h; path = AFNetworking/AFURLSessionManager.h; sourceTree = "<group>"; };
-		5FD6B5F0D11D2C68078C7AF691925A7D /* Pods-IoTVideo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-IoTVideo-acknowledgements.plist"; sourceTree = "<group>"; };
 		63F93F0C023DDFDE5D68A30389E1F259 /* ConstraintMakerRelatable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerRelatable.swift; path = Source/ConstraintMakerRelatable.swift; sourceTree = "<group>"; };
 		64107980F18D43044FDD3D00CAAF697F /* UIRefreshControl+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIRefreshControl+AFNetworking.h"; path = "UIKit+AFNetworking/UIRefreshControl+AFNetworking.h"; sourceTree = "<group>"; };
 		644EA80751847C9CCF6DBA1072A7161F /* AFCompatibilityMacros.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFCompatibilityMacros.h; path = AFNetworking/AFCompatibilityMacros.h; sourceTree = "<group>"; };
 		64BE26A59E2ECDCD5A220F0AE9029A05 /* Then.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Then.modulemap; sourceTree = "<group>"; };
 		6901A5F7B375A94489E655A69DAA2B6C /* Pods_IotVideoDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_IotVideoDemo.framework; path = "Pods-IotVideoDemo.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6BCF3AAA2698E9485C05AFF0F27B0D5A /* Pods-IoTVideo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-IoTVideo-dummy.m"; sourceTree = "<group>"; };
 		6C0034E09F09036DB9DA6F6382E00A64 /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIWebView+AFNetworking.h"; path = "UIKit+AFNetworking/UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
+		6EBF26B4BE32A0081971AD3375AECA3C /* Pods-IotVideoDemo-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-IotVideoDemo-Info.plist"; sourceTree = "<group>"; };
 		708A7029588E72C0CC4A86882DA53803 /* Typealiases.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Typealiases.swift; path = Source/Typealiases.swift; sourceTree = "<group>"; };
 		72E795C66FF292A2969BAB4CB94DD16E /* ConstraintPriority.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintPriority.swift; path = Source/ConstraintPriority.swift; sourceTree = "<group>"; };
 		736FA362F8B94B337E8492282344A8CE /* ConstraintMakerPriortizable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerPriortizable.swift; path = Source/ConstraintMakerPriortizable.swift; sourceTree = "<group>"; };
-		74416FA7FE2B27D877897E569259C75C /* Pods-IoTVideo-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-IoTVideo-umbrella.h"; sourceTree = "<group>"; };
 		745C4CC87AC366A3482E06FC1F2E5DE2 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLResponseSerialization.m; path = AFNetworking/AFURLResponseSerialization.m; sourceTree = "<group>"; };
 		76B737D6D334BCD23EAA2E92ED6BEB86 /* SwiftyJSON.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftyJSON.xcconfig; sourceTree = "<group>"; };
 		77B9C99B3763A85DBA9FDDDFFDB28D4A /* UIActivityIndicatorView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIActivityIndicatorView+AFNetworking.m"; path = "UIKit+AFNetworking/UIActivityIndicatorView+AFNetworking.m"; sourceTree = "<group>"; };
@@ -216,20 +229,17 @@
 		7A20FB2172538D3787976AB8B80BDA08 /* AFImageDownloader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFImageDownloader.h; path = "UIKit+AFNetworking/AFImageDownloader.h"; sourceTree = "<group>"; };
 		7A475BC8198782A280ECEC534A9BA549 /* AFImageDownloader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFImageDownloader.m; path = "UIKit+AFNetworking/AFImageDownloader.m"; sourceTree = "<group>"; };
 		7E1F58ED0791AE18C1604D343C63C95C /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = DEVELOPER_DIR; };
-		7F3979D03CC2BD9E7F67129F94AA1115 /* Pods-IotVideoDemo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-IotVideoDemo-dummy.m"; sourceTree = "<group>"; };
+		7F0AE1B401790995C6F78F4846D8DDD4 /* Pods-IoTVideo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-IoTVideo.debug.xcconfig"; sourceTree = "<group>"; };
 		7F7642FB834B73CEA79B461628A6F2EC /* AFNetworking-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AFNetworking-umbrella.h"; sourceTree = "<group>"; };
-		7F9FA90E1EB40363E7556951FA887E69 /* Pods-IotVideoDemo-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-IotVideoDemo-umbrella.h"; sourceTree = "<group>"; };
 		80DDCF9DFF6A41CB0FE8E59323C01C18 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
 		8179E095D4B08899566D3535CBE11DB3 /* SwiftyJSON-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftyJSON-dummy.m"; sourceTree = "<group>"; };
 		81C36620C2BB1D6B8104884EA2CDB926 /* UIProgressView+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIProgressView+AFNetworking.h"; path = "UIKit+AFNetworking/UIProgressView+AFNetworking.h"; sourceTree = "<group>"; };
 		83AB3A51F7DFDDB1A239F68264B19CFA /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFNetworkReachabilityManager.m; path = AFNetworking/AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
 		864E7DF9AD9F4B1156805BE1BA767F15 /* UIButton+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIButton+AFNetworking.h"; path = "UIKit+AFNetworking/UIButton+AFNetworking.h"; sourceTree = "<group>"; };
-		87827CFE03E10927694EA2A7E919AF1A /* Pods-IoTVideo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-IoTVideo-acknowledgements.markdown"; sourceTree = "<group>"; };
-		89C5502E2B46B2A1CA090A460445EA5B /* Pods-IotVideoDemo.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-IotVideoDemo.modulemap"; sourceTree = "<group>"; };
-		89FDEEE555067288186AC2DCD20E79F9 /* Pods-IoTVideo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-IoTVideo.release.xcconfig"; sourceTree = "<group>"; };
 		8A8490F1D5C3F2894D95C72CBA35494F /* ConstraintConstantTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintConstantTarget.swift; path = Source/ConstraintConstantTarget.swift; sourceTree = "<group>"; };
 		8B16F9BA4207299800D411CCFBA6E5D5 /* ConstraintLayoutGuide.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutGuide.swift; path = Source/ConstraintLayoutGuide.swift; sourceTree = "<group>"; };
 		8B8FAB0D627B17EDE1366984278705D9 /* MBProgressHUD.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = MBProgressHUD.framework; path = MBProgressHUD.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BE9599533CDAE97C3625B60E49D191D /* Pods-IVNetwork-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-IVNetwork-acknowledgements.markdown"; sourceTree = "<group>"; };
 		90FAA87A9EBBECA87B2358CECC177ED7 /* SnapKit.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SnapKit.xcconfig; sourceTree = "<group>"; };
 		9317E4947CA2FE1B5D5999034C09CCA7 /* Then.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Then.framework; path = Then.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9400F26800B4AEAFE09BAB65BB130ECB /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+AFNetworking.m"; path = "UIKit+AFNetworking/UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
@@ -237,28 +247,30 @@
 		9637CB83FE6D6070D6D50E976D9ADA40 /* ConstraintView+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ConstraintView+Extensions.swift"; path = "Source/ConstraintView+Extensions.swift"; sourceTree = "<group>"; };
 		979486118B3E90C08386079D57962701 /* SnapKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SnapKit.framework; path = SnapKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9824FDF303A6FD435FA087E2EC4723BA /* AFNetworking-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "AFNetworking-Info.plist"; sourceTree = "<group>"; };
+		993EB7B7120CCB18EBE39ABA0E33F054 /* Pods-IoTVideo.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-IoTVideo.modulemap"; sourceTree = "<group>"; };
 		9B43EE6CB5009533B0FD0BFCB27239EA /* AFAutoPurgingImageCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFAutoPurgingImageCache.h; path = "UIKit+AFNetworking/AFAutoPurgingImageCache.h"; sourceTree = "<group>"; };
 		9C88572488D5112DF896A2D115A80098 /* ConstraintLayoutSupportDSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintLayoutSupportDSL.swift; path = Source/ConstraintLayoutSupportDSL.swift; sourceTree = "<group>"; };
 		9D0B70AD8769A42AD5AAED46FC6292DD /* UIActivityIndicatorView+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIActivityIndicatorView+AFNetworking.h"; path = "UIKit+AFNetworking/UIActivityIndicatorView+AFNetworking.h"; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		A1F6518C7B3E47F5BF0E62F929582D1D /* Pods-IotVideoDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-IotVideoDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		A25E59FEA15C1A3352A9BA19EB4848A9 /* ConstraintView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintView.swift; path = Source/ConstraintView.swift; sourceTree = "<group>"; };
 		A4FA15D44DF6BAC7550EDEED10862AA3 /* AFNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = AFNetworking.framework; path = AFNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A54DC2C0E333B6B6F5CF5CD568BD1B99 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFHTTPSessionManager.m; path = AFNetworking/AFHTTPSessionManager.m; sourceTree = "<group>"; };
 		A63B748E9FAC4371BEC32BD500B1C445 /* SnapKit-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SnapKit-dummy.m"; sourceTree = "<group>"; };
 		A758BA65627E3C566083BCC69F6CD5A8 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLRequestSerialization.h; path = AFNetworking/AFURLRequestSerialization.h; sourceTree = "<group>"; };
+		AB202ED18442418122498BF81731187D /* Pods-IotVideoDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-IotVideoDemo.release.xcconfig"; sourceTree = "<group>"; };
 		AB4877A0A65DA89CB4710BF1DA643FC5 /* LayoutConstraintItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LayoutConstraintItem.swift; path = Source/LayoutConstraintItem.swift; sourceTree = "<group>"; };
-		AB715BCC6F42C171CD31B38E895C5010 /* Pods-IotVideoDemo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-IotVideoDemo-acknowledgements.markdown"; sourceTree = "<group>"; };
 		AF815A9F189F1025F06E28A85A018436 /* ConstraintMaker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMaker.swift; path = Source/ConstraintMaker.swift; sourceTree = "<group>"; };
 		B055A56EF375BD9E52F04FF47EACEF60 /* UILayoutSupport+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "UILayoutSupport+Extensions.swift"; path = "Source/UILayoutSupport+Extensions.swift"; sourceTree = "<group>"; };
 		B4D401181D7F2E424E2E18338FB4E2AE /* ConstraintLayoutGuide+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "ConstraintLayoutGuide+Extensions.swift"; path = "Source/ConstraintLayoutGuide+Extensions.swift"; sourceTree = "<group>"; };
+		B702E18276B1A6B543B711DF181E6FE0 /* Pods-IoTVideo-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-IoTVideo-Info.plist"; sourceTree = "<group>"; };
 		B709520FE16373C19B1881931ACC6558 /* SnapKit-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SnapKit-Info.plist"; sourceTree = "<group>"; };
 		B899D5E840EE3A56FF08741BE31BACDC /* Then-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Then-prefix.pch"; sourceTree = "<group>"; };
 		BA865FEC2D3530CC8FF9C18B39825B4A /* Then.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Then.swift; path = Sources/Then/Then.swift; sourceTree = "<group>"; };
 		BB34C6E7A5D82667888F21B385D3B70B /* MBProgressHUD-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-prefix.pch"; sourceTree = "<group>"; };
+		BC0273C86B937E38F52BA7A45B0970CC /* Pods-IVNetwork.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-IVNetwork.debug.xcconfig"; sourceTree = "<group>"; };
+		BD90F72BBB28B4C63A4BF67CEAAB3A32 /* Pods-IoTVideo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-IoTVideo.release.xcconfig"; sourceTree = "<group>"; };
 		C087899114106EC71C2527687716ED8F /* SnapKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SnapKit.modulemap; sourceTree = "<group>"; };
 		C20B9B05E72DDAF7E522EFF4F8F2B80A /* ConstraintMakerFinalizable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMakerFinalizable.swift; path = Source/ConstraintMakerFinalizable.swift; sourceTree = "<group>"; };
-		C27DE05C8D80B52BC6C62978994A9662 /* Pods-IotVideoDemo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-IotVideoDemo-frameworks.sh"; sourceTree = "<group>"; };
 		C416856F3F6EBE87305AB30ED244A6E3 /* LayoutConstraint.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LayoutConstraint.swift; path = Source/LayoutConstraint.swift; sourceTree = "<group>"; };
 		C54D1DC90F00B9DAD3CA336B59F474E1 /* ConstraintRelation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintRelation.swift; path = Source/ConstraintRelation.swift; sourceTree = "<group>"; };
 		C79D083C467108CF0675227A5D2EB941 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImageView+AFNetworking.h"; path = "UIKit+AFNetworking/UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
@@ -266,21 +278,21 @@
 		CB07BF08DD348A829E94CC5CBA32333A /* Debugging.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Debugging.swift; path = Source/Debugging.swift; sourceTree = "<group>"; };
 		CF71E351CA6EFF85AEC7B571061D2D20 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIRefreshControl+AFNetworking.m"; path = "UIKit+AFNetworking/UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
 		D37BB0B85CB4F2A779466737CD945A0C /* ConstraintInsets.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintInsets.swift; path = Source/ConstraintInsets.swift; sourceTree = "<group>"; };
+		D4D72DD63FCC2983B583C0614A65745F /* Pods-IotVideoDemo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-IotVideoDemo-acknowledgements.markdown"; sourceTree = "<group>"; };
 		D77791EF67EE3A072BC6ACCDD3EFDF4D /* SnapKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SnapKit-prefix.pch"; sourceTree = "<group>"; };
 		D7DD27188ECE6A019CDD0D42576A0165 /* AFNetworking-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AFNetworking-prefix.pch"; sourceTree = "<group>"; };
+		D8522EF2695DD5E3B5D4F67A50DCB5BC /* Pods-IotVideoDemo.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-IotVideoDemo.modulemap"; sourceTree = "<group>"; };
 		D8EE4AFF2A2EB4BED2111974D17DBDA4 /* UIProgressView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIProgressView+AFNetworking.m"; path = "UIKit+AFNetworking/UIProgressView+AFNetworking.m"; sourceTree = "<group>"; };
 		DAAA8966E567AA1CAE42D02D9E66BBD2 /* AFURLSessionManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLSessionManager.m; path = AFNetworking/AFURLSessionManager.m; sourceTree = "<group>"; };
 		DB3EB60DF98A1961CF8DCE1173752940 /* ConstraintConfig.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintConfig.swift; path = Source/ConstraintConfig.swift; sourceTree = "<group>"; };
-		DC5AC60BFE8AE55515F634AFD0BF8238 /* Pods-IoTVideo-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-IoTVideo-Info.plist"; sourceTree = "<group>"; };
 		DDBE3D490E48D5A00EE2643408DEB5ED /* Then-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Then-Info.plist"; sourceTree = "<group>"; };
 		DF452EED7AA86D2E10DEBF12CA37EB13 /* MBProgressHUD-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "MBProgressHUD-Info.plist"; sourceTree = "<group>"; };
+		E0074DDC9645DBF29405F2D8D6E2A415 /* Pods-IVNetwork-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-IVNetwork-Info.plist"; sourceTree = "<group>"; };
 		E0A7F2249E1A12F677C13EE8E6B2DCBA /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
 		E23C076BA70925415F490FEDB215DA92 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftyJSON.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E288107432D8B51F78125DF85C12257D /* ConstraintInsetTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintInsetTarget.swift; path = Source/ConstraintInsetTarget.swift; sourceTree = "<group>"; };
 		E72DE5E6EC8BBD31993C7307E6CE8FC0 /* AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworking.h; path = AFNetworking/AFNetworking.h; sourceTree = "<group>"; };
 		E92DAB722A2F37FF3C8284BA77BF28C1 /* ConstraintMultiplierTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintMultiplierTarget.swift; path = Source/ConstraintMultiplierTarget.swift; sourceTree = "<group>"; };
-		E9F0EFAFF6D4B9FA44615A77C520E8F5 /* Pods-IoTVideo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-IoTVideo-dummy.m"; sourceTree = "<group>"; };
-		EED016D7D099F7E5B4B0552FF6BF1CD5 /* Pods-IotVideoDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-IotVideoDemo.release.xcconfig"; sourceTree = "<group>"; };
 		F08779644C4FA3B917CD00ED321D0592 /* Then-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Then-dummy.m"; sourceTree = "<group>"; };
 		F13D9423299FC80B14D592F33058DED3 /* MBProgressHUD-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-umbrella.h"; sourceTree = "<group>"; };
 		F4AC894DD03D8B57195CA1A509EFC16B /* ConstraintPriorityTarget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConstraintPriorityTarget.swift; path = Source/ConstraintPriorityTarget.swift; sourceTree = "<group>"; };
@@ -308,11 +320,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		3FB61978BF4435E21D83C14198608456 /* Frameworks */ = {
+		3A7E4F720BD5F56A89DEC531A83E1245 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6C06D7A28E55FC0ABC281AD939DB3045 /* Foundation.framework in Frameworks */,
+				97AB9E85966E6B825E17BFC9D16FC361 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -321,6 +333,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				57DFDD71D48943B2085E44865F7E82FF /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		65DFDAC1E55BFD2CCC5B365EA0EB4DF7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B758B3668F7C63A9DDBE888C31C8155C /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,6 +422,21 @@
 			name = Reachability;
 			sourceTree = "<group>";
 		};
+		31305D442478B4B4CA7F012701271731 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A4FA15D44DF6BAC7550EDEED10862AA3 /* AFNetworking.framework */,
+				8B8FAB0D627B17EDE1366984278705D9 /* MBProgressHUD.framework */,
+				242E1280B641D37B10B81B0FE3C14ACD /* Pods_IoTVideo.framework */,
+				6901A5F7B375A94489E655A69DAA2B6C /* Pods_IotVideoDemo.framework */,
+				3D67374B358B24ECD7B65860C6DF53AB /* Pods_IVNetwork.framework */,
+				979486118B3E90C08386079D57962701 /* SnapKit.framework */,
+				E23C076BA70925415F490FEDB215DA92 /* SwiftyJSON.framework */,
+				9317E4947CA2FE1B5D5999034C09CCA7 /* Then.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		503EFA82298F68247DAEF4B8E43B27AB /* Security */ = {
 			isa = PBXGroup;
 			children = (
@@ -434,6 +469,22 @@
 			);
 			name = MBProgressHUD;
 			path = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		6555F241110A816BF09A11550B86750C /* Pods-IoTVideo */ = {
+			isa = PBXGroup;
+			children = (
+				993EB7B7120CCB18EBE39ABA0E33F054 /* Pods-IoTVideo.modulemap */,
+				07B05FBCF01591824D209A8C087A285F /* Pods-IoTVideo-acknowledgements.markdown */,
+				10425A052854BA2496AA0899349813ED /* Pods-IoTVideo-acknowledgements.plist */,
+				6BCF3AAA2698E9485C05AFF0F27B0D5A /* Pods-IoTVideo-dummy.m */,
+				B702E18276B1A6B543B711DF181E6FE0 /* Pods-IoTVideo-Info.plist */,
+				0A8E8FBEFF0522910CE177B48BE1975B /* Pods-IoTVideo-umbrella.h */,
+				7F0AE1B401790995C6F78F4846D8DDD4 /* Pods-IoTVideo.debug.xcconfig */,
+				BD90F72BBB28B4C63A4BF67CEAAB3A32 /* Pods-IoTVideo.release.xcconfig */,
+			);
+			name = "Pods-IoTVideo";
+			path = "Target Support Files/Pods-IoTVideo";
 			sourceTree = "<group>";
 		};
 		67956FA946CA9AEDFF2366A8AE256CEB /* NSURLSession */ = {
@@ -470,6 +521,16 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/AFNetworking";
+			sourceTree = "<group>";
+		};
+		79DED1264D53D636757737EC613E6BAF /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				6555F241110A816BF09A11550B86750C /* Pods-IoTVideo */,
+				EE0CD2E8C55817C14A146DA286F08F0A /* Pods-IotVideoDemo */,
+				AEA52904DF498D0AE84C3CA1D37E81FA /* Pods-IVNetwork */,
+			);
+			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
 		7D4B1697751CFA544E5D09A91132C895 /* SnapKit */ = {
@@ -570,37 +631,20 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		A7C8C3F1AF2AA49F593B942EE4F6275A /* Pods-IotVideoDemo */ = {
+		AEA52904DF498D0AE84C3CA1D37E81FA /* Pods-IVNetwork */ = {
 			isa = PBXGroup;
 			children = (
-				89C5502E2B46B2A1CA090A460445EA5B /* Pods-IotVideoDemo.modulemap */,
-				AB715BCC6F42C171CD31B38E895C5010 /* Pods-IotVideoDemo-acknowledgements.markdown */,
-				23A16E567990B27B85C47F039E859D69 /* Pods-IotVideoDemo-acknowledgements.plist */,
-				7F3979D03CC2BD9E7F67129F94AA1115 /* Pods-IotVideoDemo-dummy.m */,
-				C27DE05C8D80B52BC6C62978994A9662 /* Pods-IotVideoDemo-frameworks.sh */,
-				1D02056F1F9993A40F22C06D4736C8D5 /* Pods-IotVideoDemo-Info.plist */,
-				7F9FA90E1EB40363E7556951FA887E69 /* Pods-IotVideoDemo-umbrella.h */,
-				A1F6518C7B3E47F5BF0E62F929582D1D /* Pods-IotVideoDemo.debug.xcconfig */,
-				EED016D7D099F7E5B4B0552FF6BF1CD5 /* Pods-IotVideoDemo.release.xcconfig */,
+				5477A6F735D65088B4B0C06A48F16F4C /* Pods-IVNetwork.modulemap */,
+				8BE9599533CDAE97C3625B60E49D191D /* Pods-IVNetwork-acknowledgements.markdown */,
+				30C915DD7690C7EC604714753A040D1C /* Pods-IVNetwork-acknowledgements.plist */,
+				1E51DE646BFB591F8434A07879DD0BC4 /* Pods-IVNetwork-dummy.m */,
+				E0074DDC9645DBF29405F2D8D6E2A415 /* Pods-IVNetwork-Info.plist */,
+				21CCB236C7BEE96B6307859337D4B7E2 /* Pods-IVNetwork-umbrella.h */,
+				BC0273C86B937E38F52BA7A45B0970CC /* Pods-IVNetwork.debug.xcconfig */,
+				18B2E629A072610C3EE10CADB5C1E532 /* Pods-IVNetwork.release.xcconfig */,
 			);
-			name = "Pods-IotVideoDemo";
-			path = "Target Support Files/Pods-IotVideoDemo";
-			sourceTree = "<group>";
-		};
-		BC4FB51E52D81E934D7C76BD602A66FA /* Pods-IoTVideo */ = {
-			isa = PBXGroup;
-			children = (
-				073A716B3AE3CBA88F9343676D0FC5E3 /* Pods-IoTVideo.modulemap */,
-				87827CFE03E10927694EA2A7E919AF1A /* Pods-IoTVideo-acknowledgements.markdown */,
-				5FD6B5F0D11D2C68078C7AF691925A7D /* Pods-IoTVideo-acknowledgements.plist */,
-				E9F0EFAFF6D4B9FA44615A77C520E8F5 /* Pods-IoTVideo-dummy.m */,
-				DC5AC60BFE8AE55515F634AFD0BF8238 /* Pods-IoTVideo-Info.plist */,
-				74416FA7FE2B27D877897E569259C75C /* Pods-IoTVideo-umbrella.h */,
-				57951E8D67C8E5A308B9BE8904959B94 /* Pods-IoTVideo.debug.xcconfig */,
-				89FDEEE555067288186AC2DCD20E79F9 /* Pods-IoTVideo.release.xcconfig */,
-			);
-			name = "Pods-IoTVideo";
-			path = "Target Support Files/Pods-IoTVideo";
+			name = "Pods-IVNetwork";
+			path = "Target Support Files/Pods-IVNetwork";
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
@@ -609,8 +653,8 @@
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D68CA58901FBF589D75F5E40F1EAF5BA /* Frameworks */,
 				F0DF818613B41F5BE47DEFF99CB4046E /* Pods */,
-				D868AC3F0CB69FD569BCA23CD702B14F /* Products */,
-				FA19F7B8360FE57CADE97D9B0EC35666 /* Targets Support Files */,
+				31305D442478B4B4CA7F012701271731 /* Products */,
+				79DED1264D53D636757737EC613E6BAF /* Targets Support Files */,
 			);
 			sourceTree = "<group>";
 		};
@@ -636,20 +680,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D868AC3F0CB69FD569BCA23CD702B14F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				A4FA15D44DF6BAC7550EDEED10862AA3 /* AFNetworking.framework */,
-				8B8FAB0D627B17EDE1366984278705D9 /* MBProgressHUD.framework */,
-				242E1280B641D37B10B81B0FE3C14ACD /* Pods_IoTVideo.framework */,
-				6901A5F7B375A94489E655A69DAA2B6C /* Pods_IotVideoDemo.framework */,
-				979486118B3E90C08386079D57962701 /* SnapKit.framework */,
-				E23C076BA70925415F490FEDB215DA92 /* SwiftyJSON.framework */,
-				9317E4947CA2FE1B5D5999034C09CCA7 /* Then.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		EDE6941E6E212D58805A431471DF7D59 /* Serialization */ = {
 			isa = PBXGroup;
 			children = (
@@ -659,6 +689,23 @@
 				745C4CC87AC366A3482E06FC1F2E5DE2 /* AFURLResponseSerialization.m */,
 			);
 			name = Serialization;
+			sourceTree = "<group>";
+		};
+		EE0CD2E8C55817C14A146DA286F08F0A /* Pods-IotVideoDemo */ = {
+			isa = PBXGroup;
+			children = (
+				D8522EF2695DD5E3B5D4F67A50DCB5BC /* Pods-IotVideoDemo.modulemap */,
+				D4D72DD63FCC2983B583C0614A65745F /* Pods-IotVideoDemo-acknowledgements.markdown */,
+				378363090C48F204ED53838FACCC236A /* Pods-IotVideoDemo-acknowledgements.plist */,
+				514BBFDE97A8BB0546FA6D49DED6891D /* Pods-IotVideoDemo-dummy.m */,
+				1BCE103E83F3062C4EF2A5C6D9F85931 /* Pods-IotVideoDemo-frameworks.sh */,
+				6EBF26B4BE32A0081971AD3375AECA3C /* Pods-IotVideoDemo-Info.plist */,
+				1D66430B8755135CD494416D3D4ACC49 /* Pods-IotVideoDemo-umbrella.h */,
+				0DFB5232AA89F79107AA48A5C8B558C3 /* Pods-IotVideoDemo.debug.xcconfig */,
+				AB202ED18442418122498BF81731187D /* Pods-IotVideoDemo.release.xcconfig */,
+			);
+			name = "Pods-IotVideoDemo";
+			path = "Target Support Files/Pods-IotVideoDemo";
 			sourceTree = "<group>";
 		};
 		F0DF818613B41F5BE47DEFF99CB4046E /* Pods */ = {
@@ -671,15 +718,6 @@
 				6D8084C7B97219995D39D5B03BE26BDF /* Then */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		FA19F7B8360FE57CADE97D9B0EC35666 /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				BC4FB51E52D81E934D7C76BD602A66FA /* Pods-IoTVideo */,
-				A7C8C3F1AF2AA49F593B942EE4F6275A /* Pods-IotVideoDemo */,
-			);
-			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -709,11 +747,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		40B2DA473BFAF25A8511D718F069D3AB /* Headers */ = {
+		6CDEA9ECD1D35A12299680BCC0253BFA /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				12C4896C0BC4F7D5B90BD4FA535540DC /* Pods-IoTVideo-umbrella.h in Headers */,
+				9D90768C315C34E7310A90325E66B7CB /* Pods-IVNetwork-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -731,6 +769,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4EA95B9E83E4C008C2A195B810E041F /* Pods-IotVideoDemo-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BD3606EBD67BCEEB4244D453CE5BFF1C /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9FE6888909ECC7BA1871CF3A43683FA9 /* Pods-IoTVideo-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -784,17 +830,16 @@
 		};
 		02D884C8BD3043D4B4EB790666F0CE19 /* Pods-IoTVideo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7954AC943571FF92CBA10F2C2AE23330 /* Build configuration list for PBXNativeTarget "Pods-IoTVideo" */;
+			buildConfigurationList = A3B0FE654C42C63FF75C741922C6396A /* Build configuration list for PBXNativeTarget "Pods-IoTVideo" */;
 			buildPhases = (
-				40B2DA473BFAF25A8511D718F069D3AB /* Headers */,
-				064D41603495D650294EB7B23BCA776F /* Sources */,
-				3FB61978BF4435E21D83C14198608456 /* Frameworks */,
-				6D91514CA27BC27791C8DFEE6CD7C339 /* Resources */,
+				BD3606EBD67BCEEB4244D453CE5BFF1C /* Headers */,
+				197C04EA921905A24D1B678F89AC884C /* Sources */,
+				65DFDAC1E55BFD2CCC5B365EA0EB4DF7 /* Frameworks */,
+				3F1F987235048C2F425584FF9DD9C47F /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				FD7D421BEF25B2D81BC5A276FE0C29E4 /* PBXTargetDependency */,
 			);
 			name = "Pods-IoTVideo";
 			productName = "Pods-IoTVideo";
@@ -896,6 +941,25 @@
 			productReference = E23C076BA70925415F490FEDB215DA92 /* SwiftyJSON.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		E18C8370A44E6FC4CD15746D38FC71E9 /* Pods-IVNetwork */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB9EBE0AC8AD9320E611D4990BC69FA9 /* Build configuration list for PBXNativeTarget "Pods-IVNetwork" */;
+			buildPhases = (
+				6CDEA9ECD1D35A12299680BCC0253BFA /* Headers */,
+				4C8AD74418719C9106777888516EF0B9 /* Sources */,
+				3A7E4F720BD5F56A89DEC531A83E1245 /* Frameworks */,
+				2D69CEEAA264D7541E8BFEC9F6043BF7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AF69AD12E3B9E2E6C7486DFEB5D4432D /* PBXTargetDependency */,
+			);
+			name = "Pods-IVNetwork";
+			productName = "Pods-IVNetwork";
+			productReference = 3D67374B358B24ECD7B65860C6DF53AB /* Pods_IVNetwork.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -914,7 +978,7 @@
 				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = D868AC3F0CB69FD569BCA23CD702B14F /* Products */;
+			productRefGroup = 31305D442478B4B4CA7F012701271731 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -922,6 +986,7 @@
 				82B0A41D3031FF27D78E17B0A9A46FB0 /* MBProgressHUD */,
 				02D884C8BD3043D4B4EB790666F0CE19 /* Pods-IoTVideo */,
 				0D199CC1055DBE57DAABECE4BBE94FD6 /* Pods-IotVideoDemo */,
+				E18C8370A44E6FC4CD15746D38FC71E9 /* Pods-IVNetwork */,
 				19622742EBA51E823D6DAE3F8CDBFAD4 /* SnapKit */,
 				D118A6A04828FD3CDA8640CD2B6796D2 /* SwiftyJSON */,
 				C17AEFC79E770A2906EFAAB1A3757406 /* Then */,
@@ -931,6 +996,20 @@
 
 /* Begin PBXResourcesBuildPhase section */
 		1FA6EE6BB1452EE8D40646CF50CA9922 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2D69CEEAA264D7541E8BFEC9F6043BF7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3F1F987235048C2F425584FF9DD9C47F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -958,13 +1037,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6D91514CA27BC27791C8DFEE6CD7C339 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		A350694A81B0E24F9515C16E605B591F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -982,14 +1054,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		064D41603495D650294EB7B23BCA776F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				0679604B61B80D6E586CC3E18C79A25D /* Pods-IoTVideo-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		0CDB9028959BA2593F7C5704933F1E4C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1005,6 +1069,22 @@
 			files = (
 				2BF6FBC0A64BF107C5D64C61F1397770 /* SwiftyJSON-dummy.m in Sources */,
 				7B4CE5C84161E2BFE477F42DFD634382 /* SwiftyJSON.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		197C04EA921905A24D1B678F89AC884C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84F579CBDD98C390F65B4E0006AA4B9F /* Pods-IoTVideo-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4C8AD74418719C9106777888516EF0B9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B09CC54652CFF0562A768C554AE4732C /* Pods-IVNetwork-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1117,17 +1197,17 @@
 			target = 82B0A41D3031FF27D78E17B0A9A46FB0 /* MBProgressHUD */;
 			targetProxy = D84B2F46F66EC0AF431A358E54347D62 /* PBXContainerItemProxy */;
 		};
+		AF69AD12E3B9E2E6C7486DFEB5D4432D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AFNetworking;
+			target = 0130B3724283586C0E9D2A112D4F2AA1 /* AFNetworking */;
+			targetProxy = 394F1E80474399D57A60B55BF0D9940B /* PBXContainerItemProxy */;
+		};
 		EF99785CB942DE20C9D2DDE6611C20E7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AFNetworking;
 			target = 0130B3724283586C0E9D2A112D4F2AA1 /* AFNetworking */;
 			targetProxy = E1B6DBF79DBE236B2D88FD691022E5A9 /* PBXContainerItemProxy */;
-		};
-		FD7D421BEF25B2D81BC5A276FE0C29E4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = AFNetworking;
-			target = 0130B3724283586C0E9D2A112D4F2AA1 /* AFNetworking */;
-			targetProxy = 80F9D34BDFCADA1EE40E1B936FA73CE7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1161,6 +1241,44 @@
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		08B096ACA89C3A10B7281D68EF769D87 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BD90F72BBB28B4C63A4BF67CEAAB3A32 /* Pods-IoTVideo.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-IoTVideo/Pods-IoTVideo-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-IoTVideo/Pods-IoTVideo.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1277,7 +1395,7 @@
 		};
 		560B7773B35BE3AEAEC277BA620487D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A1F6518C7B3E47F5BF0E62F929582D1D /* Pods-IotVideoDemo.debug.xcconfig */;
+			baseConfigurationReference = 0DFB5232AA89F79107AA48A5C8B558C3 /* Pods-IotVideoDemo.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CODE_SIGN_IDENTITY = "";
@@ -1385,7 +1503,7 @@
 		};
 		859A9373CA68C1F91AE5496261D7157B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EED016D7D099F7E5B4B0552FF6BF1CD5 /* Pods-IotVideoDemo.release.xcconfig */;
+			baseConfigurationReference = AB202ED18442418122498BF81731187D /* Pods-IotVideoDemo.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CODE_SIGN_IDENTITY = "";
@@ -1420,6 +1538,43 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
+		};
+		85AF2DD6DAF230B3C347278829814271 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BC0273C86B937E38F52BA7A45B0970CC /* Pods-IVNetwork.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-IVNetwork/Pods-IVNetwork-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-IVNetwork/Pods-IVNetwork.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
 		};
 		896DDFCE13D9B5E69C3285EA5D65078B /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1580,44 +1735,6 @@
 			};
 			name = Debug;
 		};
-		9D9C92D8A37B8EDA69F0DC77E1D32780 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89FDEEE555067288186AC2DCD20E79F9 /* Pods-IoTVideo.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-IoTVideo/Pods-IoTVideo-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-IoTVideo/Pods-IoTVideo.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		A786902994C30700C1A40C3FA49FCC12 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 77DEB0F90C12411E5916142EACE57291 /* MBProgressHUD.xcconfig */;
@@ -1653,9 +1770,9 @@
 			};
 			name = Debug;
 		};
-		B8CB06F2A823C9B04823F0D3CA92050F /* Debug */ = {
+		C343BD2C4A36D16EE8313A9AC8678F2D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 57951E8D67C8E5A308B9BE8904959B94 /* Pods-IoTVideo.debug.xcconfig */;
+			baseConfigurationReference = 18B2E629A072610C3EE10CADB5C1E532 /* Pods-IVNetwork.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CODE_SIGN_IDENTITY = "";
@@ -1667,7 +1784,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "Target Support Files/Pods-IoTVideo/Pods-IoTVideo-Info.plist";
+				INFOPLIST_FILE = "Target Support Files/Pods-IVNetwork/Pods-IVNetwork-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1676,7 +1793,7 @@
 					"@loader_path/Frameworks",
 				);
 				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-IoTVideo/Pods-IoTVideo.modulemap";
+				MODULEMAP_FILE = "Target Support Files/Pods-IVNetwork/Pods-IVNetwork.modulemap";
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PODS_ROOT = "$(SRCROOT)";
@@ -1685,10 +1802,11 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
-			name = Debug;
+			name = Release;
 		};
 		C82A98FE4F3874FE52534C9FBB547E36 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -1725,6 +1843,43 @@
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Release;
+		};
+		CEAC0E6204E113D1C7C9D00ACAC6E3E0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7F0AE1B401790995C6F78F4846D8DDD4 /* Pods-IoTVideo.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-IoTVideo/Pods-IoTVideo-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-IoTVideo/Pods-IoTVideo.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
 		};
 		E8F35927ECB754A46E0AC8C2BACAF32D /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1809,20 +1964,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7954AC943571FF92CBA10F2C2AE23330 /* Build configuration list for PBXNativeTarget "Pods-IoTVideo" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B8CB06F2A823C9B04823F0D3CA92050F /* Debug */,
-				9D9C92D8A37B8EDA69F0DC77E1D32780 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		A248458BDE951C5A1AEEFD5865838099 /* Build configuration list for PBXNativeTarget "Then" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5AB1902AA5780246FB246D514C97FDC4 /* Debug */,
 				C82A98FE4F3874FE52534C9FBB547E36 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A3B0FE654C42C63FF75C741922C6396A /* Build configuration list for PBXNativeTarget "Pods-IoTVideo" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CEAC0E6204E113D1C7C9D00ACAC6E3E0 /* Debug */,
+				08B096ACA89C3A10B7281D68EF769D87 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB9EBE0AC8AD9320E611D4990BC69FA9 /* Build configuration list for PBXNativeTarget "Pods-IVNetwork" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				85AF2DD6DAF230B3C347278829814271 /* Debug */,
+				C343BD2C4A36D16EE8313A9AC8678F2D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -9,6 +9,7 @@
 import UIKit
 import IVAccountMgr
 import IoTVideo
+import IVNetwork
 
 let demo_accessTokenKey    = "IOT_VIDEO_DEMO_accessToken"
 let demo_accessIdKey   = "IOT_VIDEO_DEMO_ACCESSID"

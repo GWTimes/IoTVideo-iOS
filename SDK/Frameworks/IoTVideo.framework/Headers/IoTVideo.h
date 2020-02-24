@@ -22,6 +22,7 @@
 #import "IVLanNetConfig.h"
 #import "IVQRCodeNetConfig.h"
 #import "IVNetConfig.h"
+#import "IVNetworkSign.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
