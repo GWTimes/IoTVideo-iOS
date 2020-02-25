@@ -45,7 +45,16 @@ class IVPlaybackViewController: IVDevicePlayerViewController {
             logInfo(items)
             self.playbackList += items
         })
-        
+
+        let times = [(3, 10.8), (15, 30.2), (30.5, 40), (60.5, 93.2), (93.5, 100)]
+        for (t0, t1) in times {
+            let item = IVPlaybackItem()
+             item.startTime = t0
+             item.endTime = t1
+             item.duration = item.endTime - item.startTime
+             item.type = ""
+             self.playbackList.append(item)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {

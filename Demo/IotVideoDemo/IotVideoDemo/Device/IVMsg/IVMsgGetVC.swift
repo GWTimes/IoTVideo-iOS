@@ -16,7 +16,7 @@ class IVMsgGetVC: UITableViewController, IVDeviceAccessable {
     override func viewDidLoad() {
         super.viewDidLoad()
         let hud = ivLoadingHud()
-        IVMessageMgr.sharedInstance.getDataOfDevice(device.deviceID, path: "") { (json, error) in
+        IVMessageMgr.sharedInstance.readProperty(ofDevice: device.deviceID, path: "") { (json, error) in
             hud.hide()
             guard let json = json else {
                 let path = Bundle.main.path(forResource: "msgFile", ofType: "json")
@@ -85,7 +85,7 @@ class IVMsgGetVC: UITableViewController, IVDeviceAccessable {
         let subKey = subDatas[indexPath.row]
         let path = sectionKey + "." + subKey
         let hud = ivLoadingHud()
-        IVMessageMgr.sharedInstance.getDataOfDevice(self.device.deviceID, path: path) { (json, err) in
+        IVMessageMgr.sharedInstance.readProperty(ofDevice: self.device.deviceID, path: path) { (json, err) in
             hud.hide()
             let message = "json:\(json ?? "") \n error:\(String(describing: err))"
             logInfo("物模型获取 \n \(path).setVal \n \(message)")

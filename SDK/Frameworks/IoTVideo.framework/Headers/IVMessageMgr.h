@@ -21,16 +21,16 @@ typedef void(^IVMsgDataCallback)(NSData * _Nullable data, NSError * _Nullable er
 @protocol IVMessageDelegate <NSObject>
 
 @optional
-/// 接收到事件消息（EVT）:  告警、分享、系统通知
+/// 接收到事件消息（Event）:  告警、分享、系统通知
 /// @param event 事件消息体
 /// @param topic 请参照物模型定义
 - (void)didReceiveEvent:(NSString *)event topic:(NSString *)topic;
 
-/// 接收到状态消息（ST）
+/// 接收到只读属性消息（ProReadonly）
 /// @param json 内容（JSON的具体字符串）
 /// @param path 路径（JSON的叶子节点）
 /// @param deviceId 设备ID
-- (void)didUpdateStatus:(NSString *)json path:(NSString *)path deviceId:(NSString *)deviceId;
+- (void)didUpdateProperty:(NSString *)json path:(NSString *)path deviceId:(NSString *)deviceId;
 
 @end
 
@@ -51,45 +51,67 @@ typedef void(^IVMsgDataCallback)(NSData * _Nullable data, NSError * _Nullable er
 
 #pragma mark - 物模型方法
 
-/// 物模型设置
+/// 写入属性
 /// @param deviceId 设备ID
 /// @param path 路径（JSON的叶子节点）
 /// @param json  内容（JSON的具体字符串）
 /// @param completionHandler 完成回调
-- (void)setDataToDevice:(NSString *)deviceId
+- (void)writePropertyOfDevice:(NSString *)deviceId
                    path:(NSString *)path
                    json:(NSString *)json
       completionHandler:(nullable IVMsgJSONCallback)completionHandler;
 
-/// 物模型设置
+/// 写入属性
 /// @param deviceId 设备ID
 /// @param path 路径（JSON的叶子节点）
 /// @param json  内容（JSON的具体字符串）
 /// @param timeout 超时时间
 /// @param completionHandler 完成回调
-- (void)setDataToDevice:(NSString *)deviceId
+- (void)writePropertyOfDevice:(NSString *)deviceId
                    path:(NSString *)path
                    json:(NSString *)json
                 timeout:(NSTimeInterval)timeout
       completionHandler:(nullable IVMsgJSONCallback)completionHandler;
 
-/// 物模型获取
+/// 读取属性
 /// @param deviceId 设备ID
 /// @param path 路径（JSON的叶子节点）
 /// @param completionHandler 完成回调
-- (void)getDataOfDevice:(NSString *)deviceId
+- (void)readPropertyOfDevice:(NSString *)deviceId
                     path:(NSString *)path
        completionHandler:(nullable IVMsgJSONCallback)completionHandler;
 
-/// 物模型获取
+/// 读取属性
 /// @param deviceId 设备ID
 /// @param path 路径（JSON的叶子节点）
 /// @param timeout 超时时间
 /// @param completionHandler 完成回调
-- (void)getDataOfDevice:(NSString *)deviceId
+- (void)readPropertyOfDevice:(NSString *)deviceId
                     path:(NSString *)path
                  timeout:(NSTimeInterval)timeout
        completionHandler:(nullable IVMsgJSONCallback)completionHandler;
+
+/// 执行动作
+/// @param deviceId 设备ID
+/// @param path 路径（JSON的叶子节点）
+/// @param json  内容（JSON的具体字符串）
+/// @param completionHandler 完成回调
+- (void)takeActionOfDevice:(NSString *)deviceId
+                      path:(NSString *)path
+                      json:(NSString *)json
+         completionHandler:(nullable IVMsgJSONCallback)completionHandler;
+
+/// 执行动作
+/// @param deviceId 设备ID
+/// @param path 路径（JSON的叶子节点）
+/// @param json  内容（JSON的具体字符串）
+/// @param timeout 超时时间
+/// @param completionHandler 完成回调
+- (void)takeActionOfDevice:(NSString *)deviceId
+                      path:(NSString *)path
+                      json:(NSString *)json
+                   timeout:(NSTimeInterval)timeout
+         completionHandler:(nullable IVMsgJSONCallback)completionHandler;
 
 
 #pragma mark - 透传消息方法

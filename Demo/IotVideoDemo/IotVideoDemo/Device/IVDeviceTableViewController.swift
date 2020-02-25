@@ -46,7 +46,7 @@ class IVDeviceTableViewController: UITableViewController {
                 IVDeviceTableViewController.mineDevice = json!.ivArrayDecode(IVDeviceModel.self) as! [IVDeviceModel]
                 IVDeviceTableViewController.mineDevice.forEach { (dev) in
                     guard let deviceId = dev.did else { return }
-                    IVMessageMgr.sharedInstance.getDataOfDevice(deviceId, path: "ST._online") { (json, error) in
+                    IVMessageMgr.sharedInstance.readProperty(ofDevice: deviceId, path: "ProReadonly._online") { (json, error) in
                         guard let json = json else { return }
                         dev.online = JSON(parseJSON: json).value("stVal")?.boolValue
                     }

@@ -52,7 +52,7 @@
 //    IVMessageMgr.sharedInstance.delegate = self;
     
 //    // deviceId 是设备ID的字符串
-//    // controlPath 是模型路径的字符串，如 "SP.presetPosSetting.setVal"
+//    // controlPath 是模型路径的字符串，如 "ProWritable.presetPosSetting.setVal"
 //    // controlData 是模型参数的字符串，如 "{\"pos1\":{\"x\":10,\"y\":10},\"pos2\":{\"x\":100,\"y\":200}}"
 //    [IVMessageMgr.sharedInstance controlDevice:deviceId
 //                                          path:controlPath

@@ -61,9 +61,9 @@ class IVDeviceAccessVC: UITableViewController, IVDeviceAccessable {
         case 3:
             
             if indexPath.row == 0 {
-//                IVPopupView(title: "物模型获取", input: ["ST._online"], actions: [.cancel(), .confirm({ v in
-//                    var inJson = v.inputFields[0].text ?? "ST._online"
-//                    if inJson.isEmpty { inJson = "ST._online"}
+//                IVPopupView(title: "物模型获取", input: ["ProReadonly._online"], actions: [.cancel(), .confirm({ v in
+//                    var inJson = v.inputFields[0].text ?? "ProReadonly._online"
+//                    if inJson.isEmpty { inJson = "ProReadonly._online"}
 //
 //                    IVMessageMgr.sharedInstance.getDataForDevice(self.device.deviceID, path: inJson, timeout: 0) { (json, err) in
 //                        let message = json ?? err?.localizedDescription ?? "[msg]"
@@ -81,7 +81,7 @@ class IVDeviceAccessVC: UITableViewController, IVDeviceAccessable {
 //                        showAlert(msg: message)
 //                    }
 //                })])
-//                popv.inputFields[0].text = "CO._otaVersion"//"SP._cloudStoage.setVal"//"SP._otaMode.setVal"//"CO._otaVersion.ctlVal"//"CO.cameraOn"
+//                popv.inputFields[0].text = "Action._otaVersion"//"ProWritable._cloudStoage.setVal"//"ProWritable._otaMode.setVal"//"Action._otaVersion.ctlVal"//"Action.cameraOn"
 //                popv.inputFields[1].text = "{\"ctlVal\":\"\"}"//"1"//"{\"ctlVal\":1}"
 //                popv.show()
                 

@@ -84,7 +84,7 @@ extension IVTabBarViewController: IVMessageDelegate {
         ivHud("事件通知 \(topic) \n \(event)")
     }
     
-    func didUpdateStatus(_ json: String, path: String, deviceId: String) {
+    func didUpdateProperty(_ json: String, path: String, deviceId: String) {
         logInfo("状态通知 \(deviceId) \n \(path) \(json) ")
         ivHud("状态通知 \(deviceId) \n \(path) \(json)")
         if let dev = IVDeviceTableViewController.mineDevice.first(where: { $0.did == deviceId }),

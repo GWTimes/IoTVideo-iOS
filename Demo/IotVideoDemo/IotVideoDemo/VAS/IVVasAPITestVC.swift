@@ -94,6 +94,7 @@ class IVVasAPITestVC: UITableViewController {
             })
         case .cloudPlayback:
             let dateTime = "\(getZeroTimeInterval(Date()))"
+            print(dateTime)
 //            IVRequest.getVideoPlaybackList(deviceId: "", timezone: NSTimeZone.system.secondsFromGMT(), dateTime: dateTime, responseHandler: { (json, error) in
 //                handleWebCallback(json: json, error: error)
 //            })
