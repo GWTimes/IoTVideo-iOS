@@ -17,7 +17,7 @@ class IVVASGetPlaybackListVC: UIViewController, IVDeviceAccessable {
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var tableview: UITableView!
     var currentTextField: UITextField!
-    var dataSource = [String]()
+    var dataSource = [IVPalyBackList]()
     override func viewDidLoad() {
         super.viewDidLoad()
         datePicker = UIDatePicker()
@@ -36,7 +36,7 @@ class IVVASGetPlaybackListVC: UIViewController, IVDeviceAccessable {
             ivHud("结束时间不能大于开始时间")
             return
         }
-        dataSource = ["1.m3u8","2.m3u8"]
+        dataSource = []
         let hud = ivLoadingHud()
         IVVAS.shared.getVideoPlaybackList(deviceId: device.tencentID,
                                           timezone: 28800,
@@ -48,7 +48,7 @@ class IVVASGetPlaybackListVC: UIViewController, IVDeviceAccessable {
                                                 showAlert(msg: "\(String(describing: error))")
                                                 return
                                             }
-                                            self.dataSource = json.ivDecode(PlayListData.self)?.palyList.compactMap{$0.m3u8Url} ?? []
+                                            self.dataSource = json.ivDecode(PlayListData.self)?.palyList ?? []
                                             if self.dataSource.isEmpty {
                                                 showAlert(msg: "\(json) \n \(String(describing: error))")
                                             } else {
@@ -92,7 +92,7 @@ extension IVVASGetPlaybackListVC: UITableViewDataSource {
         if cell == nil {
             cell = UITableViewCell(style: .default, reuseIdentifier: "IVVASPLAYBACKCELL")
         }
-        cell?.textLabel?.text = "\(indexPath.row): " + dataSource[indexPath.row]
+        cell?.textLabel?.text = "\(indexPath.row): " + (dataSource[indexPath.row].m3u8Url ?? "")
         return cell!
     }
 }
@@ -101,13 +101,13 @@ extension IVVASGetPlaybackListVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard indexPath.row <= dataSource.count - 1 else { return }
         tableView.deselectRow(at: indexPath, animated: true)
-        ivHud(dataSource[indexPath.row])
+        ivHud(dataSource[indexPath.row].m3u8Url ?? "")
         let storyboard = UIStoryboard(name: "IVDeviceAccess", bundle: nil)
         let ijk = storyboard.instantiateViewController(withIdentifier: "IJKMediaViewController") as? IJKMediaViewController
         if let ijkVC = ijk {
-            let url = dataSource[indexPath.row].replacingOccurrences(of: "https", with: "http")
-            ijkVC.urlStr = url
-            
+            ijkVC.device = device
+            ijkVC.playbackList = dataSource
+            ijkVC.currentItem = dataSource[indexPath.row]
             self.navigationController?.pushViewController(ijkVC, animated: true)
         }
         

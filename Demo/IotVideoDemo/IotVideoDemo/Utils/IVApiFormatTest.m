@@ -11,7 +11,7 @@
 //#import "IotVideoDemo-Swift.h"
 //#import <IoTVideo/IVMessageMgr.h>
 #import <IoTVideo/IoTVideo.h>
-
+#import <IVNetwork/IVNetwork.h>
 @interface IVApiFormatTest ()
 
 @end
@@ -40,14 +40,14 @@
 //        }
 //        NSLog(@"注册成功");
 //    }];
-    
+    [IVNetwork.shareInstance requestWithMethodType:@"" urlString:@"" params:@{} response:nil];
 //    [IoTVideo.sharedInstance setupIvCid:@"xxx" productId:@"xxxxxxxxxxxx" userInfo:nil];
 //    [IoTVideo.sharedInstance registerWithAccessId:@"xxxxxxxx" accessToken:@"xxxxxx"];
     
 //    [IVAccountMgr.shareInstance addDeviceWithDeviceId:@"12345678" responseHandler:^(NSString * _Nullable json, NSError * _Nullable error) {
 //
 //    }];
-
+    
     [IVAccountMgr.shareInstance addDeviceWithDeviceId:@"0000" deviceName:nil forceBind:true responseHandler:nil];
 //    IVMessageMgr.sharedInstance.delegate = self;
     

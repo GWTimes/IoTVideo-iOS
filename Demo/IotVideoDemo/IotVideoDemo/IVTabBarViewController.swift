@@ -95,7 +95,7 @@ extension IVTabBarViewController: IVMessageDelegate {
 }
 
 
-func handleWebCallback(json: String?, error: NSError?) {
+func handleWebCallback(json: String?, error: Error?) {
     if let error = error {
         showError(error)
         return
@@ -103,7 +103,8 @@ func handleWebCallback(json: String?, error: NSError?) {
     showAlert(msg: json!)
 }
 
-func showError(_ error: NSError) {
+func showError(_ error: Error) {
+    let error = error as NSError
     if error.code == 401 {
         UserDefaults.standard.do {
             $0.removeObject(forKey: demo_accessTokenKey)

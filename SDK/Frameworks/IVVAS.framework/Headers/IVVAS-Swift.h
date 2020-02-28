@@ -183,6 +183,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import IoTVideo;
 @import ObjectiveC;
 #endif
 
@@ -215,7 +216,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) IVVAS * _Non
 
 
 
-@class NSError;
 enum IVVASServiceType : NSInteger;
 enum IVVASOrderStatus : NSInteger;
 enum IVVASOrderPayType : NSInteger;
@@ -226,7 +226,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)queryPackageHotListWithCountryCode:(NSString * _Nonnull)countryCode responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryPackageHotListWithCountryCode:(NSString * _Nonnull)countryCode responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询套餐列表
 /// \param countryCode 国家二字码,如中国：CN
 ///
@@ -242,7 +242,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)queryPackageListWithCountryCode:(NSString * _Nonnull)countryCode serviceType:(enum IVVASServiceType)serviceType responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryPackageListWithCountryCode:(NSString * _Nonnull)countryCode serviceType:(enum IVVASServiceType)serviceType responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询设备已购买服务的概要
 /// <ul>
 ///   <li>
@@ -253,7 +253,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)queryServiceOutlineWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryServiceOutlineWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询设备所有支持的服务详情列表
 /// <ul>
 ///   <li>
@@ -264,7 +264,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)queryServiceListWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryServiceListWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 生成订单
 /// \param deviceId 设备id
 ///
@@ -276,13 +276,13 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)createOrderWithDeviceId:(NSString * _Nonnull)deviceId packageNo:(NSString * _Nonnull)packageNo couponCode:(NSString * _Nullable)couponCode timezone:(NSInteger)timezone responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)createOrderWithDeviceId:(NSString * _Nonnull)deviceId packageNo:(NSString * _Nonnull)packageNo couponCode:(NSString * _Nullable)couponCode timezone:(NSInteger)timezone responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询订单详情
 /// \param orderId 订单号
 ///
 /// \param responseHandler 回调
 ///
-- (void)queryOrderInfoWithOrderId:(NSString * _Nonnull)orderId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryOrderInfoWithOrderId:(NSString * _Nonnull)orderId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询订单列表
 /// <ul>
 ///   <li>
@@ -295,7 +295,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)queryOrderListWithDeviceId:(NSString * _Nonnull)deviceId orderStatus:(enum IVVASOrderStatus)orderStatus responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryOrderListWithDeviceId:(NSString * _Nonnull)deviceId orderStatus:(enum IVVASOrderStatus)orderStatus responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 订单信息总览
 /// <ul>
 ///   <li>
@@ -306,7 +306,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)queryOrderOverviewWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryOrderOverviewWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 生成支付签名信息
 /// \param orderId 订单id
 ///
@@ -314,17 +314,17 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)createPaymentWithOrderId:(NSString * _Nonnull)orderId payType:(enum IVVASOrderPayType)payType responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)createPaymentWithOrderId:(NSString * _Nonnull)orderId payType:(enum IVVASOrderPayType)payType responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 获取支付结果
 /// \param orderId 订单id
 ///
 /// \param responseHandler 回调
 ///
-- (void)queryPaymentResultWithOrderId:(NSString * _Nonnull)orderId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryPaymentResultWithOrderId:(NSString * _Nonnull)orderId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询可转移套餐服务
-- (void)queryCanTransferPackageWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryCanTransferPackageWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(SWIFT_NOESCAPE void (^ _Nonnull)(NSString * _Nullable, NSError * _Nullable))responseHandler;
 /// 转移套餐服务
-- (void)transferPackageWithDeviceId:(NSString * _Nonnull)deviceId serviceId:(NSString * _Nonnull)serviceId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)transferPackageWithDeviceId:(NSString * _Nonnull)deviceId serviceId:(NSString * _Nonnull)serviceId responseHandler:(SWIFT_NOESCAPE void (^ _Nonnull)(NSString * _Nullable, NSError * _Nullable))responseHandler;
 /// 客户购买套餐后上传到IotVideo平台的套餐购买信息
 /// \param deviceId 设备TID，腾讯标识的设备id
 ///
@@ -346,7 +346,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param storageLen 存储时长，单位秒
 ///
-- (void)buyCloudPackageWithDeviceId:(NSString * _Nonnull)deviceId packgageId:(NSString * _Nonnull)packgageId type:(enum IVVASServiceType)type startTime:(NSString * _Nonnull)startTime endTime:(NSString * _Nonnull)endTime storageLen:(NSString * _Nonnull)storageLen responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)buyCloudPackageWithDeviceId:(NSString * _Nonnull)deviceId packgageId:(NSString * _Nonnull)packgageId type:(enum IVVASServiceType)type startTime:(NSString * _Nonnull)startTime endTime:(NSString * _Nonnull)endTime storageLen:(NSString * _Nonnull)storageLen responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 获取云存视频列表
 /// <ul>
 ///   <li>
@@ -359,7 +359,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)getVideoListWithDeviceId:(NSString * _Nonnull)deviceId timezone:(NSInteger)timezone responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)getVideoListWithDeviceId:(NSString * _Nonnull)deviceId timezone:(NSInteger)timezone responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 获取云存回放m3u8列表
 /// <ul>
 ///   <li>
@@ -376,7 +376,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)getVideoPlaybackListWithDeviceId:(NSString * _Nonnull)deviceId timezone:(NSInteger)timezone startTime:(NSString * _Nonnull)startTime endTime:(NSString * _Nonnull)endTime responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)getVideoPlaybackListWithDeviceId:(NSString * _Nonnull)deviceId timezone:(NSInteger)timezone startTime:(NSString * _Nonnull)startTime endTime:(NSString * _Nonnull)endTime responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 倍速回放
 /// \param deviceId 设备id
 ///
@@ -386,7 +386,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)videoSpeedPlayWithDeviceId:(NSString * _Nonnull)deviceId startTime:(NSString * _Nonnull)startTime speed:(NSInteger)speed responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)videoSpeedPlayWithDeviceId:(NSString * _Nonnull)deviceId startTime:(NSString * _Nonnull)startTime speed:(NSInteger)speed responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 下载视频m3u8列表
 /// <ul>
 ///   <li>
@@ -401,7 +401,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)downloadVideoWithDeviceId:(NSString * _Nonnull)deviceId timezone:(NSInteger)timezone dateTime:(NSString * _Nonnull)dateTime responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)downloadVideoWithDeviceId:(NSString * _Nonnull)deviceId timezone:(NSInteger)timezone dateTime:(NSString * _Nonnull)dateTime responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 事件列表查询
 /// \param deviceId 设备id
 ///
@@ -415,23 +415,23 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)getEventListWithDeviceId:(NSString * _Nonnull)deviceId startTime:(NSString * _Nonnull)startTime endTime:(NSString * _Nullable)endTime lastId:(NSInteger)lastId pageSize:(NSInteger)pageSize responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)getEventListWithDeviceId:(NSString * _Nonnull)deviceId startTime:(NSString * _Nonnull)startTime endTime:(NSString * _Nullable)endTime lastId:(NSInteger)lastId pageSize:(NSInteger)pageSize responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 事件删除（批量）
 /// \param eventIds 设备id 数组
 ///
 /// \param responseHandler 回调
 ///
-- (void)deleteEventsWithEventIds:(NSArray<NSNumber *> * _Nonnull)eventIds responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)deleteEventsWithEventIds:(NSArray<NSNumber *> * _Nonnull)eventIds responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查看用户已经领取的优惠券列表
-- (void)queryOwnedCouponListWithResponseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryOwnedCouponListWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 推送促销活动的信息列表
-- (void)queryPromotionListWithResponseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryPromotionListWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 领取优惠券，支持一键领取多张
 /// \param couponIds 优惠券id数组
 ///
 /// \param responseHandler 回调
 ///
-- (void)receiveCouponsWithCouponIds:(NSArray<NSString *> * _Nonnull)couponIds responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)receiveCouponsWithCouponIds:(NSArray<NSString *> * _Nonnull)couponIds responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 获取可用的优惠券列表
 /// <ul>
 ///   <li>
@@ -442,13 +442,13 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)queryAvailableCouponListWithPackageNo:(NSString * _Nonnull)packageNo responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryAvailableCouponListWithPackageNo:(NSString * _Nonnull)packageNo responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询兑换码对应的商品（优惠活动的套餐信息）信息
 /// \param voucherCode 兑换码
 ///
 /// \param responseHandler 回调
 ///
-- (void)queryVoucherWithVoucherCode:(NSString * _Nonnull)voucherCode responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryVoucherWithVoucherCode:(NSString * _Nonnull)voucherCode responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 兑换码兑换对应的商品（优惠活动的套餐信息）
 /// \param deviceId 设备id
 ///
@@ -458,8 +458,8 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)useVoucherWithDeviceId:(NSString * _Nonnull)deviceId voucherCode:(NSString * _Nonnull)voucherCode timezone:(NSInteger)timezone responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
-- (void)testP2PRequestWithResponseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)useVoucherWithDeviceId:(NSString * _Nonnull)deviceId voucherCode:(NSString * _Nonnull)voucherCode timezone:(NSInteger)timezone responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
+- (void)testP2PRequestWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 @end
 
 /// 支付方式
@@ -675,6 +675,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import IoTVideo;
 @import ObjectiveC;
 #endif
 
@@ -707,7 +708,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) IVVAS * _Non
 
 
 
-@class NSError;
 enum IVVASServiceType : NSInteger;
 enum IVVASOrderStatus : NSInteger;
 enum IVVASOrderPayType : NSInteger;
@@ -718,7 +718,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)queryPackageHotListWithCountryCode:(NSString * _Nonnull)countryCode responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryPackageHotListWithCountryCode:(NSString * _Nonnull)countryCode responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询套餐列表
 /// \param countryCode 国家二字码,如中国：CN
 ///
@@ -734,7 +734,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)queryPackageListWithCountryCode:(NSString * _Nonnull)countryCode serviceType:(enum IVVASServiceType)serviceType responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryPackageListWithCountryCode:(NSString * _Nonnull)countryCode serviceType:(enum IVVASServiceType)serviceType responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询设备已购买服务的概要
 /// <ul>
 ///   <li>
@@ -745,7 +745,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)queryServiceOutlineWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryServiceOutlineWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询设备所有支持的服务详情列表
 /// <ul>
 ///   <li>
@@ -756,7 +756,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)queryServiceListWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryServiceListWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 生成订单
 /// \param deviceId 设备id
 ///
@@ -768,13 +768,13 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)createOrderWithDeviceId:(NSString * _Nonnull)deviceId packageNo:(NSString * _Nonnull)packageNo couponCode:(NSString * _Nullable)couponCode timezone:(NSInteger)timezone responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)createOrderWithDeviceId:(NSString * _Nonnull)deviceId packageNo:(NSString * _Nonnull)packageNo couponCode:(NSString * _Nullable)couponCode timezone:(NSInteger)timezone responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询订单详情
 /// \param orderId 订单号
 ///
 /// \param responseHandler 回调
 ///
-- (void)queryOrderInfoWithOrderId:(NSString * _Nonnull)orderId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryOrderInfoWithOrderId:(NSString * _Nonnull)orderId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询订单列表
 /// <ul>
 ///   <li>
@@ -787,7 +787,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)queryOrderListWithDeviceId:(NSString * _Nonnull)deviceId orderStatus:(enum IVVASOrderStatus)orderStatus responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryOrderListWithDeviceId:(NSString * _Nonnull)deviceId orderStatus:(enum IVVASOrderStatus)orderStatus responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 订单信息总览
 /// <ul>
 ///   <li>
@@ -798,7 +798,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)queryOrderOverviewWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryOrderOverviewWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 生成支付签名信息
 /// \param orderId 订单id
 ///
@@ -806,17 +806,17 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)createPaymentWithOrderId:(NSString * _Nonnull)orderId payType:(enum IVVASOrderPayType)payType responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)createPaymentWithOrderId:(NSString * _Nonnull)orderId payType:(enum IVVASOrderPayType)payType responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 获取支付结果
 /// \param orderId 订单id
 ///
 /// \param responseHandler 回调
 ///
-- (void)queryPaymentResultWithOrderId:(NSString * _Nonnull)orderId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryPaymentResultWithOrderId:(NSString * _Nonnull)orderId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询可转移套餐服务
-- (void)queryCanTransferPackageWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryCanTransferPackageWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(SWIFT_NOESCAPE void (^ _Nonnull)(NSString * _Nullable, NSError * _Nullable))responseHandler;
 /// 转移套餐服务
-- (void)transferPackageWithDeviceId:(NSString * _Nonnull)deviceId serviceId:(NSString * _Nonnull)serviceId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)transferPackageWithDeviceId:(NSString * _Nonnull)deviceId serviceId:(NSString * _Nonnull)serviceId responseHandler:(SWIFT_NOESCAPE void (^ _Nonnull)(NSString * _Nullable, NSError * _Nullable))responseHandler;
 /// 客户购买套餐后上传到IotVideo平台的套餐购买信息
 /// \param deviceId 设备TID，腾讯标识的设备id
 ///
@@ -838,7 +838,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param storageLen 存储时长，单位秒
 ///
-- (void)buyCloudPackageWithDeviceId:(NSString * _Nonnull)deviceId packgageId:(NSString * _Nonnull)packgageId type:(enum IVVASServiceType)type startTime:(NSString * _Nonnull)startTime endTime:(NSString * _Nonnull)endTime storageLen:(NSString * _Nonnull)storageLen responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)buyCloudPackageWithDeviceId:(NSString * _Nonnull)deviceId packgageId:(NSString * _Nonnull)packgageId type:(enum IVVASServiceType)type startTime:(NSString * _Nonnull)startTime endTime:(NSString * _Nonnull)endTime storageLen:(NSString * _Nonnull)storageLen responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 获取云存视频列表
 /// <ul>
 ///   <li>
@@ -851,7 +851,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)getVideoListWithDeviceId:(NSString * _Nonnull)deviceId timezone:(NSInteger)timezone responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)getVideoListWithDeviceId:(NSString * _Nonnull)deviceId timezone:(NSInteger)timezone responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 获取云存回放m3u8列表
 /// <ul>
 ///   <li>
@@ -868,7 +868,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)getVideoPlaybackListWithDeviceId:(NSString * _Nonnull)deviceId timezone:(NSInteger)timezone startTime:(NSString * _Nonnull)startTime endTime:(NSString * _Nonnull)endTime responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)getVideoPlaybackListWithDeviceId:(NSString * _Nonnull)deviceId timezone:(NSInteger)timezone startTime:(NSString * _Nonnull)startTime endTime:(NSString * _Nonnull)endTime responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 倍速回放
 /// \param deviceId 设备id
 ///
@@ -878,7 +878,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)videoSpeedPlayWithDeviceId:(NSString * _Nonnull)deviceId startTime:(NSString * _Nonnull)startTime speed:(NSInteger)speed responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)videoSpeedPlayWithDeviceId:(NSString * _Nonnull)deviceId startTime:(NSString * _Nonnull)startTime speed:(NSInteger)speed responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 下载视频m3u8列表
 /// <ul>
 ///   <li>
@@ -893,7 +893,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)downloadVideoWithDeviceId:(NSString * _Nonnull)deviceId timezone:(NSInteger)timezone dateTime:(NSString * _Nonnull)dateTime responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)downloadVideoWithDeviceId:(NSString * _Nonnull)deviceId timezone:(NSInteger)timezone dateTime:(NSString * _Nonnull)dateTime responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 事件列表查询
 /// \param deviceId 设备id
 ///
@@ -907,23 +907,23 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)getEventListWithDeviceId:(NSString * _Nonnull)deviceId startTime:(NSString * _Nonnull)startTime endTime:(NSString * _Nullable)endTime lastId:(NSInteger)lastId pageSize:(NSInteger)pageSize responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)getEventListWithDeviceId:(NSString * _Nonnull)deviceId startTime:(NSString * _Nonnull)startTime endTime:(NSString * _Nullable)endTime lastId:(NSInteger)lastId pageSize:(NSInteger)pageSize responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 事件删除（批量）
 /// \param eventIds 设备id 数组
 ///
 /// \param responseHandler 回调
 ///
-- (void)deleteEventsWithEventIds:(NSArray<NSNumber *> * _Nonnull)eventIds responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)deleteEventsWithEventIds:(NSArray<NSNumber *> * _Nonnull)eventIds responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查看用户已经领取的优惠券列表
-- (void)queryOwnedCouponListWithResponseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryOwnedCouponListWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 推送促销活动的信息列表
-- (void)queryPromotionListWithResponseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryPromotionListWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 领取优惠券，支持一键领取多张
 /// \param couponIds 优惠券id数组
 ///
 /// \param responseHandler 回调
 ///
-- (void)receiveCouponsWithCouponIds:(NSArray<NSString *> * _Nonnull)couponIds responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)receiveCouponsWithCouponIds:(NSArray<NSString *> * _Nonnull)couponIds responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 获取可用的优惠券列表
 /// <ul>
 ///   <li>
@@ -934,13 +934,13 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)queryAvailableCouponListWithPackageNo:(NSString * _Nonnull)packageNo responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryAvailableCouponListWithPackageNo:(NSString * _Nonnull)packageNo responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询兑换码对应的商品（优惠活动的套餐信息）信息
 /// \param voucherCode 兑换码
 ///
 /// \param responseHandler 回调
 ///
-- (void)queryVoucherWithVoucherCode:(NSString * _Nonnull)voucherCode responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)queryVoucherWithVoucherCode:(NSString * _Nonnull)voucherCode responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 兑换码兑换对应的商品（优惠活动的套餐信息）
 /// \param deviceId 设备id
 ///
@@ -950,8 +950,8 @@ enum IVVASOrderPayType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)useVoucherWithDeviceId:(NSString * _Nonnull)deviceId voucherCode:(NSString * _Nonnull)voucherCode timezone:(NSInteger)timezone responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
-- (void)testP2PRequestWithResponseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)useVoucherWithDeviceId:(NSString * _Nonnull)deviceId voucherCode:(NSString * _Nonnull)voucherCode timezone:(NSInteger)timezone responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
+- (void)testP2PRequestWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 @end
 
 /// 支付方式

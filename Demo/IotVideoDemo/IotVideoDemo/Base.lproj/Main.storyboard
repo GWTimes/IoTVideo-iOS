@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="98p-VO-zKD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="98p-VO-zKD">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,7 +11,7 @@
         <!--Navigation Controller-->
         <scene sceneID="UuC-nO-KD9">
             <objects>
-                <navigationController id="bQj-Eg-ODP" sceneMemberID="viewController">
+                <navigationController id="bQj-Eg-ODP" propertyAccessControl="all" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="pfS-tk-5nf">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -27,7 +27,7 @@
         <!--Api Format Test-->
         <scene sceneID="WwY-77-iNc">
             <objects>
-                <viewController id="zvV-Jt-R9x" customClass="IVApiFormatTest" sceneMemberID="viewController">
+                <viewController id="zvV-Jt-R9x" customClass="IVApiFormatTest" propertyAccessControl="all" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ihN-9v-ibL">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -43,7 +43,7 @@
         <!--VasMgr-->
         <scene sceneID="BOg-V7-g08">
             <objects>
-                <tableViewController id="ixL-cc-xyT" customClass="IVVasAPITestVC" customModule="IotVideoDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="ixL-cc-xyT" customClass="IVVasAPITestVC" customModule="IotVideoDemo" customModuleProvider="target" propertyAccessControl="all" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="3vh-Oe-XGK">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -81,7 +81,7 @@
         <!--IVVAS-->
         <scene sceneID="WKM-sS-mm8">
             <objects>
-                <navigationController id="xvz-4a-BiC" sceneMemberID="viewController">
+                <navigationController id="xvz-4a-BiC" propertyAccessControl="all" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="IVVAS" image="云下载" id="lW5-6T-lvG"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="BQe-fz-aFM">
                         <rect key="frame" x="0.0" y="44" width="375" height="44"/>
@@ -98,7 +98,7 @@
         <!--AccountMgr-->
         <scene sceneID="Mps-Fk-JSS">
             <objects>
-                <tableViewController id="F56-tv-rOE" customClass="IVAccountAPITestVC" customModule="IotVideoDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="F56-tv-rOE" customClass="IVAccountAPITestVC" customModule="IotVideoDemo" customModuleProvider="target" propertyAccessControl="all" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="BfT-Z8-o08">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -136,7 +136,7 @@
         <!--IVAccount-->
         <scene sceneID="VKK-8o-oY7">
             <objects>
-                <navigationController id="OHQ-Vg-CTl" sceneMemberID="viewController">
+                <navigationController id="OHQ-Vg-CTl" propertyAccessControl="all" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="IVAccount" image="tabBar_icon_mine_N" id="Hd3-6z-9Oi"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="RWf-35-Ugy">
@@ -154,7 +154,7 @@
         <!--Tab Bar View Controller-->
         <scene sceneID="jxL-8q-G4X">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="98p-VO-zKD" customClass="IVTabBarViewController" customModule="IotVideoDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="98p-VO-zKD" customClass="IVTabBarViewController" customModule="IotVideoDemo" customModuleProvider="target" propertyAccessControl="all" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="UBb-P1-GBT"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="R7W-3J-8Lq">
@@ -174,7 +174,7 @@
         <!--IVDevice-->
         <scene sceneID="oxY-n0-r0b">
             <objects>
-                <viewControllerPlaceholder storyboardName="IVDevice" id="2xN-TW-q1z" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="IVDevice" id="2xN-TW-q1z" propertyAccessControl="all" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="9H7-Ea-tgS"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vfb-WD-19z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

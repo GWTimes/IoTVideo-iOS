@@ -17,45 +17,74 @@ struct IVTimelineItem {
 }
 
 protocol IVTimelineViewDelegate: class {
+    /// 滚动或者点击时间轴片段
+    /// - Parameters:
+    ///   - timelineView: 时间轴对象
+    ///   - item: 时间片段
+    ///   - time: 时间值（标准时间，不是偏移量）
     func timelineView(_ timelineView: IVTimelineView, didSelect item: IVTimelineItem, at time: TimeInterval)
 }
 
 class IVTimelineView: UIView {
     
+    /// 时间轴事件代理
     weak var delegate: IVTimelineViewDelegate?
-
-    var maximumScale = 5.0  // 最大每秒占多少像素点(pix/sec)
-    var minimumScale = 0.05 // 最小每秒占多少像素点(pix/sec)
-    var scale = 1.0 {       // 每秒占多少像素点(pix/sec)
+    
+    /// 时间轴最大缩放比例（最大每秒占多少像素点(pix/sec)）
+    var maximumScale = 5.0
+    
+    /// 时间轴最小缩放比例（最小每秒占多少像素点(pix/sec)）
+    var minimumScale = 0.02
+    
+    /// 时间轴缩放比例（每秒占多少像素点(pix/sec)）
+    var scale = 1.0 {
         didSet {
-            if scale > 5.0 { scale = 5.0 }
-            else if scale < 0.05 { scale = 0.05 }
+            if scale > maximumScale {
+                scale = maximumScale
+            } else if scale < minimumScale {
+                scale = minimumScale
+            }
+            
+            if oldValue == scale {
+                return
+            }
+
             let offsetX = collectionView.contentOffset.x
             collectionView.reloadData()
             let pinchScale = scale / oldValue
             collectionView.contentOffset.x = offsetX * CGFloat(pinchScale)
         }
     }
-    var miniGap: TimeInterval = 0.1 // 小于0.1s的间隙不显示
     
+    /// 时间轴当前时间
     var currentTime: TimeInterval = 0 {
         didSet {
             DispatchQueue.main.async {
-                if let first = self.dataSource.first {
-                    let offset = CGFloat(self.currentTime - first.startTime)// * CGFloat(self.scale)
-                    self.collectionView.contentOffset.x = offset
-                }
+                if self.hoverTime > 0 { return }
+
+                guard let first = self.dataSource.first else { return }
+                let offset = CGFloat(self.currentTime - first.startTime) * CGFloat(self.scale)
+                self.collectionView.contentOffset.x = offset
             }
         }
     }
     
+    /// 滚动之后视图悬停时间
+    var hoverTime: TimeInterval = 0
+    
+    /// 缩放手势
     lazy var pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinchGestureHandler(_:)))
     
+    /// 时间轴布局
     lazy var timelineLayout = IVTimelineLayout()
+    
+    /// 时间轴容器视图
     lazy var collectionView: UICollectionView = {
         let col = UICollectionView(frame: self.bounds, collectionViewLayout: timelineLayout)
         col.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         col.register(IVTimelineCell.self, forCellWithReuseIdentifier: "IVTimelineCell")
+        col.register(IVTimelineHeaderFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: UICollectionView.elementKindSectionHeader)
+        col.register(IVTimelineHeaderFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: UICollectionView.elementKindSectionFooter)
         col.showsHorizontalScrollIndicator = false
         col.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 100, bottom: 0, right: 100)
         col.backgroundColor = UIColor(white: 0.95, alpha: 1)
@@ -65,50 +94,65 @@ class IVTimelineView: UIView {
         return col
     }()
     
-    private(set) var dataSource: [IVTimelineItem] = [] {
+    /// 原始时间段（保存外面传入的原始时间段）
+    private(set) var dataSource: [IVTimelineItem] = []
+    
+    /// 时间片段（用于优化显示性能）
+    private var timeSlices: [IVTimelineItem] = [] {
         didSet {
             DispatchQueue.main.async { [weak self] in
                 self?.collectionView.reloadData()
             }
         }
     }
-        
-    func appendItems(_ items: [IVTimelineItem]) {
+    
+    /// 时间片最大10分钟
+    var maxDuration: TimeInterval  = 10*60
+    
+    /// 时间片最小0.001秒
+    var miniDuration: TimeInterval = 0.001
+
+    /// 设置数据源
+    func setDataSource(_ items: [IVTimelineItem]) {
+        let sortedItems = items.sorted { $0.startTime < $1.startTime }
+        dataSource = sortedItems
+        timeSlices = makeTimelineSlices(sortedItems)
+    }
+    
+    /// 插入数据源
+    func insertDataSource(_ items: [IVTimelineItem]) {
         if items.isEmpty { return }
-        // 1.排序列表
-        var items = items.sorted { $0.startTime < $1.startTime }
-        // 2.插入空隙
-        if items.count > 1 {
-            let maxIdx = items.count-1
-            for i in 0 ..< maxIdx {
-                if let gapItem = makeGapItem(lhs: items[maxIdx-i-1], rhs: items[maxIdx-i]) {
-                    items.insert(gapItem, at: maxIdx-i)
-                }
-            }
+        
+        let sortedItems = items.sorted { $0.startTime < $1.startTime }
+        
+        // 1. 时序化
+        let slices = makeTimelineSlices(sortedItems)
+        
+        if dataSource.isEmpty {
+            dataSource.append(contentsOf: sortedItems)
+            timeSlices.append(contentsOf: slices)
+            return
         }
         // 3.拼接列表
-        if let last = dataSource.last, items.first!.startTime > last.startTime {
+        if let last = timeSlices.last, sortedItems.first!.startTime >= last.startTime {
             // a.尾部插入
-            if let gapItem = makeGapItem(lhs: last, rhs: items.first!) {
-                items.insert(gapItem, at: dataSource.startIndex)
+            if let gapSlices = makeGapSlices(lhs: last, rhs: sortedItems.first!) {
+                timeSlices.insert(contentsOf: gapSlices, at: timeSlices.endIndex)
             }
-            dataSource.insert(contentsOf: items, at: dataSource.endIndex)
-        } else if let first = dataSource.first, items.last!.startTime > first.startTime {
+            dataSource.insert(contentsOf: sortedItems, at: dataSource.endIndex)
+            timeSlices.insert(contentsOf: slices, at: timeSlices.endIndex)
+        } else if let first = timeSlices.first, sortedItems.last!.startTime <= first.startTime {
             // b.头部插入
-            if let gapItem = makeGapItem(lhs: items.last!, rhs: first) {
-                items.insert(gapItem, at: dataSource.endIndex)
+            if let gapSlices = makeGapSlices(lhs: sortedItems.last!, rhs: first) {
+                timeSlices.insert(contentsOf: gapSlices, at: timeSlices.startIndex)
             }
-            dataSource.insert(contentsOf: items, at: dataSource.startIndex)
+            dataSource.insert(contentsOf: sortedItems, at: dataSource.startIndex)
+            timeSlices.insert(contentsOf: slices, at: timeSlices.startIndex)
         } else {
-            if dataSource.isEmpty {
-                dataSource.append(contentsOf: items)
-            } else {
-                logError("数据异常 datasource:\(dataSource), items:\(items)")
-                return
-            }
+            logError("数据异常 datasource:\(dataSource), timeSlices:\(timeSlices) items:\(sortedItems)")
         }
     }
-            
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor(white: 0.95, alpha: 1)
@@ -121,39 +165,131 @@ class IVTimelineView: UIView {
     }
     
     @objc func pinchGestureHandler(_ pinch: UIPinchGestureRecognizer) {
-        scale *= Double(pinch.scale)
+        //放大情况
+        if pinch.scale > 1.0 {
+            if self.scale >= maximumScale {
+                ivHud("不能再放大啦")
+                return
+            }
+        }
+        
+        //缩小情况
+        if pinch.scale < 1.0 {
+            if self.scale <= minimumScale {
+                ivHud("不能再缩小啦")
+                return
+            }
+        }
+                
+        if pinch.state == .began || pinch.state == .changed {
+            self.scale *= Double(pinch.scale)
+            pinch.scale = 1
+        }
+        
+        print(self.scale)
     }
 }
 
 private extension IVTimelineView {
     
-    func makeGapItem(lhs:IVTimelineItem, rhs:IVTimelineItem) -> IVTimelineItem? {
-        let gap = rhs.startTime - lhs.endTime
-        if gap > miniGap {
-            let gapItem = IVTimelineItem(startTime: lhs.endTime,
-                                         endTime: rhs.startTime,
-                                         duration: gap,
-                                         type: "gap",
-                                         color: .white)
-            return gapItem
+    /// 切割大块时间段
+    func fragmentTimelineItem(_ item: IVTimelineItem) -> [IVTimelineItem]? {
+        var items: [IVTimelineItem] = []
+        
+        var duration = item.duration
+        var t0  = item.startTime
+        
+        // 切割大块间隙
+        while duration > maxDuration {
+            let t1 = t0 + maxDuration
+            let subItem = IVTimelineItem(startTime: t0,
+                                         endTime: t1,
+                                         duration: maxDuration,
+                                         type: item.type,
+                                         color: item.color)
+            items.append(subItem)
+            t0 = t1
+            duration -= maxDuration
         }
-        return nil
+        
+        if duration > miniDuration {
+            let subItem = IVTimelineItem(startTime: t0,
+                                         endTime: t0 + duration,
+                                         duration: duration,
+                                         type: item.type,
+                                         color: item.color)
+            items.append(subItem)
+        }
+        
+        return items.isEmpty ? nil : items
+    }
+    
+    /// 生成间隙
+    func makeGapSlices(lhs:IVTimelineItem, rhs:IVTimelineItem) -> [IVTimelineItem]? {
+        let gapItem = IVTimelineItem(startTime: lhs.endTime,
+                                     endTime: rhs.startTime,
+                                     duration: rhs.startTime - lhs.endTime,
+                                     type: "gap",
+                                     color: .white)
+        return fragmentTimelineItem(gapItem)
+    }
+    
+    /// 生成时间轴切片
+    func makeTimelineSlices(_ items: [IVTimelineItem]) -> [IVTimelineItem] {
+        var items = items
+        if items.isEmpty { return [] }
+        // 2.切割大块文件
+        let fragments = items.map({ fragmentTimelineItem($0)})
+        // 3.去除nil
+        let compactRes = fragments.compactMap { $0 }
+        // 4.还原成一维数组
+        items = compactRes.flatMap { $0 }
+        // 5.插入空隙
+        if items.count > 1 {
+            let maxIdx = items.count-1
+            for i in 0 ..< maxIdx {
+                if let gapItems = makeGapSlices(lhs: items[maxIdx-i-1], rhs: items[maxIdx-i]) {
+                    items.insert(contentsOf: gapItems, at: maxIdx-i)
+                }
+            }
+        }
+        return items
     }
     
     func didScrollHandler() {
-        for cell in collectionView.visibleCells {
-            let newRect = collectionView.convert(cell.frame, to: self)
-            let newCenter = collectionView.center
-            if newRect.contains(newCenter) {
-                if let indexPath = collectionView.indexPath(for: cell) {
-                    let item = dataSource[indexPath.row]
+        DispatchQueue.main.async {
+            self.hoverTime += 1
+            DispatchQueue.main.asyncAfter(deadline: .now()+1) { [weak self] in
+                guard let `self` = self else { return }
+                self.hoverTime -= 1
+                if self.hoverTime > 0 { return }
+
+                for cell in self.collectionView.visibleCells {
+                    let newRect = self.collectionView.convert(cell.frame, to: self)
+                    let newCenter = self.collectionView.center
+                    
+                    guard newRect.contains(newCenter),
+                        let indexPath = self.collectionView.indexPath(for: cell) else {
+                            continue
+                    }
+                    
+                    let slice = self.timeSlices[indexPath.row]
                     
                     // 间隙不处理
-                    if item.type == "gap" { return }
+                    if slice.type == "gap" { return }
                     
-                    let offset = newCenter.x - newRect.origin.x
-                    logInfo("seek:", item.startTime, offset, offset/CGFloat(scale))
-                    delegate?.timelineView(self, didSelect: item, at: item.startTime + Double(offset)/scale)
+                    guard let item = self.dataSource.first(where: { $0.startTime <= slice.startTime && $0.endTime >= slice.endTime }) else {
+                        print("没找到对应数据")
+                        return
+                    }
+                    
+                    let width0 = (slice.startTime - item.startTime) * self.scale
+                    let width1 = Double(newCenter.x - newRect.origin.x)
+                    let offset = width0 + width1
+                    let time = round(item.startTime + offset/self.scale)
+                    
+                    logInfo("seek: \(item.startTime) => \(time)")
+                    self.delegate?.timelineView(self, didSelect: item, at: time)
                 }
             }
         }
@@ -164,15 +300,34 @@ extension IVTimelineView: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return dataSource.count
+        return timeSlices.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "IVTimelineCell", for: indexPath)
-        cell.backgroundColor = dataSource[indexPath.row].color
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "IVTimelineCell", for: indexPath) as! IVTimelineCell
+        cell.item = timeSlices[indexPath.row]
+        
+        var marks: [IVTimeMark] = []
+        for mark in IVTimeMark.all {
+            if scale * Double(mark.rawValue) >= 4.8 {
+                marks.append(mark)
+            }
+        }
+        cell.timeMarks = marks
+        
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let headerfooter = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: kind, for: indexPath) as! IVTimelineHeaderFooter
+        if kind == UICollectionView.elementKindSectionHeader {
+            headerfooter.tips.text = "到头啦👉"
+        } else {
+            headerfooter.tips.text = "👈到尾啦"
+        }
+        return headerfooter
     }
 }
 
@@ -180,12 +335,21 @@ extension IVTimelineView: UICollectionViewDataSource {
 extension IVTimelineView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let item = dataSource[indexPath.row]
+        let slice = timeSlices[indexPath.row]
+        
+        // 间隙不处理
+        if slice.type == "gap" { return }
+        
+        guard let item = dataSource.first(where: { $0.startTime <= slice.startTime && $0.endTime >= slice.endTime }) else {
+            print("没找到对应数据")
+            return
+        }
+        
         delegate?.timelineView(self, didSelect: item, at: item.startTime)
     }
-    
+        
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemW = CGFloat(dataSource[indexPath.row].duration * scale)
+        let itemW = CGFloat(timeSlices[indexPath.row].duration * scale)
         return CGSize(width: itemW, height: bounds.height)
     }
     
@@ -204,7 +368,7 @@ extension IVTimelineView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         return CGSize(width: self.bounds.width/2, height: self.bounds.height)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize(width: self.bounds.width/2, height: self.bounds.height)
     }
@@ -224,9 +388,149 @@ extension IVTimelineView: UIScrollViewDelegate {
 }
 
 class IVTimelineCell: UICollectionViewCell {
+    
+    // 缩放比例
+    var scale = 1.0
+    
+    // === 数据模型 ===
+    var item: IVTimelineItem! {
+        didSet {
+            colorView.backgroundColor = item.color
+            subviews.forEach({
+                if $0.tag != 0 {
+                    $0.removeFromSuperview()
+                }
+            })
+        }
+    }
+    
+    // === 颜色 ===
+    lazy var colorView: UIView = {
+        let v = UIView()
+        // 0.5pix是为了防止出现缝隙
+        v.frame = CGRect(x: 0, y: bounds.height / 3, width: bounds.width+0.5, height: bounds.height / 3)
+        v.autoresizingMask = .flexibleWidth
+        addSubview(v)
+        return v
+    }()
+    
+    // === 刻度\文字 ===
+    private func drawTimelineMark(_ ctx: CGContext?, step: Int, superStep: Int, color: UIColor, fontSize: CGFloat, markHeight: Double) {
+        let bgV = UIView(frame: bounds)
+        bgV.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        bgV.backgroundColor = .clear
+        bgV.tag = step
+        addSubview(bgV)
+        
+        let scale = TimeInterval(bounds.width) / item.duration
+        let decimalPoint: TimeInterval = item.startTime - floor(item.startTime)
+        let mod: TimeInterval = TimeInterval(Int(item.startTime) % step) + decimalPoint
+        var offset: TimeInterval = TimeInterval(step) - mod
+        
+        let fmt = DateFormatter()
+        fmt.dateFormat = "HH:mm"
+        
+        let charCnt = fmt.dateFormat.count
+        let multiples = [1, 2, 3, 2, 5]
+        
+        ctx?.setLineWidth(1)
+        ctx?.setStrokeColor(color.cgColor)
+        
+        while offset <= item.duration {
+            if superStep == 0 || Int(item.startTime + offset) % superStep != 0 {
+                ctx?.move(to: CGPoint(x: scale * offset, y: 0))
+                ctx?.addLine(to: CGPoint(x: scale * offset, y: markHeight))
+                
+                if step >= 60 {
+                    for multiple in multiples {
+                        if Double(step) * scale > Double(fontSize) * Double(charCnt),
+                            Int(item.startTime + offset) % multiple == 0 {
+                            let text = fmt.string(from: Date(timeIntervalSince1970: item.startTime + offset))
+                            let label = UILabel()
+                            label.frame = CGRect(x: (scale * offset)-30, y: Double(bounds.height-20), width: 60, height: 20)
+                            label.text = text
+                            label.textColor = color
+                            label.textAlignment = .center
+                            label.font = .systemFont(ofSize: fontSize)
+                            label.autoresizingMask = [.flexibleLeftMargin, .flexibleRightMargin]
+                            bgV.addSubview(label)
+                            break
+                        }
+                    }
+                }
+            }
+            
+            offset += Double(step)
+        }
+        
+        ctx?.strokePath()
+        
+    }
+    
+    var timeMarks: [IVTimeMark] = [.hour] {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .random
+        backgroundColor = .clear
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func draw(_ rect: CGRect) {
+        let ctx = UIGraphicsGetCurrentContext()
+        ctx?.clear(rect)
+
+        for mark in IVTimeMark.all {
+            if !timeMarks.contains(mark) {
+                continue
+            }
+            
+            let step = mark.rawValue
+            switch mark {
+            case .hour:
+                drawTimelineMark(ctx, step: step, superStep: 0, color: .black, fontSize: 14, markHeight: 20)
+            case .min30:
+                drawTimelineMark(ctx, step: step, superStep: step*2, color: .darkGray, fontSize: 12, markHeight: 17)
+            case .min10:
+                drawTimelineMark(ctx, step: step, superStep: step*3, color: .darkGray, fontSize: 12, markHeight: 14)
+            case .min5:
+                drawTimelineMark(ctx, step: step, superStep: step*2, color: .darkGray, fontSize: 12, markHeight: 12)
+            case .min1:
+                drawTimelineMark(ctx, step: step, superStep: step*5, color: .darkGray, fontSize: 12, markHeight: 12)
+            case .sec30:
+                drawTimelineMark(ctx, step: step, superStep: step*2, color: .gray, fontSize: 0, markHeight: 10)
+            case .sec10:
+                drawTimelineMark(ctx, step: step, superStep: step*3, color: .gray, fontSize: 0, markHeight: 8)
+            case .sec5:
+                drawTimelineMark(ctx, step: step, superStep: step*2, color: .lightGray, fontSize: 0, markHeight: 5)
+            case .sec1:
+                drawTimelineMark(ctx, step: step, superStep: step*5, color: .lightGray, fontSize: 0, markHeight: 5)
+            }
+        }
+        
+    }
+}
+
+class IVTimelineHeaderFooter: UICollectionReusableView {
+    lazy var tips: UILabel = {
+        let lb = UILabel(frame: bounds)
+        lb.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        lb.text = "没有更多了"
+        lb.textColor = .red
+        lb.textAlignment = .center
+        lb.font = .systemFont(ofSize: 14)
+        return lb
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addSubview(tips)
     }
     
     required init?(coder: NSCoder) {
@@ -248,4 +552,18 @@ class IVTimelineLayout: UICollectionViewFlowLayout {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
+
+enum IVTimeMark: Int {
+    case hour     = 3600 // 60*60
+    case min30    = 1800 // 30*60
+    case min10    = 600  // 10*60
+    case min5     = 300  // 5*60
+    case min1     = 60   // 60
+    case sec30    = 30   // 30
+    case sec10    = 10   // 10
+    case sec5     = 5    // 5
+    case sec1     = 1    // 1
+    
+    static let all: [IVTimeMark] = [.hour, .min30, .min10, .min5, .min1, .sec30, .sec10, .sec5, .sec1]
 }

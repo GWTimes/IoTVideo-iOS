@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15400" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TAK-Q6-I6h">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TAK-Q6-I6h">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15404"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,7 +11,7 @@
         <!--开发者-->
         <scene sceneID="A8n-QE-q2x">
             <objects>
-                <tableViewController id="BhH-yz-Rqj" customClass="IVDeveloperViewController" customModule="IVDevTools" sceneMemberID="viewController">
+                <tableViewController id="BhH-yz-Rqj" customClass="IVDeveloperViewController" customModule="IVDevTools" propertyAccessControl="all" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="K3q-hT-DrU">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -172,7 +172,7 @@
         <!--环境变量-->
         <scene sceneID="tcW-q5-mWq">
             <objects>
-                <tableViewController title="环境变量" id="jLn-i9-XXw" customClass="IVConfigListViewController" customModule="IVDevTools" sceneMemberID="viewController">
+                <tableViewController title="环境变量" id="jLn-i9-XXw" customClass="IVConfigListViewController" customModule="IVDevTools" propertyAccessControl="all" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="fsD-Al-4Oy">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -246,7 +246,7 @@
         <!--日志设置-->
         <scene sceneID="Zu0-3C-kcC">
             <objects>
-                <tableViewController title="日志设置" id="HIz-86-NbY" customClass="IVLogSettingViewController" customModule="IVDevTools" sceneMemberID="viewController">
+                <tableViewController title="日志设置" id="HIz-86-NbY" customClass="IVLogSettingViewController" customModule="IVDevTools" propertyAccessControl="all" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="cMe-S5-D1o">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -516,7 +516,7 @@
         <!--日志列表-->
         <scene sceneID="1Do-vH-hfB">
             <objects>
-                <viewController title="日志列表" id="V39-qA-Z1d" customClass="IVFileLogListTableViewController" customModule="IVDevTools" sceneMemberID="viewController">
+                <viewController title="日志列表" id="V39-qA-Z1d" customClass="IVFileLogListTableViewController" customModule="IVDevTools" propertyAccessControl="all" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OvG-Uy-nbB">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -630,7 +630,7 @@
         <!--日志-->
         <scene sceneID="2SD-aG-5DS">
             <objects>
-                <viewController storyboardIdentifier="IVFileLogTextViewController" title="日志" id="jYV-qd-TiQ" customClass="IVFileLogTextViewController" customModule="IVDevTools" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="IVFileLogTextViewController" title="日志" id="jYV-qd-TiQ" customClass="IVFileLogTextViewController" customModule="IVDevTools" propertyAccessControl="all" sceneMemberID="viewController">
                     <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="grV-pm-0jS">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -916,19 +916,19 @@
                                                 <rect key="frame" x="0.0" y="91" width="388" height="30"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="FontSize " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fTQ-b8-ga9">
-                                                        <rect key="frame" x="0.0" y="0.0" width="60" height="30"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="56" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <color key="textColor" cocoaTouchSystemColor="scrollViewTexturedBackgroundColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="A-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bmf-wW-mED">
-                                                        <rect key="frame" x="65" y="0.0" width="8.5" height="30"/>
+                                                        <rect key="frame" x="61" y="0.0" width="8.5" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="7"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="14" minValue="7" maxValue="20" continuous="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZY4-Tq-5Nd">
-                                                        <rect key="frame" x="76.5" y="0.0" width="283" height="31"/>
+                                                        <rect key="frame" x="72.5" y="0.0" width="287" height="31"/>
                                                         <connections>
                                                             <action selector="fontSizeValueChanged:" destination="jYV-qd-TiQ" eventType="valueChanged" id="JIh-Yf-azj"/>
                                                         </connections>
@@ -1102,7 +1102,7 @@
         <!--新建配置-->
         <scene sceneID="DWp-6f-zNW">
             <objects>
-                <viewController title="新建配置" id="Iub-Ls-a0I" customClass="IVNewConfigViewController" customModule="IVDevTools" sceneMemberID="viewController">
+                <viewController title="新建配置" id="Iub-Ls-a0I" customClass="IVNewConfigViewController" customModule="IVDevTools" propertyAccessControl="all" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oXC-p2-XBC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1202,7 +1202,7 @@
         <!--Navigation Controller-->
         <scene sceneID="D61-Pu-QXy">
             <objects>
-                <navigationController id="TAK-Q6-I6h" sceneMemberID="viewController">
+                <navigationController id="TAK-Q6-I6h" propertyAccessControl="all" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Tjd-sY-K8B">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

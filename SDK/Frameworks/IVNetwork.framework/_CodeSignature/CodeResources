@@ -6,7 +6,7 @@
 	<dict>
 		<key>Headers/IVNetwork-Swift.h</key>
 		<data>
-		OBgAFPru6Lu2HYqGPHdhl8Xxqbg=
+		An19sQdbDWivR1HgLFNo2V8MpHk=
 		</data>
 		<key>Headers/IVNetwork.h</key>
 		<data>
@@ -18,43 +18,43 @@
 		</data>
 		<key>Modules/IVNetwork.swiftmodule/arm.swiftdoc</key>
 		<data>
-		m7FRB5qIWoZrnL/ZqRjk+zd51Bs=
+		+MhZQWDYwZLItMbxmO1xU5JYQ4k=
 		</data>
 		<key>Modules/IVNetwork.swiftmodule/arm.swiftmodule</key>
 		<data>
-		bLaCgDOTtIVpcqbeIBuTKa+Z/3Y=
+		gWRKxZ3zJ+tQSSfSyjY3f5P68SY=
 		</data>
 		<key>Modules/IVNetwork.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		pc5cstKu8eaC4nRQu19PxyKhefg=
+		Tg2hEKb5nSmKSxLgKKr3CXqA2WM=
 		</data>
 		<key>Modules/IVNetwork.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		wxnELfRGHPCmt7sfBo2sCCqcoEk=
+		gmrnhqlkRAGovYDLeq6qxONVVfU=
 		</data>
 		<key>Modules/IVNetwork.swiftmodule/arm64.swiftdoc</key>
 		<data>
-		pc5cstKu8eaC4nRQu19PxyKhefg=
+		Tg2hEKb5nSmKSxLgKKr3CXqA2WM=
 		</data>
 		<key>Modules/IVNetwork.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		wxnELfRGHPCmt7sfBo2sCCqcoEk=
+		gmrnhqlkRAGovYDLeq6qxONVVfU=
 		</data>
 		<key>Modules/IVNetwork.swiftmodule/armv7-apple-ios.swiftdoc</key>
 		<data>
-		m7FRB5qIWoZrnL/ZqRjk+zd51Bs=
+		+MhZQWDYwZLItMbxmO1xU5JYQ4k=
 		</data>
 		<key>Modules/IVNetwork.swiftmodule/armv7-apple-ios.swiftmodule</key>
 		<data>
-		bLaCgDOTtIVpcqbeIBuTKa+Z/3Y=
+		gWRKxZ3zJ+tQSSfSyjY3f5P68SY=
 		</data>
 		<key>Modules/IVNetwork.swiftmodule/armv7.swiftdoc</key>
 		<data>
-		m7FRB5qIWoZrnL/ZqRjk+zd51Bs=
+		+MhZQWDYwZLItMbxmO1xU5JYQ4k=
 		</data>
 		<key>Modules/IVNetwork.swiftmodule/armv7.swiftmodule</key>
 		<data>
-		bLaCgDOTtIVpcqbeIBuTKa+Z/3Y=
+		gWRKxZ3zJ+tQSSfSyjY3f5P68SY=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -67,11 +67,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			OBgAFPru6Lu2HYqGPHdhl8Xxqbg=
+			An19sQdbDWivR1HgLFNo2V8MpHk=
 			</data>
 			<key>hash2</key>
 			<data>
-			l2S33YiqOksWt24DqStWvjBem19ZEAjSry6oBKzrNOI=
+			I6la5O4MYelKT3XiledeOXmWzLq8a/Kk73NiCCGTBZo=
 			</data>
 		</dict>
 		<key>Headers/IVNetwork.h</key>
@@ -89,110 +89,110 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			m7FRB5qIWoZrnL/ZqRjk+zd51Bs=
+			+MhZQWDYwZLItMbxmO1xU5JYQ4k=
 			</data>
 			<key>hash2</key>
 			<data>
-			LHid6x0sUMStiM7KIt3ODRzdfbvEamqHFIgiCgH0ea8=
+			BnqYYnlq/UnA4DC42Yn4/frfuVVt3FRPuRGo8hmW7kY=
 			</data>
 		</dict>
 		<key>Modules/IVNetwork.swiftmodule/arm.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			bLaCgDOTtIVpcqbeIBuTKa+Z/3Y=
+			gWRKxZ3zJ+tQSSfSyjY3f5P68SY=
 			</data>
 			<key>hash2</key>
 			<data>
-			AyZuY504f003s6K/onvZ1XlM14IQmi6LQDB224d3XLw=
+			MT9L0W1GPQtgWh2sGklgm+vo73IaTpV15BxsoAlx0hA=
 			</data>
 		</dict>
 		<key>Modules/IVNetwork.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			pc5cstKu8eaC4nRQu19PxyKhefg=
+			Tg2hEKb5nSmKSxLgKKr3CXqA2WM=
 			</data>
 			<key>hash2</key>
 			<data>
-			0q+Ts9TM8Nzw68kwcztz0fTddVE9HE6YqMoXpmF2/wM=
+			3TuiR/YRJOJ22zvC71fIzrQ2vICpOAgYIYk52ikvjGY=
 			</data>
 		</dict>
 		<key>Modules/IVNetwork.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			wxnELfRGHPCmt7sfBo2sCCqcoEk=
+			gmrnhqlkRAGovYDLeq6qxONVVfU=
 			</data>
 			<key>hash2</key>
 			<data>
-			M8RlOUWeywtuA9RYa+faixYZMosExZJHMHXhHZVShjs=
+			3WY61+JKjdiQSO0IRZ90U63D1qWICNRzzuAMq7ksD50=
 			</data>
 		</dict>
 		<key>Modules/IVNetwork.swiftmodule/arm64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			pc5cstKu8eaC4nRQu19PxyKhefg=
+			Tg2hEKb5nSmKSxLgKKr3CXqA2WM=
 			</data>
 			<key>hash2</key>
 			<data>
-			0q+Ts9TM8Nzw68kwcztz0fTddVE9HE6YqMoXpmF2/wM=
+			3TuiR/YRJOJ22zvC71fIzrQ2vICpOAgYIYk52ikvjGY=
 			</data>
 		</dict>
 		<key>Modules/IVNetwork.swiftmodule/arm64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			wxnELfRGHPCmt7sfBo2sCCqcoEk=
+			gmrnhqlkRAGovYDLeq6qxONVVfU=
 			</data>
 			<key>hash2</key>
 			<data>
-			M8RlOUWeywtuA9RYa+faixYZMosExZJHMHXhHZVShjs=
+			3WY61+JKjdiQSO0IRZ90U63D1qWICNRzzuAMq7ksD50=
 			</data>
 		</dict>
 		<key>Modules/IVNetwork.swiftmodule/armv7-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			m7FRB5qIWoZrnL/ZqRjk+zd51Bs=
+			+MhZQWDYwZLItMbxmO1xU5JYQ4k=
 			</data>
 			<key>hash2</key>
 			<data>
-			LHid6x0sUMStiM7KIt3ODRzdfbvEamqHFIgiCgH0ea8=
+			BnqYYnlq/UnA4DC42Yn4/frfuVVt3FRPuRGo8hmW7kY=
 			</data>
 		</dict>
 		<key>Modules/IVNetwork.swiftmodule/armv7-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			bLaCgDOTtIVpcqbeIBuTKa+Z/3Y=
+			gWRKxZ3zJ+tQSSfSyjY3f5P68SY=
 			</data>
 			<key>hash2</key>
 			<data>
-			AyZuY504f003s6K/onvZ1XlM14IQmi6LQDB224d3XLw=
+			MT9L0W1GPQtgWh2sGklgm+vo73IaTpV15BxsoAlx0hA=
 			</data>
 		</dict>
 		<key>Modules/IVNetwork.swiftmodule/armv7.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			m7FRB5qIWoZrnL/ZqRjk+zd51Bs=
+			+MhZQWDYwZLItMbxmO1xU5JYQ4k=
 			</data>
 			<key>hash2</key>
 			<data>
-			LHid6x0sUMStiM7KIt3ODRzdfbvEamqHFIgiCgH0ea8=
+			BnqYYnlq/UnA4DC42Yn4/frfuVVt3FRPuRGo8hmW7kY=
 			</data>
 		</dict>
 		<key>Modules/IVNetwork.swiftmodule/armv7.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			bLaCgDOTtIVpcqbeIBuTKa+Z/3Y=
+			gWRKxZ3zJ+tQSSfSyjY3f5P68SY=
 			</data>
 			<key>hash2</key>
 			<data>
-			AyZuY504f003s6K/onvZ1XlM14IQmi6LQDB224d3XLw=
+			MT9L0W1GPQtgWh2sGklgm+vo73IaTpV15BxsoAlx0hA=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

@@ -101,10 +101,18 @@ class IVMsgSetVC: UITableViewController, IVDeviceAccessable {
         let pop = IVPopupView(title: "物模型设置 \n \(path).\(subKey) ", input: [currentTextJson], actions: [.cancel(), .confirm({ (v) in
             let inJson = v.inputFields[0].text ?? ""
             let hud = ivLoadingHud()
-            IVMessageMgr.sharedInstance.writeProperty(ofDevice: self.device.deviceID, path: "\(path).\(subKey)", json: inJson, timeout: 30) { (json, err) in
-                hud.hide()
-                let message = "json:\(json ?? "") \n error:\(String(describing: err))"
-                showAlert(msg: path + "\n" + message)
+            if path == "Action" {
+                IVMessageMgr.sharedInstance.takeAction(ofDevice: self.device.deviceID, path: "\(path).\(subKey)", json: inJson, timeout: 30) { (json, err) in
+                    hud.hide()
+                    let message = "json:\(json ?? "") \n error:\(String(describing: err))"
+                    showAlert(msg: path + "\n" + message)
+                }
+            } else if path == "ProWritable" {
+                IVMessageMgr.sharedInstance.writeProperty(ofDevice: self.device.deviceID, path: "\(path).\(subKey)", json: inJson, timeout: 30) { (json, err) in
+                    hud.hide()
+                    let message = "json:\(json ?? "") \n error:\(String(describing: err))"
+                    showAlert(msg: path + "\n" + message)
+                }
             }
         })])
         pop.inputFields[0].text = currentTextJson

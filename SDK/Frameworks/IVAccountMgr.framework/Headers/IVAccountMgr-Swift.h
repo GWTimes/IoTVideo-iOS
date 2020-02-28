@@ -183,6 +183,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import IoTVideo;
 @import ObjectiveC;
 #endif
 
@@ -226,7 +227,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) IVAccountMgr
 
 
 
-@class NSError;
 enum IVAccountThirdPartyType : NSInteger;
 enum IVFeedBackType : NSInteger;
 
@@ -240,7 +240,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)getVerificationCodeForMobile:(NSString * _Nonnull)mobile mobileArea:(NSString * _Nonnull)mobileArea checkType:(enum IVAccountCheckCodeType)checkType responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)getVerificationCodeForMobile:(NSString * _Nonnull)mobile mobileArea:(NSString * _Nonnull)mobileArea checkType:(enum IVAccountCheckCodeType)checkType responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 发送邮箱验证码
 /// \param email 邮箱
 ///
@@ -248,7 +248,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)getVerificationCodeForEmail:(NSString * _Nonnull)email checkType:(enum IVAccountCheckCodeType)checkType responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)getVerificationCodeForEmail:(NSString * _Nonnull)email checkType:(enum IVAccountCheckCodeType)checkType responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 手机号注册
 /// \param mobile 手机号
 ///
@@ -260,7 +260,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)registerByMobile:(NSString * _Nonnull)mobile mobileArea:(NSString * _Nonnull)mobileArea password:(NSString * _Nonnull)password verificationCode:(NSString * _Nonnull)verificationCode ivCid:(NSString * _Nonnull)ivCid responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)registerByMobile:(NSString * _Nonnull)mobile mobileArea:(NSString * _Nonnull)mobileArea password:(NSString * _Nonnull)password verificationCode:(NSString * _Nonnull)verificationCode ivCid:(NSString * _Nonnull)ivCid responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 邮箱注册
 /// \param email 邮箱
 ///
@@ -270,13 +270,13 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)registerByEmail:(NSString * _Nonnull)email password:(NSString * _Nonnull)password verificationCode:(NSString * _Nonnull)verificationCode responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)registerByEmail:(NSString * _Nonnull)email password:(NSString * _Nonnull)password verificationCode:(NSString * _Nonnull)verificationCode responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 注销账户
 /// \param password 登录密码
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)unregisterWithPassword:(NSString * _Nonnull)password responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)unregisterWithPassword:(NSString * _Nonnull)password responseHandler:(SWIFT_NOESCAPE void (^ _Nonnull)(NSString * _Nullable, NSError * _Nullable))responseHandler;
 /// 账号登录
 /// \param account 账号/邮箱/手机号
 ///
@@ -284,7 +284,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)loginWithAccount:(NSString * _Nonnull)account password:(NSString * _Nonnull)password responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)loginWithAccount:(NSString * _Nonnull)account password:(NSString * _Nonnull)password responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 第三方登录
 /// \param thirdType 第三方平台
 ///
@@ -294,7 +294,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)loginWithThirdType:(enum IVAccountThirdPartyType)thirdType openId:(NSString * _Nonnull)openId extraInfo:(NSDictionary * _Nonnull)extraInfo responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)loginWithThirdType:(enum IVAccountThirdPartyType)thirdType openId:(NSString * _Nonnull)openId extraInfo:(NSDictionary * _Nonnull)extraInfo responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 第三方绑定
 /// \param thirdType 第三方平台
 ///
@@ -306,26 +306,26 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)bindWithThirdType:(enum IVAccountThirdPartyType)thirdType openId:(NSString * _Nonnull)openId account:(NSString * _Nonnull)account password:(NSString * _Nonnull)password responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)bindWithThirdType:(enum IVAccountThirdPartyType)thirdType openId:(NSString * _Nonnull)openId account:(NSString * _Nonnull)account password:(NSString * _Nonnull)password responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 解绑第三方
 /// \param thirdType 第三方平台
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)unbindWithThirdType:(enum IVAccountThirdPartyType)thirdType responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)unbindWithThirdType:(enum IVAccountThirdPartyType)thirdType responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 退出登录
 /// \param responseHandler 回调处理
 ///
-- (void)logoutWithResponseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)logoutWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 更新用户accessToken
 /// 终端用户用于更换即将过期的accessToken，根据app端处理的流程不是必须调用
 /// \param responseHandler 回调处理
 ///
-- (void)updateaccessTokenWithResponseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)updateaccessTokenWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 获取当前用户信息
 /// \param responseHandler 回调处理
 ///
-- (void)getUserInfoWithResponseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)getUserInfoWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查找用户信息 - 手机号
 /// \param mobile 手机号
 ///
@@ -333,19 +333,19 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)findUserInfoWithMobile:(NSString * _Nonnull)mobile mobileArea:(NSString * _Nonnull)mobileArea responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)findUserInfoWithMobile:(NSString * _Nonnull)mobile mobileArea:(NSString * _Nonnull)mobileArea responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查找用户信息 - 邮箱
 /// \param email 邮箱
 ///
 /// \param responseHandler 回调
 ///
-- (void)findUserInfoWithEmail:(NSString * _Nonnull)email responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)findUserInfoWithEmail:(NSString * _Nonnull)email responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查找用户信息 - 用户id
 /// \param accountId 用户ID
 ///
 /// \param responseHandler 回调
 ///
-- (void)findUserInfoWithAccountId:(NSString * _Nonnull)accountId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)findUserInfoWithAccountId:(NSString * _Nonnull)accountId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查找用户信息
 /// <ul>
 ///   <li>
@@ -358,7 +358,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)findUserInfoWithAccount:(NSString * _Nonnull)account mobileArea:(NSString * _Nullable)mobileArea responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)findUserInfoWithAccount:(NSString * _Nonnull)account mobileArea:(NSString * _Nullable)mobileArea responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 修改用户信息
 /// \param modifiedInfo 修改后的信息字典,现在支持的key
 /// <ul>
@@ -375,7 +375,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)modifyUserInfoWithModifiedInfo:(NSDictionary<NSString *, NSString *> * _Nonnull)modifiedInfo responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)modifyUserInfoWithModifiedInfo:(NSDictionary<NSString *, NSString *> * _Nonnull)modifiedInfo responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 重置密码 - 手机号
 /// \param mobile 手机号
 ///
@@ -387,7 +387,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)resetPasswordByMobile:(NSString * _Nonnull)mobile mobileArea:(NSString * _Nonnull)mobileArea password:(NSString * _Nonnull)password verificationCode:(NSString * _Nonnull)verificationCode responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)resetPasswordByMobile:(NSString * _Nonnull)mobile mobileArea:(NSString * _Nonnull)mobileArea password:(NSString * _Nonnull)password verificationCode:(NSString * _Nonnull)verificationCode responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 重置密码 - 邮箱
 /// \param email 邮箱
 ///
@@ -397,7 +397,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)resetPasswordByEmail:(NSString * _Nonnull)email password:(NSString * _Nonnull)password verificationCode:(NSString * _Nonnull)verificationCode responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)resetPasswordByEmail:(NSString * _Nonnull)email password:(NSString * _Nonnull)password verificationCode:(NSString * _Nonnull)verificationCode responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 修改密码
 /// \param oldPassword 旧密码
 ///
@@ -405,7 +405,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)modifyPasswordWithOldPassword:(NSString * _Nonnull)oldPassword newPassword:(NSString * _Nonnull)newPassword responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)modifyPasswordWithOldPassword:(NSString * _Nonnull)oldPassword newPassword:(NSString * _Nonnull)newPassword responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 获取访客列表
 /// <ul>
 ///   <li>
@@ -416,7 +416,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)getVisitorListWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)getVisitorListWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 分享设备邀请 - 账号方式
 /// <ul>
 ///   <li>
@@ -429,7 +429,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)shareDeviceForVisitorWithDeviceId:(NSString * _Nonnull)deviceId accountId:(NSString * _Nonnull)accountId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)shareDeviceForVisitorWithDeviceId:(NSString * _Nonnull)deviceId accountId:(NSString * _Nonnull)accountId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 分享设备 - 生成分享二维码token
 /// <ul>
 ///   <li>
@@ -444,7 +444,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)shareDevieForQRCodeWithDeviceId:(NSString * _Nonnull)deviceId deviceName:(NSString * _Nonnull)deviceName userName:(NSString * _Nonnull)userName responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)shareDevieForQRCodeWithDeviceId:(NSString * _Nonnull)deviceId deviceName:(NSString * _Nonnull)deviceName userName:(NSString * _Nonnull)userName responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 分享设备邀请 - 二维码方式
 /// <ul>
 ///   <li>
@@ -455,7 +455,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)getQRCodeSharingInfoWithQRCodeToken:(NSString * _Nonnull)QRCodeToken responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)getQRCodeSharingInfoWithQRCodeToken:(NSString * _Nonnull)QRCodeToken responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 取消分享
 /// <ul>
 ///   <li>
@@ -468,7 +468,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)cancelSharingWithDeviceId:(NSString * _Nonnull)deviceId accountId:(NSString * _Nonnull)accountId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)cancelSharingWithDeviceId:(NSString * _Nonnull)deviceId accountId:(NSString * _Nonnull)accountId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 添加设备 - 用户设备绑定
 /// forceBind 说明
 /// <ul>
@@ -487,25 +487,25 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)addDeviceWithDeviceId:(NSString * _Nonnull)deviceId deviceName:(NSString * _Nullable)deviceName forceBind:(BOOL)forceBind responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)addDeviceWithDeviceId:(NSString * _Nonnull)deviceId deviceName:(NSString * _Nullable)deviceName forceBind:(BOOL)forceBind responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 删除设备
 /// \param deviceId 设备id
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)deleteDeviceWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)deleteDeviceWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查看设备列表
-- (void)deviceListWithResponseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)deviceListWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 上传日志文件流
 /// \param logfile 压缩的日志文件字节流
 ///
 /// \param responseHandler 回调
 ///
-- (void)uploadLogWithLogfile:(NSArray<NSNumber *> * _Nonnull)logfile responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)uploadLogWithLogfile:(NSArray<NSNumber *> * _Nonnull)logfile responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// APP获取上传到腾讯云存的cos的授权信息
 /// \param responseHandler 回调
 ///
-- (void)getCosAuthInfoWithResponseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)getCosAuthInfoWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 提交反馈信息
 /// \param type 问题分类
 ///
@@ -517,15 +517,15 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)feedbackWithType:(enum IVFeedBackType)type content:(NSString * _Nonnull)content imgUrl:(NSString * _Nullable)imgUrl logUrl:(NSString * _Nullable)logUrl responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)feedbackWithType:(enum IVFeedBackType)type content:(NSString * _Nonnull)content imgUrl:(NSString * _Nullable)imgUrl logUrl:(NSString * _Nullable)logUrl responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询反馈信息列表
-- (void)feedbackListWithResponseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)feedbackListWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询反馈详情
 /// \param feedbackId 反馈id
 ///
 /// \param responseHandler 回调
 ///
-- (void)feedbackDetailWithFeedbackId:(NSString * _Nonnull)feedbackId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)feedbackDetailWithFeedbackId:(NSString * _Nonnull)feedbackId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询系统消息列表
 /// \param currentPage 当前页
 ///
@@ -533,17 +533,17 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)noticeListWithCurrentPage:(NSInteger)currentPage pageSize:(NSInteger)pageSize responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)noticeListWithCurrentPage:(NSInteger)currentPage pageSize:(NSInteger)pageSize responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询系统消息详情
 /// \param noticeId 消息id
 ///
 /// \param responseHandler 回调
 ///
-- (void)noticeDetailWithNoticeId:(NSString * _Nonnull)noticeId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)noticeDetailWithNoticeId:(NSString * _Nonnull)noticeId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 公版app获取升级地址
 /// \param responseHandler 回调
 ///
-- (void)appUpdateInfoWithResponseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)appUpdateInfoWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 @end
 
 /// 第三平台类型
@@ -763,6 +763,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #if __has_warning("-Watimport-in-framework-header")
 #pragma clang diagnostic ignored "-Watimport-in-framework-header"
 #endif
+@import IoTVideo;
 @import ObjectiveC;
 #endif
 
@@ -806,7 +807,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) IVAccountMgr
 
 
 
-@class NSError;
 enum IVAccountThirdPartyType : NSInteger;
 enum IVFeedBackType : NSInteger;
 
@@ -820,7 +820,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)getVerificationCodeForMobile:(NSString * _Nonnull)mobile mobileArea:(NSString * _Nonnull)mobileArea checkType:(enum IVAccountCheckCodeType)checkType responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)getVerificationCodeForMobile:(NSString * _Nonnull)mobile mobileArea:(NSString * _Nonnull)mobileArea checkType:(enum IVAccountCheckCodeType)checkType responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 发送邮箱验证码
 /// \param email 邮箱
 ///
@@ -828,7 +828,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)getVerificationCodeForEmail:(NSString * _Nonnull)email checkType:(enum IVAccountCheckCodeType)checkType responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)getVerificationCodeForEmail:(NSString * _Nonnull)email checkType:(enum IVAccountCheckCodeType)checkType responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 手机号注册
 /// \param mobile 手机号
 ///
@@ -840,7 +840,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)registerByMobile:(NSString * _Nonnull)mobile mobileArea:(NSString * _Nonnull)mobileArea password:(NSString * _Nonnull)password verificationCode:(NSString * _Nonnull)verificationCode ivCid:(NSString * _Nonnull)ivCid responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)registerByMobile:(NSString * _Nonnull)mobile mobileArea:(NSString * _Nonnull)mobileArea password:(NSString * _Nonnull)password verificationCode:(NSString * _Nonnull)verificationCode ivCid:(NSString * _Nonnull)ivCid responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 邮箱注册
 /// \param email 邮箱
 ///
@@ -850,13 +850,13 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)registerByEmail:(NSString * _Nonnull)email password:(NSString * _Nonnull)password verificationCode:(NSString * _Nonnull)verificationCode responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)registerByEmail:(NSString * _Nonnull)email password:(NSString * _Nonnull)password verificationCode:(NSString * _Nonnull)verificationCode responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 注销账户
 /// \param password 登录密码
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)unregisterWithPassword:(NSString * _Nonnull)password responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)unregisterWithPassword:(NSString * _Nonnull)password responseHandler:(SWIFT_NOESCAPE void (^ _Nonnull)(NSString * _Nullable, NSError * _Nullable))responseHandler;
 /// 账号登录
 /// \param account 账号/邮箱/手机号
 ///
@@ -864,7 +864,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)loginWithAccount:(NSString * _Nonnull)account password:(NSString * _Nonnull)password responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)loginWithAccount:(NSString * _Nonnull)account password:(NSString * _Nonnull)password responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 第三方登录
 /// \param thirdType 第三方平台
 ///
@@ -874,7 +874,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)loginWithThirdType:(enum IVAccountThirdPartyType)thirdType openId:(NSString * _Nonnull)openId extraInfo:(NSDictionary * _Nonnull)extraInfo responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)loginWithThirdType:(enum IVAccountThirdPartyType)thirdType openId:(NSString * _Nonnull)openId extraInfo:(NSDictionary * _Nonnull)extraInfo responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 第三方绑定
 /// \param thirdType 第三方平台
 ///
@@ -886,26 +886,26 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)bindWithThirdType:(enum IVAccountThirdPartyType)thirdType openId:(NSString * _Nonnull)openId account:(NSString * _Nonnull)account password:(NSString * _Nonnull)password responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)bindWithThirdType:(enum IVAccountThirdPartyType)thirdType openId:(NSString * _Nonnull)openId account:(NSString * _Nonnull)account password:(NSString * _Nonnull)password responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 解绑第三方
 /// \param thirdType 第三方平台
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)unbindWithThirdType:(enum IVAccountThirdPartyType)thirdType responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)unbindWithThirdType:(enum IVAccountThirdPartyType)thirdType responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 退出登录
 /// \param responseHandler 回调处理
 ///
-- (void)logoutWithResponseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)logoutWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 更新用户accessToken
 /// 终端用户用于更换即将过期的accessToken，根据app端处理的流程不是必须调用
 /// \param responseHandler 回调处理
 ///
-- (void)updateaccessTokenWithResponseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)updateaccessTokenWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 获取当前用户信息
 /// \param responseHandler 回调处理
 ///
-- (void)getUserInfoWithResponseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)getUserInfoWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查找用户信息 - 手机号
 /// \param mobile 手机号
 ///
@@ -913,19 +913,19 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)findUserInfoWithMobile:(NSString * _Nonnull)mobile mobileArea:(NSString * _Nonnull)mobileArea responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)findUserInfoWithMobile:(NSString * _Nonnull)mobile mobileArea:(NSString * _Nonnull)mobileArea responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查找用户信息 - 邮箱
 /// \param email 邮箱
 ///
 /// \param responseHandler 回调
 ///
-- (void)findUserInfoWithEmail:(NSString * _Nonnull)email responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)findUserInfoWithEmail:(NSString * _Nonnull)email responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查找用户信息 - 用户id
 /// \param accountId 用户ID
 ///
 /// \param responseHandler 回调
 ///
-- (void)findUserInfoWithAccountId:(NSString * _Nonnull)accountId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)findUserInfoWithAccountId:(NSString * _Nonnull)accountId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查找用户信息
 /// <ul>
 ///   <li>
@@ -938,7 +938,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)findUserInfoWithAccount:(NSString * _Nonnull)account mobileArea:(NSString * _Nullable)mobileArea responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)findUserInfoWithAccount:(NSString * _Nonnull)account mobileArea:(NSString * _Nullable)mobileArea responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 修改用户信息
 /// \param modifiedInfo 修改后的信息字典,现在支持的key
 /// <ul>
@@ -955,7 +955,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)modifyUserInfoWithModifiedInfo:(NSDictionary<NSString *, NSString *> * _Nonnull)modifiedInfo responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)modifyUserInfoWithModifiedInfo:(NSDictionary<NSString *, NSString *> * _Nonnull)modifiedInfo responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 重置密码 - 手机号
 /// \param mobile 手机号
 ///
@@ -967,7 +967,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)resetPasswordByMobile:(NSString * _Nonnull)mobile mobileArea:(NSString * _Nonnull)mobileArea password:(NSString * _Nonnull)password verificationCode:(NSString * _Nonnull)verificationCode responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)resetPasswordByMobile:(NSString * _Nonnull)mobile mobileArea:(NSString * _Nonnull)mobileArea password:(NSString * _Nonnull)password verificationCode:(NSString * _Nonnull)verificationCode responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 重置密码 - 邮箱
 /// \param email 邮箱
 ///
@@ -977,7 +977,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)resetPasswordByEmail:(NSString * _Nonnull)email password:(NSString * _Nonnull)password verificationCode:(NSString * _Nonnull)verificationCode responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)resetPasswordByEmail:(NSString * _Nonnull)email password:(NSString * _Nonnull)password verificationCode:(NSString * _Nonnull)verificationCode responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 修改密码
 /// \param oldPassword 旧密码
 ///
@@ -985,7 +985,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)modifyPasswordWithOldPassword:(NSString * _Nonnull)oldPassword newPassword:(NSString * _Nonnull)newPassword responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)modifyPasswordWithOldPassword:(NSString * _Nonnull)oldPassword newPassword:(NSString * _Nonnull)newPassword responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 获取访客列表
 /// <ul>
 ///   <li>
@@ -996,7 +996,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)getVisitorListWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)getVisitorListWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 分享设备邀请 - 账号方式
 /// <ul>
 ///   <li>
@@ -1009,7 +1009,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)shareDeviceForVisitorWithDeviceId:(NSString * _Nonnull)deviceId accountId:(NSString * _Nonnull)accountId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)shareDeviceForVisitorWithDeviceId:(NSString * _Nonnull)deviceId accountId:(NSString * _Nonnull)accountId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 分享设备 - 生成分享二维码token
 /// <ul>
 ///   <li>
@@ -1024,7 +1024,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)shareDevieForQRCodeWithDeviceId:(NSString * _Nonnull)deviceId deviceName:(NSString * _Nonnull)deviceName userName:(NSString * _Nonnull)userName responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)shareDevieForQRCodeWithDeviceId:(NSString * _Nonnull)deviceId deviceName:(NSString * _Nonnull)deviceName userName:(NSString * _Nonnull)userName responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 分享设备邀请 - 二维码方式
 /// <ul>
 ///   <li>
@@ -1035,7 +1035,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)getQRCodeSharingInfoWithQRCodeToken:(NSString * _Nonnull)QRCodeToken responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)getQRCodeSharingInfoWithQRCodeToken:(NSString * _Nonnull)QRCodeToken responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 取消分享
 /// <ul>
 ///   <li>
@@ -1048,7 +1048,7 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)cancelSharingWithDeviceId:(NSString * _Nonnull)deviceId accountId:(NSString * _Nonnull)accountId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)cancelSharingWithDeviceId:(NSString * _Nonnull)deviceId accountId:(NSString * _Nonnull)accountId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 添加设备 - 用户设备绑定
 /// forceBind 说明
 /// <ul>
@@ -1067,25 +1067,25 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)addDeviceWithDeviceId:(NSString * _Nonnull)deviceId deviceName:(NSString * _Nullable)deviceName forceBind:(BOOL)forceBind responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)addDeviceWithDeviceId:(NSString * _Nonnull)deviceId deviceName:(NSString * _Nullable)deviceName forceBind:(BOOL)forceBind responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 删除设备
 /// \param deviceId 设备id
 ///
 /// \param responseHandler 回调处理
 ///
-- (void)deleteDeviceWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)deleteDeviceWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查看设备列表
-- (void)deviceListWithResponseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)deviceListWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 上传日志文件流
 /// \param logfile 压缩的日志文件字节流
 ///
 /// \param responseHandler 回调
 ///
-- (void)uploadLogWithLogfile:(NSArray<NSNumber *> * _Nonnull)logfile responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)uploadLogWithLogfile:(NSArray<NSNumber *> * _Nonnull)logfile responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// APP获取上传到腾讯云存的cos的授权信息
 /// \param responseHandler 回调
 ///
-- (void)getCosAuthInfoWithResponseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)getCosAuthInfoWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 提交反馈信息
 /// \param type 问题分类
 ///
@@ -1097,15 +1097,15 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)feedbackWithType:(enum IVFeedBackType)type content:(NSString * _Nonnull)content imgUrl:(NSString * _Nullable)imgUrl logUrl:(NSString * _Nullable)logUrl responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)feedbackWithType:(enum IVFeedBackType)type content:(NSString * _Nonnull)content imgUrl:(NSString * _Nullable)imgUrl logUrl:(NSString * _Nullable)logUrl responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询反馈信息列表
-- (void)feedbackListWithResponseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)feedbackListWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询反馈详情
 /// \param feedbackId 反馈id
 ///
 /// \param responseHandler 回调
 ///
-- (void)feedbackDetailWithFeedbackId:(NSString * _Nonnull)feedbackId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)feedbackDetailWithFeedbackId:(NSString * _Nonnull)feedbackId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询系统消息列表
 /// \param currentPage 当前页
 ///
@@ -1113,17 +1113,17 @@ enum IVFeedBackType : NSInteger;
 ///
 /// \param responseHandler 回调
 ///
-- (void)noticeListWithCurrentPage:(NSInteger)currentPage pageSize:(NSInteger)pageSize responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)noticeListWithCurrentPage:(NSInteger)currentPage pageSize:(NSInteger)pageSize responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 查询系统消息详情
 /// \param noticeId 消息id
 ///
 /// \param responseHandler 回调
 ///
-- (void)noticeDetailWithNoticeId:(NSString * _Nonnull)noticeId responseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)noticeDetailWithNoticeId:(NSString * _Nonnull)noticeId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 公版app获取升级地址
 /// \param responseHandler 回调
 ///
-- (void)appUpdateInfoWithResponseHandler:(void (^ _Nullable)(NSString * _Nullable, NSError * _Nullable))responseHandler;
+- (void)appUpdateInfoWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 @end
 
 /// 第三平台类型

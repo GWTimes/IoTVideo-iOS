@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="v5P-VL-HbR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="v5P-VL-HbR">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,7 +11,7 @@
         <!--Device-->
         <scene sceneID="C5h-pe-aNi">
             <objects>
-                <tableViewController id="iKh-8F-6jv" customClass="IVDeviceTableViewController" customModule="IotVideoDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="iKh-8F-6jv" customClass="IVDeviceTableViewController" customModule="IotVideoDemo" customModuleProvider="target" propertyAccessControl="all" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="0H2-dN-ZeO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -107,14 +107,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="生成配网二维码" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zh7-PA-uNj">
-                                                    <rect key="frame" x="56.5" y="0.0" width="337.5" height="44"/>
+                                                    <rect key="frame" x="57" y="0.0" width="337" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" image="QRCode" id="VVE-Xo-rAH">
-                                                    <rect key="frame" x="20" y="11" width="21.5" height="21.5"/>
+                                                    <rect key="frame" x="20" y="11" width="22" height="22"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                 </imageView>
                                             </subviews>
@@ -165,7 +165,7 @@
         <!--扫码-->
         <scene sceneID="zJH-cW-45q">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="2lV-q0-3E4" customClass="IVQRcodeScanVC" customModule="IotVideoDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="2lV-q0-3E4" customClass="IVQRcodeScanVC" customModule="IotVideoDemo" customModuleProvider="target" propertyAccessControl="all" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="x9y-cp-AVI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -181,7 +181,7 @@
         <!--局域网设备-->
         <scene sceneID="4yy-B1-JP3">
             <objects>
-                <tableViewController hidesBottomBarWhenPushed="YES" id="PKp-hW-FYO" customClass="IVLANDeviceTableVC" customModule="IotVideoDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController hidesBottomBarWhenPushed="YES" id="PKp-hW-FYO" customClass="IVLANDeviceTableVC" customModule="IotVideoDemo" customModuleProvider="target" propertyAccessControl="all" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="KIJ-mo-qwn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -232,7 +232,7 @@
         <!--IVDeviceAccess-->
         <scene sceneID="y1y-dD-fdx">
             <objects>
-                <viewControllerPlaceholder storyboardName="IVDeviceAccess" id="na3-BJ-O1v" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="IVDeviceAccess" id="na3-BJ-O1v" propertyAccessControl="all" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="3w1-5d-f44"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wrX-Ga-3OH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -242,7 +242,7 @@
         <!--Device-->
         <scene sceneID="ylN-9M-xho">
             <objects>
-                <navigationController id="v5P-VL-HbR" sceneMemberID="viewController">
+                <navigationController id="v5P-VL-HbR" propertyAccessControl="all" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Device" image="tabBar_icon_device_N" id="meZ-hM-rZ3"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="TD8-lT-Orb">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -259,7 +259,7 @@
         <!--生成配网二维码-->
         <scene sceneID="oNh-uu-O1v">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="TkR-6W-GZW" customClass="IVQRCodeAddDevice" customModule="IotVideoDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="TkR-6W-GZW" customClass="IVQRCodeAddDevice" customModule="IotVideoDemo" customModuleProvider="target" propertyAccessControl="all" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="IHF-Ly-rlO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -343,7 +343,7 @@
         <!--我的设备-->
         <scene sceneID="r4X-QY-2Yc">
             <objects>
-                <tableViewController id="xfC-tF-IGy" customClass="IVMineDeviceTableVC" customModule="IotVideoDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="xfC-tF-IGy" customClass="IVMineDeviceTableVC" customModule="IotVideoDemo" customModuleProvider="target" propertyAccessControl="all" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="E5g-8l-UbJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

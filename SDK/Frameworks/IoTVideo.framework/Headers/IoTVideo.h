@@ -23,6 +23,7 @@
 #import "IVQRCodeNetConfig.h"
 #import "IVNetConfig.h"
 #import "IVNetworkSign.h"
+#import "IVNetwork_p2p.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
