@@ -88,7 +88,7 @@ class IVMsgGetVC: UITableViewController, IVDeviceAccessable {
         IVMessageMgr.sharedInstance.readProperty(ofDevice: self.device.deviceID, path: path) { (json, err) in
             hud.hide()
             let message = "json:\(json ?? "") \n error:\(String(describing: err))"
-            logInfo("物模型获取 \n \(path).setVal \n \(message)")
+            logInfo("物模型获取 \n \(path) \n \(message)")
             showAlert(msg: path + "\n" + message)
         }
     }

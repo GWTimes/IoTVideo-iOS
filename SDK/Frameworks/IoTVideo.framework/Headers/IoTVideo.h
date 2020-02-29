@@ -27,8 +27,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-extern NSString *kIoTVideoHostKey;
-extern NSString *kIoTVideoHostType;
+typedef NSString * IVOptionKey NS_STRING_ENUM;
+
+extern IVOptionKey const IVOptionKeyHostWeb; //!< 自定义web服务器域名，⚠️自定义域名优先级高于内置域名
+extern IVOptionKey const IVOptionKeyHostP2P; //!< 自定义p2p服务器域名，⚠️自定义域名优先级高于内置域名
+extern IVOptionKey const IVOptionKeyHostType; //!< "0"： p2p、web 内置测试服务器；   "1"：p2p、web 内置正式服务器
+extern IVOptionKey const IVOptionKeyIvCid;  //!< 客户id(从平台注册时获取)
+extern IVOptionKey const IVOptionKeyProductId; //!< app的产品id(从平台注册时获取)
+
 
 @interface IoTVideo : NSObject
 
@@ -39,7 +45,7 @@ extern NSString *kIoTVideoHostType;
 @property (nonatomic, strong, nullable, readonly) NSString *accessToken;
 @property (nonatomic, strong, nullable, readonly) NSString *accessId;
 @property (nonatomic, strong, nullable, readonly) NSString *productId;
-@property (nonatomic, strong, nullable, readonly) NSDictionary *userInfo;
+@property (nonatomic, strong, nullable, readonly) NSDictionary<IVOptionKey, id> *options;
 @property (nonatomic, assign, readonly) NSInteger SDKVersion;
 
 /// 调试模式
@@ -51,12 +57,12 @@ extern NSString *kIoTVideoHostType;
 /// SDK初始化
 /// @param ivCid      客户id(从平台注册时获取)
 /// @param productId  app的产品id(从平台注册时获取)
-/// @param userInfo  其他信息，默认传nil
+/// @param options  参考`IVOptionKey`，默认传nil
 /// @code
 /// [self setupToken]
 /// @endcode
 /// @remark 录成功服务器
-- (void)setupIvCid:(NSString *)ivCid productId:(NSString *)productId  userInfo:(nullable NSDictionary *)userInfo;
+- (void)setupIvCid:(NSString *)ivCid productId:(NSString *)productId options:(nullable NSDictionary<IVOptionKey, id> *)options;
 
 /// 设置当前用户信息，登录成功调用
 /// @param accessId  是外部访问IotVideo云平台的唯一性身份标识，所有 OpenAPI 接口都需要传入这个头部参数。

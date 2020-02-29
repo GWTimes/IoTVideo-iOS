@@ -32,21 +32,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert,.badge,.sound], categories: nil))
         }
         
-          //kIoTVideoHostType: 0 测试p2p服务器，测试web服务器
-//        Sdk 启动
-//        1、userinfo nil  -> p2p,web，云回放等均使用内置 正式 服务器
-//        2、userinfo kIoTVideoHostKey -> p2p 使用传入的地址 web，云回放等均未内置 正式 服务器
-//        3、userinfo kIoTVideoHostType 0 -> p2p,web，云回放等均使用内置 测试 服务器  不为0，为其他则和 （1、） 保持一致
-        if let type = IVConfigMgr.allConfigs.filter({$0.enable && $0.key == kIoTVideoHostType}).first?.value {
-             IoTVideo.sharedInstance.setupIvCid("103", productId: "440234147841", userInfo: [kIoTVideoHostType: type])
-        } else {
-            //默认测试服务器
-            IoTVideo.sharedInstance.setupIvCid("103", productId: "440234147841", userInfo: [kIoTVideoHostType: "0"])
+        var options: [IVOptionKey : String] = [
+//            .ivCid : "103",
+//            .productId : "440234147841",
+            .ivCid : "107",
+            .productId : "461708984449",
+            .hostType : "0"
+        ]
+        
+        let userInfoKeys: [IVOptionKey] = [.hostWeb, .hostP2P, .hostType, .ivCid, .productId]
+        for key in userInfoKeys {
+            if let cfg = IVConfigMgr.allConfigs.first(where: { $0.enable && $0.key == key.rawValue }) {
+                options[key] = cfg.value
+            }
         }
+        
+        IoTVideo.sharedInstance.setupIvCid(options[.ivCid]!, productId: options[.productId]!, options: options)
         
         IoTVideo.sharedInstance.logCallback = logMessage
 //        sleep(1)
 //        UIApplication.shared.clearLaunchScreenCache()
+        
         return true
     }
 

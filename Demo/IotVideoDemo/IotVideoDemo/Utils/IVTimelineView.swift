@@ -31,10 +31,10 @@ class IVTimelineView: UIView {
     weak var delegate: IVTimelineViewDelegate?
     
     /// 时间轴最大缩放比例（最大每秒占多少像素点(pix/sec)）
-    var maximumScale = 5.0
+    let maximumScale = 5.0
     
     /// 时间轴最小缩放比例（最小每秒占多少像素点(pix/sec)）
-    var minimumScale = 0.02
+    let minimumScale = 0.005
     
     /// 时间轴缩放比例（每秒占多少像素点(pix/sec)）
     var scale = 1.0 {
@@ -106,11 +106,11 @@ class IVTimelineView: UIView {
         }
     }
     
-    /// 时间片最大10分钟
-    var maxDuration: TimeInterval  = 10*60
+    /// 时间片最大10分钟 (太大影响放大性能，太小影响缩小性能)
+    let maxDuration: TimeInterval  = 10*60
     
     /// 时间片最小0.001秒
-    var miniDuration: TimeInterval = 0.001
+    let miniDuration: TimeInterval = 0.001
 
     /// 设置数据源
     func setDataSource(_ items: [IVTimelineItem]) {
@@ -307,16 +307,7 @@ extension IVTimelineView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "IVTimelineCell", for: indexPath) as! IVTimelineCell
-        cell.item = timeSlices[indexPath.row]
-        
-        var marks: [IVTimeMark] = []
-        for mark in IVTimeMark.all {
-            if scale * Double(mark.rawValue) >= 4.8 {
-                marks.append(mark)
-            }
-        }
-        cell.timeMarks = marks
-        
+        cell.setTimelineItem(timeSlices[indexPath.row], scale: scale)
         return cell
     }
     
@@ -389,49 +380,55 @@ extension IVTimelineView: UIScrollViewDelegate {
 
 class IVTimelineCell: UICollectionViewCell {
     
-    // 缩放比例
-    var scale = 1.0
-    
-    // === 数据模型 ===
-    var item: IVTimelineItem! {
-        didSet {
-            colorView.backgroundColor = item.color
-            subviews.forEach({
-                if $0.tag != 0 {
-                    $0.removeFromSuperview()
-                }
-            })
-        }
+    func setTimelineItem(_ item: IVTimelineItem, scale: Double) {
+        self.item = item
+        self.scale = scale
+        colorView.backgroundColor = item.color
+        markView.subviews.forEach({
+            $0.removeFromSuperview()
+        })
+        timeMarks = IVTimeMark.all.filter { scale * Double($0.rawValue) >= 4.8 } // 距离大于 4.8 pt
+        setNeedsDisplay()
     }
+
+    /// === 数据模型 ===
+    private var item: IVTimelineItem!
+    
+    /// === 缩放比例 ===
+    private var scale = 1.0
+
+    /// === 时间刻度 ===
+    private var timeMarks: [IVTimeMark] = [.hour]
     
     // === 颜色 ===
-    lazy var colorView: UIView = {
+    private lazy var colorView: UIView = {
         let v = UIView()
-        // 0.5pix是为了防止出现缝隙
-        v.frame = CGRect(x: 0, y: bounds.height / 3, width: bounds.width+0.5, height: bounds.height / 3)
+        // pix1是为了防止出现缝隙
+        let pix1 = 1 / UIScreen.main.scale
+        v.frame = CGRect(x: 0, y: bounds.height / 3, width: bounds.width + pix1, height: bounds.height / 3)
         v.autoresizingMask = .flexibleWidth
         addSubview(v)
         return v
     }()
     
     // === 刻度\文字 ===
+    private lazy var markView: UIView = {
+        let v = UIView(frame: bounds)
+        v.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        v.backgroundColor = .clear
+        addSubview(v)
+        return v
+    }()
+    
     private func drawTimelineMark(_ ctx: CGContext?, step: Int, superStep: Int, color: UIColor, fontSize: CGFloat, markHeight: Double) {
-        let bgV = UIView(frame: bounds)
-        bgV.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        bgV.backgroundColor = .clear
-        bgV.tag = step
-        addSubview(bgV)
-        
-        let scale = TimeInterval(bounds.width) / item.duration
-        let decimalPoint: TimeInterval = item.startTime - floor(item.startTime)
-        let mod: TimeInterval = TimeInterval(Int(item.startTime) % step) + decimalPoint
-        var offset: TimeInterval = TimeInterval(step) - mod
+        let remain: TimeInterval = item.startTime - floor(item.startTime) // 小数点后的余数
+        let mod: TimeInterval = TimeInterval(Int(item.startTime) % step) + remain // 小数点后的余数
+        var offset: TimeInterval = mod > 0.001 ? TimeInterval(step) - mod : 0
         
         let fmt = DateFormatter()
         fmt.dateFormat = "HH:mm"
-        
-        let charCnt = fmt.dateFormat.count
-        let multiples = [1, 2, 3, 2, 5]
+                     
+        let labelWidth = Double(fontSize) * Double(fmt.dateFormat.count)
         
         ctx?.setLineWidth(1)
         ctx?.setStrokeColor(color.cgColor)
@@ -441,19 +438,17 @@ class IVTimelineCell: UICollectionViewCell {
                 ctx?.move(to: CGPoint(x: scale * offset, y: 0))
                 ctx?.addLine(to: CGPoint(x: scale * offset, y: markHeight))
                 
-                if step >= 60 {
-                    for multiple in multiples {
-                        if Double(step) * scale > Double(fontSize) * Double(charCnt),
-                            Int(item.startTime + offset) % multiple == 0 {
-                            let text = fmt.string(from: Date(timeIntervalSince1970: item.startTime + offset))
+                if step >= IVTimeMark.min1.rawValue {
+                    for divisor in IVTimeMark.divisors {
+                        if Double(step) * scale > labelWidth, Int(item.startTime + offset) % divisor == 0 {
                             let label = UILabel()
-                            label.frame = CGRect(x: (scale * offset)-30, y: Double(bounds.height-20), width: 60, height: 20)
-                            label.text = text
+                            label.frame = CGRect(x: (scale * offset)-labelWidth/2, y: Double(bounds.height-20), width: labelWidth, height: 20)
+                            label.text = fmt.string(from: Date(timeIntervalSince1970: item.startTime + offset))
                             label.textColor = color
                             label.textAlignment = .center
                             label.font = .systemFont(ofSize: fontSize)
                             label.autoresizingMask = [.flexibleLeftMargin, .flexibleRightMargin]
-                            bgV.addSubview(label)
+                            markView.addSubview(label)
                             break
                         }
                     }
@@ -464,13 +459,6 @@ class IVTimelineCell: UICollectionViewCell {
         }
         
         ctx?.strokePath()
-        
-    }
-    
-    var timeMarks: [IVTimeMark] = [.hour] {
-        didSet {
-            setNeedsDisplay()
-        }
     }
     
     override init(frame: CGRect) {
@@ -486,15 +474,18 @@ class IVTimelineCell: UICollectionViewCell {
         let ctx = UIGraphicsGetCurrentContext()
         ctx?.clear(rect)
 
-        for mark in IVTimeMark.all {
-            if !timeMarks.contains(mark) {
-                continue
-            }
-            
+        for mark in timeMarks {
             let step = mark.rawValue
+                        
             switch mark {
-            case .hour:
+            case .hour8:
                 drawTimelineMark(ctx, step: step, superStep: 0, color: .black, fontSize: 14, markHeight: 20)
+            case .hour4:
+                drawTimelineMark(ctx, step: step, superStep: step*2, color: .black, fontSize: 14, markHeight: 20)
+            case .hour2:
+                drawTimelineMark(ctx, step: step, superStep: step*2, color: .black, fontSize: 14, markHeight: 20)
+            case .hour:
+                drawTimelineMark(ctx, step: step, superStep: step*2, color: .black, fontSize: 14, markHeight: 20)
             case .min30:
                 drawTimelineMark(ctx, step: step, superStep: step*2, color: .darkGray, fontSize: 12, markHeight: 17)
             case .min10:
@@ -555,15 +546,20 @@ class IVTimelineLayout: UICollectionViewFlowLayout {
 }
 
 enum IVTimeMark: Int {
-    case hour     = 3600 // 60*60
-    case min30    = 1800 // 30*60
-    case min10    = 600  // 10*60
-    case min5     = 300  // 5*60
-    case min1     = 60   // 60
-    case sec30    = 30   // 30
-    case sec10    = 10   // 10
-    case sec5     = 5    // 5
-    case sec1     = 1    // 1
+    case hour8    = 28800 // 60*60*8
+    case hour4    = 14400 // 60*60*4
+    case hour2    = 7200  // 60*60*2
+    case hour     = 3600  // 60*60
+    case min30    = 1800  // 30*60
+    case min10    = 600   // 10*60
+    case min5     = 300   // 5*60
+    case min1     = 60    // 60
+    case sec30    = 30    // 30
+    case sec10    = 10    // 10
+    case sec5     = 5     // 5
+    case sec1     = 1     // 1
     
-    static let all: [IVTimeMark] = [.hour, .min30, .min10, .min5, .min1, .sec30, .sec10, .sec5, .sec1]
+    static let divisors = [1, 2, 3, 5]
+
+    static let all: [IVTimeMark] = [.hour8, .hour4, .hour2, .hour, .min30, .min10, .min5, .min1, .sec30, .sec10, .sec5, .sec1]
 }

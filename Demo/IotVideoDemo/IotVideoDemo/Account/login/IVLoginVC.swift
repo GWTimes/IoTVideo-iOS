@@ -26,7 +26,9 @@ class IVLoginVC: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+        let window = (UIApplication.shared.delegate as! AppDelegate).window
+        window?.addSubview(devToolsAssistant)
+        window?.bringSubviewToFront(devToolsAssistant)
     }
     
     @IBAction func login(_ sender: Any) {

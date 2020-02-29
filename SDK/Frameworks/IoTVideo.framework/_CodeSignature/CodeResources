@@ -62,7 +62,7 @@
 		</data>
 		<key>Headers/IoTVideo.h</key>
 		<data>
-		SfsORs9t3JFuHfExOQKz0WWte68=
+		AEcw013BcK98QLL7eoLfQ8OzkCQ=
 		</data>
 		<key>Info.plist</key>
 		<data>
@@ -233,11 +233,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			SfsORs9t3JFuHfExOQKz0WWte68=
+			AEcw013BcK98QLL7eoLfQ8OzkCQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			b9jKmd9V/R86/6FGlL+Hg9iAKDgzj7pRsZ2W1+hqAN8=
+			gbeQa8EZKrvmppqXV9niz4+BC+mRH9aiRxszzhc7o90=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
