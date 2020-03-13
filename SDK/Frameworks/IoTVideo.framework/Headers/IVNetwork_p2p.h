@@ -3,7 +3,7 @@
 //  IoTVideo
 //
 //  Created by ZhaoYong on 2020/2/25.
-//  Copyright © 2020 gwell. All rights reserved.
+//  Copyright © 2020 Tencentcs. All rights reserved.
 //
 //  实现一个通过p2p的网络请求，使得增值服务可以引用核心库实现网络请求
 //

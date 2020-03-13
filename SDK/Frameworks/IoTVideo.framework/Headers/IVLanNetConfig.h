@@ -3,7 +3,7 @@
 //  IoTVideo
 //
 //  Created by JonorZhang on 2019/12/18.
-//  Copyright © 2019 gwell. All rights reserved.
+//  Copyright © 2019 Tencentcs. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -14,8 +14,6 @@ NS_ASSUME_NONNULL_BEGIN
 @interface IVLANDevice : NSObject
 /// device id
 @property (nonatomic, strong) NSString *deviceID;
-/// tencent id
-@property (nonatomic, strong) NSString *tencentID;
 /// 产品ID
 @property (nonatomic, strong) NSString *productID;
 /// 序列号

@@ -3,7 +3,7 @@
 //  IotVideoDemo
 //
 //  Created by ZhaoYong on 2019/12/4.
-//  Copyright © 2019 gwell. All rights reserved.
+//  Copyright © 2019 Tencentcs. All rights reserved.
 //
 
 #import "IVApiFormatTest.h"
@@ -11,7 +11,7 @@
 //#import "IotVideoDemo-Swift.h"
 //#import <IoTVideo/IVMessageMgr.h>
 #import <IoTVideo/IoTVideo.h>
-#import <IVNetwork/IVNetwork.h>
+
 @interface IVApiFormatTest ()
 
 @end
@@ -23,6 +23,9 @@
 
     // Do any additional setup after loading the view.
 //
+    
+    [IoTVideo.sharedInstance setupProductId:@"******" options:nil];
+    
     //    [IVAccountMgr.shareInstance registerWithEmail:"" password:"" verificationCode:"" ivCid:"" responseHandler:nil];
     [IVAccountMgr.shareInstance getVerificationCodeForMobile:@"123546664"
                                                   mobileArea:@"86"
@@ -40,7 +43,6 @@
 //        }
 //        NSLog(@"注册成功");
 //    }];
-    [IVNetwork.shareInstance requestWithMethodType:@"" urlString:@"" params:@{} response:nil];
 //    [IoTVideo.sharedInstance setupIvCid:@"xxx" productId:@"xxxxxxxxxxxx" userInfo:nil];
 //    [IoTVideo.sharedInstance registerWithAccessId:@"xxxxxxxx" accessToken:@"xxxxxx"];
     

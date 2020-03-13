@@ -6,55 +6,55 @@
 	<dict>
 		<key>Headers/IVVAS-Swift.h</key>
 		<data>
-		bNBgP5y41m/lIAxvfAjmepPSS5Y=
+		E+9nllRzBLVleQHeMvj9c5ZXinw=
 		</data>
 		<key>Headers/IVVAS.h</key>
 		<data>
-		h2qOZBPNj+YaYz6ebZaAxhF4owg=
+		rNQyWu2pM0VBOgfu4xx1IRfxcLY=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		ysDHTiR9v+pgyxyQAhpUj7VB45I=
+		C6qwzBylmyPj7raV+BIkJ1GdDmE=
 		</data>
 		<key>Modules/IVVAS.swiftmodule/arm.swiftdoc</key>
 		<data>
-		FSb0yA59JsGtVKjV1g7lCSvrkBQ=
+		x2Fcz8rkrZuX/GzxMmtWpqBEiZc=
 		</data>
 		<key>Modules/IVVAS.swiftmodule/arm.swiftmodule</key>
 		<data>
-		AgWJ4Q3pI0SNR82SOnX6AJ1RoDY=
+		mmabvkXp3ThNJAg3OF5Tx+n6li8=
 		</data>
 		<key>Modules/IVVAS.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		KKY8tGSTq+Zt+HmFTHL/4lN0HQs=
+		BUpZIN7WtuABqxJDauEZkQgqbnA=
 		</data>
 		<key>Modules/IVVAS.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		nvl5EwRV76OvEAT75qHOZpbqYGs=
+		jYDtx63il22y3Pq1QwILfplIeEw=
 		</data>
 		<key>Modules/IVVAS.swiftmodule/arm64.swiftdoc</key>
 		<data>
-		KKY8tGSTq+Zt+HmFTHL/4lN0HQs=
+		BUpZIN7WtuABqxJDauEZkQgqbnA=
 		</data>
 		<key>Modules/IVVAS.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		nvl5EwRV76OvEAT75qHOZpbqYGs=
+		jYDtx63il22y3Pq1QwILfplIeEw=
 		</data>
 		<key>Modules/IVVAS.swiftmodule/armv7-apple-ios.swiftdoc</key>
 		<data>
-		FSb0yA59JsGtVKjV1g7lCSvrkBQ=
+		x2Fcz8rkrZuX/GzxMmtWpqBEiZc=
 		</data>
 		<key>Modules/IVVAS.swiftmodule/armv7-apple-ios.swiftmodule</key>
 		<data>
-		AgWJ4Q3pI0SNR82SOnX6AJ1RoDY=
+		mmabvkXp3ThNJAg3OF5Tx+n6li8=
 		</data>
 		<key>Modules/IVVAS.swiftmodule/armv7.swiftdoc</key>
 		<data>
-		FSb0yA59JsGtVKjV1g7lCSvrkBQ=
+		x2Fcz8rkrZuX/GzxMmtWpqBEiZc=
 		</data>
 		<key>Modules/IVVAS.swiftmodule/armv7.swiftmodule</key>
 		<data>
-		AgWJ4Q3pI0SNR82SOnX6AJ1RoDY=
+		mmabvkXp3ThNJAg3OF5Tx+n6li8=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -67,132 +67,132 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			bNBgP5y41m/lIAxvfAjmepPSS5Y=
+			E+9nllRzBLVleQHeMvj9c5ZXinw=
 			</data>
 			<key>hash2</key>
 			<data>
-			ebBf3yx4dTW1zDxvb/qVd7yt2oy91FjRMcqLNrBO1C0=
+			WC69MVjuJo5CW7IuCCBQ5MwSZ/5l+H5I42WZwx0FeWY=
 			</data>
 		</dict>
 		<key>Headers/IVVAS.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			h2qOZBPNj+YaYz6ebZaAxhF4owg=
+			rNQyWu2pM0VBOgfu4xx1IRfxcLY=
 			</data>
 			<key>hash2</key>
 			<data>
-			+HavkopKoQ0McsIBHk7FcxBcZoNojQCxIdI5G7qBbW8=
+			5+WRvtcNjPpFPO86pKKL/I8uemjcC+4VCeoEv9WOGOc=
 			</data>
 		</dict>
 		<key>Modules/IVVAS.swiftmodule/arm.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			FSb0yA59JsGtVKjV1g7lCSvrkBQ=
+			x2Fcz8rkrZuX/GzxMmtWpqBEiZc=
 			</data>
 			<key>hash2</key>
 			<data>
-			x5ETZ9uM//vAx8BOU9affGgSE7cY8mhU1nY33ahRLz8=
+			1SkKy9lz9TPJ3f/npfSYLt5C4sQWIduI7sai0hT9gBU=
 			</data>
 		</dict>
 		<key>Modules/IVVAS.swiftmodule/arm.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			AgWJ4Q3pI0SNR82SOnX6AJ1RoDY=
+			mmabvkXp3ThNJAg3OF5Tx+n6li8=
 			</data>
 			<key>hash2</key>
 			<data>
-			G9lw0o2XjU2sNuf93XelngJui6Cf8xFaOf1okeBOjmQ=
+			GL18BGpZn/xNNOrTDa9Hwz9zK2w+JUZqEl/OSS8ulbQ=
 			</data>
 		</dict>
 		<key>Modules/IVVAS.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			KKY8tGSTq+Zt+HmFTHL/4lN0HQs=
+			BUpZIN7WtuABqxJDauEZkQgqbnA=
 			</data>
 			<key>hash2</key>
 			<data>
-			pm78SYRftHUqMV/tCTTIDnDsRHuyg7lGTtTdxfVm48s=
+			2NwY2iwFosZvEs20JKSKIZhKQ1jIkcVGoET8gjx86gE=
 			</data>
 		</dict>
 		<key>Modules/IVVAS.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			nvl5EwRV76OvEAT75qHOZpbqYGs=
+			jYDtx63il22y3Pq1QwILfplIeEw=
 			</data>
 			<key>hash2</key>
 			<data>
-			K4eaXuEy3H2UaRbZP6onn5xkMEhgWbin5CNKkcApEHM=
+			lXFozdERuUArGTSzvyNZvAHiXf7qtJo2l+ARoykMjDw=
 			</data>
 		</dict>
 		<key>Modules/IVVAS.swiftmodule/arm64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			KKY8tGSTq+Zt+HmFTHL/4lN0HQs=
+			BUpZIN7WtuABqxJDauEZkQgqbnA=
 			</data>
 			<key>hash2</key>
 			<data>
-			pm78SYRftHUqMV/tCTTIDnDsRHuyg7lGTtTdxfVm48s=
+			2NwY2iwFosZvEs20JKSKIZhKQ1jIkcVGoET8gjx86gE=
 			</data>
 		</dict>
 		<key>Modules/IVVAS.swiftmodule/arm64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			nvl5EwRV76OvEAT75qHOZpbqYGs=
+			jYDtx63il22y3Pq1QwILfplIeEw=
 			</data>
 			<key>hash2</key>
 			<data>
-			K4eaXuEy3H2UaRbZP6onn5xkMEhgWbin5CNKkcApEHM=
+			lXFozdERuUArGTSzvyNZvAHiXf7qtJo2l+ARoykMjDw=
 			</data>
 		</dict>
 		<key>Modules/IVVAS.swiftmodule/armv7-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			FSb0yA59JsGtVKjV1g7lCSvrkBQ=
+			x2Fcz8rkrZuX/GzxMmtWpqBEiZc=
 			</data>
 			<key>hash2</key>
 			<data>
-			x5ETZ9uM//vAx8BOU9affGgSE7cY8mhU1nY33ahRLz8=
+			1SkKy9lz9TPJ3f/npfSYLt5C4sQWIduI7sai0hT9gBU=
 			</data>
 		</dict>
 		<key>Modules/IVVAS.swiftmodule/armv7-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			AgWJ4Q3pI0SNR82SOnX6AJ1RoDY=
+			mmabvkXp3ThNJAg3OF5Tx+n6li8=
 			</data>
 			<key>hash2</key>
 			<data>
-			G9lw0o2XjU2sNuf93XelngJui6Cf8xFaOf1okeBOjmQ=
+			GL18BGpZn/xNNOrTDa9Hwz9zK2w+JUZqEl/OSS8ulbQ=
 			</data>
 		</dict>
 		<key>Modules/IVVAS.swiftmodule/armv7.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			FSb0yA59JsGtVKjV1g7lCSvrkBQ=
+			x2Fcz8rkrZuX/GzxMmtWpqBEiZc=
 			</data>
 			<key>hash2</key>
 			<data>
-			x5ETZ9uM//vAx8BOU9affGgSE7cY8mhU1nY33ahRLz8=
+			1SkKy9lz9TPJ3f/npfSYLt5C4sQWIduI7sai0hT9gBU=
 			</data>
 		</dict>
 		<key>Modules/IVVAS.swiftmodule/armv7.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			AgWJ4Q3pI0SNR82SOnX6AJ1RoDY=
+			mmabvkXp3ThNJAg3OF5Tx+n6li8=
 			</data>
 			<key>hash2</key>
 			<data>
-			G9lw0o2XjU2sNuf93XelngJui6Cf8xFaOf1okeBOjmQ=
+			GL18BGpZn/xNNOrTDa9Hwz9zK2w+JUZqEl/OSS8ulbQ=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

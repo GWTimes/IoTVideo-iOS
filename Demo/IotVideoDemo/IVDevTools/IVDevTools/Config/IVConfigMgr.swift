@@ -21,10 +21,19 @@ public class IVConfigMgr: NSObject {
     
     public static var allConfigs: [Config] = {
         if let data = UserDefaults.standard.data(forKey: kAllConfigKeys),
-            let cfgs = try? JSONDecoder().decode([Config].self, from: data) {
+            let cfgs = try? JSONDecoder().decode([Config].self, from: data), !cfgs.isEmpty {
             return cfgs
         }
-        return []
+//        直接修改默认值： PS 只给 IoTVideoDemo使用， 其他项目请还原
+//        return []
+        
+//        1157493686468 腾讯测试
+        
+        return [Config(name: "测试服务器", key: "IOT_HOST_TYPE", value: "0", enable: true),
+                Config(name: "正式服务器", key: "IOT_HOST_TYPE", value: "1", enable: false),
+                Config(name: "PID 103", key: "IOT_PID", value: "440234147841", enable: true),
+                Config(name: "PID 107", key: "IOT_PID", value: "461708984449", enable: false),
+                Config(name: "PID 腾讯测试", key: "IOT_PID", value: "1157493686468", enable: false)]
     }() {
         didSet {
             let data = try? JSONEncoder().encode(allConfigs)

@@ -3,7 +3,7 @@
 //  IotVideoDemo
 //
 //  Created by ZhaoYong on 2019/12/3.
-//  Copyright © 2019 gwell. All rights reserved.
+//  Copyright © 2019 Tencentcs. All rights reserved.
 //
 
 import UIKit
@@ -21,7 +21,7 @@ class IVShareDeviceByQRCodeVC: UIViewController, IVDeviceAccessable {
     override func viewDidLoad() {
         super.viewDidLoad()
         if let device = device {
-            didTF.text      = device.tencentID
+            didTF.text      = device.deviceID
             devNameTF.text  = device.deviceName
             userNameTF.text = UserDefaults.standard.string(forKey: demo_userName)
         } 
@@ -29,7 +29,7 @@ class IVShareDeviceByQRCodeVC: UIViewController, IVDeviceAccessable {
     
     @IBAction func createQRCode(_ sender: UIButton) {
         
-        logInfo("tencentID:", device.tencentID)
+        logInfo("deviceID:", device.deviceID)
         
         view.endEditing(true)
         let hud = ivLoadingHud()
@@ -43,7 +43,7 @@ class IVShareDeviceByQRCodeVC: UIViewController, IVDeviceAccessable {
             var find = false
             var has = false
             devices.forEach { (model) in
-                if model.devId == self.device.tencentID {
+                if model.devId == self.device.deviceID {
                     if model.shareType == .owner  {
                         find = true
                     }
@@ -64,7 +64,7 @@ class IVShareDeviceByQRCodeVC: UIViewController, IVDeviceAccessable {
             }
             
             
-            IVAccountMgr.shared.shareDevieForQRCode(deviceId: self.device.tencentID, deviceName: self.devNameTF.text ?? "", userName: self.userNameTF.text ?? "") { (json, error) in
+            IVAccountMgr.shared.shareDevieForQRCode(deviceId: self.device.deviceID, deviceName: self.devNameTF.text ?? "", userName: self.userNameTF.text ?? "") { (json, error) in
                 hud.hide()
                 guard let json = json else {
                     showError(error!)

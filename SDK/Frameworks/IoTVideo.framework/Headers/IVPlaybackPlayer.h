@@ -3,7 +3,7 @@
 //  IoTVideo
 //
 //  Created by JonorZhang on 2019/11/20.
-//  Copyright © 2019 gwell. All rights reserved.
+//  Copyright © 2019 Tencentcs. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -62,12 +62,6 @@ typedef void (^PlaybackListCallback)(IVPlaybackPage *_Nullable page, NSError *_N
 
 /// 恢复播放
 - (int)resume;
-
-/// 快进播放
-- (void)fastForward;
-
-/// 取消快进播放
-- (void)cancelFastForward;
 
 /// 获取一页回放文件列表
 /// @param deviceId 设备ID

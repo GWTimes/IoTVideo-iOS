@@ -3,15 +3,16 @@
 //  IotVideoDemo
 //
 //  Created by ZhaoYong on 2019/12/18.
-//  Copyright © 2019 gwell. All rights reserved.
+//  Copyright © 2019 Tencentcs. All rights reserved.
 //
 
 import UIKit
-import IoTVideo.IVQRCodeNetConfig
+import IoTVideo.IVNetConfig
 import IoTVideo.IVMessageMgr
 import IVAccountMgr
 import SwiftyJSON
 
+//设备扫手机的二维码
 class IVQRCodeAddDevice: UIViewController {
 
     @IBOutlet weak var ssidTF: UITextField!
@@ -28,7 +29,7 @@ class IVQRCodeAddDevice: UIViewController {
     @IBAction func createQRCode(_ sender: Any) {
         view.endEditing(true)
         let hud = ivLoadingHud()
-        IVQRCodeNetConfig.createQRCode(withWifiName: ssidTF.text ?? "", wifiPwd: pwdTF.text, qrSize: QRImgView.frame.size, completionHandler: { (image, error) in
+        IVNetConfig.qrCode.createQRCode(withWifiName: ssidTF.text ?? "", wifiPwd: pwdTF.text, qrSize: QRImgView.frame.size, completionHandler: { (image, error) in
             hud.hide()
             if let error = error {
                 showError(error as NSError)

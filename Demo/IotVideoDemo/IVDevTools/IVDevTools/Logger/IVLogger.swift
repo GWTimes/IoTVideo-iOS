@@ -1,9 +1,9 @@
 //
-//  GWLogger.swift
+//  IVLogger.swift
 //  Yoosee
 //
 //  Created by JonorZhang on 2019/4/10.
-//  Copyright © 2019 Gwell. All rights reserved.
+//  Copyright © 2019 Tencentcs. All rights reserved.
 //
 
 import Foundation
@@ -59,27 +59,17 @@ fileprivate class Log: NSObject {
     
     // 2019-05-17 08:30:53.004 [D] <BaseViewController.m:22> -[BaseViewController dealloc] 控制器销毁 MineController
     override var description: String {
-        return detailDescription
-    }
-    
-    var briefDescription: String {
-    #if DEBUG
-        let location = ":\(line) "
-        return dateDesc + level.description + location + message
-    #else
         let location = " <\(file):\(line)> "
+    #if DEBUG
+        if IVLogger.isXcodeRunning {
+            return dateDesc + level.description + location + message
+        } else {
+            return dateDesc + location + message
+        }
+    #else
         return dateDesc + location + message
     #endif
-    }
-
-    var detailDescription: String {
-//    #if DEBUG
-//        let location = " <\(file):\(line)> \(function) "
-//        return dateDesc + level.description + location + message
-//    #else
-        let location = " <\(file):\(line)> "
-        return dateDesc + location + message
-//    #endif
+        
     }
 
     static func == (lhs: Log, rhs: Log) -> Bool {
@@ -104,19 +94,19 @@ fileprivate class Log: NSObject {
 
 @objc public class IVLogger: NSObject {
     
-    private static let serialQueue = DispatchQueue(label: "gw.logger.serialQueue")
+    private static let serialQueue = DispatchQueue(label: "iv.logger.serialQueue")
     
     /// 日志的最高级别, 默认Debug:.debug / Release:.info。 log.level > maxLevel 的将会忽略
-    internal static var maxLevel: Level = IVLogSettingViewController.logLevel {
+    public static var maxLevel: Level = IVLogSettingViewController.logLevel {
         didSet {
             if maxLevel != IVLogSettingViewController.logLevel {
                 IVLogSettingViewController.logLevel = maxLevel
             }
         }
     }
+
     
-    @objc public static func register(logLevel: Level = .debug) {
-        maxLevel = logLevel
+    @objc public static func register() {
         registerCrashHandler { (crashLog) in
             log(.fatal, message: crashLog)
         }
@@ -139,12 +129,19 @@ fileprivate class Log: NSObject {
 
     @objc public static func logMessage(_ message: String?) {
         guard let message = message else { return }
-    #if DEBUG
-        print(message)
-    #endif
-        serialQueue.async {
-            IVFileLogger.shared.insertText(message)
-        }
+//#if DEBUG
+//        if IVLogger.isXcodeRunning {
+            print(message)
+//        } else {
+//            serialQueue.async {
+//                IVFileLogger.shared.insertText(message)
+//            }
+//        }
+//#else
+//        serialQueue.async {
+//            IVFileLogger.shared.insertText(message)
+//        }
+//#endif
     }
     
     @objc public static var isXcodeRunning: Bool = {
@@ -156,7 +153,6 @@ fileprivate class Log: NSObject {
         let _ = sysctl(&mib, u_int(mib.count), &info, &size, nil, 0)
         
         let isxcode = ( (info.kp_proc.p_flag & P_TRACED) != 0 )
-        log(.info, message: "isXcodeRunning:\(isxcode)")
 
         return isxcode
     }()

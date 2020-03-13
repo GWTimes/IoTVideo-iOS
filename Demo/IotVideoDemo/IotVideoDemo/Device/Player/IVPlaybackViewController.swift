@@ -3,7 +3,7 @@
 //  IotVideoDemo
 //
 //  Created by JonorZhang on 2019/12/11.
-//  Copyright © 2019 gwell. All rights reserved.
+//  Copyright © 2019 Tencentcs. All rights reserved.
 //
 
 import UIKit
@@ -37,18 +37,22 @@ class IVPlaybackViewController: IVDevicePlayerViewController {
         timelineView?.delegate = self
         seekTimeLabel.isHidden = true
 
-        var list = [IVPlaybackItem]()
-
+        let hud = ivLoadingHud()
+        
         IVPlaybackPlayer.getPlaybackList(ofDevice: device.deviceID, pageIndex: 0, countPerPage: 50, startTime: 0, endTime: Date().timeIntervalSince1970, completionHandler: { (page, err) in
+            hud.hide()
+
             guard let items = page?.items else {
                 logError(err as Any)
                 return
             }
             logInfo(items)
-            list += items
+            self.playbackList += items
+
         })
         
     #if false //假数据
+        var list = [IVPlaybackItem]()
         let tb = 1582624578.0
         let times = [(0, 10.3), (15.123, 30.345), (30.5, 40.213), (60.7, 93.2), (93.5, 100), (200, 1000), (1100, 2000), (2020, 4000), (5000, 7060), (8100, 9000), (10086, 11888), (11986, 15888), (17986, 21888), (70000, 86400)]
         for (t0, t1) in times {
@@ -59,9 +63,8 @@ class IVPlaybackViewController: IVDevicePlayerViewController {
             item.type = ""
             list.append(item)
         }
-    #endif
-        
         self.playbackList += list
+    #endif
     }
     
     override func viewDidAppear(_ animated: Bool) {

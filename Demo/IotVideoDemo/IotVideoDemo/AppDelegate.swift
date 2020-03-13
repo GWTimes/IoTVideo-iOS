@@ -3,14 +3,13 @@
 //  IotVideoDemo
 //
 //  Created by ZhaoYong on 2019/11/19.
-//  Copyright © 2019 gwell. All rights reserved.
+//  Copyright © 2019 Tencentcs. All rights reserved.
 //
 
 import UIKit
 import IoTVideo
 import UserNotifications
 import IVDevTools
-import IVNetwork
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -33,26 +32,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         var options: [IVOptionKey : String] = [
-//            .ivCid : "103",
 //            .productId : "440234147841",
-            .ivCid : "107",
             .productId : "461708984449",
             .hostType : "0"
         ]
         
-        let userInfoKeys: [IVOptionKey] = [.hostWeb, .hostP2P, .hostType, .ivCid, .productId]
+        let userInfoKeys: [IVOptionKey] = [.hostWeb, .hostP2P, .hostType, .productId]
         for key in userInfoKeys {
             if let cfg = IVConfigMgr.allConfigs.first(where: { $0.enable && $0.key == key.rawValue }) {
                 options[key] = cfg.value
             }
         }
         
-        IoTVideo.sharedInstance.setupIvCid(options[.ivCid]!, productId: options[.productId]!, options: options)
-        
+        IoTVideo.sharedInstance.setupProductId(options[.productId]!, options: options)
         IoTVideo.sharedInstance.logCallback = logMessage
+    #if DEBUG
+        IoTVideo.sharedInstance.debugMode = true
+    #endif
 //        sleep(1)
 //        UIApplication.shared.clearLaunchScreenCache()
-        
         return true
     }
 
@@ -91,9 +89,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             return
         }
         
-        IVNetwork.shared.request(methodType: .PUT, urlString: "user/pushTokenBind", params: ["xingeToken": token]) { (json, error) in
-            
-        }
     }
     
     func application(_ application: UIApplication, didChangeStatusBarOrientation oldStatusBarOrientation: UIInterfaceOrientation) {

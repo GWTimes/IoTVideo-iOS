@@ -412,7 +412,7 @@ enum IVFeedBackType : NSInteger;
 ///     设备主人查询设备被分享的所有用户列表
 ///   </li>
 /// </ul>
-/// \param deviceId 设备ID
+/// \param deviceId 设备id
 ///
 /// \param responseHandler 回调处理
 ///
@@ -423,7 +423,7 @@ enum IVFeedBackType : NSInteger;
 ///     设备主人主动通过被分享者的用户id(IvUid)进行分享，由分享者调用。
 ///   </li>
 /// </ul>
-/// \param deviceId 设备ID
+/// \param deviceId 设备id
 ///
 /// \param accountId 访客账号ID
 ///
@@ -433,7 +433,7 @@ enum IVFeedBackType : NSInteger;
 /// 分享设备 - 生成分享二维码token
 /// <ul>
 ///   <li>
-///     分享者生成二维码时调用此接口,把设备id，用户名称、设备名称传递到IotVideo平台中，由平台返回二维码token。
+///     分享者生成二维码时调用此接口,把腾讯ID，用户名称、设备名称传递到IotVideo平台中，由平台返回二维码token。
 ///   </li>
 /// </ul>
 /// \param deviceId 设备id
@@ -992,7 +992,7 @@ enum IVFeedBackType : NSInteger;
 ///     设备主人查询设备被分享的所有用户列表
 ///   </li>
 /// </ul>
-/// \param deviceId 设备ID
+/// \param deviceId 设备id
 ///
 /// \param responseHandler 回调处理
 ///
@@ -1003,7 +1003,7 @@ enum IVFeedBackType : NSInteger;
 ///     设备主人主动通过被分享者的用户id(IvUid)进行分享，由分享者调用。
 ///   </li>
 /// </ul>
-/// \param deviceId 设备ID
+/// \param deviceId 设备id
 ///
 /// \param accountId 访客账号ID
 ///
@@ -1013,7 +1013,7 @@ enum IVFeedBackType : NSInteger;
 /// 分享设备 - 生成分享二维码token
 /// <ul>
 ///   <li>
-///     分享者生成二维码时调用此接口,把设备id，用户名称、设备名称传递到IotVideo平台中，由平台返回二维码token。
+///     分享者生成二维码时调用此接口,把腾讯ID，用户名称、设备名称传递到IotVideo平台中，由平台返回二维码token。
 ///   </li>
 /// </ul>
 /// \param deviceId 设备id

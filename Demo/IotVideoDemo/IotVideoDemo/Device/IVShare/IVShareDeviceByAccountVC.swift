@@ -3,7 +3,7 @@
 //  IotVideoDemo
 //
 //  Created by ZhaoYong on 2019/12/19.
-//  Copyright © 2019 gwell. All rights reserved.
+//  Copyright © 2019 Tencentcs. All rights reserved.
 //
 
 import UIKit
@@ -35,7 +35,7 @@ class IVShareDeviceByAccountVC: UIViewController, IVDeviceAccessable {
             var find = false
             var has = false
             devices.forEach { (model) in
-                if model.devId == self.device.tencentID {
+                if model.devId == self.device.deviceID {
                     if model.shareType == .owner  {
                         find = true
                     }
@@ -63,7 +63,7 @@ class IVShareDeviceByAccountVC: UIViewController, IVDeviceAccessable {
                 }
                 let json = JSON(parseJSON: jsonStr!)
                 if let ivUid = json["data"]["ivUid"].string {
-                    IVAccountMgr.shared.shareDeviceForVisitor(deviceId: self.device.tencentID, accountId: ivUid) { (jsonStr, error) in
+                    IVAccountMgr.shared.shareDeviceForVisitor(deviceId: self.device.deviceID, accountId: ivUid) { (jsonStr, error) in
                         hud.hide()
                         guard let json = jsonStr else {
                             showError(error!)
@@ -95,7 +95,7 @@ class IVShareDeviceByAccountVC: UIViewController, IVDeviceAccessable {
             var find = false
             var has = false
             devices.forEach { (model) in
-                if model.devId == self.device.tencentID {
+                if model.devId == self.device.deviceID {
                     if model.shareType == .owner  {
                         find = true
                     }
@@ -123,7 +123,7 @@ class IVShareDeviceByAccountVC: UIViewController, IVDeviceAccessable {
                 }
                 let json = JSON(parseJSON: jsonStr!)
                 if let ivUid = json["data"]["ivUid"].string {
-                    IVAccountMgr.shared.shareDeviceForVisitor(deviceId: self.device.tencentID, accountId: ivUid) { (jsonStr, error) in
+                    IVAccountMgr.shared.shareDeviceForVisitor(deviceId: self.device.deviceID, accountId: ivUid) { (jsonStr, error) in
                         hud.hide()
                         guard let json = jsonStr else {
                             showError(error!)

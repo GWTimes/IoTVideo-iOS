@@ -3,7 +3,7 @@
 //  IVNetwork
 //
 //  Created by ZhaoYong on 2020/2/24.
-//  Copyright © 2020 DophiGo. All rights reserved.
+//  Copyright © 2020 Tencentcs. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

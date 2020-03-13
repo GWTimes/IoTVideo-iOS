@@ -3,7 +3,7 @@
 //  IotVideoDemo
 //
 //  Created by ZhaoYong on 2020/1/11.
-//  Copyright © 2020 gwell. All rights reserved.
+//  Copyright © 2020 Tencentcs. All rights reserved.
 //
 
 import UIKit
@@ -38,7 +38,7 @@ class IVVASGetPlaybackListVC: UIViewController, IVDeviceAccessable {
         }
         dataSource = []
         let hud = ivLoadingHud()
-        IVVAS.shared.getVideoPlaybackList(deviceId: device.tencentID,
+        IVVAS.shared.getVideoPlaybackList(deviceId: device.deviceID,
                                           timezone: 28800,
                                           startTime: self.beginTF.text! + "000",
                                           endTime: self.endTF.text! + "000") { (json, error) in

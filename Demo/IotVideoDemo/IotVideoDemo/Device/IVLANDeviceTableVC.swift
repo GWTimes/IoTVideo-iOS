@@ -3,21 +3,21 @@
 //  IotVideoDemo
 //
 //  Created by JonorZhang on 2019/12/17.
-//  Copyright © 2019 gwell. All rights reserved.
+//  Copyright © 2019 Tencentcs. All rights reserved.
 //
 
 import UIKit
-import IoTVideo.IVLanNetConfig
+import IoTVideo.IVNetConfig
 import IVAccountMgr
+import SwiftyJSON
 
 class IVLANDeviceTableVC: UITableViewController {
     
-    var mineDeviceId: [String] = []
     var dataSource: [IVLANDevice] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dataSource = IVLanNetConfig.getDeviceList()
+        dataSource = IVNetConfig.lan.getDeviceList()
     }
     
     // MARK: - Table view data source
@@ -32,40 +32,41 @@ class IVLANDeviceTableVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LANDeviceCell", for: indexPath)
-        cell.textLabel?.text = "did: \( dataSource[indexPath.row].deviceID)"
-        cell.detailTextLabel?.text = "tid: \(dataSource[indexPath.row].tencentID)"
+        cell.textLabel?.text = dataSource[indexPath.row].deviceID
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let dev = dataSource[indexPath.row]
-        let dstVC = UIStoryboard(name: "IVDeviceAccess", bundle: .main).instantiateInitialViewController() as! IVDeviceAccessVC
-        if mineDeviceId.contains(dev.tencentID) {
-            dstVC.device = IVDevice(deviceID: dev.deviceID, tencentID: dev.tencentID, productID: dev.productID, deviceName: "\"\"", serialNumber: dev.serialNumber, version: dev.version, macAddr: dev.macAddr)
+        let dstVC = UIStoryboard(name: "IVDeviceMgr", bundle: .main).instantiateInitialViewController() as! IVDeviceAccessable
+        dstVC.device = IVDevice(dev)
+
+        if userDeviceList.contains(where: { $0.devId == dev.deviceID }) {
             self.navigationController?.pushViewController(dstVC, animated: true)
         } else {
-            let alert = UIAlertController(title: "绑定设备", message: "绑定：\n deviceId:\(dev.deviceID) \n tencentId:\(dev.tencentID) \n 这台设备?", preferredStyle: .alert)
-            let ok = UIAlertAction(title: "绑定", style: .default) { (_) in
-                UIApplication.shared.isNetworkActivityIndicatorVisible = true
-                IVAccountMgr.shared.addDevice(deviceId: dev.tencentID) { (json, error) in
-                    UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            let alert = UIAlertController(title: nil, message: "您未拥有该设备，您希望如何操作？", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "添加为我的设备", style: .default) { (_) in
+                let hud = ivLoadingHud()
+                
+                addDevice(deviceId: dev.deviceID, role: .owner, responseHandler: { (json, error) in
+                    hud.hide()
                     if let error = error {
                         showError(error)
                         return
                     }
-                    self.mineDeviceId.append(dev.tencentID)
-                    dstVC.device = IVDevice(deviceID: dev.deviceID, tencentID: dev.tencentID, productID: dev.productID, deviceName: "\"\"", serialNumber: dev.serialNumber, version: dev.version, macAddr: dev.macAddr)
-                    self.navigationController?.pushViewController(dstVC, animated: true)
-                }
+                    
+                    guard let _ = parseJson(json) else {
+                        return
+                    }
+                    
+                    userDeviceList.append(IVDeviceModel(dev))
+                    self.navigationController?.popToRootViewController(animated: true)
+                })
             }
-            let cancel = UIAlertAction(title: "取消", style: .cancel, handler: nil)
-            let hacking = UIAlertAction(title: "☠️Hacking", style: .destructive) { [weak self](_) in
-                if let vc = UIStoryboard(name: "IVDeviceAccess", bundle: .main).instantiateInitialViewController() as? IVDeviceAccessVC {
-                    guard let `self` = self else { return }
-                    let dev = self.dataSource[indexPath.row]
-                    vc.device = IVDevice(deviceID: dev.deviceID, tencentID: dev.tencentID, productID: dev.productID, deviceName: "\"\"", serialNumber: dev.serialNumber, version: dev.version, macAddr: dev.macAddr)
-                    self.navigationController?.pushViewController(vc, animated: true)
-                }
+            
+            let cancel = UIAlertAction(title: "我再想想", style: .cancel, handler: nil)
+            let hacking = UIAlertAction(title: "☠️调试开发", style: .destructive) { _ in
+                self.navigationController?.pushViewController(dstVC, animated: true)
             }
             alert.addAction(ok)
             alert.addAction(cancel)

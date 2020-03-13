@@ -3,7 +3,7 @@
 //  IotVideoDemo
 //
 //  Created by JonorZhang on 2019/8/27.
-//  Copyright © 2019 Gwell. All rights reserved.
+//  Copyright © 2019 Tencentcs. All rights reserved.
 //
 
 import Foundation
@@ -64,7 +64,7 @@ var devToolsAssistant: IVDevToolsAssistant {
 }
 
 func registerLogger() {
-    IVLogger.register(logLevel: .debug)
+    IVLogger.register()
 }
 
 fileprivate func unwrap<T: Any>(_ any: T) -> T {

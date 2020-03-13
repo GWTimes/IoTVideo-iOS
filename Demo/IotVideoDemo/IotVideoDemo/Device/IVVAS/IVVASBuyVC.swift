@@ -3,7 +3,7 @@
 //  IotVideoDemo
 //
 //  Created by ZhaoYong on 2020/1/11.
-//  Copyright © 2020 gwell. All rights reserved.
+//  Copyright © 2020 Tencentcs. All rights reserved.
 //
 
 import UIKit
@@ -60,7 +60,7 @@ class IVVASBuyVC: UIViewController, IVDeviceAccessable{
         }
         let len = end - begin;
         let hud = ivLoadingHud()
-        IVVAS.shared.buyCloudPackage(deviceId: device.tencentID, packgageId: "yc1m3d", type: self.chooseType, startTime: self.beginTF.text!, endTime: self.endTF.text!, storageLen: "\(len)") { (json, error) in
+        IVVAS.shared.buyCloudPackage(deviceId: device.deviceID, packgageId: "yc1m3d", type: self.chooseType, startTime: self.beginTF.text!, endTime: self.endTF.text!, storageLen: "\(len)") { (json, error) in
             hud.hide()
              showAlert(msg: "\(String(describing: json)) \n \(String(describing: error))")
         }

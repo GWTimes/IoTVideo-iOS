@@ -3,7 +3,7 @@
 //  IotVideoDemo
 //
 //  Created by JonorZhang on 2019/9/27.
-//  Copyright © 2018年 Gwell. All rights reserved.
+//  Copyright © 2018年 Tencentcs. All rights reserved.
 //
 
 import UIKit

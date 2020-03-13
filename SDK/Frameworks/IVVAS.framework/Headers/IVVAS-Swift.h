@@ -249,7 +249,7 @@ enum IVVASOrderPayType : NSInteger;
 ///     查询设备已经购买的套餐服务概要，主要是服务剩余时间（包括事件服务、全时服务）。
 ///   </li>
 /// </ul>
-/// \param deviceId 设备id
+/// \param deviceId 腾讯id
 ///
 /// \param responseHandler 回调
 ///
@@ -260,13 +260,13 @@ enum IVVASOrderPayType : NSInteger;
 ///     查询设备所有支持的套餐服务详情列表，包括已激活、未激活、暂停的服务。
 ///   </li>
 /// </ul>
-/// \param deviceId 设备id
+/// \param deviceId 腾讯id
 ///
 /// \param responseHandler 回调
 ///
 - (void)queryServiceListWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 生成订单
-/// \param deviceId 设备id
+/// \param deviceId 腾讯id
 ///
 /// \param packageNo 套餐编号
 ///
@@ -289,7 +289,7 @@ enum IVVASOrderPayType : NSInteger;
 ///     终端用户查询已购买的订单列表信息。
 ///   </li>
 /// </ul>
-/// \param deviceId 设备id
+/// \param deviceId 腾讯id
 ///
 /// \param orderStatus 订单状态
 ///
@@ -302,7 +302,7 @@ enum IVVASOrderPayType : NSInteger;
 ///     查看已支付订单、未支付订单和未使用的优惠券总数。
 ///   </li>
 /// </ul>
-/// \param deviceId 设备id
+/// \param deviceId 腾讯id
 ///
 /// \param responseHandler 回调
 ///
@@ -353,7 +353,7 @@ enum IVVASOrderPayType : NSInteger;
 ///     用于终端用户在云存页面中对云存服务时间内的日期进行标注，区分出是否有云存视频文件。
 ///   </li>
 /// </ul>
-/// \param deviceId 设备id
+/// \param deviceId 腾讯id
 ///
 /// \param timezone 相对于0时区的秒数，例如东八区28800
 ///
@@ -366,7 +366,7 @@ enum IVVASOrderPayType : NSInteger;
 ///     终端用户获取云存储的m3u8列表进行回放，同时根据返回的列表对时间轴进行渲染。
 ///   </li>
 /// </ul>
-/// \param deviceId 设备id
+/// \param deviceId：设备id 
 ///
 /// \param timezone 相对于0时区的秒数，例如东八区28800
 ///
@@ -378,7 +378,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 - (void)getVideoPlaybackListWithDeviceId:(NSString * _Nonnull)deviceId timezone:(NSInteger)timezone startTime:(NSString * _Nonnull)startTime endTime:(NSString * _Nonnull)endTime responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 倍速回放
-/// \param deviceId 设备id
+/// \param deviceId 腾讯id
 ///
 /// \param startTime 倍速回放的开始时间
 ///
@@ -393,7 +393,7 @@ enum IVVASOrderPayType : NSInteger;
 ///     终端用户在云存页面中对一段时间内的视频文件下载。
 ///   </li>
 /// </ul>
-/// \param deviceId 设备id
+/// \param deviceId 腾讯id
 ///
 /// \param timezone 相对于0时区的秒数，例如东八区28800
 ///
@@ -403,7 +403,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 - (void)downloadVideoWithDeviceId:(NSString * _Nonnull)deviceId timezone:(NSInteger)timezone dateTime:(NSString * _Nonnull)dateTime responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 事件列表查询
-/// \param deviceId 设备id
+/// \param deviceId 腾讯id
 ///
 /// \param startTime 事件告警开始时间
 ///
@@ -417,7 +417,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 - (void)getEventListWithDeviceId:(NSString * _Nonnull)deviceId startTime:(NSString * _Nonnull)startTime endTime:(NSString * _Nullable)endTime lastId:(NSInteger)lastId pageSize:(NSInteger)pageSize responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 事件删除（批量）
-/// \param eventIds 设备id 数组
+/// \param eventIds 腾讯id 数组
 ///
 /// \param responseHandler 回调
 ///
@@ -450,7 +450,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 - (void)queryVoucherWithVoucherCode:(NSString * _Nonnull)voucherCode responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 兑换码兑换对应的商品（优惠活动的套餐信息）
-/// \param deviceId 设备id
+/// \param deviceId 腾讯id
 ///
 /// \param voucherCode 兑换码
 ///
@@ -741,7 +741,7 @@ enum IVVASOrderPayType : NSInteger;
 ///     查询设备已经购买的套餐服务概要，主要是服务剩余时间（包括事件服务、全时服务）。
 ///   </li>
 /// </ul>
-/// \param deviceId 设备id
+/// \param deviceId 腾讯id
 ///
 /// \param responseHandler 回调
 ///
@@ -752,13 +752,13 @@ enum IVVASOrderPayType : NSInteger;
 ///     查询设备所有支持的套餐服务详情列表，包括已激活、未激活、暂停的服务。
 ///   </li>
 /// </ul>
-/// \param deviceId 设备id
+/// \param deviceId 腾讯id
 ///
 /// \param responseHandler 回调
 ///
 - (void)queryServiceListWithDeviceId:(NSString * _Nonnull)deviceId responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 生成订单
-/// \param deviceId 设备id
+/// \param deviceId 腾讯id
 ///
 /// \param packageNo 套餐编号
 ///
@@ -781,7 +781,7 @@ enum IVVASOrderPayType : NSInteger;
 ///     终端用户查询已购买的订单列表信息。
 ///   </li>
 /// </ul>
-/// \param deviceId 设备id
+/// \param deviceId 腾讯id
 ///
 /// \param orderStatus 订单状态
 ///
@@ -794,7 +794,7 @@ enum IVVASOrderPayType : NSInteger;
 ///     查看已支付订单、未支付订单和未使用的优惠券总数。
 ///   </li>
 /// </ul>
-/// \param deviceId 设备id
+/// \param deviceId 腾讯id
 ///
 /// \param responseHandler 回调
 ///
@@ -845,7 +845,7 @@ enum IVVASOrderPayType : NSInteger;
 ///     用于终端用户在云存页面中对云存服务时间内的日期进行标注，区分出是否有云存视频文件。
 ///   </li>
 /// </ul>
-/// \param deviceId 设备id
+/// \param deviceId 腾讯id
 ///
 /// \param timezone 相对于0时区的秒数，例如东八区28800
 ///
@@ -858,7 +858,7 @@ enum IVVASOrderPayType : NSInteger;
 ///     终端用户获取云存储的m3u8列表进行回放，同时根据返回的列表对时间轴进行渲染。
 ///   </li>
 /// </ul>
-/// \param deviceId 设备id
+/// \param deviceId：设备id 
 ///
 /// \param timezone 相对于0时区的秒数，例如东八区28800
 ///
@@ -870,7 +870,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 - (void)getVideoPlaybackListWithDeviceId:(NSString * _Nonnull)deviceId timezone:(NSInteger)timezone startTime:(NSString * _Nonnull)startTime endTime:(NSString * _Nonnull)endTime responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 倍速回放
-/// \param deviceId 设备id
+/// \param deviceId 腾讯id
 ///
 /// \param startTime 倍速回放的开始时间
 ///
@@ -885,7 +885,7 @@ enum IVVASOrderPayType : NSInteger;
 ///     终端用户在云存页面中对一段时间内的视频文件下载。
 ///   </li>
 /// </ul>
-/// \param deviceId 设备id
+/// \param deviceId 腾讯id
 ///
 /// \param timezone 相对于0时区的秒数，例如东八区28800
 ///
@@ -895,7 +895,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 - (void)downloadVideoWithDeviceId:(NSString * _Nonnull)deviceId timezone:(NSInteger)timezone dateTime:(NSString * _Nonnull)dateTime responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 事件列表查询
-/// \param deviceId 设备id
+/// \param deviceId 腾讯id
 ///
 /// \param startTime 事件告警开始时间
 ///
@@ -909,7 +909,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 - (void)getEventListWithDeviceId:(NSString * _Nonnull)deviceId startTime:(NSString * _Nonnull)startTime endTime:(NSString * _Nullable)endTime lastId:(NSInteger)lastId pageSize:(NSInteger)pageSize responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 事件删除（批量）
-/// \param eventIds 设备id 数组
+/// \param eventIds 腾讯id 数组
 ///
 /// \param responseHandler 回调
 ///
@@ -942,7 +942,7 @@ enum IVVASOrderPayType : NSInteger;
 ///
 - (void)queryVoucherWithVoucherCode:(NSString * _Nonnull)voucherCode responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 /// 兑换码兑换对应的商品（优惠活动的套餐信息）
-/// \param deviceId 设备id
+/// \param deviceId 腾讯id
 ///
 /// \param voucherCode 兑换码
 ///

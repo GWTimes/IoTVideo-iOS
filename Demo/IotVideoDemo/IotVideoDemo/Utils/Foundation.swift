@@ -3,7 +3,7 @@
 //  IotVideoDemo
 //
 //  Created by JonorZhang on 2020/1/2.
-//  Copyright © 2020 gwell. All rights reserved.
+//  Copyright © 2020 Tencentcs. All rights reserved.
 //
 
 import Foundation

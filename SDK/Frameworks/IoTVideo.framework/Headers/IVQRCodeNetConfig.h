@@ -3,7 +3,7 @@
 //  IoTVideo
 //
 //  Created by ZhaoYong on 2019/12/18.
-//  Copyright © 2019 gwell. All rights reserved.
+//  Copyright © 2019 Tencentcs. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

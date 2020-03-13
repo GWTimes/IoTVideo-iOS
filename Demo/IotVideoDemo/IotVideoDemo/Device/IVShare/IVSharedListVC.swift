@@ -3,7 +3,7 @@
 //  IotVideoDemo
 //
 //  Created by ZhaoYong on 2020/1/7.
-//  Copyright © 2020 gwell. All rights reserved.
+//  Copyright © 2020 Tencentcs. All rights reserved.
 //
 
 import UIKit
@@ -31,7 +31,7 @@ class IVSharedListVC: UITableViewController, IVDeviceAccessable {
             var find = false
             var has = false
             devices.forEach { (model) in
-                if model.devId == self.device.tencentID {
+                if model.devId == self.device.deviceID {
                     if model.shareType == .owner  {
                         find = true
                     }
@@ -50,7 +50,7 @@ class IVSharedListVC: UITableViewController, IVDeviceAccessable {
                 showAlert(msg: "非设备主人")
                 return
             }
-            IVAccountMgr.shared.getVisitorList(deviceId: self.device.tencentID) { (json, error) in
+            IVAccountMgr.shared.getVisitorList(deviceId: self.device.deviceID) { (json, error) in
                 hud.hide()
                 guard let json = json else {
                     showError(error!)
@@ -80,7 +80,7 @@ class IVSharedListVC: UITableViewController, IVDeviceAccessable {
         tableView.deselectRow(at: indexPath, animated: true)
         IVPopupView(title: "取消分享", message: "取消此设备对该用户的分享", input: nil, actions: [.cancel(),.confirm({v in
             let hud = ivLoadingHud()
-            IVAccountMgr.shared.cancelSharing(deviceId: self.device!.tencentID, accountId: self.dataSource![indexPath.row], responseHandler: { (json, error) in
+            IVAccountMgr.shared.cancelSharing(deviceId: self.device!.deviceID, accountId: self.dataSource![indexPath.row], responseHandler: { (json, error) in
                 hud.hide()
                 if let error = error {
                     showError(error)

@@ -12,24 +12,28 @@
         <scene sceneID="EHf-IW-A2E">
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1BF-iN-w8f"/>
+                        <viewControllerLayoutGuide type="bottom" id="4M3-Mc-57D"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IotVideo Demo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="4ml-aj-WnB">
-                                <rect key="frame" x="16" y="108" width="382" height="68.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IoT Video Demo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="4ml-aj-WnB">
+                                <rect key="frame" x="16" y="108" width="382" height="69"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="57"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright © 2019 - 2020 Gwell. All Rights Reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="1" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HAG-5G-tgj">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright © 2019 - 2020 Tencentcs. All Rights Reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="1" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HAG-5G-tgj">
                                 <rect key="frame" x="16" y="825" width="382" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appLogo" translatesAutoresizingMaskIntoConstraints="NO" id="UGl-yf-4Ha">
-                                <rect key="frame" x="0.0" y="186.5" width="414" height="414"/>
+                                <rect key="frame" x="0.0" y="187" width="414" height="414"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="UGl-yf-4Ha" secondAttribute="height" multiplier="1:1" id="g3f-wW-pHH"/>
                                 </constraints>
@@ -37,17 +41,17 @@
                         </subviews>
                         <color key="backgroundColor" red="0.078431372549019607" green="0.69411764705882351" blue="0.61568627450980395" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="4ml-aj-WnB" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="64" id="40g-LS-KKf"/>
-                            <constraint firstItem="UGl-yf-4Ha" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="8D6-fg-FM5"/>
-                            <constraint firstItem="HAG-5G-tgj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="D2B-qC-Qvp"/>
-                            <constraint firstItem="4ml-aj-WnB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="QRJ-2f-9gA"/>
+                            <constraint firstItem="4ml-aj-WnB" firstAttribute="top" secondItem="1BF-iN-w8f" secondAttribute="bottom" constant="64" id="40g-LS-KKf"/>
+                            <constraint firstItem="UGl-yf-4Ha" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="8D6-fg-FM5"/>
+                            <constraint firstItem="HAG-5G-tgj" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="16" id="D2B-qC-Qvp"/>
+                            <constraint firstItem="4ml-aj-WnB" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="16" id="QRJ-2f-9gA"/>
                             <constraint firstItem="UGl-yf-4Ha" firstAttribute="top" secondItem="4ml-aj-WnB" secondAttribute="bottom" constant="10" id="Uyv-nC-uEm"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="HAG-5G-tgj" secondAttribute="trailing" constant="16" id="YbU-1X-UR4"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="4ml-aj-WnB" secondAttribute="trailing" constant="16" id="gMN-x4-wdT"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="HAG-5G-tgj" secondAttribute="bottom" constant="16" id="lnO-65-o2q"/>
-                            <constraint firstItem="UGl-yf-4Ha" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="rua-Rg-fE3"/>
+                            <constraint firstAttribute="trailing" secondItem="HAG-5G-tgj" secondAttribute="trailing" constant="16" id="YbU-1X-UR4"/>
+                            <constraint firstAttribute="trailing" secondItem="4ml-aj-WnB" secondAttribute="trailing" constant="16" id="gMN-x4-wdT"/>
+                            <constraint firstItem="4M3-Mc-57D" firstAttribute="top" secondItem="HAG-5G-tgj" secondAttribute="bottom" constant="16" id="lnO-65-o2q"/>
+                            <constraint firstItem="UGl-yf-4Ha" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailing" id="rua-Rg-fE3"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <viewLayoutGuide key="safeArea" id="yV0-T2-uD8"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>

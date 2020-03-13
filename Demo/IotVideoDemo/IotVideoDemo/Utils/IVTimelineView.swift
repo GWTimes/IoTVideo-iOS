@@ -3,7 +3,7 @@
 //  IotVideoDemo
 //
 //  Created by JonorZhang on 2020/1/8.
-//  Copyright © 2020 gwell. All rights reserved.
+//  Copyright © 2020 Tencentcs. All rights reserved.
 //
 
 import UIKit
@@ -60,7 +60,18 @@ class IVTimelineView: UIView {
     var currentTime: TimeInterval = 0 {
         didSet {
             DispatchQueue.main.async {
-                if self.hoverTime > 0 { return }
+                if self.collectionView.isDragging {
+                    print("isDragging")
+                    return
+                }
+                if self.collectionView.isTracking {
+                    print("isTracking")
+                    return
+                }
+                if self.collectionView.isDecelerating {
+                    print("isDecelerating")
+                    return
+                }
 
                 guard let first = self.dataSource.first else { return }
                 let offset = CGFloat(self.currentTime - first.startTime) * CGFloat(self.scale)
@@ -68,9 +79,6 @@ class IVTimelineView: UIView {
             }
         }
     }
-    
-    /// 滚动之后视图悬停时间
-    var hoverTime: TimeInterval = 0
     
     /// 缩放手势
     lazy var pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinchGestureHandler(_:)))
@@ -184,9 +192,7 @@ class IVTimelineView: UIView {
         if pinch.state == .began || pinch.state == .changed {
             self.scale *= Double(pinch.scale)
             pinch.scale = 1
-        }
-        
-        print(self.scale)
+        }        
     }
 }
 
@@ -254,45 +260,6 @@ private extension IVTimelineView {
             }
         }
         return items
-    }
-    
-    func didScrollHandler() {
-        DispatchQueue.main.async {
-            self.hoverTime += 1
-            DispatchQueue.main.asyncAfter(deadline: .now()+1) { [weak self] in
-                guard let `self` = self else { return }
-                self.hoverTime -= 1
-                if self.hoverTime > 0 { return }
-
-                for cell in self.collectionView.visibleCells {
-                    let newRect = self.collectionView.convert(cell.frame, to: self)
-                    let newCenter = self.collectionView.center
-                    
-                    guard newRect.contains(newCenter),
-                        let indexPath = self.collectionView.indexPath(for: cell) else {
-                            continue
-                    }
-                    
-                    let slice = self.timeSlices[indexPath.row]
-                    
-                    // 间隙不处理
-                    if slice.type == "gap" { return }
-                    
-                    guard let item = self.dataSource.first(where: { $0.startTime <= slice.startTime && $0.endTime >= slice.endTime }) else {
-                        print("没找到对应数据")
-                        return
-                    }
-                    
-                    let width0 = (slice.startTime - item.startTime) * self.scale
-                    let width1 = Double(newCenter.x - newRect.origin.x)
-                    let offset = width0 + width1
-                    let time = round(item.startTime + offset/self.scale)
-                    
-                    logInfo("seek: \(item.startTime) => \(time)")
-                    self.delegate?.timelineView(self, didSelect: item, at: time)
-                }
-            }
-        }
     }
 }
 
@@ -366,7 +333,37 @@ extension IVTimelineView: UICollectionViewDelegateFlowLayout {
 }
 
 extension IVTimelineView: UIScrollViewDelegate {
-    
+        
+    private func didScrollHandler() {
+        for cell in collectionView.visibleCells {
+            let newRect = collectionView.convert(cell.frame, to: self)
+            let newCenter = collectionView.center
+            
+            guard newRect.contains(newCenter),
+                let indexPath = collectionView.indexPath(for: cell) else {
+                    continue
+            }
+            
+            let slice = timeSlices[indexPath.row]
+            
+            // 间隙不处理
+            if slice.type == "gap" { return }
+            
+            guard let item = dataSource.first(where: { $0.startTime <= slice.startTime && $0.endTime >= slice.endTime }) else {
+                print("没找到对应数据")
+                return
+            }
+            
+            let width0 = (slice.startTime - item.startTime) * scale
+            let width1 = Double(newCenter.x - newRect.origin.x)
+            let offset = width0 + width1
+            let time = round(item.startTime + offset/scale)
+            
+            logInfo("seek: \(item.startTime) => \(time)")
+            delegate?.timelineView(self, didSelect: item, at: time)
+        }
+    }
+        
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         if decelerate { return }
         didScrollHandler()

@@ -3,7 +3,7 @@
 //  IVAccountMgr
 //
 //  Created by ZhaoYong on 2020/1/10.
-//  Copyright © 2020 gwell. All rights reserved.
+//  Copyright © 2020 Tencentcs. All rights reserved.
 //
 
 import UIKit
@@ -80,7 +80,7 @@ extension IVKeychain {
     /// 创建查询条件
     /// - Parameter identifier: keychain server 即存款关键字
     private class func createKeychainQuery(_ identifier: String) -> NSMutableDictionary {
-        let serverName = "com.gwell.IVAccountMgr"
+        let serverName = "com.Tencentcs.IVAccountMgr"
         let keychainQueryMutableDictionary = NSMutableDictionary(capacity: 4)
         //设置条件存储的类型
         keychainQueryMutableDictionary.setValue(kSecClassGenericPassword, forKey: kSecClass as String)

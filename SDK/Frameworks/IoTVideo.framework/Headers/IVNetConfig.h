@@ -3,20 +3,27 @@
 //  IoTVideo
 //
 //  Created by ZhaoYong on 2020/1/8.
-//  Copyright © 2020 gwell. All rights reserved.
+//  Copyright © 2020 Tencentcs. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "IVQRCodeNetConfig.h"
-#import "IVLanNetConfig.h"
+@class IVLanNetConfig,IVQRCodeNetConfig;
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IVNetConfig : NSObject
 
+/// 配网管理
+@interface IVNetConfig : NSObject
+/// 局域网配网
+@property(class, nonatomic, strong, readonly) IVLanNetConfig *lan;
+/// 二维码配网
+@property(class, nonatomic, strong, readonly) IVQRCodeNetConfig *QRCode;
+
+/// 局域网配网
 + (IVLanNetConfig *)lan;
+/// 二维码配网
 + (IVQRCodeNetConfig *)QRCode;
 
-/** 零时订阅设备
+/** 通过web绑定成功后，快速订阅设备
  * @param token 订阅的设备访问token
  * @return 是否成功
  */

@@ -3,7 +3,7 @@
 //  IotVideoDemo
 //
 //  Created by JonorZhang on 2020/1/12.
-//  Copyright © 2020 gwell. All rights reserved.
+//  Copyright © 2020 Tencentcs. All rights reserved.
 //
 
 import UIKit
@@ -53,7 +53,7 @@ class IJKMediaViewController: UIViewController, IVDeviceAccessable {
             let startTime = "\(Int((Date().timeIntervalSince1970 - 60*60*24*365) * 1000))"
             let hud = ivLoadingHud()
                         
-            IVVAS.shared.getVideoPlaybackList(deviceId: device.tencentID,
+            IVVAS.shared.getVideoPlaybackList(deviceId: device.deviceID,
                                               timezone: timezone,
                                               startTime: startTime,
                                               endTime: endTime)

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1Zl-p8-sgG">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation View Controller-->
+        <scene sceneID="RLl-G4-opo">
+            <objects>
+                <navigationController id="1Zl-p8-sgG" customClass="IVNavigationViewController" customModule="IotVideoDemoTX" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="a3e-N8-LBy">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="KEf-Xn-pH4" kind="relationship" relationship="rootViewController" id="gkT-dy-Abf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ywC-B7-3cQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1304" y="91"/>
+        </scene>
+        <!--用户设备列表-->
+        <scene sceneID="U9Z-Dq-EKm">
+            <objects>
+                <tableViewController id="KEf-Xn-pH4" customClass="IVDeviceListViewController" customModule="IotVideoDemoTX" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="RiV-T9-OLS">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="IVDeviceCell" rowHeight="60" id="i9C-LW-nIR" customClass="IVDeviceCell" customModule="IotVideoDemoTX" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="60"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="i9C-LW-nIR" id="JVG-ov-B4P">
+                                    <rect key="frame" x="0.0" y="0.0" width="383" height="60"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="031400005df99fe0b50beb4c2a389a18" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Qb-KP-exX">
+                                            <rect key="frame" x="20" y="11" width="308" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="syv-mh-nmB"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tabBar_icon_device_N" highlightedImage="tabBar_icon_device_S" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YFK-aw-e0y">
+                                            <rect key="frame" x="20" y="35" width="14" height="14"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="YFK-aw-e0y" secondAttribute="height" multiplier="1:1" id="BnA-4U-BLa"/>
+                                                <constraint firstAttribute="height" constant="14" id="LpX-CM-9iD"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="离线" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EXs-Xv-U1N">
+                                            <rect key="frame" x="39" y="32" width="25" height="20"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="20" id="Ct5-yO-6a8"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="EXs-Xv-U1N" firstAttribute="centerY" secondItem="YFK-aw-e0y" secondAttribute="centerY" id="HzP-Z1-NKh"/>
+                                        <constraint firstItem="7Qb-KP-exX" firstAttribute="top" secondItem="JVG-ov-B4P" secondAttribute="topMargin" id="Ly1-B6-cKb"/>
+                                        <constraint firstItem="7Qb-KP-exX" firstAttribute="leading" secondItem="JVG-ov-B4P" secondAttribute="leadingMargin" id="O9G-l0-BTY"/>
+                                        <constraint firstItem="YFK-aw-e0y" firstAttribute="bottom" secondItem="JVG-ov-B4P" secondAttribute="bottomMargin" id="eP2-5z-T81"/>
+                                        <constraint firstItem="YFK-aw-e0y" firstAttribute="leading" secondItem="JVG-ov-B4P" secondAttribute="leadingMargin" id="gly-h4-3Zj"/>
+                                        <constraint firstItem="EXs-Xv-U1N" firstAttribute="leading" secondItem="YFK-aw-e0y" secondAttribute="trailing" constant="5" id="rzd-NQ-zC9"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="deviceIdLabel" destination="7Qb-KP-exX" id="D5w-ey-oJt"/>
+                                    <outlet property="onlineIcon" destination="YFK-aw-e0y" id="Kz5-FL-Scz"/>
+                                    <outlet property="onlineLabel" destination="EXs-Xv-U1N" id="mYt-xi-OSE"/>
+                                    <segue destination="isH-JG-cxD" kind="show" id="opS-bF-W6S"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="KEf-Xn-pH4" id="aXm-Um-Raf"/>
+                            <outlet property="delegate" destination="KEf-Xn-pH4" id="vtE-4o-CMF"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="用户设备列表" id="4Wi-0s-btD">
+                        <barButtonItem key="leftBarButtonItem" image="tabBar_icon_mine_N" style="plain" id="yzV-gw-jYc">
+                            <connections>
+                                <segue destination="HiP-NK-tnm" kind="show" id="S8y-oH-rRY"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="PEE-tV-E6l">
+                            <connections>
+                                <segue destination="Z4j-DR-og5" kind="show" id="oY9-oq-Vrv"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e8K-xG-ruV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-428" y="90"/>
+        </scene>
+        <!--IVAccount-->
+        <scene sceneID="nnh-NC-EEB">
+            <objects>
+                <viewControllerPlaceholder storyboardName="IVAccount" id="HiP-NK-tnm" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Q6A-nl-evz"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="JzN-8x-s2E" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="232" y="36"/>
+        </scene>
+        <!--IVAddDevice-->
+        <scene sceneID="BaS-jC-3nM">
+            <objects>
+                <viewControllerPlaceholder storyboardName="IVAddDevice" id="Z4j-DR-og5" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="kiz-yR-NOd"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2fE-5P-9dl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="244" y="74"/>
+        </scene>
+        <!--IVDeviceMgr-->
+        <scene sceneID="HxZ-mj-rdV">
+            <objects>
+                <viewControllerPlaceholder storyboardName="IVDeviceMgr" id="isH-JG-cxD" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mAq-Q3-GaK" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="245" y="108"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="tabBar_icon_device_N" width="21" height="21"/>
+        <image name="tabBar_icon_device_S" width="21" height="21"/>
+        <image name="tabBar_icon_mine_N" width="21" height="21"/>
+    </resources>
+</document>

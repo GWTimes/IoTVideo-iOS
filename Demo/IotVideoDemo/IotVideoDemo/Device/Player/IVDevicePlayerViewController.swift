@@ -3,7 +3,7 @@
 //  IotVideoDemo
 //
 //  Created by JonorZhang on 2019/12/25.
-//  Copyright © 2019 gwell. All rights reserved.
+//  Copyright © 2019 Tencentcs. All rights reserved.
 //
 
 import UIKit
@@ -89,7 +89,7 @@ extension IVDevicePlayerViewController {
             player.stopRecord()
         } else {
             let docPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-            let mp4Path = docPath + "/hahaha.mp4"
+            let mp4Path = docPath + "/\(Date().timeIntervalSince1970).mp4"
             player.startRecord(mp4Path) { (savePath, error) in
                 guard let savePath = savePath else {
                     print("录像失败", error as Any)
