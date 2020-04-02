@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1Zl-p8-sgG">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="1Zl-p8-sgG">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -26,11 +26,34 @@
         <!--用户设备列表-->
         <scene sceneID="U9Z-Dq-EKm">
             <objects>
-                <tableViewController id="KEf-Xn-pH4" customClass="IVDeviceListViewController" customModule="IotVideoDemoTX" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="KEf-Xn-pH4" customClass="IVDeviceListViewController" customModule="IotVideoDemoTX" customModuleProvider="target" propertyAccessControl="all" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="RiV-T9-OLS">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="6f3-P8-gpy">
+                            <rect key="frame" x="0.0" y="116" width="414" height="300"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tXH-ph-gk2">
+                                    <rect key="frame" x="157" y="128" width="100" height="44"/>
+                                    <color key="backgroundColor" red="0.0" green="0.43137254899999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="100" id="17R-5F-hSX"/>
+                                        <constraint firstAttribute="height" constant="44" id="f8d-nW-DNd"/>
+                                    </constraints>
+                                    <state key="normal" title="添加设备"/>
+                                    <connections>
+                                        <segue destination="Z4j-DR-og5" kind="show" id="1Wp-EU-K5u"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <constraints>
+                                <constraint firstItem="tXH-ph-gk2" firstAttribute="centerX" secondItem="6f3-P8-gpy" secondAttribute="centerX" id="WOe-tS-Bqy"/>
+                                <constraint firstItem="tXH-ph-gk2" firstAttribute="centerY" secondItem="6f3-P8-gpy" secondAttribute="centerY" id="fbO-jf-sLf"/>
+                            </constraints>
+                        </view>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="IVDeviceCell" rowHeight="60" id="i9C-LW-nIR" customClass="IVDeviceCell" customModule="IotVideoDemoTX" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="60"/>
@@ -48,7 +71,7 @@
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tabBar_icon_device_N" highlightedImage="tabBar_icon_device_S" highlighted="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YFK-aw-e0y">
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tabBar_icon_device_N" highlightedImage="tabBar_icon_device_S" translatesAutoresizingMaskIntoConstraints="NO" id="YFK-aw-e0y">
                                             <rect key="frame" x="20" y="35" width="14" height="14"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="YFK-aw-e0y" secondAttribute="height" multiplier="1:1" id="BnA-4U-BLa"/>
@@ -88,21 +111,24 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="用户设备列表" id="4Wi-0s-btD">
-                        <barButtonItem key="leftBarButtonItem" image="tabBar_icon_mine_N" style="plain" id="yzV-gw-jYc">
+                        <barButtonItem key="leftBarButtonItem" image="tabBar_icon_mine_N" style="done" id="yzV-gw-jYc">
                             <connections>
                                 <segue destination="HiP-NK-tnm" kind="show" id="S8y-oH-rRY"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="add" id="PEE-tV-E6l">
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="add" id="PEE-tV-E6l">
                             <connections>
                                 <segue destination="Z4j-DR-og5" kind="show" id="oY9-oq-Vrv"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="addDeviceVidw" destination="6f3-P8-gpy" id="5um-Yw-bZW"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e8K-xG-ruV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-428" y="90"/>
+            <point key="canvasLocation" x="-428.98550724637687" y="89.732142857142847"/>
         </scene>
         <!--IVAccount-->
         <scene sceneID="nnh-NC-EEB">
@@ -112,7 +138,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JzN-8x-s2E" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="232" y="36"/>
+            <point key="canvasLocation" x="167" y="-202"/>
         </scene>
         <!--IVAddDevice-->
         <scene sceneID="BaS-jC-3nM">
@@ -122,7 +148,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2fE-5P-9dl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="244" y="74"/>
+            <point key="canvasLocation" x="192" y="-41"/>
         </scene>
         <!--IVDeviceMgr-->
         <scene sceneID="HxZ-mj-rdV">
@@ -130,9 +156,12 @@
                 <viewControllerPlaceholder storyboardName="IVDeviceMgr" id="isH-JG-cxD" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mAq-Q3-GaK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="245" y="108"/>
+            <point key="canvasLocation" x="220" y="108"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="oY9-oq-Vrv"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="tabBar_icon_device_N" width="21" height="21"/>
         <image name="tabBar_icon_device_S" width="21" height="21"/>

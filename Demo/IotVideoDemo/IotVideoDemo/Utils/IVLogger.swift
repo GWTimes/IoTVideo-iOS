@@ -8,6 +8,7 @@
 
 import Foundation
 import IVDevTools
+import IoTVideo
 
 //@objc class IVLog: NSObject {
 //    @objc static func error(path: String = #file, function: String = #function, line: Int = #line, _ items: Any...) {
@@ -63,8 +64,14 @@ var devToolsAssistant: IVDevToolsAssistant {
     return IVDevToolsAssistant.shared
 }
 
+var logLevel: UInt {
+    return UInt(IVLogger.logLevel.rawValue)
+}
+
 func registerLogger() {
-    IVLogger.register()
+    IVLogger.register { (logger) in
+        IoTVideo.sharedInstance.logLevel = IVLogLevel(rawValue: logLevel)!
+    }
 }
 
 fileprivate func unwrap<T: Any>(_ any: T) -> T {

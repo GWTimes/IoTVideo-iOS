@@ -87,9 +87,9 @@ func showError(_ error: Error) {
         let error = error as NSError
         if error.code == 401 {
             UserDefaults.standard.do {
-                $0.removeObject(forKey: demo_accessTokenKey)
-                $0.removeObject(forKey: demo_accessIdKey)
-                $0.removeObject(forKey: demo_expireTimeKey)
+                $0.removeObject(forKey: demo_accessToken)
+                $0.removeObject(forKey: demo_accessId)
+                $0.removeObject(forKey: demo_expireTime)
             }
             let board = UIStoryboard(name: "IVLogin", bundle: nil)
             let loginVC = board.instantiateViewController(withIdentifier: "LogNav") as! UINavigationController

@@ -8,7 +8,6 @@
 
 import UIKit
 import IoTVideo.IVNetConfig
-import IVAccountMgr
 import SwiftyJSON
 
 class IVLANDeviceTableVC: UITableViewController {
@@ -33,6 +32,7 @@ class IVLANDeviceTableVC: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "LANDeviceCell", for: indexPath)
         cell.textLabel?.text = dataSource[indexPath.row].deviceID
+        cell.detailTextLabel?.text = "局域网"
         return cell
     }
     
@@ -48,18 +48,10 @@ class IVLANDeviceTableVC: UITableViewController {
             let ok = UIAlertAction(title: "添加为我的设备", style: .default) { (_) in
                 let hud = ivLoadingHud()
                 
-                addDevice(deviceId: dev.deviceID, role: .owner, responseHandler: { (json, error) in
+                IVDemoNetwork.addDevice(dev.deviceID, responseHandler: { (data, error) in
                     hud.hide()
-                    if let error = error {
-                        showError(error)
-                        return
-                    }
+                    if data == nil { return }
                     
-                    guard let _ = parseJson(json) else {
-                        return
-                    }
-                    
-                    userDeviceList.append(IVDeviceModel(dev))
                     self.navigationController?.popToRootViewController(animated: true)
                 })
             }

@@ -11,6 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+/// 监控播放器
 @interface IVMonitorPlayer : IVPlayer <IVPlayerTalkable>
 
 /// 创建播放器

@@ -8,8 +8,8 @@ Demo/*
 !Demo/IotVideoDemo
 SDK/*
 !SDK/Frameworks
-GW/
-SRV/
+GW
+SRV
 
 ## User settings
 xcuserdata/

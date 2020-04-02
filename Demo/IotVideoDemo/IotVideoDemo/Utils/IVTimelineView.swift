@@ -59,24 +59,8 @@ class IVTimelineView: UIView {
     /// 时间轴当前时间
     var currentTime: TimeInterval = 0 {
         didSet {
-            DispatchQueue.main.async {
-                if self.collectionView.isDragging {
-                    print("isDragging")
-                    return
-                }
-                if self.collectionView.isTracking {
-                    print("isTracking")
-                    return
-                }
-                if self.collectionView.isDecelerating {
-                    print("isDecelerating")
-                    return
-                }
-
-                guard let first = self.dataSource.first else { return }
-                let offset = CGFloat(self.currentTime - first.startTime) * CGFloat(self.scale)
-                self.collectionView.contentOffset.x = offset
-            }
+            print("dTime \(currentTime) \(oldValue) \(currentTime - oldValue)")
+            refreshRefreshTimeline(currentTime)
         }
     }
     
@@ -95,7 +79,7 @@ class IVTimelineView: UIView {
         col.register(IVTimelineHeaderFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: UICollectionView.elementKindSectionFooter)
         col.showsHorizontalScrollIndicator = false
         col.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 100, bottom: 0, right: 100)
-        col.backgroundColor = UIColor(white: 0.95, alpha: 1)
+        col.backgroundColor = UIColor.clear
         col.dataSource = self
         col.delegate   = self
         col.addGestureRecognizer(pinchGesture)
@@ -163,7 +147,6 @@ class IVTimelineView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor(white: 0.95, alpha: 1)
         addSubview(collectionView)
     }
     
@@ -172,31 +155,36 @@ class IVTimelineView: UIView {
         addSubview(collectionView)
     }
     
-    @objc func pinchGestureHandler(_ pinch: UIPinchGestureRecognizer) {
-        //放大情况
-        if pinch.scale > 1.0 {
-            if self.scale >= maximumScale {
-                ivHud("不能再放大啦")
-                return
-            }
-        }
-        
-        //缩小情况
-        if pinch.scale < 1.0 {
-            if self.scale <= minimumScale {
-                ivHud("不能再缩小啦")
-                return
-            }
-        }
-                
-        if pinch.state == .began || pinch.state == .changed {
-            self.scale *= Double(pinch.scale)
-            pinch.scale = 1
-        }        
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        collectionView.reloadData()
     }
 }
 
 private extension IVTimelineView {
+    
+    func refreshRefreshTimeline(_ time: TimeInterval) {
+        DispatchQueue.main.async {
+            if self.collectionView.isDragging {
+                print("isDragging")
+                return
+            }
+            if self.collectionView.isTracking {
+                print("isTracking")
+                return
+            }
+            if self.collectionView.isDecelerating {
+                print("isDecelerating")
+                return
+            }
+
+            guard let first = self.dataSource.first else { return }
+            let offset = CGFloat(time - first.startTime) * CGFloat(self.scale)
+
+            let point = CGPoint(x: offset, y: self.collectionView.contentOffset.y)
+            self.collectionView.setContentOffset(point, animated: true)
+        }
+    }
     
     /// 切割大块时间段
     func fragmentTimelineItem(_ item: IVTimelineItem) -> [IVTimelineItem]? {
@@ -261,6 +249,59 @@ private extension IVTimelineView {
         }
         return items
     }
+    
+    @objc func pinchGestureHandler(_ pinch: UIPinchGestureRecognizer) {
+        //放大情况
+        if pinch.scale > 1.0 {
+            if self.scale >= maximumScale {
+                ivHud("不能再放大啦")
+                return
+            }
+        }
+        
+        //缩小情况
+        if pinch.scale < 1.0 {
+            if self.scale <= minimumScale {
+                ivHud("不能再缩小啦")
+                return
+            }
+        }
+                
+        if pinch.state == .began || pinch.state == .changed {
+            self.scale *= Double(pinch.scale)
+            pinch.scale = 1
+        }
+    }
+    
+    private func didScrollHandler() {
+        for cell in collectionView.visibleCells {
+            let newRect = collectionView.convert(cell.frame, to: self)
+            let newCenter = collectionView.center
+            
+            guard newRect.contains(newCenter),
+                let indexPath = collectionView.indexPath(for: cell) else {
+                    continue
+            }
+            
+            let slice = timeSlices[indexPath.row]
+            
+            // 间隙不处理
+            if slice.type == "gap" { return }
+            
+            guard let item = dataSource.first(where: { $0.startTime <= slice.startTime && $0.endTime >= slice.endTime }) else {
+                print("没找到对应数据")
+                return
+            }
+            
+            let width0 = (slice.startTime - item.startTime) * scale
+            let width1 = Double(newCenter.x - newRect.origin.x)
+            let offset = width0 + width1
+            let time = round(item.startTime + offset/scale)
+            
+            delegate?.timelineView(self, didSelect: item, at: time)
+            return
+        }
+    }
 }
 
 extension IVTimelineView: UICollectionViewDataSource {
@@ -324,55 +365,24 @@ extension IVTimelineView: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: self.bounds.width/2, height: self.bounds.height)
+        return CGSize(width: bounds.width/2, height: bounds.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: self.bounds.width/2, height: self.bounds.height)
+        return CGSize(width: bounds.width/2, height: bounds.height)
     }
 }
 
 extension IVTimelineView: UIScrollViewDelegate {
-        
-    private func didScrollHandler() {
-        for cell in collectionView.visibleCells {
-            let newRect = collectionView.convert(cell.frame, to: self)
-            let newCenter = collectionView.center
-            
-            guard newRect.contains(newCenter),
-                let indexPath = collectionView.indexPath(for: cell) else {
-                    continue
-            }
-            
-            let slice = timeSlices[indexPath.row]
-            
-            // 间隙不处理
-            if slice.type == "gap" { return }
-            
-            guard let item = dataSource.first(where: { $0.startTime <= slice.startTime && $0.endTime >= slice.endTime }) else {
-                print("没找到对应数据")
-                return
-            }
-            
-            let width0 = (slice.startTime - item.startTime) * scale
-            let width1 = Double(newCenter.x - newRect.origin.x)
-            let offset = width0 + width1
-            let time = round(item.startTime + offset/scale)
-            
-            logInfo("seek: \(item.startTime) => \(time)")
-            delegate?.timelineView(self, didSelect: item, at: time)
-        }
-    }
-        
+    
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if decelerate { return }
+        if scrollView.isDecelerating || decelerate { return }
         didScrollHandler()
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         didScrollHandler()
     }
-    
 }
 
 class IVTimelineCell: UICollectionViewCell {
@@ -381,10 +391,8 @@ class IVTimelineCell: UICollectionViewCell {
         self.item = item
         self.scale = scale
         colorView.backgroundColor = item.color
-        markView.subviews.forEach({
-            $0.removeFromSuperview()
-        })
-        timeMarks = IVTimeMark.all.filter { scale * Double($0.rawValue) >= 4.8 } // 距离大于 4.8 pt
+        removeAllTextLayer()
+        showTimeMarks = IVTimeMark.all.filter { scale * Double($0.rawValue) >= 4.8 } // 距离大于 4.8 pt
         setNeedsDisplay()
     }
 
@@ -395,7 +403,7 @@ class IVTimelineCell: UICollectionViewCell {
     private var scale = 1.0
 
     /// === 时间刻度 ===
-    private var timeMarks: [IVTimeMark] = [.hour]
+    private var showTimeMarks: [IVTimeMark] = [.hour]
     
     // === 颜色 ===
     private lazy var colorView: UIView = {
@@ -407,52 +415,115 @@ class IVTimelineCell: UICollectionViewCell {
         addSubview(v)
         return v
     }()
+   
+    private func FontSize(of mark: IVTimeMark) -> CGFloat {
+        var fontSize: CGFloat
+        if mark.rawValue >= IVTimeMark.hour.rawValue {
+            fontSize = CGFloat(CGFloat(mark.rawValue) * CGFloat(scale) / 800) * 20
+            fontSize = fontSize < 14 ? 14 : (fontSize > 20 ? 20 : fontSize)
+        } else if mark.rawValue >= IVTimeMark.min1.rawValue  {
+            fontSize = CGFloat(CGFloat(mark.rawValue) * CGFloat(scale) / 800) * 17
+            fontSize = fontSize < 12 ? 12 : (fontSize > 17 ? 17 : fontSize)
+        } else {
+            fontSize = CGFloat(CGFloat(mark.rawValue) * CGFloat(scale) / 800) * 15
+            fontSize = fontSize < 8 ? 8 : (fontSize > 15 ? 15 : fontSize)
+        }
+        return fontSize
+    }
+    
+    private func TimeOffset(of mark: IVTimeMark) -> TimeInterval {
+        let remain: TimeInterval = item.startTime - floor(item.startTime) // 小数点后的余数
+        let mod: TimeInterval = TimeInterval(Int(item.startTime) % mark.rawValue) + remain // 小数点后的余数
+        let offset: TimeInterval = mod > 0.001 ? TimeInterval(mark.rawValue) - mod : 0
+        return offset
+    }
+    
+    private func DateFormat(of mark: IVTimeMark) -> String {
+        return mark < .min1 ? "ss" : "HH:mm"
+    }
+    
+    private func LabelWidth(of mark: IVTimeMark) -> CGFloat {
+        let text = DateFormat(of: mark) as NSString
+        let width = text.boundingRect(with: CGSize(width: 100, height: 20),
+                                      options: .usesFontLeading,
+                                      attributes: [.font : UIFont.systemFont(ofSize: FontSize(of: mark))],
+                                      context: nil).width
+        return max(width, 30)
+        //        return FontSize(of: mark) * CGFloat(DateFormat(of: mark).count)
+    }
+
+    private func MarkHeight(of mark: IVTimeMark) -> Double {
+        switch mark {
+        case .hour8, .hour4, .hour2, .hour: return 20
+        case .min30: return 18
+        case .min10: return 16
+        case .min5, .min1: return 14
+        case .sec30: return 12
+        case .sec10: return 10
+        case .sec5, .sec1: return 8
+        }
+    }
+    
+    private func StrokeColor(of mark: IVTimeMark) -> UIColor {
+        let alpha = ((CGFloat(mark.rawValue) * CGFloat(scale) - 2) / 200) + 0.2
+        let color = UIColor(white: 0, alpha: alpha)
+        return color
+    }
+    
+    private func removeAllTextLayer() {
+        layer.sublayers?.forEach({
+            if $0.name == "textLayer" { $0.removeFromSuperlayer() }
+        })
+    }
+    
+    private func addTextLayer(frame: CGRect, text: String, color: UIColor, fontSize: CGFloat) {
+        let timeLayer = CATextLayer()
+        timeLayer.frame = frame
+        timeLayer.string = text
+        timeLayer.alignmentMode = .center
+        timeLayer.foregroundColor = color.cgColor
+        timeLayer.fontSize = fontSize
+        timeLayer.contentsScale = UIScreen.main.scale
+        timeLayer.name = "textLayer"
+        layer.addSublayer(timeLayer)
+    }
     
     // === 刻度\文字 ===
-    private lazy var markView: UIView = {
-        let v = UIView(frame: bounds)
-        v.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        v.backgroundColor = .clear
-        addSubview(v)
-        return v
-    }()
-    
-    private func drawTimelineMark(_ ctx: CGContext?, step: Int, superStep: Int, color: UIColor, fontSize: CGFloat, markHeight: Double) {
-        let remain: TimeInterval = item.startTime - floor(item.startTime) // 小数点后的余数
-        let mod: TimeInterval = TimeInterval(Int(item.startTime) % step) + remain // 小数点后的余数
-        var offset: TimeInterval = mod > 0.001 ? TimeInterval(step) - mod : 0
+    private func drawTimelineMark(_ ctx: CGContext?, mark: IVTimeMark) {
+        let markHeight = MarkHeight(of: mark)
+        var offset = TimeOffset(of: mark)
+        
+        let color = StrokeColor(of: mark)
+        let fontSize = FontSize(of: mark)
         
         let fmt = DateFormatter()
-        fmt.dateFormat = "HH:mm"
-                     
-        let labelWidth = Double(fontSize) * Double(fmt.dateFormat.count)
+        fmt.dateFormat = DateFormat(of: mark)
+
+        let labelWidth = LabelWidth(of: mark)
+        let showText = CGFloat(mark.rawValue) * CGFloat(scale) > labelWidth
         
         ctx?.setLineWidth(1)
         ctx?.setStrokeColor(color.cgColor)
         
         while offset <= item.duration {
-            if superStep == 0 || Int(item.startTime + offset) % superStep != 0 {
+            if mark.upperMark == nil || Int(item.startTime + offset) % mark.upperMark!.rawValue != 0 {
                 ctx?.move(to: CGPoint(x: scale * offset, y: 0))
                 ctx?.addLine(to: CGPoint(x: scale * offset, y: markHeight))
                 
-                if step >= IVTimeMark.min1.rawValue {
+                if showText, mark >= .sec10 {
                     for divisor in IVTimeMark.divisors {
-                        if Double(step) * scale > labelWidth, Int(item.startTime + offset) % divisor == 0 {
-                            let label = UILabel()
-                            label.frame = CGRect(x: (scale * offset)-labelWidth/2, y: Double(bounds.height-20), width: labelWidth, height: 20)
-                            label.text = fmt.string(from: Date(timeIntervalSince1970: item.startTime + offset))
-                            label.textColor = color
-                            label.textAlignment = .center
-                            label.font = .systemFont(ofSize: fontSize)
-                            label.autoresizingMask = [.flexibleLeftMargin, .flexibleRightMargin]
-                            markView.addSubview(label)
+                        if Int(item.startTime + offset) % divisor == 0 {
+                            addTextLayer(frame: CGRect(x: CGFloat(scale * offset)-labelWidth/2, y: bounds.height-20, width: labelWidth, height: 20),
+                                         text: fmt.string(from: Date(timeIntervalSince1970: item.startTime + offset)),
+                                         color: color,
+                                         fontSize: fontSize)
                             break
                         }
                     }
                 }
             }
             
-            offset += Double(step)
+            offset += Double(mark.rawValue)
         }
         
         ctx?.strokePath()
@@ -471,37 +542,9 @@ class IVTimelineCell: UICollectionViewCell {
         let ctx = UIGraphicsGetCurrentContext()
         ctx?.clear(rect)
 
-        for mark in timeMarks {
-            let step = mark.rawValue
-                        
-            switch mark {
-            case .hour8:
-                drawTimelineMark(ctx, step: step, superStep: 0, color: .black, fontSize: 14, markHeight: 20)
-            case .hour4:
-                drawTimelineMark(ctx, step: step, superStep: step*2, color: .black, fontSize: 14, markHeight: 20)
-            case .hour2:
-                drawTimelineMark(ctx, step: step, superStep: step*2, color: .black, fontSize: 14, markHeight: 20)
-            case .hour:
-                drawTimelineMark(ctx, step: step, superStep: step*2, color: .black, fontSize: 14, markHeight: 20)
-            case .min30:
-                drawTimelineMark(ctx, step: step, superStep: step*2, color: .darkGray, fontSize: 12, markHeight: 17)
-            case .min10:
-                drawTimelineMark(ctx, step: step, superStep: step*3, color: .darkGray, fontSize: 12, markHeight: 14)
-            case .min5:
-                drawTimelineMark(ctx, step: step, superStep: step*2, color: .darkGray, fontSize: 12, markHeight: 12)
-            case .min1:
-                drawTimelineMark(ctx, step: step, superStep: step*5, color: .darkGray, fontSize: 12, markHeight: 12)
-            case .sec30:
-                drawTimelineMark(ctx, step: step, superStep: step*2, color: .gray, fontSize: 0, markHeight: 10)
-            case .sec10:
-                drawTimelineMark(ctx, step: step, superStep: step*3, color: .gray, fontSize: 0, markHeight: 8)
-            case .sec5:
-                drawTimelineMark(ctx, step: step, superStep: step*2, color: .lightGray, fontSize: 0, markHeight: 5)
-            case .sec1:
-                drawTimelineMark(ctx, step: step, superStep: step*5, color: .lightGray, fontSize: 0, markHeight: 5)
-            }
+        showTimeMarks.forEach { (mark) in
+            drawTimelineMark(ctx, mark: mark)
         }
-        
     }
 }
 
@@ -542,7 +585,7 @@ class IVTimelineLayout: UICollectionViewFlowLayout {
     }
 }
 
-enum IVTimeMark: Int {
+enum IVTimeMark: Int, Comparable {
     case hour8    = 28800 // 60*60*8
     case hour4    = 14400 // 60*60*4
     case hour2    = 7200  // 60*60*2
@@ -556,7 +599,17 @@ enum IVTimeMark: Int {
     case sec5     = 5     // 5
     case sec1     = 1     // 1
     
+    var upperMark: IVTimeMark? { IVTimeMark.all.reversed().first(where: { $0 > self }) }
+    
     static let divisors = [1, 2, 3, 5]
 
     static let all: [IVTimeMark] = [.hour8, .hour4, .hour2, .hour, .min30, .min10, .min5, .min1, .sec30, .sec10, .sec5, .sec1]
+
+    static func < (lhs: IVTimeMark, rhs: IVTimeMark) -> Bool {
+        return lhs.rawValue < rhs.rawValue
+    }
+
+    static func > (lhs: IVTimeMark, rhs: IVTimeMark) -> Bool {
+        return lhs.rawValue > rhs.rawValue
+    }
 }

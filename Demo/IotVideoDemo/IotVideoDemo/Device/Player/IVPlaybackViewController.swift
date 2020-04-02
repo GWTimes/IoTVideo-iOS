@@ -87,14 +87,17 @@ class IVPlaybackViewController: IVDevicePlayerViewController {
             data = "record_stop".data(using: .utf8)!
         }
         sender.isEnabled = false
+        let hud = ivLoadingHud()
         IVMessageMgr.sharedInstance.sendData(toDevice: device.deviceID, data: data, withoutResponse: { _, err in
+            hud.hide()
             if let err = err {
                 showAlert(msg: err.localizedDescription)
             } else {
                 showAlert(msg: "发送成功")
                 sender.isSelected = !sender.isSelected
-                sender.isEnabled = true
             }
+            
+            sender.isEnabled = true
         })
     }
 }

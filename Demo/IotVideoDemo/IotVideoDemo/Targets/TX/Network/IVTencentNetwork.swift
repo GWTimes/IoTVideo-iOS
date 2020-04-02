@@ -17,16 +17,19 @@ public enum IVTencentNetworkRequestType: String {
 
 public typealias IVTencentNetworkResponseHandler = ((_ json: String?, _ error: NSError?) -> Void)?
 
-
 // yunApi 网络请求类
 public class IVTencentNetwork: AFHTTPSessionManager {
-    private var host = "http://14.22.4.147:80/"
-    var secretId = ""
+//    private var host = "http://cvm.tencentcloudapi.com"
+//    private var host = "http://14.22.4.147:80/"
+    private var host = "https://iotvideo.tencentcloudapi.com/"
+    var secretId  = ""
     var secretKey = ""
     var token = ""
+    
     public static let shared: IVTencentNetwork = {
         let instance = IVTencentNetwork()
         instance.responseSerializer.acceptableContentTypes = NSSet(objects: "application/json", "text/html", "text/json", "text/javascript", "text/plain","application/octet-stream") as? Set
+        instance.requestSerializer = AFJSONRequestSerializer()
         return instance
     }()
     
@@ -81,64 +84,103 @@ extension IVTencentNetwork {
 extension IVTencentNetwork {
     func setupHeader(methodType: IVTencentNetworkRequestType, params: [String: Any]?, action: String!) {
         
-        requestSerializer = AFJSONRequestSerializer()
+//temp
+//        let action = "DescribeInstances"
+//        secretId  = "AKIDz8krbsJ5yKBZQpn74WFkmLPx3EXAMPLE"
+//        secretKey = "Gu5t9xGARNpq86cd98joQYCN3EXAMPLE"
+        
+        if self.secretId.isEmpty || self.secretKey.isEmpty {
+            secretId  = UserDefaults.standard.string(forKey: demo_secretId) ?? ""
+            secretKey = UserDefaults.standard.string(forKey: demo_secretKey) ?? ""
+        }
+        
+        if self.token.isEmpty {
+            let loginToken = UserDefaults.standard.string(forKey: demo_loginToken)
+            if let loginToken = loginToken, !loginToken.isEmpty, loginToken.count > 1 {
+                token = loginToken
+            }
+        }
         
         var headerParams = [String: String]()
+       
         
         let region = "ap-guangzhou"
+        let service = "iotvideo"
         let version = "2019-11-26"
-        let endpoint = "iotvideo.tencentcloudapi.com"
-        let contentType = "application/json; charset=utf-8"
-        let canonicalUri = "/"
-        let canonicalQueryString = ""
-        let canonicalHeaders = "content-type:" + contentType + "\nhost:" + endpoint + "\n"
-        let signedHeaders = "content-type;host"
+        let algorithm = "TC3-HMAC-SHA256"
         
         do {
+            // ************* 步骤 1：拼接规范请求串 *************
+            // POST:示例
+            
+            let httpRequestMethod = methodType.rawValue
+            let canonicalUri = "/"
+            let canonicalQueryString = ""
+            let contentType = "application/json; charset=utf-8"
+            let hostStr = URL(string: host)?.host ?? ""
+            let canonicalHeaders = "content-type:" + contentType + "\n" + "host:" + hostStr + "\n"
+            let signedHeaders = "content-type;host"
+            
             let jsonPayloadData = try JSONSerialization.data(withJSONObject: params ?? [], options: [])
             let jsonPayload = NSString(data: jsonPayloadData, encoding: String.Encoding.utf8.rawValue)
-            let hashedRequestPayload = (jsonPayload! as String).sha256()
-            let canonicalRequest = methodType.rawValue + "\n" + canonicalUri + "\n" + canonicalQueryString + "\n"
-            + canonicalHeaders + "\n" + signedHeaders + "\n" + hashedRequestPayload;
+            let hashedRequestPayload = (jsonPayload! as String).hashHex(by: .SHA256)
+            let canonicalRequest = httpRequestMethod + "\n" + canonicalUri + "\n" + canonicalQueryString + "\n"
+                       + canonicalHeaders + "\n" + signedHeaders + "\n" + hashedRequestPayload;
+//            print("第一步：", canonicalRequest)
             
+            // ************* 步骤 2：拼接待签名字符串 *************
+                        
             let timestamp = Date().timeIntervalSince1970
             let timestampStr = "\(Int(timestamp))"
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd"
             dateFormatter.timeZone = TimeZone(identifier: "UTC")
-            let date = dateFormatter.string(from: Date(timeIntervalSince1970: timestamp))
-            let service = endpoint
+            let date = dateFormatter.string(from: Date(timeIntervalSince1970: TimeInterval(timestamp)))
+            
             let credentialScope = date + "/" + service + "/" + "tc3_request"
-            let hashedCanonicalRequest = canonicalRequest.sha256()
-            let stringToSign = "TC3-HMAC-SHA256\n" + timestampStr + "\n" + credentialScope + "\n" + hashedCanonicalRequest
-            let secretDate = date.hmac(algorithm: .SHA256, key: "TC3" + secretKey)
-            let secretService = service.hmac(algorithm: .SHA256, key: secretDate)
-            let secretSigning = "tc3_request".hmac(algorithm: .SHA256, key: secretService)
-            let signature = stringToSign.hmac(algorithm: .SHA256, key: secretSigning).lowercased()
+            let hashedCanonicalRequest = canonicalRequest.hashHex(by: .SHA256)
+            let stringToSign = algorithm + "\n" + timestampStr + "\n" + credentialScope + "\n" + hashedCanonicalRequest
+            
+//            print("第二步：", stringToSign)
+            
+            // ************* 步骤 3：计算签名 *************
+            let secretDate = date.hmac(by: .SHA256, key: ("TC3" + secretKey).bytes)
+            let secretService = service.hmac(by: .SHA256, key: secretDate)
+            let secretSigning = "tc3_request".hmac(by: .SHA256, key: secretService)
+            let signature = stringToSign.hmac(by: .SHA256, key: secretSigning).hexString.lowercased()
+            
+//            print("第三步：\n", signature)
+            
             let authorization = "TC3-HMAC-SHA256 " + "Credential=" + secretId + "/" + credentialScope + ", "
             + "SignedHeaders=" + signedHeaders + ", " + "Signature=" + signature
-         
+            
+//            print("第四步：\n", authorization)
 
-            headerParams["Host"]           = endpoint
-            headerParams["Content-Type"]   = contentType
+            headerParams["Host"]           = hostStr
             headerParams["Authorization"]  = authorization
+            headerParams["Content-Type"]   = contentType
             headerParams["X-TC-Action"]    = action
             headerParams["X-TC-Timestamp"] = timestampStr
             headerParams["X-TC-Version"]   = version
             headerParams["X-TC-Region"]    = region
-            headerParams["X-TC-RequestClient"] = version
-            headerParams["X-TC-Token"]     = token
+            
+            if !self.token.isEmpty {
+                headerParams["X-TC-Token"] = token
+            }
+            
             for headerParam in headerParams {
                 requestSerializer.setValue(headerParam.value, forHTTPHeaderField: headerParam.key)
+                
+                print(headerParam.key, "=" , headerParam.value)
             }
+            print("body = ",jsonPayload!)
             //print(requestSerializer.httpRequestHeaders, params)
         } catch  {
             print(error)
+            showError(error)
         }
     }
-    
-    
-    
+
     /// 获取唯一识别码，APP卸载后重置
     func getUniqueId() -> String {
         let userDefault = UserDefaults.standard
@@ -150,15 +192,4 @@ extension IVTencentNetwork {
         userDefault.set(uuid!, forKey:"IOTVIDEO_UUID")
         return uuid!
     }
-    
 }
-
-func parseJson(_ json: String?) -> JSON? {
-    let json = JSON(parseJSON: json!)
-    if let errorCode = json["Response"]["Error"]["Code"].string {
-        ivHud("\(errorCode) : \(json["Response"]["Error"]["Message"].stringValue)")
-        return nil
-    }
-    return json
-}
-

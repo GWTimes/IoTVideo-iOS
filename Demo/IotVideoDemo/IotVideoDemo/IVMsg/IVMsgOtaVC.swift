@@ -13,6 +13,8 @@ import SwiftyJSON
 class IVMsgOtaVC: UIViewController, IVDeviceAccessable {
     var device: IVDevice!
     @IBOutlet weak var updateProgressView: UIStackView!
+    
+    @IBOutlet weak var newVersionLabel: UILabel!
     @IBOutlet weak var updatePersentLabel: UILabel!
     @IBOutlet weak var updatePersentProgress: UIProgressView!
     var newVersion: String?
@@ -39,34 +41,33 @@ class IVMsgOtaVC: UIViewController, IVDeviceAccessable {
             }
             
             self.newVersion = JSON(parseJSON: json)["stVal"].stringValue
+            self.newVersionLabel.text = self.newVersion
             
             showAlert(msg: self.newVersion)
+            
+            let alert = UIAlertController(title: "当前待更新版本：", message: "\(self.newVersion!) \n 是否确认更新至该版本？", preferredStyle: .alert)
+            let ok = UIAlertAction(title: "确认更新", style: .default) { (_) in
+                let hud = ivLoadingHud()
+                IVMessageMgr.sharedInstance.takeAction(ofDevice: self.device.deviceID, path: "Action._otaVersion", json: "{\"ctlVal\":\"\(self.newVersion!)\"}") { (json, err) in
+                    hud.hide()
+                    
+                    if let err = err {
+                        showAlert(msg: "error:\(String(describing: err))")
+                        return
+                    }
+                    
+                    self.updateProgressView.isHidden = false
+                    self.timer = Timer(timeInterval: 0.5, target: self, selector: #selector(self.getUpdateProgress), userInfo: nil, repeats: true)
+                    self.timer?.fire()
+                }
+            }
+            let cancel = UIAlertAction(title: "暂不更新", style: .cancel, handler: nil)
+            alert.addAction(ok)
+            alert.addAction(cancel)
+            self .present(alert, animated: true, completion: nil)
         }
     }
     
-    @IBAction func update(_ sender: Any) {
-        guard let newVersion = self.newVersion else {
-            showAlert(msg: "当前无可升级版本")
-            return
-        }
-        let pop = IVPopupView(title: "OTA升级", message: "输入可升级的版本号", input: ["{\"ctlVal\":\"\(newVersion)\"}"], actions:[ .cancel(), .confirm({ v in
-            let hud = ivLoadingHud()
-            IVMessageMgr.sharedInstance.takeAction(ofDevice: self.device.deviceID, path: "Action._otaVersion", json: v.inputFields[0].text ?? "") { (json, err) in
-                hud.hide()
-                
-                if let err = err {
-                    showAlert(msg: "error:\(String(describing: err))")
-                    return
-                }
-                
-                self.updateProgressView.isHidden = false
-                self.timer = Timer(timeInterval: 0.5, target: self, selector: #selector(self.getUpdateProgress), userInfo: nil, repeats: true)
-                self.timer?.fire()
-            }
-        })])
-        pop.inputFields[0].text = "{\"ctlVal\":\"\(newVersion)\"}"
-        pop.show()
-    }
     
     @objc func getUpdateProgress() {
         IVMessageMgr.sharedInstance.readProperty(ofDevice: self.device.deviceID, path: "ProReadonly._otaUpgrade", completionHandler: { (json, err) in

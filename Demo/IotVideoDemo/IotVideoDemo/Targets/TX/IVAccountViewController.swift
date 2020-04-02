@@ -43,6 +43,16 @@ class IVAccountViewController: UITableViewController {
         return section == 0 ? 0.01 : UITableView.automaticDimension
     }
     
+    override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
+        if section == 1,
+            let infoDictionary = Bundle.main.infoDictionary {
+            let appVersion = infoDictionary["CFBundleShortVersionString"] as! String
+            let appBuild = infoDictionary["CFBundleVersion"] as! String
+            return "Version \(appVersion) (Build \(appBuild))"
+        }
+        return nil
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 {
@@ -55,9 +65,9 @@ class IVAccountViewController: UITableViewController {
                 IoTVideo.sharedInstance.unregister()
             }
             UserDefaults.standard.do {
-                $0.removeObject(forKey: demo_accessTokenKey)
-                $0.removeObject(forKey: demo_accessIdKey)
-                $0.removeObject(forKey: demo_expireTimeKey)
+                $0.removeObject(forKey: demo_accessToken)
+                $0.removeObject(forKey: demo_accessId)
+                $0.removeObject(forKey: demo_expireTime)
             }
             let board = UIStoryboard(name: "IVLogin", bundle: nil)
             let loginVC = board.instantiateViewController(withIdentifier: "LogNav") as! UINavigationController

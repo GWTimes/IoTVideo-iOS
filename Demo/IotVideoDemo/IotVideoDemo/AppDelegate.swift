@@ -10,6 +10,7 @@ import UIKit
 import IoTVideo
 import UserNotifications
 import IVDevTools
+import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,27 +31,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // Fallback on earlier versions
             UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert,.badge,.sound], categories: nil))
         }
-        
-        var options: [IVOptionKey : String] = [
-//            .productId : "440234147841",
-            .productId : "461708984449",
-            .hostType : "0"
-        ]
-        
-        let userInfoKeys: [IVOptionKey] = [.hostWeb, .hostP2P, .hostType, .productId]
-        for key in userInfoKeys {
-            if let cfg = IVConfigMgr.allConfigs.first(where: { $0.enable && $0.key == key.rawValue }) {
-                options[key] = cfg.value
-            }
-        }
-        
-        IoTVideo.sharedInstance.setupProductId(options[.productId]!, options: options)
+        IoTVideo.sharedInstance.setup(launchOptions: launchOptions)
         IoTVideo.sharedInstance.logCallback = logMessage
     #if DEBUG
-        IoTVideo.sharedInstance.debugMode = true
+        IoTVideo.sharedInstance.logLevel = IVLogLevel(rawValue: logLevel)!
     #endif
-//        sleep(1)
+
+        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "完成"
 //        UIApplication.shared.clearLaunchScreenCache()
+        
         return true
     }
 
@@ -116,3 +106,4 @@ public extension UIApplication {
     }
 
 }
+

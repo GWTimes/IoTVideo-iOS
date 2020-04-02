@@ -29,8 +29,8 @@ public class IVConfigMgr: NSObject {
         
 //        1157493686468 腾讯测试
         
-        return [Config(name: "测试服务器", key: "IOT_HOST_TYPE", value: "0", enable: true),
-                Config(name: "正式服务器", key: "IOT_HOST_TYPE", value: "1", enable: false),
+        return [Config(name: "测试服务器", key: "IOT_HOST_TYPE", value: "0", enable: false),
+                Config(name: "正式服务器", key: "IOT_HOST_TYPE", value: "1", enable: true),
                 Config(name: "PID 103", key: "IOT_PID", value: "440234147841", enable: true),
                 Config(name: "PID 107", key: "IOT_PID", value: "461708984449", enable: false),
                 Config(name: "PID 腾讯测试", key: "IOT_PID", value: "1157493686468", enable: false)]

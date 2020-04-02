@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <Foundation/Foundation.h>
+#import "IVQRCodeDef.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -40,7 +41,7 @@ typedef void(^IVQRCodeCreateCallback)(UIImage * _Nullable QRImage, NSError * _Nu
  @param size     二维码尺寸
  @param completionHandler 完成回调
 */
-+ (void)createQRCodeWithWifiName:(NSString *)wifiName wifiPwd:(NSString * _Nullable)wifiPwd  language:(NSString *)language timeZone:(NSInteger)timeZone QRSize:(CGSize)size completionHandler:(nullable IVQRCodeCreateCallback)completionHandler;
++ (void)createQRCodeWithWifiName:(NSString *)wifiName wifiPwd:(NSString * _Nullable)wifiPwd  language:(IV_QR_CODE_LANGUAGE)language timeZone:(NSInteger)timeZone QRSize:(CGSize)size completionHandler:(nullable IVQRCodeCreateCallback)completionHandler;
 
 /**
  生成设备配网二维码
@@ -62,7 +63,7 @@ typedef void(^IVQRCodeCreateCallback)(UIImage * _Nullable QRImage, NSError * _Nu
  @param size     二维码尺寸
  @param completionHandler 完成回调
 */
-- (void)createQRCodeWithWifiName:(NSString *)wifiName wifiPwd:(NSString * _Nullable)wifiPwd  language:(NSString *)language timeZone:(NSInteger)timeZone QRSize:(CGSize)size completionHandler:(nullable IVQRCodeCreateCallback)completionHandler;
+- (void)createQRCodeWithWifiName:(NSString *)wifiName wifiPwd:(NSString * _Nullable)wifiPwd  language:(IV_QR_CODE_LANGUAGE)language timeZone:(NSInteger)timeZone QRSize:(CGSize)size completionHandler:(nullable IVQRCodeCreateCallback)completionHandler;
 
 
 @end

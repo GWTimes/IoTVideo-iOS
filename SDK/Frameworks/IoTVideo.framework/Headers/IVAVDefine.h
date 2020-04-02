@@ -46,22 +46,22 @@ typedef NS_ENUM(NSUInteger, IVVideoCodecType) {
 
 /// 视频像素格式
 typedef NS_ENUM(NSUInteger, IVPixelFormatType) {
-    IVPixelFormatTypeYUV420P,
-    IVPixelFormatType32BGRA,
+    IVPixelFormatTypeYUV420P = 0,
+    IVPixelFormatType32BGRA  = 1,
 };
 
 /// 视频清晰度
 typedef NS_ENUM(NSUInteger, IVVideoDefinition) {
-    IVVideoDefinitionLow,
-    IVVideoDefinitionMid,
-    IVVideoDefinitionHigh,
+    IVVideoDefinitionLow  = 0,
+    IVVideoDefinitionMid  = 1,
+    IVVideoDefinitionHigh = 2,
 };
 
 /// 音频编码类型
 typedef NS_ENUM(NSUInteger, IVAudioCodecType) {
     IVAudioCodecTypeG711A = 1,
     IVAudioCodecTypeG711U = 2,
-    IVAudioCodecTypeG726 = 3,
+    IVAudioCodecTypeG726  = 3,
     IVAudioCodecTypeAAC   = 4,
     IVAudioCodecTypeAMR   = 5,
     IVAudioCodecTypeADPCMA = 6,
@@ -82,28 +82,28 @@ typedef NS_ENUM(NSUInteger, IVAudioSoundMode) {
 
 /// 音频格式
 typedef NS_ENUM(NSUInteger, IVAudioFormat) {
-    IVAudioFormatPCM   = 0,
+    IVAudioFormatLinearPCM   = 0,
 };
 
 /// 视频原始帧
 typedef struct IVVideoFrame {
     // For YUV: [0]Y [1]U [2]V,
-    // For RGB: [0]BGRA
+    // For RGBA: [0]BGRA
 
     IVPixelFormatType type;
     uint8_t    *data[3];
     uint32_t    linesize[3];
     uint32_t    width;
     uint32_t    height;
-    uint64_t    pts; // 毫秒
+    uint64_t    pts;
 } IVVideoFrame;
 
 /// 音频原始帧
 typedef struct IVAudioFrame {
-    IVAudioFormat type;
-    uint8_t    *data;
-    uint32_t    size;
-    uint64_t    pts; // 毫秒
+    IVAudioFormat type; //!< 音频采样格式
+    uint8_t    *data;   //!< [IN][OUT] 缓冲区地址
+    uint32_t    size;   //!< [IN] data最大容量,  [OUT] data有效长度
+    uint64_t    pts;    //!< 时间戳，may be 0。
 } IVAudioFrame;
 
 /// 视频数据包
@@ -112,8 +112,8 @@ typedef struct IVVideoPacket {
     uint8_t    *data;
     int         size;
     bool        keyFrame;
-    uint64_t    dts; // 毫秒
-    uint64_t    pts; // 毫秒
+    uint64_t    dts;
+    uint64_t    pts;
 } IVVideoPacket;
 
 /// 音频数据包
@@ -121,7 +121,7 @@ typedef struct IVAudioPacket {
     IVAudioCodecType type;
     uint8_t    *data;
     int         size;
-    uint64_t    pts; // 毫秒
+    uint64_t    pts; 
 } IVAudioPacket;
 
 /// 摄像头方位

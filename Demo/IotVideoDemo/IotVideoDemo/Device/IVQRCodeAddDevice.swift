@@ -9,7 +9,6 @@
 import UIKit
 import IoTVideo.IVNetConfig
 import IoTVideo.IVMessageMgr
-import IVAccountMgr
 import SwiftyJSON
 
 //设备扫手机的二维码
@@ -47,17 +46,21 @@ class IVQRCodeAddDevice: UIViewController {
 
 extension IVQRCodeAddDevice: IVMessageDelegate {
     func didReceiveEvent(_ event: String, topic: String) {
-        if topic == "EVENT_SYS/NetCfg_OK" {
-            if let devId = JSON(parseJSON: event)["dev_tid"].string {
-                IVAccountMgr.shared.addDevice(deviceId: devId) { (json, error) in
-                    if let error = error {
-                        showError(error)
-                        return
+            guard topic == "EVENT_SYS/NetCfg_OK",
+                let devId = JSON(parseJSON: event)["dev_tid"].string else { return }
+                
+            let hud = ivLoadingHud()
+            
+        IVDemoNetwork.addDevice(devId, responseHandler: { (data, error) in
+                hud.hide()
+                guard let succ = data as? Bool, error == nil else { return }
+                                
+                IVPopupView(title: "添加结果", message: succ ? "成功" : "失败", input: nil, actions: [.iKnow({ (_) in
+                    if succ {
+                        self.navigationController?.popToRootViewController(animated: true)                        
                     }
-                    showAlert(msg: json)
-                }
-            }
-        }
+                })]).show()
+            })
     //topic   EVENT_SYS/NetCfg_OK
         /*event
          {

@@ -41,7 +41,6 @@ struct IVDevice {
 class IVDeviceModel: Codable {
     var deviceMode: String?
     var shareType: IVDeviceShareType = .owner
-//    var did: String?
     var devId: String?
     var url: String?
     var deviceName: String?
@@ -100,6 +99,17 @@ extension NSNotification.Name {
 
 protocol IVDeviceAccessable where Self: UIViewController {
     var device: IVDevice! { get set }
+}
+
+
+struct PlayListData: Codable {
+    var palyList = [IVPalyBackList]()
+}
+
+struct IVPalyBackList: Codable {
+    var starttime: Int = 0
+    var endtime: Int = 0
+    var m3u8Url: String?
 }
 
 

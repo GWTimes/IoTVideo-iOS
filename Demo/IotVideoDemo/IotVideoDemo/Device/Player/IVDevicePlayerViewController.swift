@@ -57,13 +57,39 @@ class IVDevicePlayerViewController: UIViewController, IVDeviceAccessable {
             player.stop()
         }
     }
+    
+    func requestAuthorization(_ work: @escaping () -> Void) {
+        PHPhotoLibrary.requestAuthorization { (status) in
+            if status != .authorized {
+                ivHud("未授权访问相册")
+                return
+            }
+            DispatchQueue.main.async(execute: work)
+        }
+    }
+
+    func creationRequestForAsset(_ asset: Any) {
+        PHPhotoLibrary.shared().performChanges({
+            if let image = asset as? UIImage {
+                PHAssetChangeRequest.creationRequestForAsset(from: image)
+            } else if let url = asset as? URL {
+                PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: url)
+            }
+        }) { (_, error) in
+            if let _ = error {
+                ivHud("保存失败")
+            } else {
+                ivHud("已保存到相册")
+            }
+        }
+    }
 }
 
 // MARK: - 点击事件
 extension IVDevicePlayerViewController {
     @IBAction func playClicked(_ sender: UIButton) {
         if let player = player as? IVPlaybackPlayer, player.playbackItem == nil {
-            showAlert(msg: "未选择回放文件")
+            ivHud("请先选择时间点")
             return
         }
         
@@ -85,47 +111,48 @@ extension IVDevicePlayerViewController {
     }
     
     @IBAction func recordClicked(_ sender: UIButton) {
-        if sender.isSelected {
+        if player.isRecording {
             player.stopRecord()
+            sender.isSelected = false
         } else {
-            let docPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
-            let mp4Path = docPath + "/\(Date().timeIntervalSince1970).mp4"
-            player.startRecord(mp4Path) { (savePath, error) in
-                guard let savePath = savePath else {
-                    print("录像失败", error as Any)
-                    return
-                }
-                print("录像成功", savePath)
-                let url = URL(fileURLWithPath: savePath)
-                PHPhotoLibrary.shared().performChanges({
-                    PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: url)
-                }) { (success, error) in
-                    guard success == true else {
-                        print("视频保存到相册失败", error as Any)
+            requestAuthorization { [weak self] in
+                let docPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first!
+                let mp4Path = docPath + "/\(Date().timeIntervalSince1970).mp4"
+                self?.player.startRecord(mp4Path) { (savePath, error) in
+                    guard let savePath = savePath else {
+                        ivHud("录像失败")
                         return
                     }
-                    print("视频保存到相册成功", url)
+                    let url = URL(fileURLWithPath: savePath)
+                    self?.creationRequestForAsset(url)
                 }
+                sender.isSelected = true
             }
         }
-        sender.isSelected = !sender.isSelected
     }
     
     @IBAction func screenshotClicked(_ sender: UIButton) {
-        player.takeScreenshot({ (image) in
-            guard let image = image else { return }
-            DispatchQueue.main.sync {
-                let imgW: CGFloat = 150
-                let imgH = imgW / image.size.width * image.size.height
-                let imgVrect = CGRect(x: 8, y: self.videoView.bounds.size.height - imgH - 8, width: imgW, height: imgH)
-                let imgView = UIImageView(frame: imgVrect)
-                imgView.image = image
-                self.videoView.addSubview(imgView)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    imgView.removeFromSuperview()
+        requestAuthorization {  [weak self] in
+            self?.player.takeScreenshot({ (image) in
+                guard let `self` = self,
+                    let image = image else {
+                    ivHud("截图失败")
+                    return
                 }
-            }
-        })
+                DispatchQueue.main.sync {
+                    let imgW: CGFloat = 150
+                    let imgH = imgW / image.size.width * image.size.height
+                    let imgVrect = CGRect(x: 8, y: self.videoView.bounds.size.height - imgH - 8, width: imgW, height: imgH)
+                    let imgView = UIImageView(frame: imgVrect)
+                    imgView.image = image
+                    self.videoView.addSubview(imgView)
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        imgView.removeFromSuperview()
+                    }
+                    self.creationRequestForAsset(image)
+                }
+            })
+        }
     }
     
     @IBAction func micClicked(_ sender: UIButton) {
@@ -165,7 +192,7 @@ extension IVDevicePlayerViewController: UITextFieldDelegate {
 
 extension IVDevicePlayerViewController: IVPlayerDelegate {
     func player(_ player: IVPlayer, didUpdate status: IVPlayerStatus) {
-        let animating = (status == .loading || status == .preparing)
+        let animating = (status == .preparing || status == .loading)
         animating ? activityIndicatorView.startAnimating() : activityIndicatorView.stopAnimating()
         playBtn.isSelected = (status == .playing)
         speakerBtn?.isSelected = player.mute

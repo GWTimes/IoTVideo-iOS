@@ -48,7 +48,7 @@ class IVLogSettingViewController: UITableViewController {
     static var logLevel: Level {
         set {
             UserDefaults.standard.set(newValue.rawValue, forKey: kLogLevelKey)
-            IVLogger.maxLevel = newValue
+            IVLogger.logLevel = newValue
         }
         get {
             if let lv = UserDefaults.standard.value(forKey: kLogLevelKey) as? Int {

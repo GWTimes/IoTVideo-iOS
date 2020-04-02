@@ -35,6 +35,8 @@ class IJKMediaViewController: UIViewController, IVDeviceAccessable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = "云回放"
+        
         addMediaObservers()
         timelineView?.delegate = self
 

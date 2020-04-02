@@ -23,11 +23,13 @@ NS_ASSUME_NONNULL_BEGIN
 /// 二维码配网
 + (IVQRCodeNetConfig *)QRCode;
 
-/** 通过web绑定成功后，快速订阅设备
- * @param token 订阅的设备访问token
- * @return 是否成功
+/**
+ * 通过web绑定成功后，快速订阅设备
+ *  @param token 订阅的设备访问token
+ *  @param deviceId 设备ID
+ *  @return 是否成功
  */
-+ (BOOL)subscribeDeviceWithToken:(NSString *)token;
++ (BOOL)subscribeDeviceWithToken:(NSString *)token deviceId:(NSString *)deviceId;
 
 @end
 

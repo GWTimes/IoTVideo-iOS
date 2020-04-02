@@ -11,28 +11,35 @@
 #import <AVFoundation/AVFoundation.h>
 NS_ASSUME_NONNULL_BEGIN
 
+/// 回放文件
 @interface IVPlaybackItem: NSObject
-@property (nonatomic, assign) NSTimeInterval startTime; // 回放文件起始时间（秒）
-@property (nonatomic, assign) NSTimeInterval endTime;  // 回放文件结束时间（秒）
-@property (nonatomic, assign) NSTimeInterval duration; // 回放文件持续时间（秒）
+/// 回放文件起始时间（秒）
+@property (nonatomic, assign) NSTimeInterval startTime;
+/// 回放文件结束时间（秒）
+@property (nonatomic, assign) NSTimeInterval endTime;
+/// 回放文件持续时间（秒）
+@property (nonatomic, assign) NSTimeInterval duration;
+/// 回放文件类型（例如手动录像、人形侦测等）
 @property (nonatomic, strong) NSString      *type;
 @end
 
+/// 回放文件分页
 @interface IVPlaybackPage: NSObject
-///当前页码索引
+/// 当前页码索引
 @property (nonatomic, assign) uint32_t  pageIndex;
-///总页数
+/// 总页数
 @property (nonatomic, assign) uint32_t  totalPage;
-///回放文件数组
+// /回放文件数组
 @property (nonatomic, strong) NSArray<IVPlaybackItem *> *items;
 @end
 
-
+/// 回放文件获取回调
 typedef void (^PlaybackListCallback)(IVPlaybackPage *_Nullable page, NSError *_Nullable error);
 
+/// 回放播放器
 @interface IVPlaybackPlayer : IVPlayer
 
-/// 创建播放器
+/// 创建空播放器
 /// @param deviceId 设备ID
 - (instancetype)initWithDeviceId:(NSString *)deviceId;
 
@@ -41,27 +48,6 @@ typedef void (^PlaybackListCallback)(IVPlaybackPage *_Nullable page, NSError *_N
 /// @param item 播放的文件(可跨文件)
 /// @param time 指定播放起始时间点（秒），取值范围`playbackItem.startTime >= time <= playbackItem.endTime`
 - (instancetype)initWithDeviceId:(NSString *)deviceId playbackItem:(IVPlaybackItem *)item seekToTime:(NSTimeInterval)time;;
-
-/// (未播放前)设置回放参数
-/// @note 文件尚未播放时使用，`setPlaybackItem:seekToTime:` 后需手动调用`play`开始播放
-/// @param item 播放的文件(可跨文件)
-/// @param time 指定播放起始时间点（秒），取值范围`playbackItem.startTime >= time <= playbackItem.endTime`
-- (void)setPlaybackItem:(IVPlaybackItem *)item seekToTime:(NSTimeInterval)time;
-
-/// (已播放后)跳到指定时间播放
-/// @note 文件正在播放时使用, `seekToTime:playbackItem:`后无需再手动调用`play`开始播放
-/// @param time 指定播放起始时间点（秒），取值范围`playbackItem.startTime >= time <= playbackItem.endTime`
-/// @param item 播放的文件(可跨文件)
-- (void)seekToTime:(NSTimeInterval)time playbackItem:(IVPlaybackItem *)item;
-
-/// 当前回放的文件
-@property (nonatomic, strong, nullable, readonly) IVPlaybackItem *playbackItem;
-
-/// 暂停
-- (int)pause;
-
-/// 恢复播放
-- (int)resume;
 
 /// 获取一页回放文件列表
 /// @param deviceId 设备ID
@@ -76,6 +62,28 @@ typedef void (^PlaybackListCallback)(IVPlaybackPage *_Nullable page, NSError *_N
                       startTime:(NSTimeInterval)startTime
                         endTime:(NSTimeInterval)endTime
               completionHandler:(PlaybackListCallback)completionHandler;
+
+/// (未播放前)设置回放参数
+/// @note 文件尚未播放时使用，`setPlaybackItem:seekToTime:` 后需手动调用`play`开始播放
+/// @param item 播放的文件(可跨文件)
+/// @param time 指定播放起始时间点（秒），取值范围`playbackItem.startTime >= time <= playbackItem.endTime`
+- (void)setPlaybackItem:(IVPlaybackItem *)item seekToTime:(NSTimeInterval)time;
+
+/// (已播放后)跳到指定文件和时间播放
+/// @note 文件正在播放时使用, `seekToTime:playbackItem:`后无需再手动调用`play`开始播放
+/// @param time 指定播放起始时间点（秒），取值范围`playbackItem.startTime >= time <= playbackItem.endTime`
+/// @param item 播放的文件(可跨文件)
+- (void)seekToTime:(NSTimeInterval)time playbackItem:(IVPlaybackItem *)item;
+
+/// 当前回放的文件。
+/// @note 时间通过`-[IVPlayer pts]`获取
+@property (nonatomic, strong, nullable, readonly) IVPlaybackItem *playbackItem;
+
+/// 暂停
+- (void)pause;
+
+/// 恢复播放
+- (void)resume;
 
 @end
 

@@ -16,6 +16,13 @@ extension IVTencentNetwork {
     func register(tmpSecretID: String, tmpSecretKey: String, token: String, userName: String, responseHandler: IVTencentNetworkResponseHandler) {
         IVTencentNetwork.shared.secretKey = tmpSecretKey
         IVTencentNetwork.shared.secretId = tmpSecretID
+        
+        UserDefaults.standard.do {
+            $0.setValue(tmpSecretID, forKey: demo_secretId)
+            $0.setValue(tmpSecretKey, forKey: demo_secretKey)
+            $0.setValue(token, forKey: demo_loginToken)
+        }
+        
         IVTencentNetwork.shared.token = token
         self.request(methodType: .POST,
                      action: "CreateAppUsr",
@@ -35,7 +42,7 @@ extension IVTencentNetwork {
     
     //获取设备列表
     func deviceList(responseHandler: IVTencentNetworkResponseHandler) {
-        let accessId = UserDefaults.standard.value(forKey: demo_accessIdKey)!
+        let accessId = UserDefaults.standard.string(forKey: demo_accessId)!
         self.request(methodType: .POST,
                      action: "DescribeBindDev",
                      params: ["AccessId": accessId],
@@ -46,8 +53,7 @@ extension IVTencentNetwork {
     //role: .owner 主人绑定设备
     //role: .guest 绑定别人分享的设备
     //forceBid: 默认true 是否踢掉之前的主人，true：踢掉；false：不踢掉。当role为owner时，可以不填
-    func addDevice(deviceId: String, role: IVRole, forceBind: Bool = true, responseHandler: IVTencentNetworkResponseHandler) {
-        let accessId = UserDefaults.standard.value(forKey: demo_accessIdKey)!
+    func addDevice(accessId: String, deviceId: String, role: IVRole, forceBind: Bool = true, responseHandler: IVTencentNetworkResponseHandler) {
         self.request(methodType: .POST,
                      action: "CreateBinding",
                      params: ["AccessId": accessId,
@@ -58,8 +64,7 @@ extension IVTencentNetwork {
     }
     
     //解绑
-    func deleteDevice(deviceId: String, role: IVRole, responseHandler: IVTencentNetworkResponseHandler) {
-        let accessId = UserDefaults.standard.value(forKey: demo_accessIdKey)!
+    func deleteDevice(deviceId: String, accessId: String, role: IVRole, responseHandler: IVTencentNetworkResponseHandler) {
         self.request(methodType: .POST,
                      action: "DeleteBinding",
                      params: ["AccessId": accessId,
@@ -67,22 +72,41 @@ extension IVTencentNetwork {
                               "Role": role.rawValue],
                      response: responseHandler)
     }
-}
-
-
-//绑定设备
-//role: .owner 主人绑定设备
-//role: .guest 绑定别人分享的设备
-//forceBid: 默认true 是否踢掉之前的主人，true：踢掉；false：不踢掉。当role为owner时，可以不填
-func addDevice(deviceId: String, role: IVRole, forceBind: Bool = true, responseHandler: IVTencentNetworkResponseHandler) {
-    IVTencentNetwork.shared.addDevice(deviceId: deviceId, role: role, forceBind: forceBind){ (json, error) in
-        if let json = json  {
-            let newJson = JSON(parseJSON: json)
-            //订阅设备 --- 绑定设备后，让IoTVideo快速加入此设备
-            let succ = IVNetConfig.subscribeDevice(withToken: newJson["Response"]["AccessToken"].stringValue)
-            logDebug("subscribeDevice: ", succ)
-        }
-        
-        responseHandler?(json, error)
+    
+    //主人获取设备的分享者列表
+    func getVisitorList(deviceId: String, responseHandler: IVTencentNetworkResponseHandler) {
+        let accessId = UserDefaults.standard.string(forKey: demo_accessId)!
+        self.request(methodType: .POST,
+                     action: "DescribeBindUsr",
+                     params: ["AccessId": accessId, "Tid": deviceId],
+                     response: responseHandler)
+    }
+    
+    /// 临时访问
+    /// 终端用户与设备没有强绑定关联关系; 允许终端用户短时或一次性临时访问设备; 当终端用户与设备有强绑定关系时，可以不用调用此接口
+    /// - Parameters:
+    ///   - deviceIds: 设备id数组 0 < count <= 100
+    ///   - TTL: 授权分钟数
+    ///   - responseHandler: 回调
+    func temporaryVisit(deviceIds: [String], TTL: Int, responseHandler: IVTencentNetworkResponseHandler) {
+        let accessId = UserDefaults.standard.value(forKey: demo_accessId)!
+        self.request(methodType: .POST,
+                     action: "CreateDevToken",
+                     params: ["AccessId": accessId,
+                              "Tids.N": deviceIds,
+                              "TtlMinutes": TTL],
+                     response: responseHandler)
+    }
+    
+    
+    func buyCloudStoragePackage(packageID: String, deviceId: String, responseHandler: IVTencentNetworkResponseHandler) {
+        let accessId = UserDefaults.standard.string(forKey: demo_accessId)!
+        self.request(methodType: .POST,
+                     action: "CreateStorage",
+                     params: ["PkgId": packageID,
+                              "Tid": deviceId,
+                              "UserTag": accessId],
+                     response: responseHandler)
     }
 }
+

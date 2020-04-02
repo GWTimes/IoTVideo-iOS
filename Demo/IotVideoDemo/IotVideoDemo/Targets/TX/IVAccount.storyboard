@@ -10,7 +10,7 @@
         <!--账户-->
         <scene sceneID="pLN-tN-Pw4">
             <objects>
-                <tableViewController id="fdI-sz-p1s" customClass="IVAccountViewController" customModule="IotVideoDemoTX" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="fdI-sz-p1s" customClass="IVAccountViewController" customModule="IotVideoDemo" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="40" id="T4M-h1-5mX">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -8,7 +8,6 @@
 
 import UIKit
 import IoTVideo
-import IVAccountMgr
 import SwiftyJSON
 
 class IVNavigationViewController: UINavigationController {
@@ -16,30 +15,13 @@ class IVNavigationViewController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let accessToken = UserDefaults.standard.string(forKey: demo_accessTokenKey)
-        let accessId = UserDefaults.standard.string(forKey: demo_accessIdKey)
-        let expireTime = UserDefaults.standard.value(forKey: demo_expireTimeKey) as? TimeInterval
-        if let accessToken = accessToken, let accessId = accessId, let expireTime = expireTime, !accessToken.isEmpty, !accessId.isEmpty {
-            IoTVideo.sharedInstance.register(withAccessId: accessId, accessToken: accessToken)
-            if expireTime - Date().timeIntervalSince1970 < 7 * 24 * 60 * 60 {
-                DispatchQueue.global().async {
-                    IVAccountMgr.shared.updateaccessToken { (json, error) in
-                        guard let json = json else {
-                            showError(error!)
-                            return
-                        }
-                        let newJson = JSON(parseJSON: json)
-                        UserDefaults.standard.do {
-                            $0.set(newJson["data"]["accessToken"].string, forKey: demo_accessTokenKey)
-                            $0.set(newJson["data"]["expireTime"].doubleValue, forKey:demo_expireTimeKey)
-                        }
-                        IoTVideo.sharedInstance.updateToken(newJson["data"]["accessToken"].string!)
-                    }
-                }
-            }
-        }
-        
         IVMessageMgr.sharedInstance.delegate = self
+        
+        let accessToken = UserDefaults.standard.string(forKey: demo_accessToken)
+        let accessId = UserDefaults.standard.string(forKey: demo_accessId)
+        if let accessToken = accessToken, let accessId = accessId, !accessToken.isEmpty, !accessId.isEmpty {
+            IoTVideo.sharedInstance.register(withAccessId: accessId, accessToken: accessToken)
+        }
     }
        
     override func viewDidAppear(_ animated: Bool) {
@@ -56,6 +38,7 @@ class IVNavigationViewController: UINavigationController {
     }
     
     func jumpToLoginView() {
+        self.isNavigationBarHidden = false
         let board = UIStoryboard(name: "IVLogin", bundle: nil)
         let loginVC = board.instantiateViewController(withIdentifier: "LogNav") as! UINavigationController
         loginVC.modalPresentationStyle = .fullScreen

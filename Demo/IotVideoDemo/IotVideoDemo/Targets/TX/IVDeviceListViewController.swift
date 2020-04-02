@@ -12,6 +12,7 @@ import IoTVideo.IVMessageMgr
 
 class IVDeviceListViewController: UITableViewController {
 
+    @IBOutlet weak var addDeviceVidw: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,42 +24,23 @@ class IVDeviceListViewController: UITableViewController {
             
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if UserDefaults.standard.string(forKey: demo_accessTokenKey)?.isEmpty ?? true {
+        if UserDefaults.standard.string(forKey: demo_accessToken)?.isEmpty ?? true {
             return
         }
         let hud = ivLoadingHud()
-        IVTencentNetwork.shared.deviceList {(json, error) in
-            if let error = error {
-                hud.hide()
-                showError(error)
-                return
-            }
-
-            guard let json = parseJson(json) else {
-                return
-            }
-             
-            var newUserDeviceList: [IVDeviceModel] = []
-            if let data = json["Response"]["Data"].array {
-                for device in data {
-                    let deviceModel = IVDeviceModel(devId: device["Tid"].stringValue,
-                                                    deviceName: device["DeviceName"].stringValue,
-                                                    shareType: IVDeviceShareType(rawValue: device["Role"].stringValue) ?? .owner)
-                    newUserDeviceList.append(deviceModel)
-                    
-                    IVMessageMgr.sharedInstance.readProperty(ofDevice: deviceModel.devId!, path: "ProReadonly._online") { (json, error) in
-                        guard let json = json else { return }
-                        deviceModel.online = JSON(parseJSON: json).value("stVal")?.boolValue
-                    }
-                }
-            }
-            
-            DispatchQueue.main.async {
-                userDeviceList = newUserDeviceList
-                self.tableView.reloadData()
-            }
-            
+        
+        IVDemoNetwork.deviceList { (data, error) in
             hud.hide()
+            guard let data = data else {
+                return
+            }
+        
+            DispatchQueue.main.async {
+                userDeviceList = data as? [IVDeviceModel] ?? []
+                self.addDeviceVidw.isHidden = !userDeviceList.isEmpty
+                self.tableView.reloadData()
+                hud.hide()
+            }
         }
     }
     
@@ -98,4 +80,5 @@ class IVDeviceCell: UITableViewCell {
     @IBOutlet weak var deviceIdLabel: UILabel!
     @IBOutlet weak var onlineIcon: UIImageView!
     @IBOutlet weak var onlineLabel: UILabel!
+    
 }

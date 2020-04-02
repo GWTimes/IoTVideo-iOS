@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="boi-H1-T35">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="boi-H1-T35">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,13 +27,13 @@
         <!--IoT Video Demo-->
         <scene sceneID="Xge-My-cBz">
             <objects>
-                <viewController id="boi-H1-T35" customClass="IVLoginViewController" customModule="IotVideoDemo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="boi-H1-T35" customClass="IVLoginViewController" customModule="IotVideoDemoTX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="t3A-M1-txL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appLogo" translatesAutoresizingMaskIntoConstraints="NO" id="6oo-6E-ytB">
-                                <rect key="frame" x="167" y="108" width="80" height="80"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IoTVideoLogo" translatesAutoresizingMaskIntoConstraints="NO" id="6oo-6E-ytB">
+                                <rect key="frame" x="167" y="136" width="80" height="80"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="6oo-6E-ytB" secondAttribute="height" multiplier="1:1" id="4Gd-aj-TwK"/>
                                     <constraint firstAttribute="height" constant="80" id="NcN-gR-G7j"/>
@@ -59,7 +59,7 @@
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="tmpSecretID" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7eC-aX-i5r">
                                                 <rect key="frame" x="0.0" y="25.5" width="334" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="done"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="boi-H1-T35" id="q87-SU-63a"/>
                                                 </connections>
@@ -78,7 +78,7 @@
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="tmpSecretKey" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ntD-jR-8oD">
                                                 <rect key="frame" x="0.0" y="25.5" width="334" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="done"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="boi-H1-T35" id="WXq-3B-6TL"/>
                                                 </connections>
@@ -97,7 +97,7 @@
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Token" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gHa-OD-n9h">
                                                 <rect key="frame" x="0.0" y="25.5" width="334" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="done"/>
                                             </textField>
                                         </subviews>
                                     </stackView>
@@ -113,7 +113,7 @@
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="用户名" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZVh-S4-DiI">
                                                 <rect key="frame" x="0.0" y="25.5" width="334" height="34"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="alphabet" returnKeyType="done"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="boi-H1-T35" id="Ny8-Kz-Dby"/>
                                                 </connections>
@@ -124,11 +124,11 @@
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="smm-xH-8aK">
                                 <rect key="frame" x="60" y="643.5" width="294" height="44"/>
-                                <color key="backgroundColor" red="0.35294117650000001" green="0.7843137255" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.43137254901960786" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="pSy-rQ-IoS"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="19"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
                                 <state key="normal" title="登录">
                                     <color key="titleColor" red="0.97405088699999998" green="0.97405088699999998" blue="0.97405088699999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -141,7 +141,7 @@
                         <constraints>
                             <constraint firstItem="tYr-dg-RKM" firstAttribute="centerY" secondItem="t3A-M1-txL" secondAttribute="centerY" id="282-2J-fB0"/>
                             <constraint firstItem="smm-xH-8aK" firstAttribute="leading" secondItem="Ubw-nL-dDt" secondAttribute="leading" constant="60" id="32S-AX-0SU"/>
-                            <constraint firstItem="6oo-6E-ytB" firstAttribute="top" secondItem="Ubw-nL-dDt" secondAttribute="top" constant="20" id="4GT-zH-IUa"/>
+                            <constraint firstItem="6oo-6E-ytB" firstAttribute="top" secondItem="Ubw-nL-dDt" secondAttribute="top" constant="48" id="4GT-zH-IUa"/>
                             <constraint firstItem="Ubw-nL-dDt" firstAttribute="trailing" secondItem="tYr-dg-RKM" secondAttribute="trailing" constant="40" id="OHc-w8-wcD"/>
                             <constraint firstItem="smm-xH-8aK" firstAttribute="top" secondItem="tYr-dg-RKM" secondAttribute="bottom" constant="60" id="cF0-9p-yFk"/>
                             <constraint firstItem="tYr-dg-RKM" firstAttribute="leading" secondItem="Ubw-nL-dDt" secondAttribute="leading" constant="40" id="kGd-8q-AOD"/>
@@ -165,6 +165,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="appLogo" width="341.33334350585938" height="341.33334350585938"/>
+        <image name="IoTVideoLogo" width="341.33334350585938" height="341.33334350585938"/>
     </resources>
 </document>

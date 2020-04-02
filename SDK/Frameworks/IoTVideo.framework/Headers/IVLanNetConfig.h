@@ -33,7 +33,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param wifiPwd Wi-Fi密码
 /// @param deviceId 设备ID
 /// @param completionHandler 配网结果回调
-+ (void)sendWifiName:(NSString *)wifiName wifiPwd:(NSString *)wifiPwd toDevice:(NSString *)deviceId completion:(void(^)(BOOL success, NSError *error))completionHandler;
++ (void)sendWifiName:(NSString *)wifiName wifiPwd:(NSString *)wifiPwd toDevice:(NSString *)deviceId completion:(void(^)(BOOL success, NSError * _Nullable error))completionHandler;
 
 /// 获取局域网设备列表
 + (NSArray<IVLANDevice *> *)getDeviceList;
@@ -43,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param wifiPwd Wi-Fi密码
 /// @param deviceId 设备ID
 /// @param completionHandler 配网结果回调
-- (void)sendWifiName:(NSString *)wifiName wifiPwd:(NSString *)wifiPwd toDevice:(NSString *)deviceId completion:(void(^)(BOOL success, NSError *error))completionHandler;
+- (void)sendWifiName:(NSString *)wifiName wifiPwd:(NSString *)wifiPwd toDevice:(NSString *)deviceId completion:(void(^)(BOOL success,  NSError * _Nullable error))completionHandler;
 
 /// 获取局域网设备列表
 - (NSArray<IVLANDevice *> *)getDeviceList;

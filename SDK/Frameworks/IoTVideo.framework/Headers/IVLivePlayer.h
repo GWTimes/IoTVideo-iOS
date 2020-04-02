@@ -12,32 +12,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IVLivePlayer : IVPlayer <IVPlayerTalkable>
+/// 音视频通话播放器
+@interface IVLivePlayer : IVPlayer <IVPlayerTalkable, IVPlayerVideoable>
 
 /// 创建播放器
 /// @param deviceId 设备ID
 - (instancetype)initWithDeviceId:(NSString *)deviceId;
-
-/// 摄像头预览图层
-@property (nonatomic, strong, readonly) CALayer *previewLayer;
-
-/// 镜头位置，默认IVCameraPositionFront
-@property (nonatomic, assign, readonly) IVCameraPosition cameraPosition;
-
-/// 是否正在开启摄像头
-@property (nonatomic, assign, readonly) BOOL isCameraOpening;
-
-/// 视频帧率，默认16
-@property (nonatomic, assign) int frameRate;
-
-/// 启动摄像头
-- (void)openCamera;
-
-/// 关闭摄像头
-- (void)closeCamera;
-
-/// 切换摄像头
-- (void)switchCamera;
 
 @end
 

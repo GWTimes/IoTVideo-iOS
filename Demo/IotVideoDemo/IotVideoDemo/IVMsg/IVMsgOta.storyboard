@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eF4-GO-eUs">
-    <device id="retina6_1" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="eF4-GO-eUs">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,41 +23,39 @@
                                     <constraint firstAttribute="height" constant="48" id="BwV-sg-Y7n"/>
                                     <constraint firstAttribute="width" constant="180" id="goi-zI-eaE"/>
                                 </constraints>
-                                <state key="normal" title="查询最新版本">
+                                <state key="normal" title="检查设备待更新版本">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <connections>
                                     <action selector="searchNewVersion:" destination="eF4-GO-eUs" eventType="touchUpInside" id="qq3-US-8CH"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uw8-Ya-64p">
-                                <rect key="frame" x="117" y="152" width="180" height="48"/>
-                                <color key="backgroundColor" red="0.077233854209999994" green="0.43433108980000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="66K-GS-np7"/>
-                                    <constraint firstAttribute="width" constant="180" id="gwR-8D-p2M"/>
-                                </constraints>
-                                <state key="normal" title="升级">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="update:" destination="eF4-GO-eUs" eventType="touchUpInside" id="N78-r2-6Dv"/>
-                                </connections>
-                            </button>
                             <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="6xp-Es-oSD">
-                                <rect key="frame" x="117" y="230" width="180" height="103"/>
+                                <rect key="frame" x="117" y="170" width="180" height="193.5"/>
                                 <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设备当前待更新版本：" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qRt-fe-EiV">
+                                        <rect key="frame" x="28.5" y="0.0" width="123" height="14.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.2.3" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gb4-2V-rBB">
+                                        <rect key="frame" x="74.5" y="44.5" width="31.5" height="16"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a5Q-jX-QcN">
-                                        <rect key="frame" x="78" y="0.0" width="24.5" height="20.5"/>
+                                        <rect key="frame" x="78" y="90.5" width="24.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="44P-Px-3pF">
-                                        <rect key="frame" x="0.0" y="50.5" width="180" height="2"/>
+                                        <rect key="frame" x="0.0" y="141" width="180" height="2"/>
                                     </progressView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="升级进度" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C3F-vG-QX3">
-                                        <rect key="frame" x="55.5" y="82.5" width="69.5" height="20.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="更新进度" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C3F-vG-QX3">
+                                        <rect key="frame" x="55.5" y="173" width="69.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -72,16 +68,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="6xp-Es-oSD" firstAttribute="top" secondItem="Uw8-Ya-64p" secondAttribute="bottom" constant="30" id="2TM-AP-8hy"/>
-                            <constraint firstItem="Uw8-Ya-64p" firstAttribute="top" secondItem="fyX-ZY-IMM" secondAttribute="bottom" constant="30" id="2ny-0M-beh"/>
                             <constraint firstItem="fyX-ZY-IMM" firstAttribute="centerX" secondItem="eb7-f3-bIL" secondAttribute="centerX" id="87o-0c-9Hj"/>
                             <constraint firstItem="fyX-ZY-IMM" firstAttribute="top" secondItem="yJg-de-ToJ" secondAttribute="top" constant="30" id="HY1-QC-YgY"/>
-                            <constraint firstItem="Uw8-Ya-64p" firstAttribute="centerX" secondItem="eb7-f3-bIL" secondAttribute="centerX" id="Sg9-KM-JDS"/>
+                            <constraint firstItem="6xp-Es-oSD" firstAttribute="top" secondItem="fyX-ZY-IMM" secondAttribute="bottom" constant="48" id="OV6-OU-yQW"/>
                             <constraint firstItem="6xp-Es-oSD" firstAttribute="centerX" secondItem="eb7-f3-bIL" secondAttribute="centerX" id="Y0q-ja-rso"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yJg-de-ToJ"/>
                     </view>
                     <connections>
+                        <outlet property="newVersionLabel" destination="gb4-2V-rBB" id="rFI-Ky-oW7"/>
                         <outlet property="updatePersentLabel" destination="a5Q-jX-QcN" id="c2W-cG-CnB"/>
                         <outlet property="updatePersentProgress" destination="44P-Px-3pF" id="H0n-Hx-Pl0"/>
                         <outlet property="updateProgressView" destination="6xp-Es-oSD" id="fYe-zs-Jh6"/>
@@ -89,7 +84,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yOY-hT-IKg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="30" y="38"/>
+            <point key="canvasLocation" x="28.985507246376812" y="37.5"/>
         </scene>
     </scenes>
 </document>

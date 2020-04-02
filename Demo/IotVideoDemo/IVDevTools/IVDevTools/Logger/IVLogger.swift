@@ -21,12 +21,12 @@ import Foundation
     public var description: String {
         switch self {
         case .off:      return ""
-        case .fatal:    return " [F]📵"
-        case .error:    return " [E]💔"
-        case .warning:  return " [W]⚠️"
-        case .info:     return " [I]💙"
-        case .debug:    return " [D]"
-        case .verbose:  return " [V]"
+        case .fatal:    return "[F]📵"
+        case .error:    return "[E]💔"
+        case .warning:  return "[W]⚠️"
+        case .info:     return "[I]💙"
+        case .debug:    return ""
+        case .verbose:  return ""
         }
     }
 }
@@ -59,16 +59,28 @@ fileprivate class Log: NSObject {
     
     // 2019-05-17 08:30:53.004 [D] <BaseViewController.m:22> -[BaseViewController dealloc] 控制器销毁 MineController
     override var description: String {
-        let location = " <\(file):\(line)> "
-    #if DEBUG
-        if IVLogger.isXcodeRunning {
-            return dateDesc + level.description + location + message
-        } else {
-            return dateDesc + location + message
+        let location = (line > 0 ? "<\(file):\(line)>" : "<\(file)>")
+        
+        switch (level) {
+        case .fatal, .error, .warning:
+            // 18:01:40.917 [F]📵 <BaseViewController.m:22> -[viewDidLoad:] set current ListSrv to 119.29.231.112.
+            return String(format: "%@ %@ %@ %@ %@", dateDesc, level.description, location, function, message)
+            
+        case .info:
+            // 18:01:40.917 [I]💙 <BaseViewController.m:22> set current ListSrv to 119.29.231.112.
+            return String(format: "%@ %@ %@ %@", dateDesc, level.description, location, message)
+            
+        case .debug:
+            // 18:01:40.917 <BaseViewController.m:22> set current ListSrv to 119.29.231.112.
+            return String(format: "%@ %@ %@", dateDesc, location, message)
+            
+        case .verbose:
+            // 08:30:53.004 set current ListSrv to 119.29.231.112.
+            return String(format: "%@ %@", dateDesc, message)
+            
+        default:
+            return ""
         }
-    #else
-        return dateDesc + location + message
-    #endif
         
     }
 
@@ -97,16 +109,19 @@ fileprivate class Log: NSObject {
     private static let serialQueue = DispatchQueue(label: "iv.logger.serialQueue")
     
     /// 日志的最高级别, 默认Debug:.debug / Release:.info。 log.level > maxLevel 的将会忽略
-    public static var maxLevel: Level = IVLogSettingViewController.logLevel {
+    public static var logLevel: Level = IVLogSettingViewController.logLevel {
         didSet {
-            if maxLevel != IVLogSettingViewController.logLevel {
-                IVLogSettingViewController.logLevel = maxLevel
+            if logLevel != IVLogSettingViewController.logLevel {
+                IVLogSettingViewController.logLevel = logLevel
             }
+            eventObserver?(self)
         }
     }
 
+    private static var eventObserver: ((IVLogger.Type) -> Void)? = nil
     
-    @objc public static func register() {
+    @objc public static func register(_ eventObserver: ((IVLogger.Type) -> Void)? = nil) {
+        self.eventObserver = eventObserver
         registerCrashHandler { (crashLog) in
             log(.fatal, message: crashLog)
         }
@@ -114,7 +129,7 @@ fileprivate class Log: NSObject {
 
     @objc public static func log(_ level: Level = .debug, path: String = #file, function: String = #function, line: Int = #line, message: String = "") {
         // 级别限制
-        if level.rawValue > maxLevel.rawValue { return }
+        if level.rawValue > logLevel.rawValue { return }
         
         // 模型转换
         let fileName = (path as NSString).lastPathComponent

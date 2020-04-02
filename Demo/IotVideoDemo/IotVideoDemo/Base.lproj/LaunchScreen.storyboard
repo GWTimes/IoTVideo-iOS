@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,36 +20,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="IoT Video Demo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="4ml-aj-WnB">
-                                <rect key="frame" x="16" y="108" width="382" height="69"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="57"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright © 2019 - 2020 Tencentcs. All Rights Reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="1" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HAG-5G-tgj">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Copyright © 2019 - 2020 Tencentcs. All Rights Reserved." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="1" translatesAutoresizingMaskIntoConstraints="NO" id="HAG-5G-tgj">
                                 <rect key="frame" x="16" y="825" width="382" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="appLogo" translatesAutoresizingMaskIntoConstraints="NO" id="UGl-yf-4Ha">
-                                <rect key="frame" x="0.0" y="187" width="414" height="414"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="IoTVideoLogo" translatesAutoresizingMaskIntoConstraints="NO" id="UGl-yf-4Ha">
+                                <rect key="frame" x="88" y="329" width="238" height="238"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="UGl-yf-4Ha" secondAttribute="height" multiplier="1:1" id="g3f-wW-pHH"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="IoT Video Demo" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="4ml-aj-WnB">
+                                <rect key="frame" x="48" y="108" width="318" height="53"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="44"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.078431372549019607" green="0.69411764705882351" blue="0.61568627450980395" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="4ml-aj-WnB" firstAttribute="top" secondItem="1BF-iN-w8f" secondAttribute="bottom" constant="64" id="40g-LS-KKf"/>
-                            <constraint firstItem="UGl-yf-4Ha" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="8D6-fg-FM5"/>
+                            <constraint firstItem="UGl-yf-4Ha" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="88" id="8D6-fg-FM5"/>
                             <constraint firstItem="HAG-5G-tgj" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="16" id="D2B-qC-Qvp"/>
-                            <constraint firstItem="4ml-aj-WnB" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="16" id="QRJ-2f-9gA"/>
-                            <constraint firstItem="UGl-yf-4Ha" firstAttribute="top" secondItem="4ml-aj-WnB" secondAttribute="bottom" constant="10" id="Uyv-nC-uEm"/>
+                            <constraint firstItem="4ml-aj-WnB" firstAttribute="leading" secondItem="yV0-T2-uD8" secondAttribute="leading" constant="48" id="PLz-gE-Q1s"/>
+                            <constraint firstItem="yV0-T2-uD8" firstAttribute="trailing" secondItem="4ml-aj-WnB" secondAttribute="trailing" constant="48" id="Thb-Tv-6zt"/>
                             <constraint firstAttribute="trailing" secondItem="HAG-5G-tgj" secondAttribute="trailing" constant="16" id="YbU-1X-UR4"/>
-                            <constraint firstAttribute="trailing" secondItem="4ml-aj-WnB" secondAttribute="trailing" constant="16" id="gMN-x4-wdT"/>
                             <constraint firstItem="4M3-Mc-57D" firstAttribute="top" secondItem="HAG-5G-tgj" secondAttribute="bottom" constant="16" id="lnO-65-o2q"/>
-                            <constraint firstItem="UGl-yf-4Ha" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailing" id="rua-Rg-fE3"/>
+                            <constraint firstItem="UGl-yf-4Ha" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="o9q-jH-q0R"/>
+                            <constraint firstItem="UGl-yf-4Ha" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailing" constant="-88" id="rua-Rg-fE3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yV0-T2-uD8"/>
                     </view>
@@ -60,6 +60,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="appLogo" width="341.33334350585938" height="341.33334350585938"/>
+        <image name="IoTVideoLogo" width="326.66665649414062" height="328"/>
     </resources>
 </document>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JJa-xL-XG1">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--物模型获取及配置-->
+        <scene sceneID="XUg-kY-glk">
+            <objects>
+                <tableViewController id="JJa-xL-XG1" customClass="IVMsgVC" customModule="IotVideoDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="NsV-0Z-tea">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="IVMsgCellID" id="HhA-nz-XiE" customClass="IVMsgCell" customModule="IotVideoDemo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="HhA-nz-XiE" id="3jJ-nZ-GUd">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZbQ-Al-rmc">
+                                            <rect key="frame" x="20" y="11.5" width="42" height="20.5"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="cd7-Zy-1Xm">
+                                            <rect key="frame" x="320" y="7" width="74" height="30"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UET-TJ-UG7">
+                                                    <rect key="frame" x="0.0" y="0.0" width="31" height="30"/>
+                                                    <state key="normal" title="查看">
+                                                        <color key="titleColor" red="0.0" green="0.43137254899999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="getSender:" destination="HhA-nz-XiE" eventType="touchUpInside" id="akm-DY-v3H"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TYY-mj-VrV">
+                                                    <rect key="frame" x="43" y="0.0" width="31" height="30"/>
+                                                    <state key="normal" title="编辑">
+                                                        <color key="titleColor" red="0.0" green="0.43137254901960786" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="actionSender:" destination="HhA-nz-XiE" eventType="touchUpInside" id="f28-yt-qMS"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="cd7-Zy-1Xm" secondAttribute="trailing" constant="20" id="Udk-vt-M0x"/>
+                                        <constraint firstItem="ZbQ-Al-rmc" firstAttribute="centerY" secondItem="3jJ-nZ-GUd" secondAttribute="centerY" id="dgm-iC-spm"/>
+                                        <constraint firstItem="ZbQ-Al-rmc" firstAttribute="leading" secondItem="3jJ-nZ-GUd" secondAttribute="leadingMargin" id="iLt-mh-fa5"/>
+                                        <constraint firstItem="cd7-Zy-1Xm" firstAttribute="centerY" secondItem="3jJ-nZ-GUd" secondAttribute="centerY" id="mmZ-CG-6PE"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="actionButton" destination="TYY-mj-VrV" id="VJj-QM-E6r"/>
+                                    <outlet property="getButton" destination="UET-TJ-UG7" id="jYl-uX-oy4"/>
+                                    <outlet property="nameLabel" destination="ZbQ-Al-rmc" id="NrB-6r-oEz"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
+                        <connections>
+                            <outlet property="dataSource" destination="JJa-xL-XG1" id="xRP-3c-I04"/>
+                            <outlet property="delegate" destination="JJa-xL-XG1" id="22t-bh-OFG"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="物模型获取及配置" id="kUl-ZC-ORi"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CS8-SO-14m" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="269.56521739130437" y="679.6875"/>
+        </scene>
+    </scenes>
+</document>

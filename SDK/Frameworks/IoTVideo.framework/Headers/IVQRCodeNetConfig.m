@@ -9,7 +9,7 @@
 #import "IVQRCodeNetConfig.h"
 #import "IVQRCodeHelper.h"
 #import "IoTVideo.h"
-#import "libp2p.h"
+#import "IVCommUtils.h"
 #import "iot_video_link_def.h"
 #import "IVQRCodeDef.h"
 
@@ -23,7 +23,7 @@
     
     [IVQRCodeNetConfig createQRCodeWithWifiName:wifiName
                                         wifiPwd:wifiPwd
-                                       language:NSLocale.preferredLanguages.firstObject
+                                       language:IV_QR_CODE_LANGUAGE_TYPE_CN
                                        timeZone:[NSTimeZone.systemTimeZone secondsFromGMT]/60
                                          QRSize:size
                               completionHandler:completionHandler];
@@ -31,7 +31,7 @@
 
 + (void)createQRCodeWithWifiName:(NSString *)wifiName
                          wifiPwd:(NSString *)wifiPwd
-                        language:(NSString *)language
+                        language:(IV_QR_CODE_LANGUAGE)language
                         timeZone:(NSInteger)timeZone
                           QRSize:(CGSize)size
                completionHandler:(IVQRCodeCreateCallback)completionHandler {
@@ -88,7 +88,7 @@
  @param size     二维码尺寸
  @param completionHandler 完成回调
 */
-- (void)createQRCodeWithWifiName:(NSString *)wifiName wifiPwd:(NSString * _Nullable)wifiPwd  language:(NSString *)language timeZone:(NSInteger)timeZone QRSize:(CGSize)size completionHandler:(nullable IVQRCodeCreateCallback)completionHandler {
+- (void)createQRCodeWithWifiName:(NSString *)wifiName wifiPwd:(NSString * _Nullable)wifiPwd  language:(IV_QR_CODE_LANGUAGE)language timeZone:(NSInteger)timeZone QRSize:(CGSize)size completionHandler:(nullable IVQRCodeCreateCallback)completionHandler {
     [IVQRCodeNetConfig createQRCodeWithWifiName:wifiName wifiPwd:wifiPwd language:language timeZone:timeZone QRSize:size completionHandler:completionHandler];
 }
 
@@ -109,7 +109,7 @@
 + (nullable UIImage *)createQRCodeWithWifiName:(NSString *)wifiName
                                        wifiPwd:(NSString *)wifiPwd
                                    netConfigId:(NSString *)netConfigId
-                                      language:(NSString *)language
+                                      language:(IV_QR_CODE_LANGUAGE)language
                                       timeZone:(NSInteger)timeZone
                                         QRSize:(CGSize)size {
     
@@ -136,7 +136,7 @@
         pOffset += dataLength;
     };
     
-    //写入协议头"GWQR"
+    //写入协议头"IVQR"
     for (; pOffset < strlen((char *)IV_QR_HEADER); pOffset++) {
         *((uint8_t *)(buffer + pOffset)) = IV_QR_HEADER[pOffset];
     }
@@ -145,15 +145,16 @@
     *((uint8_t *)(buffer + pOffset)) = (uint8_t)(IV_QR_CODE_TYPE_NET_CONFIG);
     pOffset += sizeof(uint8_t);
     
-    NSString *timeZoneStr = [NSString stringWithFormat:@"%ld", timeZone]; //时区
+    NSString *timeZoneStr = [NSString stringWithFormat:@"%ld", (long)timeZone]; //时区
     NSString *userId = IoTVideo.sharedInstance.accessId; //用户id
+    NSString *languageStr = [NSString stringWithFormat:@"%u", (unsigned int)language]; //语言
     
     writeData(IV_QR_CODE_FUNCTION_WIFI_SSID,     wifiName);    //写入Wifi name
     writeData(IV_QR_CODE_FUNCTION_WIFI_PASSWORD, wifiPwd);     //写入Wifi password
     writeData(IV_QR_CODE_FUNCTION_APP_USER_ID,   userId);      //写入UserId
     writeData(IV_QR_CODE_FUNCTION_NETSET_ID,     netConfigId); //写入配网id
     writeData(IV_QR_CODE_FUNCTION_TIMEZONE,      timeZoneStr); //写入时区
-    writeData(IV_QR_CODE_FUNCTION_LANGUAGE,      language);    //写入语言
+    writeData(IV_QR_CODE_FUNCTION_LANGUAGE,      languageStr);    //写入语言
     //    writeData(IV_NET_CONFIG_QR_CODE_SESSION_ID, @"");      //写入session
     //    writeData(IV_NET_CONFIG_QR_CODE_ASSIGN, @"");          //写入assign
     NSData *QRCodeData = [NSData dataWithBytes:buffer length:pOffset];
@@ -162,7 +163,6 @@
     UIImage *QRImage = [IVQRCodeHelper createQRCodeWithData:QRCodeData QRSize:size];
     return QRImage;
 }
-
 
 
 @end
