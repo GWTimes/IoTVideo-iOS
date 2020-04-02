@@ -599,7 +599,7 @@ enum IVTimeMark: Int, Comparable {
     case sec5     = 5     // 5
     case sec1     = 1     // 1
     
-    var upperMark: IVTimeMark? { IVTimeMark.all.reversed().first(where: { $0 > self }) }
+    var upperMark: IVTimeMark? { return IVTimeMark.all.reversed().first(where: { $0 > self }) }
     
     static let divisors = [1, 2, 3, 5]
 

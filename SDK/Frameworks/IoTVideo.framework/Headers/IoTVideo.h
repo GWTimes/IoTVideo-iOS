@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "IVLog.h"
+#import "IVError.h"
 
 #import "IVAVDefine.h"
 #import "IVAVCodecable.h"

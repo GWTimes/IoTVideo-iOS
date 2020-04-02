@@ -55,7 +55,7 @@ class IJKMediaViewController: UIViewController, IVDeviceAccessable {
             let startTime = "\(Int((Date().timeIntervalSince1970 - 60*60*24*365) * 1000))"
             let hud = ivLoadingHud()
                         
-            IVVAS.shared.getVideoPlaybackList(deviceId: device.deviceID,
+            IVVAS.shared.getVideoPlaybackList(withDeviceId: device.deviceID,
                                               timezone: timezone,
                                               startTime: startTime,
                                               endTime: endTime)
