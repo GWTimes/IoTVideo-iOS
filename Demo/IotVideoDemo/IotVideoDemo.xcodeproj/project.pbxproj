@@ -330,15 +330,15 @@
 		EA6BB0712434A24D002EE591 /* Player */ = {
 			isa = PBXGroup;
 			children = (
+				EA6BB0722434A24D002EE591 /* IVLiveViewController.swift */,
+				EA6BB0732434A24D002EE591 /* IVPlaybackViewController.swift */,
 				EA6BB0742434A24D002EE591 /* IVLivePlayer.storyboard */,
 				EA6BB0752434A24D002EE591 /* IVMonitorPlayer.storyboard */,
 				EA6BB0762434A24D002EE591 /* IVPlaybackPlayer.storyboard */,
-				EA6BB07A2434A24D002EE591 /* IJKMediaPlayer.storyboard */,
-				EA6BB0782434A24D002EE591 /* IVDevicePlayerViewController.swift */,
-				EA6BB0722434A24D002EE591 /* IVLiveViewController.swift */,
-				EA6BB0732434A24D002EE591 /* IVPlaybackViewController.swift */,
-				EA6BB0792434A24D002EE591 /* IVMonitorViewController.swift */,
 				EA6BB0772434A24D002EE591 /* IJKMediaViewController.swift */,
+				EA6BB0782434A24D002EE591 /* IVDevicePlayerViewController.swift */,
+				EA6BB0792434A24D002EE591 /* IVMonitorViewController.swift */,
+				EA6BB07A2434A24D002EE591 /* IJKMediaPlayer.storyboard */,
 			);
 			path = Player;
 			sourceTree = "<group>";

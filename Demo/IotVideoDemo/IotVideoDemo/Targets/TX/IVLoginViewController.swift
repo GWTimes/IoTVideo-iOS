@@ -27,11 +27,6 @@ class IVLoginViewController: UIViewController, UITextFieldDelegate {
         window?.addSubview(devToolsAssistant)
         window?.bringSubviewToFront(devToolsAssistant)
         
-        #warning("调试使用，打包注释, 此秘钥为 内部开发使用")
-        let secretId  = "AKIDwmOmvryLcolStUw2vc4JI1hHfpkShJOS"
-        let secretKey = "zmJbfXBZlkkV1IMBk9OSGtIannUwCCwR"
-        tmpSecretIDTF.text  = secretId
-        tmpSecretKeyTF.text = secretKey
     }
 
     @IBAction func loginBtnClicked(_ sender: UIButton) {
