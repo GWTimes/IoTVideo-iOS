@@ -10,6 +10,9 @@ import UIKit
 import IoTVideo
 import SwiftyJSON
 
+let kDidReceiveEvent   = "IOT_VIDEO_DEMO_DID_RECEIVE_EVENT_KEY"   //!< 收到Event通知key
+let kDidUpdateProperty = "IOT_VIDEO_DEMO_DID_UPDATE_PROPERTT_KEY" //!< 收到属性更新通知key
+
 class IVNavigationViewController: UINavigationController {
 
     override func viewDidLoad() {
@@ -50,14 +53,48 @@ extension IVNavigationViewController: IVMessageDelegate {
     func didReceiveEvent(_ event: String, topic: String) {
         logInfo("事件通知 \(topic) \n \(event)")
         ivHud("事件通知 \(topic) \n \(event)")
+        
+        let noti = Notification(name: .IVMessageDidReceiveEvent,
+                                object: nil,
+                                userInfo: ["body": IVReceiveEventNoti(event: event, topic: topic)])
+        NotificationCenter.default.post(noti)
+        
     }
     
     func didUpdateProperty(_ json: String, path: String, deviceId: String) {
-        logInfo("状态通知 \(deviceId) \n \(path) \(json) ")
-        ivHud("状态通知 \(deviceId) \n \(path) \(json)")
+        logInfo("属性更新 devid:\(deviceId) path:\(path) json:\(json)")
+        ivHud("属性更新 devid:\(deviceId) path:\(path) json:\(json)")
+        
         if let dev = userDeviceList.first(where: { $0.devId == deviceId }),
-            let online = JSON(parseJSON: json).value("_online.stVal")?.boolValue {
-            dev.online = online
+            let online = JSON(parseJSON: json).value("_online"), online.exists(),
+            let stVal = online.value("stVal")?.boolValue {
+            dev.online = stVal
         }
+        
+        let noti = Notification(name: .IVMessageDidUpdateProperty,
+                                object: nil,
+                                userInfo: ["body": IVUpdatePropertyNoti(deviceId: deviceId, path: path, json: json)])
+        NotificationCenter.default.post(noti)
     }
+}
+
+
+extension Notification.Name {
+    /// IVMessage 收到事件
+    static let IVMessageDidReceiveEvent = Notification.Name(rawValue: kDidReceiveEvent)
+    
+    /// IVMessage 收到状态更新
+    static let IVMessageDidUpdateProperty = Notification.Name(rawValue: kDidUpdateProperty)
+}
+
+
+struct IVReceiveEventNoti {
+    var event: String
+    var topic: String
+}
+
+struct IVUpdatePropertyNoti {
+    var deviceId: String
+    var path: String
+    var json: String
 }

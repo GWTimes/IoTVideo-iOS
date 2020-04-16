@@ -61,7 +61,7 @@ extension IVTencentNetwork {
                 }
                 if let jsonData = try? JSONSerialization.data(withJSONObject: json!, options: []) {
                     let str = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)
-                    print(str ?? "http call back empty")
+                    print(action + ": \n" + String(str ?? "http call back empty"))
                     res(str! as String, nil)
                 } else {
                     res(nil, NSError(domain: "", code: 999, userInfo: nil))

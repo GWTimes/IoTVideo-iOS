@@ -10,15 +10,15 @@
 		</data>
 		<key>Headers/IVAVDefine.h</key>
 		<data>
-		+qZDAQhx3o+fJR+3MdU23kF9LuA=
+		05y1LmXFSgoa6abCqoKdNRTGSo4=
 		</data>
 		<key>Headers/IVError.h</key>
 		<data>
-		aTbt6UC1zBm0rzWTN8l+C8PvjoQ=
+		Wl0UlojX3p4SU50UGhrU8j9tNiI=
 		</data>
 		<key>Headers/IVLanNetConfig.h</key>
 		<data>
-		OzKfB6tOcIk9+6eeSDZ5AIsFlQ4=
+		OGBMhA3cuC5f0byw2V9Z44xujho=
 		</data>
 		<key>Headers/IVLivePlayer.h</key>
 		<data>
@@ -50,7 +50,7 @@
 		</data>
 		<key>Headers/IVPlaybackPlayer.h</key>
 		<data>
-		ukXpq69QjN2wptQMXNmn7d2057U=
+		jE55IkA4DDXhK1QD0iYJjWaQRNo=
 		</data>
 		<key>Headers/IVPlayer.h</key>
 		<data>
@@ -58,27 +58,27 @@
 		</data>
 		<key>Headers/IVQRCodeDef.h</key>
 		<data>
-		bVEzLI3FAcHohoOskYM1qerrFto=
+		EFStrAtFo/2QLgCMlv10oW6UWnU=
 		</data>
 		<key>Headers/IVQRCodeHelper.h</key>
 		<data>
-		gMTFEYJW6wPbW4Jp6KJDogAzBxE=
+		3aj8VIImkxvJ0Fqi03ehQ0j9D1U=
 		</data>
 		<key>Headers/IVQRCodeNetConfig.h</key>
 		<data>
-		2GaBPNsgNWBKfQsrJWYiubN43sw=
+		5mR18Z4oH6tvdRnsYaqS7wVX9n4=
 		</data>
 		<key>Headers/IVQRCodeNetConfig.m</key>
 		<data>
-		xDMgMDQSGM0uSjq7O7zoUvJBIa4=
+		jB2vkYMiNEo9M0nz6DmqsFMQtDo=
 		</data>
 		<key>Headers/IoTVideo.h</key>
 		<data>
-		CZnlsLHOC2yicxdBIZ26VW2E9dA=
+		eN4moD7RyUKXrqINU9zW2kxPaBM=
 		</data>
 		<key>Info.plist</key>
 		<data>
-		uM5EChzGWvQnmVLlJl12JfGBP+Q=
+		IFqNcRlvNgrGNweQL0O3qerMujw=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -102,33 +102,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			+qZDAQhx3o+fJR+3MdU23kF9LuA=
+			05y1LmXFSgoa6abCqoKdNRTGSo4=
 			</data>
 			<key>hash2</key>
 			<data>
-			WQf2yQ5/HYfKBqwfnDxURGEIL5JotPZ+b7tcdsiU8p4=
+			oFnZvudfzCIy69qiKqu/38Bw5wMzsUbh81csTCOxpkY=
 			</data>
 		</dict>
 		<key>Headers/IVError.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			aTbt6UC1zBm0rzWTN8l+C8PvjoQ=
+			Wl0UlojX3p4SU50UGhrU8j9tNiI=
 			</data>
 			<key>hash2</key>
 			<data>
-			VMio/vbNB4JVCEtA5zLBqSs4h4+nIU8VZMj2/y5csck=
+			UXx61Vs6GtnKUneQTYbEDVB4ULRpkJ2nhmslQjA793U=
 			</data>
 		</dict>
 		<key>Headers/IVLanNetConfig.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			OzKfB6tOcIk9+6eeSDZ5AIsFlQ4=
+			OGBMhA3cuC5f0byw2V9Z44xujho=
 			</data>
 			<key>hash2</key>
 			<data>
-			Hvx3WXnv0Cq3MJb1UOFIgkXqIa3FNlMmBlzJ+3597W8=
+			AxETdTMMuzhjn1boV3jOIs4BqIyg8R29ub1q7j0vA6I=
 			</data>
 		</dict>
 		<key>Headers/IVLivePlayer.h</key>
@@ -212,11 +212,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			ukXpq69QjN2wptQMXNmn7d2057U=
+			jE55IkA4DDXhK1QD0iYJjWaQRNo=
 			</data>
 			<key>hash2</key>
 			<data>
-			a40QkioqY2q9MRYjJqMUix+Ro8dp/mbDqQqoJPxbM+w=
+			IIFuHrcvT8q+hVR5Qen1loFzXp9UbTxW7PTp3gt2Hi0=
 			</data>
 		</dict>
 		<key>Headers/IVPlayer.h</key>
@@ -234,55 +234,55 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			bVEzLI3FAcHohoOskYM1qerrFto=
+			EFStrAtFo/2QLgCMlv10oW6UWnU=
 			</data>
 			<key>hash2</key>
 			<data>
-			kx6yiHVQuXWOubzOnHB+vO/2GdPd72OHsmcRmZLU9WM=
+			tgOjHJMrA7MfF3nr0/9upUDlaXc1IgVN/sLgU3TNBb8=
 			</data>
 		</dict>
 		<key>Headers/IVQRCodeHelper.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			gMTFEYJW6wPbW4Jp6KJDogAzBxE=
+			3aj8VIImkxvJ0Fqi03ehQ0j9D1U=
 			</data>
 			<key>hash2</key>
 			<data>
-			onPrlcO4V/WUhWy8QrS3Mus5TqJYw58FDNJCiOaIzjs=
+			VNI+kMXjz9kUbd2Upsq0s/8tXQ0moJeVMh6lIkRLBAo=
 			</data>
 		</dict>
 		<key>Headers/IVQRCodeNetConfig.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			2GaBPNsgNWBKfQsrJWYiubN43sw=
+			5mR18Z4oH6tvdRnsYaqS7wVX9n4=
 			</data>
 			<key>hash2</key>
 			<data>
-			N6cgSdifdJiuDawJDlC+DXii/rbiXuI7jyRMurBkD0k=
+			VXgmTdOSKR3IrRGI9eS+bWLPyEQjqo3Tmn1ZIOA071o=
 			</data>
 		</dict>
 		<key>Headers/IVQRCodeNetConfig.m</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			xDMgMDQSGM0uSjq7O7zoUvJBIa4=
+			jB2vkYMiNEo9M0nz6DmqsFMQtDo=
 			</data>
 			<key>hash2</key>
 			<data>
-			Cs6b2Cqt9lICkAnoR73mpy+A05F7jjlpqDOvv7+Jy+o=
+			nrzCd0GINj6aoSHhWpzPORueqiqavT2rQ+7gGTAEa3w=
 			</data>
 		</dict>
 		<key>Headers/IoTVideo.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			CZnlsLHOC2yicxdBIZ26VW2E9dA=
+			eN4moD7RyUKXrqINU9zW2kxPaBM=
 			</data>
 			<key>hash2</key>
 			<data>
-			PiubM8kh1bkBaJDdO7jYam2n3G9xsfsXtQ+Yh1gMWQo=
+			4xq3FXF6y9V0PU4kmlcZ4KdDJw6UFQbxLApMSA3n75s=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

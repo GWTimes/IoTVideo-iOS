@@ -30,8 +30,8 @@
                                     <action selector="searchNewVersion:" destination="eF4-GO-eUs" eventType="touchUpInside" id="qq3-US-8CH"/>
                                 </connections>
                             </button>
-                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="6xp-Es-oSD">
-                                <rect key="frame" x="117" y="170" width="180" height="193.5"/>
+                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="6xp-Es-oSD">
+                                <rect key="frame" x="117" y="140" width="180" height="113.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设备当前待更新版本：" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qRt-fe-EiV">
                                         <rect key="frame" x="28.5" y="0.0" width="123" height="14.5"/>
@@ -40,22 +40,22 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.2.3" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gb4-2V-rBB">
-                                        <rect key="frame" x="74.5" y="44.5" width="31.5" height="16"/>
+                                        <rect key="frame" x="74.5" y="24.5" width="31.5" height="16"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a5Q-jX-QcN">
-                                        <rect key="frame" x="78" y="90.5" width="24.5" height="20.5"/>
+                                        <rect key="frame" x="78" y="50.5" width="24.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="44P-Px-3pF">
-                                        <rect key="frame" x="0.0" y="141" width="180" height="2"/>
+                                        <rect key="frame" x="0.0" y="81" width="180" height="2"/>
                                     </progressView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="更新进度" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C3F-vG-QX3">
-                                        <rect key="frame" x="55.5" y="173" width="69.5" height="20.5"/>
+                                        <rect key="frame" x="55.5" y="93" width="69.5" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -63,6 +63,8 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="180" id="BMZ-Am-BbA"/>
+                                    <constraint firstAttribute="trailing" secondItem="44P-Px-3pF" secondAttribute="trailing" id="HgP-5U-X2K"/>
+                                    <constraint firstItem="44P-Px-3pF" firstAttribute="leading" secondItem="6xp-Es-oSD" secondAttribute="leading" id="r86-7E-hfo"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -70,7 +72,7 @@
                         <constraints>
                             <constraint firstItem="fyX-ZY-IMM" firstAttribute="centerX" secondItem="eb7-f3-bIL" secondAttribute="centerX" id="87o-0c-9Hj"/>
                             <constraint firstItem="fyX-ZY-IMM" firstAttribute="top" secondItem="yJg-de-ToJ" secondAttribute="top" constant="30" id="HY1-QC-YgY"/>
-                            <constraint firstItem="6xp-Es-oSD" firstAttribute="top" secondItem="fyX-ZY-IMM" secondAttribute="bottom" constant="48" id="OV6-OU-yQW"/>
+                            <constraint firstItem="6xp-Es-oSD" firstAttribute="top" secondItem="fyX-ZY-IMM" secondAttribute="bottom" constant="18" id="OV6-OU-yQW"/>
                             <constraint firstItem="6xp-Es-oSD" firstAttribute="centerX" secondItem="eb7-f3-bIL" secondAttribute="centerX" id="Y0q-ja-rso"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="yJg-de-ToJ"/>

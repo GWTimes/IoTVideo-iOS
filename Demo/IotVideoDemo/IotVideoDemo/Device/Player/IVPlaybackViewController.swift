@@ -8,23 +8,14 @@
 
 import UIKit
 import IoTVideo
+import MBProgressHUD
 
 class IVPlaybackViewController: IVDevicePlayerViewController {
     
     @IBOutlet weak var timelineView: IVTimelineView?
     @IBOutlet weak var seekTimeLabel: UILabel!
-    
-    var playbackList: [IVPlaybackItem] = [] {
-        didSet {
-            let list = playbackList.map({ IVTimelineItem(startTime: $0.startTime,
-                                                         endTime: $0.endTime,
-                                                         duration: $0.endTime-$0.startTime,
-                                                         type: $0.type,
-                                                         color: .random) })
-            timelineView?.setDataSource(list)
-        }
-    }
-    
+    @IBOutlet weak var deviceRecordBtn: UIButton!
+
     var playbackPlayer: IVPlaybackPlayer {
         get { return player as! IVPlaybackPlayer }
         set { player = newValue }
@@ -35,36 +26,7 @@ class IVPlaybackViewController: IVDevicePlayerViewController {
         playbackPlayer = IVPlaybackPlayer(deviceId: device.deviceID)
         
         timelineView?.delegate = self
-        seekTimeLabel.isHidden = true
-
-        let hud = ivLoadingHud()
-        
-        IVPlaybackPlayer.getPlaybackList(ofDevice: device.deviceID, pageIndex: 0, countPerPage: 50, startTime: 0, endTime: Date().timeIntervalSince1970, completionHandler: { (page, err) in
-            hud.hide()
-
-            guard let items = page?.items else {
-                logError(err as Any)
-                return
-            }
-            logInfo(items)
-            self.playbackList += items
-
-        })
-        
-    #if false //假数据
-        var list = [IVPlaybackItem]()
-        let tb = 1582624578.0
-        let times = [(0, 10.3), (15.123, 30.345), (30.5, 40.213), (60.7, 93.2), (93.5, 100), (200, 1000), (1100, 2000), (2020, 4000), (5000, 7060), (8100, 9000), (10086, 11888), (11986, 15888), (17986, 21888), (70000, 86400)]
-        for (t0, t1) in times {
-            let item = IVPlaybackItem()
-            item.startTime = t0 + tb
-            item.endTime = t1 + tb
-            item.duration = item.endTime - item.startTime
-            item.type = ""
-            list.append(item)
-        }
-        self.playbackList += list
-    #endif
+        deviceRecordBtn.isSelected = UserDefaults.standard.bool(forKey: "deviceRecordBtn.isSelected")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -79,6 +41,26 @@ class IVPlaybackViewController: IVDevicePlayerViewController {
         playbackPlayer.stop()
     }
     
+    /// 获取回放列表
+    func loadPlaybackItems(timeRange: IVTime, completionHandler: @escaping ([IVPlaybackItem]?) -> Void) {
+        seekTimeLabel.isHidden = true
+        let hud = ivLoadingHud()
+
+        // ⚠️如果时间跨度太大请合理使用分页功能，否则可能影响查询速度
+        IVPlaybackPlayer.getPlaybackList(ofDevice: device.deviceID, pageIndex: 0, countPerPage: 10000, startTime: timeRange.start, endTime: timeRange.end) { (page, err) in
+            guard let items = page?.items else {
+                completionHandler(nil)
+                hud.hide()
+                logError(err as Any)
+                return
+            }
+            logInfo(items)
+                                    
+            completionHandler(items)
+            hud.hide()
+        }
+    }
+    
     @IBAction func deviceRecordClicked(_ sender: UIButton) {
         let data: Data
         if !sender.isSelected {
@@ -86,6 +68,7 @@ class IVPlaybackViewController: IVDevicePlayerViewController {
         } else {
             data = "record_stop".data(using: .utf8)!
         }
+        
         sender.isEnabled = false
         let hud = ivLoadingHud()
         IVMessageMgr.sharedInstance.sendData(toDevice: device.deviceID, data: data, withoutResponse: { _, err in
@@ -95,14 +78,37 @@ class IVPlaybackViewController: IVDevicePlayerViewController {
             } else {
                 showAlert(msg: "发送成功")
                 sender.isSelected = !sender.isSelected
+                UserDefaults.standard.set(sender.isSelected, forKey: "deviceRecordBtn.isSelected")
             }
             
             sender.isEnabled = true
         })
     }
+    
+    override func playClicked(_ sender: UIButton) {
+        if playbackPlayer.playbackItem == nil {
+            //加载数据后自动预选择第一段视频
+            if let item = timelineView?.currentItem.rawValue as? IVPlaybackItem {
+                self.playbackPlayer.setPlaybackItem(item, seekToTime: item.startTime)
+            }
+        }
+        
+        super.playClicked(sender)
+    }
 }
 
 extension IVPlaybackViewController: IVTimelineViewDelegate {
+    
+    func timelineView(_ timelineView: IVTimelineView, itemsForTimelineAt timeRange: IVTime, completionHandler: @escaping ([IVTimelineItem]?) -> Void) {
+        loadPlaybackItems(timeRange: timeRange) { (playbackItems) in
+            let timelineItems = playbackItems?.compactMap({ IVTimelineItem(start: $0.startTime,
+                                                                          end: $0.endTime,
+                                                                          type: $0.type,
+                                                                          color: .random,
+                                                                          rawValue: $0) })
+            completionHandler(timelineItems)
+        }
+    }
     
     func timelineView(_ timelineView: IVTimelineView, didSelect item: IVTimelineItem, at time: TimeInterval) {
         let fmt = DateFormatter()
@@ -110,11 +116,11 @@ extension IVPlaybackViewController: IVTimelineViewDelegate {
         let date = Date(timeIntervalSince1970: time)
         seekTimeLabel.text = fmt.string(from: date)
         seekTimeLabel.isHidden = false
-
+        
         DispatchQueue.main.asyncAfter(deadline: .now()+1) {
             self.seekTimeLabel.isHidden = true
         }
-        if let playbackItem = playbackList.first(where: { $0.startTime == item.startTime }) {
+        if let playbackItem = item.rawValue as? IVPlaybackItem {
             if playbackPlayer.status == .stoped {
                 playbackPlayer.setPlaybackItem(playbackItem, seekToTime: time)
                 playbackPlayer.play()
@@ -127,6 +133,6 @@ extension IVPlaybackViewController: IVTimelineViewDelegate {
     
     override func player(_ player: IVPlayer, didUpdatePTS PTS: TimeInterval) {
         super.player(player, didUpdatePTS: PTS)
-        timelineView?.currentTime = PTS
+        timelineView?.currentPTS = PTS
     }
 }

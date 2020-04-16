@@ -16,7 +16,7 @@ class IVDeviceMgrViewController: UITableViewController, IVDeviceAccessable {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 2 { //暂时屏蔽分享（YUNAPI接口对此方面支持还不够完善）
+        if section == 2 { /*暂时屏蔽分享（YUNAPI接口对此方面支持还不够完善,最好是分享给某个用户后，推一条消息，让该用户以分享者身份去绑定并订阅该设备）*/
             return 1
         }
         return super.tableView(tableView, numberOfRowsInSection: section)

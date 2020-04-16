@@ -87,12 +87,8 @@ class IVDevicePlayerViewController: UIViewController, IVDeviceAccessable {
 
 // MARK: - 点击事件
 extension IVDevicePlayerViewController {
+    
     @IBAction func playClicked(_ sender: UIButton) {
-        if let player = player as? IVPlaybackPlayer, player.playbackItem == nil {
-            ivHud("请先选择时间点")
-            return
-        }
-        
         sender.isSelected = !sender.isSelected
         if sender.isSelected {
             if let player = player as? IVPlaybackPlayer,
@@ -156,6 +152,15 @@ extension IVDevicePlayerViewController {
     }
     
     @IBAction func micClicked(_ sender: UIButton) {
+        
+        let status = AVAudioSession.sharedInstance().recordPermission
+        if status == AVAudioSession.RecordPermission.denied {
+            let errStr = "没有麦克风权限，请在设置中开启"
+            logWarning(errStr)
+            ivHud(errStr)
+            return
+        }
+        
         if let player = player as? IVPlayerTalkable {
             sender.isSelected = !sender.isSelected
             if sender.isSelected {

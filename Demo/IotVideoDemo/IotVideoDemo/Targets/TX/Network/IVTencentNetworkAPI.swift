@@ -16,6 +16,7 @@ extension IVTencentNetwork {
     func register(tmpSecretID: String, tmpSecretKey: String, token: String, userName: String, responseHandler: IVTencentNetworkResponseHandler) {
         IVTencentNetwork.shared.secretKey = tmpSecretKey
         IVTencentNetwork.shared.secretId = tmpSecretID
+        IVTencentNetwork.shared.token = token
         
         UserDefaults.standard.do {
             $0.setValue(tmpSecretID, forKey: demo_secretId)
@@ -73,12 +74,11 @@ extension IVTencentNetwork {
                      response: responseHandler)
     }
     
-    //主人获取设备的分享者列表
-    func getVisitorList(deviceId: String, responseHandler: IVTencentNetworkResponseHandler) {
-        let accessId = UserDefaults.standard.string(forKey: demo_accessId)!
+    //获取设备绑定的用户列表
+    func getUserList(deviceId: String, responseHandler: IVTencentNetworkResponseHandler) {
         self.request(methodType: .POST,
                      action: "DescribeBindUsr",
-                     params: ["AccessId": accessId, "Tid": deviceId],
+                     params: ["Tid": deviceId],
                      response: responseHandler)
     }
     

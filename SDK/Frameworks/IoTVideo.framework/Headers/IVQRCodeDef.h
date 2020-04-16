@@ -6,6 +6,20 @@
 //  Copyright © 2020 Tencentcs. All rights reserved.
 //
 
+/**
+ * ***************************************************************************************************
+ *      内置二维码协议
+ *
+ *   协议头 + 二维码类型 + 数据类型 +  数据长度 + 数据 + 数据类型 + 数据长度  + ......
+ *
+ *   数据类型        数据长度        数据
+ *   uint8_t            uint8_t           ****
+ *   type                len                 data
+ *
+ * *****************************************************************************************************
+ */
+
+
 #ifndef IVQRCodeDef_h
 #define IVQRCodeDef_h
 
@@ -26,7 +40,7 @@ typedef NS_ENUM(NSUInteger, IV_QR_CODE_FUNCTION) {
     IV_QR_CODE_FUNCTION_WIFI_PASSWORD = 3, /**<  WiFi密码 文本 没有密码就不传  */
     IV_QR_CODE_FUNCTION_APP_USER_ID   = 4, /**<  用户id  */
     IV_QR_CODE_FUNCTION_NETSET_ID     = 5, /**<  配网id  */
-    IV_QR_CODE_FUNCTION_TIMEZONE      = 6, /**<  时区  */
+    IV_QR_CODE_FUNCTION_TIMEZONE      = 6, /**<  时区  分钟*/
     IV_QR_CODE_FUNCTION_LANGUAGE      = 7, /**<  设置设备语言  */
     
     IV_QR_CODE_FUNCTION_SHARE_TOKEN   = 32 /**<  分享设备  */

@@ -27,11 +27,25 @@ class IVLoginViewController: UIViewController, UITextFieldDelegate {
         window?.addSubview(devToolsAssistant)
         window?.bringSubviewToFront(devToolsAssistant)
         
+        #warning("调试使用，打包注释下面四行, 此秘钥为 内部开发使用")
+        let secretId  = "AKIDwmOmvryLcolStUw2vc4JI1hHfpkShJOS"
+        let secretKey = "zmJbfXBZlkkV1IMBk9OSGtIannUwCCwR"
+        tmpSecretIDTF.text  = secretId
+        tmpSecretKeyTF.text = secretKey
     }
 
     @IBAction func loginBtnClicked(_ sender: UIButton) {
         let hud = ivLoadingHud(isMask: true)
-        IVTencentNetwork.shared.register(tmpSecretID: tmpSecretIDTF.text ?? "", tmpSecretKey: tmpSecretKeyTF.text ?? "", token: tokenTF.text ?? " ", userName: userNameTF.text ?? " ") { [weak self](regJson, error) in
+        
+        //正常登陆：腾讯控制台获取的 id,key和用户名
+        //零时授权登陆：腾讯控制台获取的 零时id,key,token和用户名
+        
+        let secretId  = tmpSecretIDTF.text?.trimmingCharacters(in: .whitespaces) ?? ""
+        let secretKey = tmpSecretKeyTF.text?.trimmingCharacters(in: .whitespaces) ?? ""
+        let tempToken = tokenTF.text?.trimmingCharacters(in: .whitespaces) ?? ""
+        let userName  = userNameTF.text?.trimmingCharacters(in: .whitespaces) ?? ""
+        
+        IVTencentNetwork.shared.register(tmpSecretID: secretId, tmpSecretKey: secretKey, token: tempToken, userName: userName) { [weak self](regJson, error) in
 
             guard let regJson = IVDemoNetwork.handlerError(regJson, error) else {
                 hud.hide()

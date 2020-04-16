@@ -77,7 +77,7 @@ typedef void(^IVQRCodeScanCallback)(NSString * _Nullable scanResult);
 */
 + (nullable UIImage *)createQRCodeWithData:(NSData *)QRData QRSize:(CGSize)size;
 
-/// 生成分享设备二维码
+/// 以内置协议 生成分享设备二维码
 ///
 /// 需要使用本类扫描解析本类生成的二维码
 /// @param token 分享的token

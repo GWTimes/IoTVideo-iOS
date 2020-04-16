@@ -11,7 +11,7 @@
 #ifndef IVError_h
 #define IVError_h
 
-typedef NS_ENUM(NSUInteger, IVErrorCode) {
+typedef NS_ENUM(int64_t, IVErrorCode) {
     IVErrorCode_error_none = 0,                                                 //!< 成功
 
     //!< 中心服务器返回的错误码
@@ -113,9 +113,10 @@ typedef NS_ENUM(NSUInteger, IVErrorCode) {
     IVErrorCode_Term_msg_gdm_handle_parse_json_fail = 20102, //!< 设备端解析JSON出错
     IVErrorCode_Term_msg_gdm_handle_fail = 20103,            //!< 设备处理ACtion失败
     IVErrorCode_Term_msg_gdm_handle_no_cb_registered = 20104,//!< 设备未注册相应的ACtion回调函数
+    IVErrorCode_Term_msg_gdm_handle_buildin_prowritable_error = 20105,//!< 设备不允许通过局域网修改内置可写对象
 };
 
 
-extern NSString *IVErrorCodeDescribe(IVErrorCode errorCode);
+extern NSString *IVErrorDescribe(int64_t errorCode);
 
 #endif /* IVError_h */

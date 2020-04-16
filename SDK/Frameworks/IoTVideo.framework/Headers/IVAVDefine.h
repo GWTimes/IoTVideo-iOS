@@ -13,20 +13,20 @@
 
 /// 音视频连接类型
 typedef NS_ENUM(NSUInteger, IVAVConnType) {
-    IVAVConnTypeLive       = 0,     //!< 视频呼叫，双向音视频
-    IVAVConnTypeMonitor    = 1,     //!< 监控，单向视频，双向音频（对讲）
-    IVAVConnTypePlayback   = 2,     //!< 录像回放
+    IVAVConnTypeLive     = 0,      //!< 视频呼叫，双向音视频
+    IVAVConnTypeMonitor  = 1,      //!< 监控，单向视频，双向音频（对讲）
+    IVAVConnTypePlayback = 2,      //!< 录像回放
 };
 
 /// 播放器状态
 typedef NS_ENUM(NSUInteger, IVPlayerStatus) {
-    IVPlayerStatusStoped,           //!< 停止
-    IVPlayerStatusPreparing,        //!< 准备中
-    IVPlayerStatusReady,            //!< 就绪
-    IVPlayerStatusLoading,          //!< 加载中
-    IVPlayerStatusPlaying,          //!< 播放中
-    IVPlayerStatusPaused,           //!< 暂停
-    IVPlayerStatusFastForward,      //!< 快进中
+    IVPlayerStatusStoped,          //!< 停止
+    IVPlayerStatusPreparing,       //!< 准备中
+    IVPlayerStatusReady,           //!< 就绪
+    IVPlayerStatusLoading,         //!< 加载中
+    IVPlayerStatusPlaying,         //!< 播放中
+    IVPlayerStatusPaused,          //!< 暂停
+    IVPlayerStatusFastForward,     //!< 快进中
 };
 
 /// 多媒体类型
@@ -37,11 +37,11 @@ typedef NS_ENUM(NSUInteger, IVMediaType) {
 
 /// 视频编码类型
 typedef NS_ENUM(NSUInteger, IVVideoCodecType) {
-    IVVideoCodecTypeH264 = 1,
+    IVVideoCodecTypeH264  = 1,
     IVVideoCodecTypeMPEG4 = 2,
-    IVVideoCodecTypeJPEG = 3,
+    IVVideoCodecTypeJPEG  = 3,
     IVVideoCodecTypeMJPEG = 4,
-    IVVideoCodecTypeH265 = 5,
+    IVVideoCodecTypeH265  = 5,
 };
 
 /// 视频像素格式
@@ -59,30 +59,30 @@ typedef NS_ENUM(NSUInteger, IVVideoDefinition) {
 
 /// 音频编码类型
 typedef NS_ENUM(NSUInteger, IVAudioCodecType) {
-    IVAudioCodecTypeG711A = 1,
-    IVAudioCodecTypeG711U = 2,
-    IVAudioCodecTypeG726  = 3,
-    IVAudioCodecTypeAAC   = 4,
-    IVAudioCodecTypeAMR   = 5,
+    IVAudioCodecTypeG711A  = 1,
+    IVAudioCodecTypeG711U  = 2,
+    IVAudioCodecTypeG726   = 3,
+    IVAudioCodecTypeAAC    = 4,
+    IVAudioCodecTypeAMR    = 5,
     IVAudioCodecTypeADPCMA = 6,
 };
 
 /// 音频每个采样的位宽
 typedef NS_ENUM(NSUInteger, IVAudioBitWidth) {
-    IVAudioBitWidth8    = 0,
-    IVAudioBitWidth16   = 1,
-    IVAudioBitWidth32   = 2,
+    IVAudioBitWidth8  = 0,
+    IVAudioBitWidth16 = 1,
+    IVAudioBitWidth32 = 2,
 };
 
 /// 音频声道模式
 typedef NS_ENUM(NSUInteger, IVAudioSoundMode) {
-    IVAudioSoundModeMono    = 0,
-    IVAudioSoundModeStereo   = 1,
+    IVAudioSoundModeMono   = 0, /**< 单声道 */
+    IVAudioSoundModeStereo = 1, /**< 立体声 */
 };
 
 /// 音频格式
 typedef NS_ENUM(NSUInteger, IVAudioFormat) {
-    IVAudioFormatLinearPCM   = 0,
+    IVAudioFormatLinearPCM = 0,
 };
 
 /// 视频原始帧
@@ -133,12 +133,12 @@ typedef NS_ENUM(NSUInteger, IVCameraPosition) {
 // 音视频头信息
 typedef struct IVAVHeader {
     /*audio info*/
-    IVAudioCodecType    audioType;          //!< 音频编码格式
-    IVAudioSoundMode    audioMode;          //!< 音频模式： 单声道/双声道
-    uint8_t             audioCodecOption;   //!< 音频编码格式的细分类型
-    uint8_t             audioBitWidth;      //!< 音频位宽
-    uint32_t            audioSampleRate;    //!< 音频采样率
-    uint32_t            sampleNumPerFrame;  //!< 每帧数据里的采样数
+    IVAudioCodecType    audioType;         //!< 音频编码格式
+    IVAudioSoundMode    audioMode;         //!< 音频模式： 单声道/双声道
+    uint8_t             audioCodecOption;  //!< 音频编码格式的细分类型
+    uint8_t             audioBitWidth;     //!< 音频位宽
+    uint32_t            audioSampleRate;   //!< 音频采样率
+    uint32_t            sampleNumPerFrame; //!< 每帧数据里的采样数
     
     /*video info*/
     IVVideoCodecType    videoType;         //!< 视频类型(h264/h265)

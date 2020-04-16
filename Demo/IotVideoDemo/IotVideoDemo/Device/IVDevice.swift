@@ -103,10 +103,10 @@ protocol IVDeviceAccessable where Self: UIViewController {
 
 
 struct PlayListData: Codable {
-    var palyList = [IVPalyBackList]()
+    var palyList = [IVCSPlaybackItem]()
 }
 
-struct IVPalyBackList: Codable {
+struct IVCSPlaybackItem: Codable {
     var starttime: Int = 0
     var endtime: Int = 0
     var m3u8Url: String?

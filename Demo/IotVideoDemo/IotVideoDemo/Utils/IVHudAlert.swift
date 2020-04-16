@@ -20,7 +20,7 @@ func safe_main_async(_ execute: @escaping () -> Void) {
     }
 }
 
-func ivHud(_ msg: String?, icon: String? = nil,inView view: UIView? = nil, isMask mask: Bool = false)  {
+func ivHud(_ msg: String?, icon: String? = nil,inView view: UIView? = nil, isMask mask: Bool = false, delay: Double = 1.5)  {
     safe_main_async({
         guard let showView = view ?? UIApplication.shared.windows.last else {return}
         let hud = MBProgressHUD.showAdded(to: showView, animated: true)
@@ -39,7 +39,7 @@ func ivHud(_ msg: String?, icon: String? = nil,inView view: UIView? = nil, isMas
             hud.isUserInteractionEnabled = true
         }
         hud.removeFromSuperViewOnHide = true
-        hud.hide(animated: true, afterDelay: 1.5)
+        hud.hide(animated: true, afterDelay: delay)
     })
 }
 

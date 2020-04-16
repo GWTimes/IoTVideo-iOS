@@ -8,12 +8,171 @@
 
 import UIKit
 
-struct IVTimelineItem {
-    let startTime: TimeInterval
-    let endTime: TimeInterval
+protocol IVTiming: Equatable {
+    var start: TimeInterval { get }
+    var end: TimeInterval { get }
+    var duration: TimeInterval { get }
+}
+
+extension IVTiming {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return abs(lhs.start - rhs.start) < 0.0001 && abs(lhs.end - rhs.end) < 0.0001
+    }
+}
+
+struct IVTimelineGroup {
+    let time: IVTime
+    let items: [IVTimelineItem] // 一定会有至少一个元素
+    
+    init(_ time: IVTime, _ items: [IVTimelineItem]) {
+        self.time  = time
+        self.items = items.isEmpty ? [.placeholder] : items
+    }
+    
+    var isPlaceholder: Bool { return items[0].isPlaceholder }
+    
+    static func placeholder(_ time: IVTime) -> IVTimelineGroup  {
+        return IVTimelineGroup(time, [.placeholder])
+    }
+    
+    var validFilesCnt: UInt { items.reduce(0, { $0 + ($1.isValid ? 1 : 0) }) }
+
+    var summaryString: String {
+        return String(format: "%@ ▽     文件数:%d", time.dateString, validFilesCnt)
+    }
+}
+
+/// 时间片最大10分钟 (太大影响放大性能，太小影响缩小性能)
+let maxDuration: TimeInterval  = 10*60
+/// 时间片最小0.001秒
+let miniDuration: TimeInterval = 0.001
+
+struct IVTimelineItem: IVTiming {
+    
+    let start: TimeInterval
+    let end: TimeInterval
     let duration: TimeInterval
+    
     let type: String
     let color: UIColor
+    let rawValue: Any?
+    
+    private(set)
+    lazy var fragments: [IVTimelineFragment] = splitIntoFragments()
+
+    init?(start: TimeInterval, end: TimeInterval, type: String, color: UIColor, rawValue: Any?) {
+        self.start = start
+        self.end = end
+        self.duration = end - start
+        
+        if self.duration < miniDuration {
+            return nil
+        }
+        
+        self.type = type
+        self.color = color
+        self.rawValue = rawValue
+    }
+    
+    var isPadding: Bool { type == "padding" }
+    var isPlaceholder: Bool { type == "placeholder" }
+    var isValid: Bool { !isPadding && !isPlaceholder }
+
+    static func padding(start: TimeInterval, end: TimeInterval) -> IVTimelineItem? {
+        return IVTimelineItem(start: start, end: end, type: "padding", color: .white, rawValue: nil)
+    }
+    
+    static var placeholder: IVTimelineItem {
+        return IVTimelineItem(start: 0, end: miniDuration*2, type: "placeholder", color: .white, rawValue: nil)!
+    }
+    
+    /// 切割大块时间段
+    func splitIntoFragments() -> [IVTimelineFragment] {
+        var fragments: [IVTimelineFragment] = []
+        
+        var duration = self.duration
+        var t0  = self.start
+        
+        // 切割大块间隙
+        while duration > maxDuration {
+            let t1 = t0 + maxDuration
+            let fg = IVTimelineFragment(start: t0, end: t1, item: self)
+            fragments.append(fg)
+            t0 = t1
+            duration -= maxDuration
+        }
+        
+        // 剩余小块
+        if duration > miniDuration {
+            let fg = IVTimelineFragment(start: t0, end: t0 + duration, item: self)
+            fragments.append(fg)
+        }
+        
+        return fragments
+    }
+}
+
+struct IVTimelineFragment: IVTiming {
+    let start: TimeInterval
+    let end: TimeInterval
+    let duration: TimeInterval
+    let item: IVTimelineItem
+    
+    init(start: TimeInterval, end: TimeInterval, item: IVTimelineItem) {
+        self.start = start
+        self.end = end
+        self.duration = end - start
+        self.item = item
+    }
+}
+
+struct IVTime: IVTiming, Hashable {
+    let start: TimeInterval
+    let end: TimeInterval
+    let duration: TimeInterval
+    
+    init(start: TimeInterval, end: TimeInterval) {
+        self.start = start
+        self.end = end
+        self.duration = end - start
+    }
+    
+    init(date: Date) {
+        let calendar = Calendar.current
+        let ymd = calendar.dateComponents([.year, .month, .day], from: date)
+        let date = calendar.date(from: ymd)!
+        let t0 = date.timeIntervalSince1970
+        let t1 = t0 + (86400 - 1)
+        self.init(start: t0, end: t1)
+    }
+        
+    static let today = IVTime(date: Date())
+    
+    func after(days: UInt) -> IVTime {
+        return offset(days: Int(days))
+    }
+
+    func before(days: UInt) -> IVTime {
+        return offset(days: -1 * Int(days))
+    }
+
+    func offset(days: Int) -> IVTime {
+        return IVTime(start: start + Double(86400*days), end: end + Double(86400*days))
+    }
+    
+    func string(dateFormat: String) -> String {
+        let fmt = DateFormatter()
+        fmt.dateFormat = dateFormat
+        return fmt.string(from: date)
+    }
+    
+    var date: Date {
+        return Date(timeIntervalSince1970: start)
+    }
+    
+    var dateString: String {
+        return string(dateFormat: "yyyy-MM-dd")
+    }
 }
 
 protocol IVTimelineViewDelegate: class {
@@ -23,10 +182,19 @@ protocol IVTimelineViewDelegate: class {
     ///   - item: 时间片段
     ///   - time: 时间值（标准时间，不是偏移量）
     func timelineView(_ timelineView: IVTimelineView, didSelect item: IVTimelineItem, at time: TimeInterval)
+    
+    /// 数据源
+    /// - Parameters:
+    ///   - timelineView: 时间轴对象
+    ///   - time: 时间片段
+    ///   - completionHandler: 数据获取完成回调
+    func timelineView(_ timelineView: IVTimelineView, itemsForTimelineAt time: IVTime, completionHandler: @escaping ([IVTimelineItem]?) -> Void)
 }
 
 class IVTimelineView: UIView {
     
+    // MARK: - Property
+
     /// 时间轴事件代理
     weak var delegate: IVTimelineViewDelegate?
     
@@ -37,294 +205,447 @@ class IVTimelineView: UIView {
     let minimumScale = 0.005
     
     /// 时间轴缩放比例（每秒占多少像素点(pix/sec)）
+    private(set)
     var scale = 1.0 {
         didSet {
-            if scale > maximumScale {
-                scale = maximumScale
-            } else if scale < minimumScale {
-                scale = minimumScale
-            }
-            
+            scale = max(minimumScale, min(maximumScale, scale))
+                        
             if oldValue == scale {
                 return
             }
-
+            
             let offsetX = collectionView.contentOffset.x
             collectionView.reloadData()
             let pinchScale = scale / oldValue
             collectionView.contentOffset.x = offsetX * CGFloat(pinchScale)
         }
     }
-    
-    /// 时间轴当前时间
-    var currentTime: TimeInterval = 0 {
-        didSet {
-            print("dTime \(currentTime) \(oldValue) \(currentTime - oldValue)")
-            refreshRefreshTimeline(currentTime)
+                    
+    /// 所有文件数据源
+    private(set)
+    var dataSource: [IVTimelineGroup] = []
+
+    /// 当前文件组
+    private(set)
+    var currentGroup: IVTimelineGroup = .placeholder(.today) {
+        willSet {
+            DispatchQueue.main.async {[weak self] in
+                self?.dateBtn.setTitle(newValue.summaryString , for: .normal)
+                self?.currentItem = self?.nextItem ?? .placeholder
+            }
         }
     }
     
-    /// 缩放手势
-    lazy var pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinchGestureHandler(_:)))
+    /// 当前文件
+    private(set)
+    var currentItem: IVTimelineItem = .placeholder
+            
+    /// 当前播放时间（UTC标准时间）
+    var currentPTS: TimeInterval = 0 {
+        didSet {
+            logVerbose("currentPTS new:\(currentPTS) old:\(oldValue) diff:\(currentPTS - oldValue)")
+            
+            if currentPTS < currentGroup.time.start {
+                loadAndDisplayItems(at: currentGroup.time.before(days: 1))
+            } else if currentPTS > currentGroup.time.end {
+                loadAndDisplayItems(at: currentGroup.time.after(days: 1))
+            } else {
+                tryScrollToTime(currentPTS)
+            }
+        }
+    }
+
+    /// 下一个文件
+    var nextItem: IVTimelineItem? {
+        if !currentItem.isValid {
+            return currentGroup.items.first(where: { $0.isValid })
+        } else if let currIdx = currentGroup.items.firstIndex(of: currentItem) {
+            for nextIdx in currIdx+1..<currentGroup.items.endIndex {
+                let nextItem = currentGroup.items[nextIdx]
+                if nextItem.isValid {
+                    return nextItem
+                }
+            }
+        }
+        return nil
+    }
+
+    private var autoScrollEnable = true
     
+    private var loadingTimes: [IVTime] = []
+    
+    // MARK: - UI
+
+    lazy var indicatorLine: UIView = {
+        let ind = UIView(frame: CGRect(x: (collectionView.bounds.width-2)/2, y: 0, width: 2, height: collectionView.bounds.height))
+        ind.autoresizingMask = [.flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin]
+        ind.backgroundColor  = UIColor.red
+        return ind
+    }()
+
+    lazy var scaleLabel: UILabel = {
+        let lb = UILabel(frame: CGRect(x: (collectionView.bounds.width-40)/2, y: (collectionView.bounds.height-40)/2, width: 40, height: 40))
+        lb.autoresizingMask = [.flexibleTopMargin, .flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin]
+        lb.backgroundColor = UIColor(white: 0.8, alpha: 0.8)
+        lb.textColor = .black
+        lb.textAlignment = .center
+        lb.font = .systemFont(ofSize: 12)
+        lb.layer.cornerRadius = 20
+        lb.layer.masksToBounds = true
+        lb.isHidden = true
+        self.addSubview(lb)
+        return lb
+    }()
+    
+    lazy var playBtn: UIButton = {
+        let btn = UIButton(frame: CGRect(x: (collectionView.bounds.width-40)/2, y: (collectionView.bounds.height-40)/2, width: 40, height: 40))
+        btn.autoresizingMask = [.flexibleTopMargin, .flexibleBottomMargin, .flexibleLeftMargin, .flexibleRightMargin]
+        btn.backgroundColor = UIColor(white: 0.8, alpha: 0.8)
+        btn.layer.cornerRadius = 20
+        btn.layer.masksToBounds = true
+        btn.setImage(UIImage(named: "FullPlay_Play"), for: .normal)
+        btn.addEvent { [weak self]_ in
+            self?.playBtnClicked()
+        }
+        btn.isHidden = true
+        self.addSubview(btn)
+        return btn
+    }()
+
+    
+    lazy var headerBtn: UIButton = {
+        let btn = UIButton(frame: CGRect(x: 0, y: bounds.height-20, width: 40, height: 20))
+        btn.autoresizingMask = [.flexibleTopMargin, .flexibleBottomMargin, .flexibleRightMargin]
+        btn.backgroundColor = UIColor(white: 0.9, alpha: 1)
+        btn.layer.cornerRadius = 5
+        btn.layer.masksToBounds = true
+        btn.titleLabel?.font = .systemFont(ofSize: 10)
+        btn.setTitle("<<", for: .normal)
+        btn.setTitleColor(.blue, for: .normal)
+        btn.addEvent { [unowned self]_ in
+            self.collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        }
+        btn.isHidden = true
+        self.addSubview(btn)
+        return btn
+    }()
+
+    lazy var footerBtn: UIButton = {
+        let btn = UIButton(frame: CGRect(x: bounds.width-40, y: bounds.height-20, width: 40, height: 20))
+        btn.autoresizingMask = [.flexibleTopMargin, .flexibleBottomMargin, .flexibleLeftMargin]
+        btn.backgroundColor = UIColor(white: 0.9, alpha: 1)
+        btn.layer.cornerRadius = 5
+        btn.layer.masksToBounds = true
+        btn.titleLabel?.font = .systemFont(ofSize: 10)
+        btn.setTitle(">>", for: .normal)
+        btn.setTitleColor(.blue, for: .normal)
+        btn.addEvent { [unowned self]_ in
+            self.collectionView.setContentOffset(CGPoint(x: self.collectionView.contentSize.width-self.collectionView.frame.width, y: 0), animated: true)
+        }
+        btn.isHidden = true
+        self.addSubview(btn)
+        return btn
+    }()
+
+    lazy var dateBtn: UIButton = {
+        let btn = UIButton(frame: CGRect(x: 0, y: collectionView.bounds.maxY, width: bounds.width, height: 20))
+        btn.autoresizingMask = [.flexibleWidth, .flexibleTopMargin]
+        btn.setTitle(currentGroup.summaryString, for: .normal)
+        btn.setTitleColor(.blue, for: .normal)
+        btn.titleLabel?.font = .systemFont(ofSize: 12)
+        btn.addEvent { (_) in
+            self.calendarView.isHidden = false
+            self.calendarView.currentDate = self.currentGroup.time.date
+        }
+        return btn
+    }()
+
     /// 时间轴布局
     lazy var timelineLayout = IVTimelineLayout()
     
     /// 时间轴容器视图
     lazy var collectionView: UICollectionView = {
-        let col = UICollectionView(frame: self.bounds, collectionViewLayout: timelineLayout)
-        col.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        let rect = CGRect(x: 0, y: 0, width: self.bounds.width, height: 64)
+        let col = UICollectionView(frame: rect, collectionViewLayout: timelineLayout)
+        col.autoresizingMask = [.flexibleBottomMargin, .flexibleWidth]
         col.register(IVTimelineCell.self, forCellWithReuseIdentifier: "IVTimelineCell")
         col.register(IVTimelineHeaderFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: UICollectionView.elementKindSectionHeader)
         col.register(IVTimelineHeaderFooter.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: UICollectionView.elementKindSectionFooter)
         col.showsHorizontalScrollIndicator = false
         col.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 100, bottom: 0, right: 100)
-        col.backgroundColor = UIColor.clear
+        col.backgroundColor = UIColor(white: 0.98, alpha: 1)
         col.dataSource = self
         col.delegate   = self
         col.addGestureRecognizer(pinchGesture)
         return col
     }()
     
-    /// 原始时间段（保存外面传入的原始时间段）
-    private(set) var dataSource: [IVTimelineItem] = []
+    /// 缩放手势
+    private lazy var pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinchGestureHandler(_:)))
     
-    /// 时间片段（用于优化显示性能）
-    private var timeSlices: [IVTimelineItem] = [] {
-        didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.collectionView.reloadData()
-            }
-        }
-    }
+    lazy var calendarView: IVCalendar = {
+        let vcView = nextViewController?.view
+        let cal = IVCalendar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 300))
+        cal.center = vcView!.center
+        cal.backgroundColor = .white
+//        cal.markDates = [Date(timeIntervalSince1970: 1584240204),
+//                         Date(timeIntervalSince1970: 1586919204)]
+//        cal.lowerValidDate = Date(timeIntervalSince1970: 1584240204)
+        cal.currentDate = currentGroup.time.date
+        cal.delegate = self
+        vcView?.addSubview(cal)
+        return cal
+    }()
     
-    /// 时间片最大10分钟 (太大影响放大性能，太小影响缩小性能)
-    let maxDuration: TimeInterval  = 10*60
-    
-    /// 时间片最小0.001秒
-    let miniDuration: TimeInterval = 0.001
-
-    /// 设置数据源
-    func setDataSource(_ items: [IVTimelineItem]) {
-        let sortedItems = items.sorted { $0.startTime < $1.startTime }
-        dataSource = sortedItems
-        timeSlices = makeTimelineSlices(sortedItems)
-    }
-    
-    /// 插入数据源
-    func insertDataSource(_ items: [IVTimelineItem]) {
-        if items.isEmpty { return }
-        
-        let sortedItems = items.sorted { $0.startTime < $1.startTime }
-        
-        // 1. 时序化
-        let slices = makeTimelineSlices(sortedItems)
-        
-        if dataSource.isEmpty {
-            dataSource.append(contentsOf: sortedItems)
-            timeSlices.append(contentsOf: slices)
-            return
-        }
-        // 3.拼接列表
-        if let last = timeSlices.last, sortedItems.first!.startTime >= last.startTime {
-            // a.尾部插入
-            if let gapSlices = makeGapSlices(lhs: last, rhs: sortedItems.first!) {
-                timeSlices.insert(contentsOf: gapSlices, at: timeSlices.endIndex)
-            }
-            dataSource.insert(contentsOf: sortedItems, at: dataSource.endIndex)
-            timeSlices.insert(contentsOf: slices, at: timeSlices.endIndex)
-        } else if let first = timeSlices.first, sortedItems.last!.startTime <= first.startTime {
-            // b.头部插入
-            if let gapSlices = makeGapSlices(lhs: sortedItems.last!, rhs: first) {
-                timeSlices.insert(contentsOf: gapSlices, at: timeSlices.startIndex)
-            }
-            dataSource.insert(contentsOf: sortedItems, at: dataSource.startIndex)
-            timeSlices.insert(contentsOf: slices, at: timeSlices.startIndex)
-        } else {
-            logError("数据异常 datasource:\(dataSource), timeSlices:\(timeSlices) items:\(sortedItems)")
-        }
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(collectionView)
+        setupUI()
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        addSubview(collectionView)
+        setupUI()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        collectionView.reloadData()
+        if currentGroup.isPlaceholder {
+            preloadItemsIfNeed(at: currentGroup.time)
+        }
     }
 }
 
 private extension IVTimelineView {
     
-    func refreshRefreshTimeline(_ time: TimeInterval) {
-        DispatchQueue.main.async {
-            if self.collectionView.isDragging {
-                print("isDragging")
-                return
+    func setupUI() {
+        backgroundColor = .white
+        addSubview(collectionView)
+        addSubview(indicatorLine)
+        addSubview(dateBtn)
+    }
+    
+    /// 预加载数据
+    func preloadItemsIfNeed(at time: IVTime) {
+        DispatchQueue.main.async {[weak self] in
+            guard let `self` = self else { return }
+                        
+            if !self.dataSource.contains(where: { time == $0.time }),
+                !self.loadingTimes.contains(time) {
+                self.loadingTimes.append(time)
+                
+                self.delegate?.timelineView(self, itemsForTimelineAt: time) {(items) in
+                    DispatchQueue.main.async {[weak self] in
+                        guard let `self` = self else { return }
+                        self.loadingTimes.removeAll(where: { $0 == time})
+                        if let items = items {
+                            logInfo("下载成功 \(time.dateString)")
+                            self.insertDataSource(items, at: time)
+                        } else {
+                            logError("下载失败 \(time.dateString)")
+                        }
+                    }
+                }
             }
-            if self.collectionView.isTracking {
-                print("isTracking")
-                return
-            }
-            if self.collectionView.isDecelerating {
-                print("isDecelerating")
-                return
-            }
+        }
+    }
+    
+    /// 加载并刷新UI
+    func loadAndDisplayItems(at time: IVTime) {
+        DispatchQueue.main.async {[weak self] in
+            guard let `self` = self else { return }
+            if self.currentGroup.time != time {
+                let isPrev = time.start < self.currentGroup.time.start
+                
+                self.currentGroup = self.dataSource.first(where: { time == $0.time }) ?? .placeholder(time)
 
-            guard let first = self.dataSource.first else { return }
-            let offset = CGFloat(time - first.startTime) * CGFloat(self.scale)
+                if self.currentGroup.isPlaceholder {
+                    self.preloadItemsIfNeed(at: time)
+                }
+                
+                self.collectionView.reloadData()
+                self.collectionView.contentOffset.x = isPrev ? self.collectionView.contentSize.width-self.collectionView.frame.width : 0
+                self.collectionView.transform = CGAffineTransform(translationX: isPrev ? -1000 : 1000, y: 0)
+                UIView.animate(withDuration: 0.3) {
+                    self.collectionView.transform = .identity
+                }
+            }
+        }
+    }
+    
+    /// 插入数据源
+    func insertDataSource(_ items: [IVTimelineItem], at time: IVTime) {
+        var newItems = items.sorted { $0.start < $1.start }
+        
+        // 填充中间空隙
+        let maxIdx = max(items.count-1, 0)
+        for i in 0 ..< maxIdx {
+            if let padding = IVTimelineItem.padding(start: newItems[maxIdx-i-1].end, end: newItems[maxIdx-i].start) {
+                newItems.insert(padding, at: maxIdx-i)
+            }
+        }
+        // 填充尾部空隙
+        if items.count > 0 {
+            if let padding = IVTimelineItem.padding(start: newItems.last!.end, end: time.end) {
+                newItems.insert(padding, at: newItems.endIndex)
+            }
+        }
+        // 填充头部空隙
+        if let padding = IVTimelineItem.padding(start: time.start, end: newItems.first?.start ?? time.end) {
+            newItems.insert(padding, at: newItems.startIndex)
+        }
+        
+        let newGroup = IVTimelineGroup(time, newItems)
+          
+        let idx = dataSource.firstIndex(where: { $0.time.start >= time.end })
+        dataSource.insert(newGroup, at: idx ?? 0)
+        
+        if currentGroup.time == time && currentGroup.isPlaceholder {
+            currentGroup = newGroup
+            collectionView.reloadData()
+        }
+    }
+    
+    func selectedTimelineItem() -> (item: IVTimelineItem, time: TimeInterval)? {
+        for cell in collectionView.visibleCells {
+            guard let cell = cell as? IVTimelineCell else {
+                continue
+            }
+            let newRect = collectionView.convert(cell.frame, to: self)
+            let indRect = indicatorLine.frame
+            
+            guard newRect.contains(CGPoint(x: indRect.maxX, y: indRect.midY)) else {
+                continue
+            }
+            
+            guard let fragment = cell.fragment, fragment.item.isValid else {
+                break
+            }
+                                    
+            let width0 = (fragment.start - fragment.item.start) * scale
+            let width1 = Double(indRect.maxX - newRect.origin.x)
+            let offset = width0 + width1
+            let time = round(fragment.item.start + offset/scale)
+
+            return (fragment.item, time)
+        }
+        
+        return nil
+    }
+    
+    func enableAutoScroll(after delay: TimeInterval) {
+        autoScrollEnable = false
+        IVDelayWork.asyncAfter(delay, key: "autoScrollEnable") {[weak self] in
+            self?.autoScrollEnable = true
+        }
+    }
+    
+    var isInteracting: Bool {
+        return collectionView.isDragging ||
+            collectionView.isTracking ||
+            collectionView.isDecelerating ||
+            !playBtn.isHidden ||
+            !scaleLabel.isHidden
+    }
+    
+    func forceScrollToTime(_ time: TimeInterval) {
+        DispatchQueue.main.async {
+            guard let first = self.currentGroup.items.first else { return }
+            let offset = CGFloat(time - first.start) * CGFloat(self.scale)
 
             let point = CGPoint(x: offset, y: self.collectionView.contentOffset.y)
             self.collectionView.setContentOffset(point, animated: true)
         }
     }
-    
-    /// 切割大块时间段
-    func fragmentTimelineItem(_ item: IVTimelineItem) -> [IVTimelineItem]? {
-        var items: [IVTimelineItem] = []
-        
-        var duration = item.duration
-        var t0  = item.startTime
-        
-        // 切割大块间隙
-        while duration > maxDuration {
-            let t1 = t0 + maxDuration
-            let subItem = IVTimelineItem(startTime: t0,
-                                         endTime: t1,
-                                         duration: maxDuration,
-                                         type: item.type,
-                                         color: item.color)
-            items.append(subItem)
-            t0 = t1
-            duration -= maxDuration
+
+    func tryScrollToTime(_ time: TimeInterval) {
+        if self.isInteracting {
+            self.enableAutoScroll(after: 2)
+            return
         }
         
-        if duration > miniDuration {
-            let subItem = IVTimelineItem(startTime: t0,
-                                         endTime: t0 + duration,
-                                         duration: duration,
-                                         type: item.type,
-                                         color: item.color)
-            items.append(subItem)
+        if !self.autoScrollEnable {
+            return
         }
         
-        return items.isEmpty ? nil : items
-    }
-    
-    /// 生成间隙
-    func makeGapSlices(lhs:IVTimelineItem, rhs:IVTimelineItem) -> [IVTimelineItem]? {
-        let gapItem = IVTimelineItem(startTime: lhs.endTime,
-                                     endTime: rhs.startTime,
-                                     duration: rhs.startTime - lhs.endTime,
-                                     type: "gap",
-                                     color: .white)
-        return fragmentTimelineItem(gapItem)
-    }
-    
-    /// 生成时间轴切片
-    func makeTimelineSlices(_ items: [IVTimelineItem]) -> [IVTimelineItem] {
-        var items = items
-        if items.isEmpty { return [] }
-        // 2.切割大块文件
-        let fragments = items.map({ fragmentTimelineItem($0)})
-        // 3.去除nil
-        let compactRes = fragments.compactMap { $0 }
-        // 4.还原成一维数组
-        items = compactRes.flatMap { $0 }
-        // 5.插入空隙
-        if items.count > 1 {
-            let maxIdx = items.count-1
-            for i in 0 ..< maxIdx {
-                if let gapItems = makeGapSlices(lhs: items[maxIdx-i-1], rhs: items[maxIdx-i]) {
-                    items.insert(contentsOf: gapItems, at: maxIdx-i)
-                }
-            }
-        }
-        return items
+        forceScrollToTime(time)
     }
     
     @objc func pinchGestureHandler(_ pinch: UIPinchGestureRecognizer) {
-        //放大情况
-        if pinch.scale > 1.0 {
-            if self.scale >= maximumScale {
-                ivHud("不能再放大啦")
-                return
-            }
-        }
-        
-        //缩小情况
-        if pinch.scale < 1.0 {
-            if self.scale <= minimumScale {
-                ivHud("不能再缩小啦")
-                return
-            }
-        }
-                
-        if pinch.state == .began || pinch.state == .changed {
+        switch pinch.state {
+        case .began:
+            scaleLabel.isHidden = false
+            playBtn.isHidden = true
+        case .changed:
             self.scale *= Double(pinch.scale)
-            pinch.scale = 1
+            scaleLabel.text = self.scale > 0.1 ? "\(Int(self.scale * 100))%" : String(format: "%.1f%%", self.scale * 100)
+        default:
+            IVDelayWork.asyncAfter(1, key: "scaleLabel.isHidden") {[weak self] in
+                self?.scaleLabel.isHidden = true
+            }
         }
+        pinch.scale = 1
     }
     
     private func didScrollHandler() {
-        for cell in collectionView.visibleCells {
-            let newRect = collectionView.convert(cell.frame, to: self)
-            let newCenter = collectionView.center
-            
-            guard newRect.contains(newCenter),
-                let indexPath = collectionView.indexPath(for: cell) else {
-                    continue
+        if let _ = selectedTimelineItem() {
+            playBtn.isHidden = false
+            IVDelayWork.asyncAfter(2, key: "playBtn.isHidden") {[weak self] in
+                self?.playBtn.isHidden = true
             }
-            
-            let slice = timeSlices[indexPath.row]
-            
-            // 间隙不处理
-            if slice.type == "gap" { return }
-            
-            guard let item = dataSource.first(where: { $0.startTime <= slice.startTime && $0.endTime >= slice.endTime }) else {
-                print("没找到对应数据")
-                return
-            }
-            
-            let width0 = (slice.startTime - item.startTime) * scale
-            let width1 = Double(newCenter.x - newRect.origin.x)
-            let offset = width0 + width1
-            let time = round(item.startTime + offset/scale)
-            
+        }
+    }
+    
+    func playBtnClicked() {
+        playBtn.isHidden = true
+        autoScrollEnable = true
+        if let (item, time) = selectedTimelineItem() {
+            currentItem = item
             delegate?.timelineView(self, didSelect: item, at: time)
-            return
         }
     }
 }
 
 extension IVTimelineView: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        return currentGroup.items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return timeSlices.count
+        var item = currentGroup.items[section]
+        return item.fragments.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "IVTimelineCell", for: indexPath) as! IVTimelineCell
-        cell.setTimelineItem(timeSlices[indexPath.row], scale: scale)
+        var item = currentGroup.items[indexPath.section]
+        let fragment = item.fragments[indexPath.row]
+        cell.setTimelineFragment(fragment, scale: scale)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let headerfooter = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: kind, for: indexPath) as! IVTimelineHeaderFooter
         if kind == UICollectionView.elementKindSectionHeader {
-            headerfooter.tips.text = "到头啦👉"
+            let prevDay = self.currentGroup.time.before(days: 1)
+            headerfooter.dateLabel.text = prevDay.dateString
+            headerfooter.btn.setTitle("<<<前一天<<<", for: .normal)
+            headerfooter.btn.addEvent { (_) in
+                self.loadAndDisplayItems(at: prevDay)
+            }
         } else {
-            headerfooter.tips.text = "👈到尾啦"
+            if currentGroup.time == .today {
+                headerfooter.dateLabel.text = ""
+                headerfooter.btn.setTitle("没有更多了", for: .normal)
+                headerfooter.btn.addEvent { _ in }
+            } else {
+                let nextDay = self.currentGroup.time.after(days: 1)
+                headerfooter.dateLabel.text = nextDay.dateString
+                headerfooter.btn.setTitle(">>>后一天>>>", for: .normal)
+                headerfooter.btn.addEvent { (_) in
+                    self.loadAndDisplayItems(at: nextDay)
+                }
+            }
         }
         return headerfooter
     }
@@ -333,23 +654,46 @@ extension IVTimelineView: UICollectionViewDataSource {
 
 extension IVTimelineView: UICollectionViewDelegateFlowLayout {
     
+    func collectionView(_ collectionView: UICollectionView, willDisplaySupplementaryView view: UICollectionReusableView, forElementKind elementKind: String, at indexPath: IndexPath) {
+        if elementKind == UICollectionView.elementKindSectionHeader {
+            headerBtn.isHidden = true
+            let prevDay = currentGroup.time.before(days: 1)
+            preloadItemsIfNeed(at: prevDay)
+        } else {
+            footerBtn.isHidden = true
+            let nextDay = currentGroup.time.after(days: 1)
+            preloadItemsIfNeed(at: nextDay)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didEndDisplayingSupplementaryView view: UICollectionReusableView, forElementOfKind elementKind: String, at indexPath: IndexPath) {
+        if elementKind == UICollectionView.elementKindSectionHeader {
+            headerBtn.isHidden = false
+        } else {
+            footerBtn.isHidden = false
+        }
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let slice = timeSlices[indexPath.row]
+        let item = currentGroup.items[indexPath.section]
         
         // 间隙不处理
-        if slice.type == "gap" { return }
+        if !item.isValid { return }
+                
+        forceScrollToTime(item.start)
         
-        guard let item = dataSource.first(where: { $0.startTime <= slice.startTime && $0.endTime >= slice.endTime }) else {
-            print("没找到对应数据")
-            return
+        playBtn.isHidden = false
+        IVDelayWork.asyncAfter(2, key: "playBtn.isHidden") {[weak self] in
+            self?.playBtn.isHidden = true
         }
-        
-        delegate?.timelineView(self, didSelect: item, at: item.startTime)
     }
-        
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemW = CGFloat(timeSlices[indexPath.row].duration * scale)
-        return CGSize(width: itemW, height: bounds.height)
+        var item = currentGroup.items[indexPath.section]
+        let fragment = item.fragments[indexPath.row]
+
+        let itemW = CGFloat(fragment.duration * scale)
+        return CGSize(width: itemW, height: collectionView.bounds.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -365,18 +709,41 @@ extension IVTimelineView: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: bounds.width/2, height: bounds.height)
+        if section == currentGroup.items.startIndex {
+            return CGSize(width: collectionView.bounds.width/2, height: collectionView.bounds.height)
+        }
+        return .zero
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: bounds.width/2, height: bounds.height)
+        if section == currentGroup.items.endIndex-1 {
+            return CGSize(width: collectionView.bounds.width/2, height: collectionView.bounds.height)
+        }
+        return .zero
     }
 }
 
 extension IVTimelineView: UIScrollViewDelegate {
     
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        playBtn.isHidden = true
+        scaleLabel.isHidden = true
+    }
+
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if scrollView.isDecelerating || decelerate { return }
+        if scrollView.isDecelerating { return }
+        
+        if scrollView.contentOffset.x < -60 {
+            let prevDay = self.currentGroup.time.before(days: 1)
+            self.loadAndDisplayItems(at: prevDay)
+        } else if currentGroup.time != .today,
+            scrollView.contentOffset.x - scrollView.contentSize.width > -(scrollView.frame.width-60) {
+            let nextDay = self.currentGroup.time.after(days: 1)
+            self.loadAndDisplayItems(at: nextDay)
+        }
+
+        if decelerate { return }
+
         didScrollHandler()
     }
     
@@ -385,25 +752,33 @@ extension IVTimelineView: UIScrollViewDelegate {
     }
 }
 
+extension IVTimelineView: IVCalendarDelegate {
+    
+    func calendar(_ calendar: IVCalendar, didSelect date: Date) {
+        calendar.isHidden = true
+        loadAndDisplayItems(at: IVTime(date: date))
+    }
+}
+
 class IVTimelineCell: UICollectionViewCell {
     
-    func setTimelineItem(_ item: IVTimelineItem, scale: Double) {
-        self.item = item
+    func setTimelineFragment(_ fragment: IVTimelineFragment, scale: Double) {
+        self.fragment = fragment
         self.scale = scale
-        colorView.backgroundColor = item.color
+        colorView.backgroundColor = fragment.item.color
         removeAllTextLayer()
-        showTimeMarks = IVTimeMark.all.filter { scale * Double($0.rawValue) >= 4.8 } // 距离大于 4.8 pt
+        timeMarks = IVTimeMark.all.filter { scale * Double($0.rawValue) >= 4.8 } // 距离大于 4.8 pt
         setNeedsDisplay()
     }
 
     /// === 数据模型 ===
-    private var item: IVTimelineItem!
+    private(set) var fragment: IVTimelineFragment!
     
     /// === 缩放比例 ===
-    private var scale = 1.0
+    private(set) var scale = 1.0
 
     /// === 时间刻度 ===
-    private var showTimeMarks: [IVTimeMark] = [.hour]
+    private var timeMarks: [IVTimeMark] = [.hour]
     
     // === 颜色 ===
     private lazy var colorView: UIView = {
@@ -432,8 +807,8 @@ class IVTimelineCell: UICollectionViewCell {
     }
     
     private func TimeOffset(of mark: IVTimeMark) -> TimeInterval {
-        let remain: TimeInterval = item.startTime - floor(item.startTime) // 小数点后的余数
-        let mod: TimeInterval = TimeInterval(Int(item.startTime) % mark.rawValue) + remain // 小数点后的余数
+        let remain: TimeInterval = fragment.start - floor(fragment.start) // 小数点后的余数
+        let mod: TimeInterval = TimeInterval(Int(fragment.start) % mark.rawValue) + remain // 小数点后的余数
         let offset: TimeInterval = mod > 0.001 ? TimeInterval(mark.rawValue) - mod : 0
         return offset
     }
@@ -454,7 +829,7 @@ class IVTimelineCell: UICollectionViewCell {
 
     private func MarkHeight(of mark: IVTimeMark) -> Double {
         switch mark {
-        case .hour8, .hour4, .hour2, .hour: return 20
+        case .hour4, .hour2, .hour: return 20
         case .min30: return 18
         case .min10: return 16
         case .min5, .min1: return 14
@@ -505,16 +880,16 @@ class IVTimelineCell: UICollectionViewCell {
         ctx?.setLineWidth(1)
         ctx?.setStrokeColor(color.cgColor)
         
-        while offset <= item.duration {
-            if mark.upperMark == nil || Int(item.startTime + offset) % mark.upperMark!.rawValue != 0 {
+        while offset <= fragment.duration {
+            if mark.upperMark == nil || Int(fragment.start + offset) % mark.upperMark!.rawValue != 0 {
                 ctx?.move(to: CGPoint(x: scale * offset, y: 0))
                 ctx?.addLine(to: CGPoint(x: scale * offset, y: markHeight))
                 
                 if showText, mark >= .sec10 {
                     for divisor in IVTimeMark.divisors {
-                        if Int(item.startTime + offset) % divisor == 0 {
+                        if Int(fragment.start + offset) % divisor == 0 {
                             addTextLayer(frame: CGRect(x: CGFloat(scale * offset)-labelWidth/2, y: bounds.height-20, width: labelWidth, height: 20),
-                                         text: fmt.string(from: Date(timeIntervalSince1970: item.startTime + offset)),
+                                         text: fmt.string(from: Date(timeIntervalSince1970: fragment.start + offset)),
                                          color: color,
                                          fontSize: fontSize)
                             break
@@ -542,26 +917,35 @@ class IVTimelineCell: UICollectionViewCell {
         let ctx = UIGraphicsGetCurrentContext()
         ctx?.clear(rect)
 
-        showTimeMarks.forEach { (mark) in
+        timeMarks.forEach { (mark) in
             drawTimelineMark(ctx, mark: mark)
         }
     }
 }
 
 class IVTimelineHeaderFooter: UICollectionReusableView {
-    lazy var tips: UILabel = {
-        let lb = UILabel(frame: bounds)
+    lazy var dateLabel: UILabel = {
+        let lb = UILabel(frame: CGRect(x: 0, y: bounds.height-20, width: bounds.width, height: 20))
         lb.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        lb.text = "没有更多了"
-        lb.textColor = .red
+        lb.textColor = .gray
         lb.textAlignment = .center
-        lb.font = .systemFont(ofSize: 14)
+        lb.font = .systemFont(ofSize: 10)
+        lb.numberOfLines = 1
         return lb
+    }()
+    
+    lazy var btn: UIButton = {
+        let btn = UIButton(frame: bounds)
+        btn.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        btn.setTitleColor(.blue, for: .normal)
+        btn.titleLabel?.font = .systemFont(ofSize: 15)
+        return btn
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addSubview(tips)
+        addSubview(btn)
+        addSubview(dateLabel)
     }
     
     required init?(coder: NSCoder) {
@@ -586,7 +970,6 @@ class IVTimelineLayout: UICollectionViewFlowLayout {
 }
 
 enum IVTimeMark: Int, Comparable {
-    case hour8    = 28800 // 60*60*8
     case hour4    = 14400 // 60*60*4
     case hour2    = 7200  // 60*60*2
     case hour     = 3600  // 60*60
@@ -603,7 +986,7 @@ enum IVTimeMark: Int, Comparable {
     
     static let divisors = [1, 2, 3, 5]
 
-    static let all: [IVTimeMark] = [.hour8, .hour4, .hour2, .hour, .min30, .min10, .min5, .min1, .sec30, .sec10, .sec5, .sec1]
+    static let all: [IVTimeMark] = [.hour4, .hour2, .hour, .min30, .min10, .min5, .min1, .sec30, .sec10, .sec5, .sec1]
 
     static func < (lhs: IVTimeMark, rhs: IVTimeMark) -> Bool {
         return lhs.rawValue < rhs.rawValue

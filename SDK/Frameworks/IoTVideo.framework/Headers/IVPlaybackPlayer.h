@@ -50,15 +50,16 @@ typedef void (^PlaybackListCallback)(IVPlaybackPage *_Nullable page, NSError *_N
 - (instancetype)initWithDeviceId:(NSString *)deviceId playbackItem:(IVPlaybackItem *)item seekToTime:(NSTimeInterval)time;;
 
 /// 获取一页回放文件列表
+/// 请根据实际情况合理设置查询时间范围和分页，时间跨度太大可能会增加设备查询时间（一般建议设置为三天以内, 即当天、前一天和后一天）
 /// @param deviceId 设备ID
-/// @param pageIndex 页码索引，从0开始（获取哪一页的回放文件）
-/// @param countPerPage 每页包含回放文件数
+/// @param pageIndex 页码索引，获取指定页码的回放文件（ pageIndex从0开始递增）
+/// @param countPerPage 在[startTime, endTime]时间范围内按每页countPerPage个文件查询，每次返回一页的数据
 /// @param startTime 开始时间戳（秒）
 /// @param endTime 结束时间戳（秒）
 /// @param completionHandler 结果回调
 + (void)getPlaybackListOfDevice:(NSString *)deviceId
-                      pageIndex:(NSUInteger)pageIndex
-                   countPerPage:(NSUInteger)countPerPage
+                      pageIndex:(uint32_t)pageIndex
+                   countPerPage:(uint32_t)countPerPage
                       startTime:(NSTimeInterval)startTime
                         endTime:(NSTimeInterval)endTime
               completionHandler:(PlaybackListCallback)completionHandler;

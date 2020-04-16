@@ -15,27 +15,56 @@
 
 @implementation IVQRCodeNetConfig
 
-#pragma mark - public class fuction
-+ (void)createQRCodeWithWifiName:(NSString *)wifiName
-                         wifiPwd:(NSString *)wifiPwd
-                          QRSize:(CGSize)size
-               completionHandler:(IVQRCodeCreateCallback)completionHandler {
-    
-    [IVQRCodeNetConfig createQRCodeWithWifiName:wifiName
-                                        wifiPwd:wifiPwd
-                                       language:IV_QR_CODE_LANGUAGE_TYPE_CN
-                                       timeZone:[NSTimeZone.systemTimeZone secondsFromGMT]/60
-                                         QRSize:size
-                              completionHandler:completionHandler];
+/// 获取二维码配网所需要的配网 Token
+/// @param completionHandler 回调
+- (void)getToken:(void(^)(NSString * _Nullable token, NSError * _Nullable error))completionHandler {
+    NSString *inPath = [NSString stringWithFormat:@"%s/%s", URLCMD_HEAD_GET, URLCMD_DATA_NETCFG_TOKEN];
+    [IVMessageMgr.sharedInstance sendDataToServer:inPath
+                                             data:nil
+                                completionHandler:^(NSData * _Nullable data, NSError * _Nullable error) {
+        if (!completionHandler) { return;}
+        
+        if (data == nil) {
+            completionHandler(nil, error);
+            return;
+        }
+        
+        NSDictionary *jsonDic = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+        if (error) {
+            completionHandler(nil, error);
+            return;
+        }
+        
+        NSString *token = jsonDic[@"token"];
+        
+        completionHandler(token, nil);
+    }];
 }
 
-+ (void)createQRCodeWithWifiName:(NSString *)wifiName
-                         wifiPwd:(NSString *)wifiPwd
-                        language:(IV_QR_CODE_LANGUAGE)language
-                        timeZone:(NSInteger)timeZone
-                          QRSize:(CGSize)size
-               completionHandler:(IVQRCodeCreateCallback)completionHandler {
-    
+
+/**
+ 以内置协议 生成设备配网二维码
+ 
+ @param wifiName  wifi name
+ @param wifiPwd   wifi 密码
+ @param size      二维码尺寸
+ @param completionHandler 完成回调
+*/
+- (void)createQRCodeWithWifiName:(NSString *)wifiName wifiPwd:(NSString  * _Nullable)wifiPwd QRSize:(CGSize)size completionHandler:(nullable IVQRCodeCreateCallback)completionHandler {
+    [self createQRCodeWithWifiName:wifiName wifiPwd:wifiPwd language:IV_QR_CODE_LANGUAGE_TYPE_EN timeZone:[NSTimeZone.systemTimeZone secondsFromGMT]/60 QRSize:size completionHandler:completionHandler];
+}
+
+/**
+ 以内置协议 生成设备配网二维码
+ 
+ @param wifiName wifi name
+ @param wifiPwd  wifi 密码
+ @param language 需要配置的语言
+ @param timeZone timeZone 分钟
+ @param size     二维码尺寸
+ @param completionHandler 完成回调
+*/
+- (void)createQRCodeWithWifiName:(NSString *)wifiName wifiPwd:(NSString * _Nullable)wifiPwd  language:(IV_QR_CODE_LANGUAGE)language timeZone:(NSInteger)timeZone QRSize:(CGSize)size completionHandler:(nullable IVQRCodeCreateCallback)completionHandler {
     NSString *inPath = [NSString stringWithFormat:@"%s/%s", URLCMD_HEAD_GET, URLCMD_DATA_NETCFG_TOKEN];
     [IVMessageMgr.sharedInstance sendDataToServer:inPath
                                              data:nil
@@ -65,38 +94,11 @@
     }];
 }
 
-#pragma mark - instance function
-/**
- 生成设备配网二维码
- 
- @param wifiName  wifi name
- @param wifiPwd   wifi 密码
- @param size      二维码尺寸
- @param completionHandler 完成回调
-*/
-- (void)createQRCodeWithWifiName:(NSString *)wifiName wifiPwd:(NSString  * _Nullable)wifiPwd QRSize:(CGSize)size completionHandler:(nullable IVQRCodeCreateCallback)completionHandler {
-    [IVQRCodeNetConfig createQRCodeWithWifiName:wifiName wifiPwd:wifiPwd QRSize:size completionHandler:completionHandler];
-}
-
-/**
- 生成设备配网二维码
- 
- @param wifiName wifi name
- @param wifiPwd  wifi 密码
- @param language 需要配置的语言
- @param timeZone timeZone 分钟
- @param size     二维码尺寸
- @param completionHandler 完成回调
-*/
-- (void)createQRCodeWithWifiName:(NSString *)wifiName wifiPwd:(NSString * _Nullable)wifiPwd  language:(IV_QR_CODE_LANGUAGE)language timeZone:(NSInteger)timeZone QRSize:(CGSize)size completionHandler:(nullable IVQRCodeCreateCallback)completionHandler {
-    [IVQRCodeNetConfig createQRCodeWithWifiName:wifiName wifiPwd:wifiPwd language:language timeZone:timeZone QRSize:size completionHandler:completionHandler];
-}
-
 
 #pragma mark - private function
 
 /**
- 生成设备配网二维码
+ 以内置协议 生成设备配网二维码
  
  @param wifiName wifi name
  @param wifiPwd  wifi 密码
@@ -106,7 +108,7 @@
  @param netConfigId 配网ID
  @return 二维码图片
  */
-+ (nullable UIImage *)createQRCodeWithWifiName:(NSString *)wifiName
+- (nullable UIImage *)createQRCodeWithWifiName:(NSString *)wifiName
                                        wifiPwd:(NSString *)wifiPwd
                                    netConfigId:(NSString *)netConfigId
                                       language:(IV_QR_CODE_LANGUAGE)language
@@ -119,8 +121,8 @@
     
     /***********************************
      类型       数据长度   数据
-     uint8_t   uint8_t   ****
-     type      len       data
+     uint8_t   uint8_t       ****
+     type      len              data
      ************************************/
     //写入数据
     void(^writeData)(IV_QR_CODE_FUNCTION, NSString *) = ^(IV_QR_CODE_FUNCTION type, NSString *string) {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7ru-en-yQm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7ru-en-yQm">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,6 +27,7 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
+                                        <size key="shadowOffset" width="0.0" height="0.0"/>
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -137,34 +138,15 @@
                                     <constraint firstAttribute="height" constant="44" id="Qbd-Pj-EzJ"/>
                                 </constraints>
                             </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P9I-8d-apS" userLabel="Timeline View">
-                                <rect key="frame" x="0.0" y="255" width="375" height="64"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SVr-sh-HIb" userLabel="Timeline" customClass="IVTimelineView" customModule="IotVideoDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
-                                        <color key="backgroundColor" red="0.97405088699999998" green="0.97405088699999998" blue="0.97405088699999998" alpha="0.74836793660000001" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </view>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="indicator" translatesAutoresizingMaskIntoConstraints="NO" id="JVg-ud-VDw">
-                                        <rect key="frame" x="155.66666666666666" y="0.0" width="64" height="64"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="JVg-ud-VDw" secondAttribute="height" multiplier="1:1" id="24J-tX-5ng"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P9I-8d-apS" userLabel="Timeline View" customClass="IVTimelineView" customModule="IotVideoDemo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="255" width="375" height="84"/>
+                                <color key="backgroundColor" red="0.97405088699999998" green="0.97405088699999998" blue="0.97405088699999998" alpha="0.74836793660000001" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="JVg-ud-VDw" firstAttribute="centerX" secondItem="P9I-8d-apS" secondAttribute="centerX" id="4x0-Hn-nf9"/>
-                                    <constraint firstItem="SVr-sh-HIb" firstAttribute="leading" secondItem="P9I-8d-apS" secondAttribute="leading" id="Mbr-EE-cvN"/>
-                                    <constraint firstItem="SVr-sh-HIb" firstAttribute="top" secondItem="P9I-8d-apS" secondAttribute="top" id="Nu2-Dy-Sdm"/>
-                                    <constraint firstAttribute="bottom" secondItem="SVr-sh-HIb" secondAttribute="bottom" id="QDS-Wx-xwg"/>
-                                    <constraint firstItem="JVg-ud-VDw" firstAttribute="centerY" secondItem="P9I-8d-apS" secondAttribute="centerY" id="YzI-3G-YfH"/>
-                                    <constraint firstItem="JVg-ud-VDw" firstAttribute="height" secondItem="P9I-8d-apS" secondAttribute="height" id="bHl-dX-l2e"/>
-                                    <constraint firstAttribute="height" constant="64" id="gh3-Mw-P3f"/>
-                                    <constraint firstAttribute="trailing" secondItem="SVr-sh-HIb" secondAttribute="trailing" id="x5d-7K-e9T"/>
+                                    <constraint firstAttribute="height" constant="84" id="gh3-Mw-P3f"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AFH-Wu-wIc">
-                                <rect key="frame" x="118.66666666666669" y="367" width="138" height="30"/>
+                                <rect key="frame" x="118.66666666666669" y="387" width="138" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="0F4-Uo-ore"/>
                                 </constraints>
@@ -179,6 +161,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="AFH-Wu-wIc" firstAttribute="top" secondItem="P9I-8d-apS" secondAttribute="bottom" constant="48" id="4Sm-nx-gwK"/>
                             <constraint firstItem="P9I-8d-apS" firstAttribute="top" secondItem="wo3-qq-lZS" secondAttribute="bottom" id="AdY-9A-7GH"/>
                             <constraint firstItem="7sa-iq-6N0" firstAttribute="bottom" secondItem="P9I-8d-apS" secondAttribute="bottom" id="DYT-X1-fp2"/>
                             <constraint firstItem="4lk-66-NYl" firstAttribute="top" secondItem="7sa-iq-6N0" secondAttribute="top" id="EPH-4k-vxx"/>
@@ -189,7 +172,6 @@
                             <constraint firstItem="wo3-qq-lZS" firstAttribute="leading" secondItem="7sa-iq-6N0" secondAttribute="leading" id="YNY-1T-yQO"/>
                             <constraint firstItem="P9I-8d-apS" firstAttribute="top" secondItem="4lk-66-NYl" secondAttribute="bottom" id="fHp-EO-0iN"/>
                             <constraint firstItem="7sa-iq-6N0" firstAttribute="bottom" secondItem="4lk-66-NYl" secondAttribute="bottom" id="qgE-AE-lF9"/>
-                            <constraint firstItem="AFH-Wu-wIc" firstAttribute="top" secondItem="SVr-sh-HIb" secondAttribute="bottom" constant="48" id="ueB-8H-wb7"/>
                             <constraint firstItem="4lk-66-NYl" firstAttribute="trailing" secondItem="7sa-iq-6N0" secondAttribute="trailing" id="vFc-bK-gJp"/>
                             <constraint firstItem="wo3-qq-lZS" firstAttribute="trailing" secondItem="7sa-iq-6N0" secondAttribute="trailing" id="xcE-U1-erm"/>
                             <constraint firstItem="7sa-iq-6N0" firstAttribute="bottom" secondItem="4lk-66-NYl" secondAttribute="bottom" id="xqp-Bi-tSv"/>
@@ -222,19 +204,20 @@
                     <navigationItem key="navigationItem" title="设备回放" id="DSc-g1-phw"/>
                     <connections>
                         <outlet property="activityIndicatorView" destination="wU6-L7-com" id="zGh-YV-lGN"/>
+                        <outlet property="deviceRecordBtn" destination="AFH-Wu-wIc" id="BfJ-to-FwI"/>
                         <outlet property="playBtn" destination="4hR-zJ-c2F" id="Ejr-0n-eyV"/>
                         <outlet property="recordBtn" destination="wwE-Zx-372" id="gQ4-fA-O6T"/>
                         <outlet property="screenshotBtn" destination="G1f-33-9PB" id="VeH-8y-pAX"/>
                         <outlet property="seekTimeLabel" destination="Ein-mh-Vfz" id="76C-bd-NvZ"/>
                         <outlet property="speakerBtn" destination="QXj-bd-TrE" id="RfA-tT-cN3"/>
-                        <outlet property="timelineView" destination="SVr-sh-HIb" id="hLJ-8f-FKE"/>
+                        <outlet property="timelineView" destination="P9I-8d-apS" id="EV4-Rj-Vr6"/>
                         <outlet property="userdataFiled" destination="DgV-WV-1uC" id="9xF-2W-Ywj"/>
                         <outlet property="videoView" destination="4lk-66-NYl" id="Rec-eQ-nnA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D0V-2a-tYU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2742.1182266009855" y="-1244"/>
+            <point key="canvasLocation" x="-2743.1999999999998" y="-1244.3349753694581"/>
         </scene>
     </scenes>
     <resources>
@@ -245,6 +228,5 @@
         <image name="FullPlay_recod" width="24.5" height="23"/>
         <image name="FullPlay_recoding" width="24.5" height="23"/>
         <image name="FullPlay_screenShott" width="17" height="17.5"/>
-        <image name="indicator" width="64" height="64"/>
     </resources>
 </document>

@@ -32,13 +32,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert,.badge,.sound], categories: nil))
         }
         IoTVideo.sharedInstance.setup(launchOptions: launchOptions)
-        IoTVideo.sharedInstance.logCallback = logMessage
+        IoTVideo.sharedInstance.delegate = self
     #if DEBUG
         IoTVideo.sharedInstance.logLevel = IVLogLevel(rawValue: logLevel)!
     #endif
 
         IQKeyboardManager.shared.enable = true
         IQKeyboardManager.shared.toolbarDoneBarButtonItemText = "完成"
+//        IQKeyboardManager.shared.keyboardDistanceFromTextField = 40
 //        UIApplication.shared.clearLaunchScreenCache()
         
         return true
@@ -93,6 +94,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+}
+
+extension AppDelegate: IoTVideoDelegate {
+    func didUpdate(_ linkStatus: IVLinkStatus) {
+        logDebug("linkStatus: \(linkStatus.rawValue)")
+    }
+    
+    func didOutputLogMessage(_ message: String, level: IVLogLevel, file: String, func: String, line: Int32) {
+        let lv = Level(rawValue: Int(level.rawValue))!
+        IVLogger.log(lv, path: file, function: `func`, line: Int(line), message: message)
+    }
 }
 
 public extension UIApplication {

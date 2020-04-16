@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import IoTVideo.IVMessageMgr
+import IoTVideo
 
 // deviceId 是设备ID的字符串
 // controlPath 是模型路径的字符串，如 "ProWritable.presetPosSetting.setVal"
@@ -27,12 +27,6 @@ class myclas {
 //              // do something here
 //        }
 
-        IVLanNetConfig.sendWifiName("TP-LINK12345", wifiPwd: "12345678", toDevice: "99999999") { (success, error) in
-            if success {
-                // 配网成功
-            } else {
-                // 配网失败
-            }
-        }
+       
     }
 }

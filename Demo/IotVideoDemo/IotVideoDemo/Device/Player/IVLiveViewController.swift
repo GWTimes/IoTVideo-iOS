@@ -29,6 +29,15 @@ class IVLiveViewController: IVDevicePlayerViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         livePlayer.play()
+
+        let status = AVCaptureDevice.authorizationStatus(for: .video)
+        if status == AVAuthorizationStatus.restricted || status == AVAuthorizationStatus.denied {
+            let errStr = "没有相机权限，请在设置中开启"
+            logWarning(errStr)
+            ivHud(errStr)
+            return;
+        }
+        
         livePlayer.openCamera()
     }
     

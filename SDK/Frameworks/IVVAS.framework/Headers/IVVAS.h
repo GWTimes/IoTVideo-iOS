@@ -9,12 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <IoTVideo/IVNetwork_p2p.h>
 
-//! Project version number for IVVAS.
-FOUNDATION_EXPORT double IVVASVersionNumber;
-
-//! Project version string for IVVAS.
-FOUNDATION_EXPORT const unsigned char IVVASVersionString[];
-
 
 /// 支付方式
 typedef NS_ENUM(NSInteger, IVVASOrderPayType) {
@@ -48,6 +42,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// 增值服务管理单例
 + (instancetype)shareInstance;
 @property (nonatomic, class, strong, readonly) IVVAS *shared;
+
+/// SDK版本
+@property (class, nonatomic, strong, readonly) NSString *SDKVersion;
 
 // MARK: - 套餐/订单
 
@@ -122,16 +119,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 // MARK: - 云回放
 
-/// 客户购买套餐后上传到IotVideo平台的套餐购买信息
-/// @param deviceId 设备TID，腾讯标识的设备id
-/// @param packgageId 套餐id
-/// @param type 套餐类型
-///      - vss: 全时套餐
-///      - evs: 事件套餐
-/// @param startTime 套餐生效时间，uint32类型的unix时间戳
-/// @param endTime 套餐终止时间，uint32类型的unix时间戳
-/// @param storageLen 存储时长，单位秒
-- (void)buyCloudPackageWithDeviceId:(NSString *)deviceId packgageId:(NSString *)packgageId type:(IVVASServiceType)type startTime:(NSString *)startTime endTime:(NSString *)endTime storageLen:(NSString *)storageLen responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 
 /// 获取云存视频列表
 /// - 用于终端用户在云存页面中对云存服务时间内的日期进行标注，区分出是否有云存视频文件。
@@ -144,25 +131,25 @@ NS_ASSUME_NONNULL_BEGIN
 ///- 终端用户获取云存储的m3u8列表进行回放，同时根据返回的列表对时间轴进行渲染。
 /// @param deviceId 设备id
 /// @param timezone  相对于0时区的秒数，例如东八区28800
-/// @param startTime  时间戳，单位毫秒，为当天的零点零分零秒
-/// @param endTime 时间戳，单位毫秒，为当天的零点零分零秒
+/// @param startTime  时间戳，回放开始时间
+/// @param endTime 时间戳，回放结束时间
 /// @param responseHandler 回调
-- (void)getVideoPlaybackListWithDeviceId:(NSString *)deviceId timezone:(NSInteger)timezone startTime:(NSString *)startTime endTime:(NSString *)endTime responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
+- (void)getVideoPlaybackListWithDeviceId:(NSString *)deviceId timezone:(NSInteger)timezone startTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 
 /// 倍速回放
 /// @param deviceId 腾讯id
 /// @param startTime 倍速回放的开始时间
 /// @param speed 倍数
 /// @param responseHandler 回调
-- (void)videoSpeedPlayWithDeviceId:(NSString *)deviceId startTime:(NSString *)startTime speed:(NSInteger)speed responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
+- (void)videoSpeedPlayWithDeviceId:(NSString *)deviceId startTime:(NSTimeInterval)startTime speed:(NSInteger)speed responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 
 /// 下载视频m3u8列表
 /// - 终端用户在云存页面中对一段时间内的视频文件下载。
 /// @param deviceId 腾讯id
 /// @param timezone 相对于0时区的秒数，例如东八区28800
-/// @param dateTime 时间戳，单位毫秒，为当天的零点零分零秒
+/// @param dateTime 时间戳，为当天的零点零分零秒
 /// @param responseHandler 回调
-- (void)downloadVideoWithDeviceId:(NSString *)deviceId timezone:(NSInteger)timezone dateTime:(NSString *)dateTime responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
+- (void)downloadVideoWithDeviceId:(NSString *)deviceId timezone:(NSInteger)timezone dateTime:(NSTimeInterval)dateTime responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 
 
 //MARK:- 事件
@@ -170,11 +157,11 @@ NS_ASSUME_NONNULL_BEGIN
 /// 事件列表查询
 /// @param deviceId 腾讯id
 /// @param startTime 事件告警开始时间
-/// @param endTime 时间告警结束时间，当为空时，默认当天的23点59分59秒
+/// @param endTime 时间告警结束时间，当为0时，默认当天的23点59分59秒
 /// @param lastId 倒序分页查看的最后一条记录ID
 /// @param pageSize 每页总数
 /// @param responseHandler 回调
-- (void)getEventListWithDeviceId:(NSString *)deviceId startTime:(NSString *)startTime endTime:(NSString * _Nullable)endTime lastId:(NSInteger)lastId pageSize:(NSInteger)pageSize responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
+- (void)getEventListWithDeviceId:(NSString *)deviceId startTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime lastId:(int64_t)lastId pageSize:(NSInteger)pageSize responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 
 // FIXME: - 需要和后台讨论
 /// 事件删除（批量）
@@ -182,38 +169,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param responseHandler 回调
 - (void)deleteEventsWithEventIds:(NSArray<NSNumber *> *)eventIds responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 
-// MARK: - 优惠券/兑换码
-
-// FIXME: - 需要和后台讨论
-/// 查看用户已经领取的优惠券列表
-- (void)queryOwnedCouponListWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
-
-// FIXME: - 需要和后台讨论 参数应该是不需要
-/// 推送促销活动的信息列表
-- (void)queryPromotionListWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
-
-/// 领取优惠券，支持一键领取多张
-/// @param couponIds 优惠券id数组
-/// @param responseHandler 回调
-- (void)receiveCouponsWithCouponIds:(NSArray<NSString *> *)couponIds responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
-
-/// 获取可用的优惠券列表
-/// - 支付时获取用户可使用优惠券列表。
-/// @param packageNo 套餐编号
-/// @param responseHandler 回调
-- (void)queryAvailableCouponListWithPackageNo:(NSString *)packageNo responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
-
-/// 查询兑换码对应的商品（优惠活动的套餐信息）信息
- /// @param voucherCode 兑换码
- /// @param responseHandler 回调
-- (void)queryVoucherWithVoucherCode:(NSString *)voucherCode responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
-
-/// 兑换码兑换对应的商品（优惠活动的套餐信息）
-/// @param deviceId 腾讯id
-/// @param voucherCode 兑换码
-/// @param timezone 时区值，相对0时区秒数
-/// @param responseHandler 回调
-- (void)useVoucherWithDeviceId:(NSString *)deviceId voucherCode:(NSString *)voucherCode timezone:(NSInteger)timezone responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
 
 /// 测试p2p
 - (void)testP2PRequestWithResponseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;

@@ -56,10 +56,6 @@ func logVerbose(path: String = #file, function: String = #function, line: Int = 
     IVLogger.log(.verbose, path: path, function: function, line: line, message: message(items))
 }
 
-func logMessage(level: Int32, path: String, function: String, line: Int32, message: String) {
-    IVLogger.log(Level(rawValue: Int(level))!, path: path, function: function, line: Int(line), message: message)
-}
-
 var devToolsAssistant: IVDevToolsAssistant {
     return IVDevToolsAssistant.shared
 }

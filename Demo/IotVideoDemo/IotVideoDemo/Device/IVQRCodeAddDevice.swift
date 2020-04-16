@@ -13,16 +13,39 @@ import SwiftyJSON
 
 //设备扫手机的二维码
 class IVQRCodeAddDevice: UIViewController {
-
+    
     @IBOutlet weak var ssidTF: UITextField!
     @IBOutlet weak var pwdTF: UITextField!
     @IBOutlet weak var QRImgView: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
-        IVMessageMgr.sharedInstance.delegate = self
+        
+        // 监听设备配网结果
+        NotificationCenter.default.addObserver(forName: .IVMessageDidReceiveEvent, object: nil, queue: nil) { (noti) in
+            
+            guard let eventModel = noti.userInfo?["body"] as? IVReceiveEventNoti else {
+                return
+            }
+            
+            guard eventModel.topic == "EVENT_SYS/NetCfg_OK",
+                let devId = JSON(parseJSON: eventModel.event)["dev_tid"].string else { return }
+            
+            let hud = ivLoadingHud()
+            
+            IVDemoNetwork.addDevice(devId, responseHandler: { (data, error) in
+                hud.hide()
+                guard let succ = data as? Bool, error == nil else { return }
+                
+                IVPopupView(title: "添加结果", message: succ ? "成功" : "失败", input: nil, actions: [.iKnow({ (_) in
+                    if succ {
+                        self.navigationController?.popToRootViewController(animated: true)
+                    }
+                })]).show()
+            })
+        }
     }
     
     @IBAction func createQRCode(_ sender: Any) {
@@ -42,32 +65,9 @@ class IVQRCodeAddDevice: UIViewController {
         super.touchesBegan(touches, with: event)
         view.endEditing(true)
     }
-}
-
-extension IVQRCodeAddDevice: IVMessageDelegate {
-    func didReceiveEvent(_ event: String, topic: String) {
-            guard topic == "EVENT_SYS/NetCfg_OK",
-                let devId = JSON(parseJSON: event)["dev_tid"].string else { return }
-                
-            let hud = ivLoadingHud()
-            
-        IVDemoNetwork.addDevice(devId, responseHandler: { (data, error) in
-                hud.hide()
-                guard let succ = data as? Bool, error == nil else { return }
-                                
-                IVPopupView(title: "添加结果", message: succ ? "成功" : "失败", input: nil, actions: [.iKnow({ (_) in
-                    if succ {
-                        self.navigationController?.popToRootViewController(animated: true)                        
-                    }
-                })]).show()
-            })
-    //topic   EVENT_SYS/NetCfg_OK
-        /*event
-         {
-           "devid":"12312321312131"
-            "dev_tid": "ab322342342423sdfds"
-        }
-        */
-        
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
+

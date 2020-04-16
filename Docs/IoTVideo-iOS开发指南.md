@@ -4,9 +4,9 @@
 
 **平台支持**：
 
-| 平台 | SDK 及兼容性         | SDK 及 Demo                                                  |
-| :--- | :------------------- | :----------------------------------------------------------- |
-| iOS  | Xcode 9.3+, iOS 9.0+ | 填写 [申请表](https://cloud.tencent.com/apply/p/ozpml9a5po) 进行申请，完成申请后，相关工作人员将联系您进行需求沟通，并提供对应 SDK 及 Demo |
+| 平台 | SDK 及兼容性          | SDK 及 Demo                                                  |
+| :--- | :-------------------- | :----------------------------------------------------------- |
+| iOS  | Xcode 10.2+, iOS 9.0+ | 填写 [申请表](https://cloud.tencent.com/apply/p/ozpml9a5po) 进行申请，完成申请后，相关工作人员将联系您进行需求沟通，并提供对应 SDK 及 Demo |
 
 将IoTVideoSDK集成到您的项目中并配置工程依赖，就可以完成SDK的集成工作。
 
@@ -16,7 +16,7 @@
 
 开始使用 SDK 前，我们还需要获取`accessId`和`accessToken`，获取方式如下：
 
-- **accessId：** 指外部访问 IoT Video 云平台的唯一性身份标识 
+- **accessId：** 外部访问 IoT Video 云平台的唯一性身份标识 
 - **accessToken：** 登录成功后 IoT Video 云服务器返回的`accessToken`。
 
 **1. 获取 accessId**
@@ -30,7 +30,9 @@
 ## 第三步：SDK初始化
 
 ### 1、初始化
+
 在 `AppDelegate` 中的`application:didFinishLaunchingWithOptions:`调用如下初始化方法：
+
 ```swift
 import IoTVideo
 
@@ -38,6 +40,7 @@ IoTVideo.sharedInstance.setup(launchOptions: launchOptions)
 ```
 
 ### 2、注册
+
 账号注册成功后可获取到 `accessId`，登录成功后可获取到 `accessToken `，调用sdk注册接口:
 
 ```swift
@@ -67,6 +70,8 @@ IoTVideo.sharedInstance.register(withAccessId: "********", accessToken: "*******
 ### 2.设备绑定
 
 设备绑定具体操作请参见 [终端用户绑定设备接口](https://cloud.tencent.com/document/product/1131/42367) 进行设备绑定。
+
+### 3.设备订阅
 
 绑定成功后，获取到订阅token,需调用命令使IoTVideo SDK订阅该设备：
 
@@ -146,34 +151,43 @@ IVMessageMgr.sharedInstance.takeAction(ofDevice: deviceId, path: actionPath, jso
 
 ### 开发环境要求
 
-- Xcode 9.3+
+- Xcode 10.2+
 - iOS 9.0+
 
 ### 集成 SDK
 
 **1. 登录 [物联网智能视频服务控制台](https://console.cloud.tencent.com/iot-video) 进行申请，申请完成后，相关工作人员将联系您进行需求沟通，并提供对应 SDK 及 Demo**。
 
-**2. 将下载并解压得到的IoTVideo相关Framework添加到工程中**
 
-- IoTVideo.framework   //核心库
-- IVVAS.framework      //增值服务相关
 
-⚠️注意： 需要设置TATGETS -> Build Phases -> Embed Frameworks为 Embed & sign，或者Xcode11后可在General -> Frameworks,Libraries,and Embedded Content设置Embed&Sign
+**2. 将下载并解压得到的IoTVideo相关Framework添加到工程中, 并添加相应依赖库**
 
-  ![image](https://note.youdao.com/yws/api/group/108650997/file/898850154?method=download&inline=true&version=1&shareToken=13D2636806184BB1931F4809D2A4C8F0)
+必选库：
 
-**3. 添加系统的 Framework**
+- IoTVideo.framework   // 核心库
+- IVVAS.framework      // 增值服务相关
+
+依赖库：
 
   - AudioToolbox.framework   
   - VideoToolbox.framework   
-  - CoreMedia.framework     
-  - libz.tbd
+  - CoreMedia.framework       
 
-**4. 添加其他第三方库依赖**
+可选库：
 
-  - AFNNetWorking 3.0+ *//[添加方法参考GitHub](https://github.com/AFNetworking/AFNetworking)*
+- IJKMediaFramework.framework     // 用于播放云回放的m3u8文件
 
-**5. 其他设置**
+![](https://note.youdao.com/yws/api/group/108650997/file/899753505?method=download&inline=true&version=1&shareToken=8F06C8A52D714120BF05F3646BE15F4F)
+
+
+
+**3. ⚠️注意： 需要设置TATGETS -> Build Phases -> Embed Frameworks为 Embed & sign，或者Xcode11后可在General -> Frameworks,Libraries,and Embedded Content 设置 Embed&Sign**
+
+ ![image](https://note.youdao.com/yws/api/group/108650997/file/898850154?method=download&inline=true&version=2&shareToken=13D2636806184BB1931F4809D2A4C8F0)
+
+
+
+**4. 其他设置**
 
   - 关闭bitcode： TARGETS -> Build Settings -> Build Options -> Enable Bitcode -> NO
     ![image](https://note.youdao.com/yws/api/group/108650997/file/891138351?method=download&inline=true&version=3&shareToken=0C0D6A6794DE4F8BBEC81BD8497CDC41)
@@ -288,7 +302,8 @@ IVNetConfig.lan.sendWifiName("********", wifiPwd: "********", toDevice: "*******
     }
 }
     
-// 4.等待设备上线通知...
+// 4.等待设备配网成功通知...
+//参考消息管理中的事件通知，配网成功： topic EVENT_SYS/NetCfg_OK
 
 // 5.绑定设备
 
@@ -306,8 +321,16 @@ IVNetConfig.subscribeDevice(withToken: "********", deviceId: deviceId)
 ```swift
 import IoTVideo.IVNetConfig
 
-// 1.生成二维码图片
+// 1、生成二维码 分为自定协议生成(见1.2.1)和使用SDK内置协议生成（见1.2.2）
 
+// 1.1 获取配网token
+IVNetConfig.qrCode.getToken { (token, error) in
+            
+}
+
+// 1.2.1 使用得到的配网token加上wifi信息按自定协议生成二维码
+
+// 1.2.2 使用SDK内置协议 直接生成二维码图片（内部调用了获取配网token接口，二维码协议请参考 IVQRCodeDef.h）
 IVNetConfig.qrCode.createQRCode(withWifiName: wifiName, wifipwd: wifiPwd, qrSize: size, completionHandler: { (image, error)  in
      // get the image
  })
@@ -321,7 +344,8 @@ IVNetConfig.qrCode.createQRCode(withWifiName: wifiName, wifipwd: wifiPwd, langua
 
 // 2.用户使用设备扫描二维码....
 
-// 3.等待设备上线通知...
+// 3.等待设备配网成功通知...
+//参考消息管理中的事件通知，配网成功： topic EVENT_SYS/NetCfg_OK
 
 // 4.绑定设备
 
