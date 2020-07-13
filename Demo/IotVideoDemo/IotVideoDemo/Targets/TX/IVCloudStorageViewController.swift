@@ -30,7 +30,10 @@ class IVCloudStorageViewController: IVDeviceAccessableTVC {
                 if let json = json,
                     let utcExpire = JSON(parseJSON: json).value("setVal.utcExpire")?.doubleValue {
                     if Date().timeIntervalSince1970 < utcExpire {
-                        message = "当前套餐仍然在有效期内，新套餐将在当前套餐到期时自动生效。"
+                        let fmt = DateFormatter()
+                        fmt.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                        let expireString = fmt.string(from: Date(timeIntervalSince1970: utcExpire))
+                        message = "当前套餐有效期截止\(expireString)，新套餐将在当前套餐到期时自动生效。"
                     }
                 }
                 

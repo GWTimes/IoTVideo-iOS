@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="uT0-oE-tEK">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--生成配网二维码-->
+        <scene sceneID="e9G-1u-hdw">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="uT0-oE-tEK" customClass="IVQRCodeAddDevice" customModule="IotVideoDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dc3-Dd-pvE">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JtO-by-4VZ">
+                                <rect key="frame" x="105" y="77.5" width="293" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="wifi name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ljz-bo-6FV">
+                                <rect key="frame" x="16" y="84" width="73" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3VH-mf-hJE">
+                                <rect key="frame" x="105" y="134.5" width="293" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="wifi pwd" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ArI-qT-MbB">
+                                <rect key="frame" x="16" y="141" width="73" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pmz-7v-Oi8">
+                                <rect key="frame" x="72" y="213" width="0.0" height="0.0"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vbc-aG-fQe">
+                                <rect key="frame" x="153" y="200.5" width="108" height="30"/>
+                                <state key="normal" title="生成配网二维码"/>
+                                <connections>
+                                    <action selector="createQRCode:" destination="uT0-oE-tEK" eventType="touchUpInside" id="NRh-08-qL6"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DDa-AR-UPl">
+                                <rect key="frame" x="32" y="262.5" width="350" height="350"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="DDa-AR-UPl" secondAttribute="height" multiplier="1:1" id="sj1-pL-bSo"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="yGR-x1-fct" firstAttribute="trailing" secondItem="JtO-by-4VZ" secondAttribute="trailing" constant="16" id="1p8-13-hAg"/>
+                            <constraint firstItem="ArI-qT-MbB" firstAttribute="leading" secondItem="Ljz-bo-6FV" secondAttribute="leading" id="82v-MM-JEU"/>
+                            <constraint firstItem="Ljz-bo-6FV" firstAttribute="leading" secondItem="yGR-x1-fct" secondAttribute="leading" constant="16" id="D3G-5e-1C7"/>
+                            <constraint firstItem="JtO-by-4VZ" firstAttribute="leading" secondItem="Ljz-bo-6FV" secondAttribute="trailing" constant="16" id="EEk-eN-dtw"/>
+                            <constraint firstItem="DDa-AR-UPl" firstAttribute="centerX" secondItem="dc3-Dd-pvE" secondAttribute="centerX" id="FBL-hg-Na9"/>
+                            <constraint firstItem="vbc-aG-fQe" firstAttribute="top" secondItem="3VH-mf-hJE" secondAttribute="bottom" constant="32" id="Gf8-ij-Vy0"/>
+                            <constraint firstItem="yGR-x1-fct" firstAttribute="trailing" secondItem="DDa-AR-UPl" secondAttribute="trailing" constant="32" id="Pa3-6a-peZ"/>
+                            <constraint firstItem="3VH-mf-hJE" firstAttribute="centerY" secondItem="ArI-qT-MbB" secondAttribute="centerY" id="Upd-5e-uXY"/>
+                            <constraint firstItem="vbc-aG-fQe" firstAttribute="centerX" secondItem="dc3-Dd-pvE" secondAttribute="centerX" id="V3J-Or-S9l"/>
+                            <constraint firstItem="JtO-by-4VZ" firstAttribute="centerY" secondItem="Ljz-bo-6FV" secondAttribute="centerY" id="Y1s-f5-loQ"/>
+                            <constraint firstItem="3VH-mf-hJE" firstAttribute="leading" secondItem="ArI-qT-MbB" secondAttribute="trailing" constant="16" id="as6-at-LP3"/>
+                            <constraint firstItem="Ljz-bo-6FV" firstAttribute="top" secondItem="yGR-x1-fct" secondAttribute="top" constant="40" id="dlO-Ao-D2B"/>
+                            <constraint firstItem="DDa-AR-UPl" firstAttribute="leading" secondItem="yGR-x1-fct" secondAttribute="leading" constant="32" id="fr1-MO-dMT"/>
+                            <constraint firstItem="yGR-x1-fct" firstAttribute="trailing" secondItem="3VH-mf-hJE" secondAttribute="trailing" constant="16" id="jJ5-Dc-6yK"/>
+                            <constraint firstItem="DDa-AR-UPl" firstAttribute="top" secondItem="vbc-aG-fQe" secondAttribute="bottom" constant="32" id="l5t-Td-hsI"/>
+                            <constraint firstItem="ArI-qT-MbB" firstAttribute="top" secondItem="Ljz-bo-6FV" secondAttribute="bottom" constant="36" id="rgs-hP-aiG"/>
+                            <constraint firstItem="ArI-qT-MbB" firstAttribute="width" secondItem="Ljz-bo-6FV" secondAttribute="width" id="uBb-4e-Zof"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="yGR-x1-fct"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="生成配网二维码" id="NUc-XR-x6B"/>
+                    <connections>
+                        <outlet property="QRImgView" destination="DDa-AR-UPl" id="S5o-l2-s8v"/>
+                        <outlet property="pwdTF" destination="3VH-mf-hJE" id="2xF-BY-nhT"/>
+                        <outlet property="ssidTF" destination="JtO-by-4VZ" id="JWa-wO-T6j"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z5k-Px-J2t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1842" y="90"/>
+        </scene>
+    </scenes>
+</document>

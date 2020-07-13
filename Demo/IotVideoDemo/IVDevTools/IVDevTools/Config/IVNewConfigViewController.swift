@@ -63,7 +63,8 @@ class IVNewConfigViewController: UIViewController {
             let alert = UIAlertController(title: nil, message: "已存在名为“\(name)”的配置文件，是否覆盖？", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "取消", style: .cancel, handler: nil))
             alert.addAction(UIAlertAction(title: "覆盖", style: .destructive, handler: { _ in
-                IVConfigMgr.updateCfg(self.config?.name ?? "", newCfg)
+                let name = self.config?.name ?? ""
+                IVConfigMgr.updateCfg(name, newCfg)
                 self.makeToast("覆盖成功,重启后生效")
                 DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
                     self.navigationController?.popViewController(animated: true)

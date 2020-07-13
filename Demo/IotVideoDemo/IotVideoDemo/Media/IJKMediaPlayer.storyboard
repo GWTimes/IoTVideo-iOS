@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dWz-ae-rsO">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Media View Controller-->
+        <scene sceneID="uyf-nE-HOa">
+            <objects>
+                <viewController storyboardIdentifier="IJKMediaViewController" id="dWz-ae-rsO" customClass="IJKMediaViewController" customModule="IotVideoDemo" customModuleProvider="target" propertyAccessControl="none" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Wx7-1K-tNG" propertyAccessControl="none">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="en2-ii-0h3">
+                                <rect key="frame" x="0.0" y="44" width="414" height="233"/>
+                                <color key="backgroundColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="en2-ii-0h3" secondAttribute="height" multiplier="16:9" id="TS9-N5-m9Z"/>
+                                    <constraint firstAttribute="width" secondItem="en2-ii-0h3" secondAttribute="height" multiplier="16:9" id="aiM-mI-acc"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="TS9-N5-m9Z"/>
+                                        <exclude reference="aiM-mI-acc"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="TS9-N5-m9Z"/>
+                                        <include reference="aiM-mI-acc"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="zYN-kW-vTh">
+                                <rect key="frame" x="0.0" y="233" width="414" height="44"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KjH-hr-aNf">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Nn0-ap-ufs">
+                                                <rect key="frame" x="8" y="0.0" width="44" height="44"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KrQ-8q-wLW">
+                                                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" secondItem="KrQ-8q-wLW" secondAttribute="height" multiplier="1:1" id="Ggq-2Z-bau"/>
+                                                        </constraints>
+                                                        <state key="normal" image="FullPlay_Play"/>
+                                                        <state key="selected" image="FullPlay_Pause"/>
+                                                        <connections>
+                                                            <action selector="playClicked:" destination="dWz-ae-rsO" eventType="touchUpInside" id="PUu-4k-CfG"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.23529411759999999" green="0.23529411759999999" blue="0.26274509800000001" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstItem="Nn0-ap-ufs" firstAttribute="top" secondItem="KjH-hr-aNf" secondAttribute="top" id="25Z-aF-O5O"/>
+                                            <constraint firstAttribute="height" constant="44" id="QhA-GJ-ey6"/>
+                                            <constraint firstAttribute="bottom" secondItem="Nn0-ap-ufs" secondAttribute="bottom" id="S62-P1-jtw"/>
+                                            <constraint firstItem="Nn0-ap-ufs" firstAttribute="leading" secondItem="KjH-hr-aNf" secondAttribute="leading" constant="8" id="TwW-On-ZDE"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="2k5-35-L3W"/>
+                                </constraints>
+                            </stackView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="9sZ-sK-z4z">
+                                <rect key="frame" x="188.5" y="142" width="37" height="37"/>
+                            </activityIndicatorView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1OA-cX-VrR">
+                                <rect key="frame" x="186" y="209" width="42" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.97405088699999998" green="0.97405088699999998" blue="0.97405088699999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cFL-db-TiO" userLabel="Timeline View" customClass="IVTimelineView" customModule="IotVideoDemo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="277" width="414" height="84"/>
+                                <color key="backgroundColor" red="0.97405088699999998" green="0.97405088699999998" blue="0.97405088699999998" alpha="0.74836793660000001" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="84" id="r8q-lx-jsh"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="cFL-db-TiO" secondAttribute="trailing" id="7jk-G8-gaU"/>
+                            <constraint firstItem="1OA-cX-VrR" firstAttribute="top" secondItem="9sZ-sK-z4z" secondAttribute="bottom" constant="30" id="CJE-jj-utA"/>
+                            <constraint firstAttribute="trailing" secondItem="en2-ii-0h3" secondAttribute="trailing" id="Qov-FU-vj7"/>
+                            <constraint firstItem="1OA-cX-VrR" firstAttribute="centerX" secondItem="9sZ-sK-z4z" secondAttribute="centerX" id="QzK-Av-o1p"/>
+                            <constraint firstItem="en2-ii-0h3" firstAttribute="leading" secondItem="UUX-2A-ARP" secondAttribute="leading" id="To3-e6-A44"/>
+                            <constraint firstItem="en2-ii-0h3" firstAttribute="top" secondItem="UUX-2A-ARP" secondAttribute="top" id="YQs-5L-LaB"/>
+                            <constraint firstItem="cFL-db-TiO" firstAttribute="top" secondItem="zYN-kW-vTh" secondAttribute="bottom" id="byg-Lt-P7w"/>
+                            <constraint firstItem="zYN-kW-vTh" firstAttribute="trailing" secondItem="UUX-2A-ARP" secondAttribute="trailing" id="dm9-Uz-g9x"/>
+                            <constraint firstItem="cFL-db-TiO" firstAttribute="top" secondItem="en2-ii-0h3" secondAttribute="bottom" id="gdb-uf-okO"/>
+                            <constraint firstItem="9sZ-sK-z4z" firstAttribute="centerY" secondItem="en2-ii-0h3" secondAttribute="centerY" id="jjw-QX-Mt2"/>
+                            <constraint firstItem="cFL-db-TiO" firstAttribute="leading" secondItem="Wx7-1K-tNG" secondAttribute="leading" id="kUy-X3-4hj"/>
+                            <constraint firstItem="9sZ-sK-z4z" firstAttribute="centerX" secondItem="en2-ii-0h3" secondAttribute="centerX" id="qEb-7r-lHS"/>
+                            <constraint firstItem="zYN-kW-vTh" firstAttribute="leading" secondItem="UUX-2A-ARP" secondAttribute="leading" id="x6h-Ew-fMT"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="UUX-2A-ARP"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="K1L-0D-TlS"/>
+                    <connections>
+                        <outlet property="activityIndicatorView" destination="9sZ-sK-z4z" id="Yq8-C3-jfc"/>
+                        <outlet property="playBtn" destination="KrQ-8q-wLW" id="LPl-11-V4Y"/>
+                        <outlet property="seekTimeLabel" destination="1OA-cX-VrR" id="rVB-Cp-HrH"/>
+                        <outlet property="timelineView" destination="cFL-db-TiO" id="ym6-EQ-fca"/>
+                        <outlet property="videoView" destination="en2-ii-0h3" id="5FF-cG-39v"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZHS-UA-3DI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1477" y="58"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="FullPlay_Pause" width="12.5" height="16.5"/>
+        <image name="FullPlay_Play" width="12.5" height="16.5"/>
+    </resources>
+</document>

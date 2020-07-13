@@ -71,6 +71,12 @@ class IVMsgOtaVC: UIViewController, IVDeviceAccessable {
     
     //MARK: 查询更新信息
     @IBAction func searchNewVersion(_ sender: Any) {
+        guard let Action = jsonData["Action"] as? [String: AnyHashable],
+            let searchTextDic = Action["_otaVersion"] as? [String: AnyHashable] else {
+                showAlert(msg: "物模型为空")
+                return
+        }
+
         let hud = ivLoadingHud()
         
         //获取最新的查询服务器版本的json,此处为开发实时适配物模型的变更做的工作
@@ -79,7 +85,6 @@ class IVMsgOtaVC: UIViewController, IVDeviceAccessable {
         // Action._otaVersion 的 stVal 填空字符串即为查询可升级的最新固件版本号
         var searchTextJson = ""
         do {
-            let searchTextDic = (self.jsonData["Action"] as! [String: AnyHashable])["_otaVersion"] as! [String: AnyHashable]
             let searchTextData = try JSONSerialization.data(withJSONObject: searchTextDic, options: [])
             searchTextJson = String(data:searchTextData, encoding: .utf8) ?? ""
         } catch let error {
@@ -101,10 +106,8 @@ class IVMsgOtaVC: UIViewController, IVDeviceAccessable {
     
     // 监听升级查询结果通知
     func addUpdateObserver() {
-        NotificationCenter.default.addObserver(forName: .IVMessageDidUpdateProperty, object: nil, queue: nil) { (noti) in
-            guard let propertyModel = noti.userInfo?["body"] as? IVUpdatePropertyNoti else {
-                return
-            }
+        NotificationCenter.default.addObserver(forName: .iVMessageDidUpdateProperty, object: nil, queue: nil) { (noti) in
+            guard let propertyModel = noti.userInfo?[IVNotiBody] as? IVUpdateProperty else { return }
             
             // 升级版本通知(最新的返回 Action._otaVersion)
             if propertyModel.path == "ProReadonly._otaVersion" || propertyModel.path == "Action._otaVersion" {
@@ -141,14 +144,19 @@ class IVMsgOtaVC: UIViewController, IVDeviceAccessable {
                 }
                 
                 if persent == 100 {
-                    ivHud("升级完成，设备正在重启，请稍候", isMask: true, delay: 10)
-                    NotificationCenter.default.addObserver(forName: .IVMessageDidUpdateProperty, object: nil, queue: nil) { (noti) in
-                        guard let onlineModel = noti.userInfo?["body"] as? IVUpdatePropertyNoti else {
+                    let hud = ivLoadingHud("设备正在重启，请稍候")
+                    NotificationCenter.default.addObserver(forName: .iVMessageDidUpdateProperty, object: nil, queue: nil) { (noti) in
+                        guard let onlineModel = noti.userInfo?[IVNotiBody] as? IVUpdateProperty else {
                             return
                         }
                         if onlineModel.deviceId == self.device.deviceID && onlineModel.path == "ProReadonly._online" {
+                            hud.hide()
                             showAlert(msg: "更新完成,设备已经重启")
                         }
+                    }
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 45) {
+                        hud.hide()
                     }
                 }
             }

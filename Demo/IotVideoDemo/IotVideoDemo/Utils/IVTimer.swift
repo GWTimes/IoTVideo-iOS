@@ -81,7 +81,7 @@ private class IVTimerProxy: NSObject {
         } else {
             self.timer?.invalidate()
             self.timer = nil
-            print("IVTimeProxy: invalidate timer.")
+            logDebug("IVTimeProxy: invalidate timer.")
         }
     }
 }

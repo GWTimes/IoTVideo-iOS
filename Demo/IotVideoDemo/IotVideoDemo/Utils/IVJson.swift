@@ -67,7 +67,7 @@ extension JSON {
             let leaf = String(subpaths[0])
             let newpath = String(subpaths[1])
             if !json[leaf].exists() {
-                return json.value(newpath)
+                return nil
             } else {
                 let newjson = json[leaf]
                 return newjson.value(newpath)
@@ -77,4 +77,29 @@ extension JSON {
         }
     }
     
+    /// 读取服务器推送的状态更新
+    /// - Parameters:
+    ///   - value: 具体值的字段 例如 stVal 或 ctVal
+    ///   - property: 是哪个属性的值 例如 _online
+    ///   - path: 服务器返回 有时候完整的，有时候是部分的，直接传进来就好
+    /// - Returns: 返回的 JSON
+    func ivValue(_ value: String, property: String, path: String) -> JSON? {
+        if path.contains(property) {
+            return self[value].ivExists()
+        } else {
+            let paths = ["ProReadonly","Action","ProConst"]
+            for path in paths {
+                if self[path].exists() {
+                    return self[path].value(property + "." + value)?.ivExists()
+                }
+            }
+            return self.value(property + "." + value)?.ivExists()
+        }
+    }
+    
+    // 防止未解析到对应值，但是最终却使用了类似 0，“”，false这样的默认值
+    private func ivExists() -> JSON? {
+        return self.exists() ? self : nil
+    }
 }
+

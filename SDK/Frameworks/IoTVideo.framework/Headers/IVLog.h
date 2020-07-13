@@ -14,13 +14,20 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, IVLogLevel) {
-    IVLogLevel_OFF   = 0,    //!< 不打印日志
-    IVLogLevel_FATAL = 1,    //!< 严重
-    IVLogLevel_ERROR = 2,    //!< 错误
-    IVLogLevel_WARN  = 3,    //!< 警告
-    IVLogLevel_INFO  = 4,    //!< 信息
-    IVLogLevel_DEBUG = 5,    //!< 调试
-    IVLogLevel_TRACE = 6,    //!< 跟踪
+    /// 不打印日志
+    IVLogLevel_OFF   = 0,
+    /// 严重
+    IVLogLevel_FATAL = 1,
+    /// 错误
+    IVLogLevel_ERROR = 2,
+    /// 警告
+    IVLogLevel_WARN  = 3,
+    /// 信息
+    IVLogLevel_INFO  = 4,
+    /// 调试
+    IVLogLevel_DEBUG = 5,
+    /// 跟踪
+    IVLogLevel_TRACE = 6,
 };
 
 /// 日志输出回调

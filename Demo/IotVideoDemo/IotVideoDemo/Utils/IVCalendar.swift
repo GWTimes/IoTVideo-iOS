@@ -8,12 +8,10 @@
 
 import UIKit
 
-let kScreenWidth:  CGFloat = UIScreen.main.bounds.width
-let kScreenHeight: CGFloat = UIScreen.main.bounds.height
 
-let margin: CGFloat = 10.0
-let paddingLeft: CGFloat = 20.0
-let itemWidth: CGFloat = (kScreenWidth - paddingLeft * 2 - margin * 6) / 7.0
+private let margin: CGFloat = 10.0
+private let paddingLeft: CGFloat = 20.0
+private let itemWidth: CGFloat = (kScreenWidth - paddingLeft * 2 - margin * 6) / 7.0
 
 protocol IVCalendarDelegate: class {
     func calendar(_ calendar: IVCalendar, didSelect date: Date)
@@ -21,14 +19,17 @@ protocol IVCalendarDelegate: class {
 
 class IVCalendar: UIView {
     // MARK: - Property
-    
+
     weak var delegate: IVCalendarDelegate?
     
     // 需要标记的日期数组
-    var markDates: [Date] = []
-
-    // 有效日期下限
-    var lowerValidDate: Date?
+    var markableDates: [(ti: Int, mark: Bool)] = [] {
+        didSet {
+            DispatchQueue.main.async {[weak self] in
+                self?.collectionView.reloadData()
+            }
+        }
+    }
     
     // 当前选中日期
     var currentDate = Date() {
@@ -50,7 +51,7 @@ class IVCalendar: UIView {
 
     // MARK: - UI
     
-    private lazy var headerView: UIView = {
+    private lazy var monitorTopBar: UIView = {
         let headV = UIView(frame: CGRect(x: 0, y: 0, width: self.bounds.width, height: 74))
         headV.backgroundColor = UIColor(rgb: 0x0075fe)
         return headV
@@ -95,13 +96,13 @@ class IVCalendar: UIView {
         btn.setTitle("取消", for: .normal)
         btn.titleLabel?.font = .systemFont(ofSize: 17)
         btn.addEvent { (_) in
-            self.isHidden = true
+            self.alpha = 0
         }
         return btn
     }()
     
     private lazy var weekView: UIView = {
-        let originY: CGFloat = self.headerView.bounds.height - 13.0 - 15.0
+        let originY: CGFloat = self.monitorTopBar.bounds.height - 13.0 - 15.0
         let weekView = UIView(frame: CGRect(x: paddingLeft, y: originY, width: kScreenWidth - paddingLeft * 2, height: 15))
         weekView.backgroundColor = UIColor.clear
         
@@ -127,7 +128,7 @@ class IVCalendar: UIView {
         layout.minimumLineSpacing = margin
         layout.minimumInteritemSpacing = margin
         
-        let tempRect = CGRect(x: paddingLeft, y: self.headerView.frame.maxY, width: kScreenWidth - paddingLeft * 2, height: 244)
+        let tempRect = CGRect(x: paddingLeft, y: self.monitorTopBar.frame.maxY, width: kScreenWidth - paddingLeft * 2, height: 244)
         let colV = UICollectionView(frame: tempRect, collectionViewLayout: layout)
         colV.backgroundColor = UIColor.white
         colV.dataSource = self
@@ -145,12 +146,12 @@ class IVCalendar: UIView {
         //init
         _initCalendarInfo()
         
-        self.addSubview(headerView)
-        headerView.addSubview(dateLabel)
-        headerView.addSubview(lastMonthButton)
-        headerView.addSubview(nextMonthButton)
-        headerView.addSubview(cancelButton)
-        headerView.addSubview(weekView)
+        self.addSubview(monitorTopBar)
+        monitorTopBar.addSubview(dateLabel)
+        monitorTopBar.addSubview(lastMonthButton)
+        monitorTopBar.addSubview(nextMonthButton)
+        monitorTopBar.addSubview(cancelButton)
+        monitorTopBar.addSubview(weekView)
         
         self.addSubview(collectionView)
         
@@ -248,10 +249,14 @@ extension IVCalendar: UICollectionViewDataSource {
             let date = dateOfDay(day, from: referenceDate)
             
             cell.dayLabel.text = "\(day)"
-            cell.markLayer.isHidden = !markDates.contains(date)
+            let mark = markableDates.first(where: { $0.ti == Int(date.timeIntervalSince1970) })?.mark ?? false
+            cell.markLayer.isHidden = !mark
             
-            if date < (lowerValidDate ?? Date.distantPast) || date > Date() {
-                cell.dayLabel.textColor = .gray
+            if Int(date.timeIntervalSince1970) < (markableDates.first?.ti ?? 0) || date > Date() {
+                cell.dayLabel.textColor = .lightGray
+                if Int(date.timeIntervalSince1970) < (markableDates.first?.ti ?? 0) {
+                    cell.subLabel.text = "过期"
+                }
             }
 
             if Calendar.current.isDate(date, inSameDayAs: currentDate) {
@@ -266,8 +271,10 @@ extension IVCalendar: UICollectionViewDataSource {
 
 extension IVCalendar: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let cell = collectionView.cellForItem(at: indexPath) as! IVCalendarCell
+        if cell.dayLabel.textColor == .lightGray { return }
+        
         let day = indexPath.row - firstWeekInMonth(date: referenceDate) + 1
-        if indexPath.row < firstWeekInMonth(date: referenceDate) || inFuture(day, for: referenceDate) { return }
         let selectDate = dateOfDay(day, from: referenceDate)
         delegate?.calendar(self, didSelect: selectDate)
     }
@@ -292,7 +299,7 @@ class IVCalendarCell: UICollectionViewCell {
         lb.layer.masksToBounds = true
         lb.textAlignment = .center
         lb.textColor = .black
-        lb.font = .systemFont(ofSize: 14)
+        lb.font = .systemFont(ofSize: 17)
         addSubview(lb)
         return lb
     }()
@@ -300,8 +307,8 @@ class IVCalendarCell: UICollectionViewCell {
     lazy var subLabel: UILabel = {
         let lb = UILabel(frame: CGRect(x: 0, y: bounds.height-15, width: bounds.width, height: 15))
         lb.textAlignment = .center
-        lb.textColor = .gray
-        lb.font = .systemFont(ofSize: 10)
+        lb.textColor = .lightGray
+        lb.font = .systemFont(ofSize: 9)
         addSubview(lb)
         return lb
     }()

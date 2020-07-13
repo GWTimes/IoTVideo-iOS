@@ -7,9 +7,12 @@
 Demo/*
 !Demo/IotVideoDemo
 SDK/*
-!SDK/Frameworks
+!SDK/Frameworks/IoTVideo.framework
+!SDK/Frameworks/IVNetwork.framework
+!SDK/Frameworks/IVVAS.framework
 GW
 SRV
+YS
 
 ## User settings
 xcuserdata/

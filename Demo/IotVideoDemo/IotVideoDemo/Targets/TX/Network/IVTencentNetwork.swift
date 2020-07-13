@@ -50,28 +50,24 @@ extension IVTencentNetwork {
         self.setupHeader(methodType: methodType, params: params, action: action)
         
         let success = {(task: URLSessionTask, json: Any?) -> () in
-            if let res = response {
-                if json == nil {
-                    res(nil, NSError(domain: "", code: 997, userInfo: nil))
-                    return
-                }
-                if let json = json, let jsonObj = json as? [String: Any], let code:Int = jsonObj["code"] as? Int, code != 0 { //code 不等于0时，返回错误信息
-                    res(nil, NSError(domain: "", code: 998, userInfo: nil))
-                    return
-                }
-                if let jsonData = try? JSONSerialization.data(withJSONObject: json!, options: []) {
-                    let str = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)
-                    print(action + ": \n" + String(str ?? "http call back empty"))
-                    res(str! as String, nil)
-                } else {
-                    res(nil, NSError(domain: "", code: 999, userInfo: nil))
-                }
+            if json == nil {
+                response?(nil, NSError(domain: "", code: 997, userInfo: nil))
+                return
+            }
+            if let json = json, let jsonObj = json as? [String: Any], let code:Int = jsonObj["code"] as? Int, code != 0 { //code 不等于0时，返回错误信息
+                response?(nil, NSError(domain: "", code: 998, userInfo: nil))
+                return
+            }
+            if let jsonData = try? JSONSerialization.data(withJSONObject: json!, options: []) {
+                let str = NSString(data: jsonData, encoding: String.Encoding.utf8.rawValue)
+                logInfo(action + ": \n" + String(str ?? "http call back empty"))
+                response?(str! as String, nil)
+            } else {
+                response?(nil, NSError(domain: "", code: 999, userInfo: nil))
             }
         }
         let failure = {(task: URLSessionTask?, error: Error) -> () in
-            if let res = response {
-                res(nil, error as NSError)
-            }
+            response?(nil, error as NSError)
         }
         switch methodType {
         case .GET:
@@ -126,7 +122,7 @@ extension IVTencentNetwork {
             let hashedRequestPayload = (jsonPayload! as String).hashHex(by: .SHA256)
             let canonicalRequest = httpRequestMethod + "\n" + canonicalUri + "\n" + canonicalQueryString + "\n"
                        + canonicalHeaders + "\n" + signedHeaders + "\n" + hashedRequestPayload;
-//            print("第一步：", canonicalRequest)
+//            logDebug("第一步：", canonicalRequest)
             
             // ************* 步骤 2：拼接待签名字符串 *************
                         
@@ -141,7 +137,7 @@ extension IVTencentNetwork {
             let hashedCanonicalRequest = canonicalRequest.hashHex(by: .SHA256)
             let stringToSign = algorithm + "\n" + timestampStr + "\n" + credentialScope + "\n" + hashedCanonicalRequest
             
-//            print("第二步：", stringToSign)
+//            logDebug("第二步：", stringToSign)
             
             // ************* 步骤 3：计算签名 *************
             let secretDate = date.hmac(by: .SHA256, key: ("TC3" + secretKey).bytes)
@@ -149,12 +145,12 @@ extension IVTencentNetwork {
             let secretSigning = "tc3_request".hmac(by: .SHA256, key: secretService)
             let signature = stringToSign.hmac(by: .SHA256, key: secretSigning).hexString.lowercased()
             
-//            print("第三步：\n", signature)
+//            logDebug("第三步：\n", signature)
             
             let authorization = "TC3-HMAC-SHA256 " + "Credential=" + secretId + "/" + credentialScope + ", "
             + "SignedHeaders=" + signedHeaders + ", " + "Signature=" + signature
             
-//            print("第四步：\n", authorization)
+//            logDebug("第四步：\n", authorization)
 
             headerParams["Host"]           = hostStr
             headerParams["Authorization"]  = authorization
@@ -171,12 +167,12 @@ extension IVTencentNetwork {
             for headerParam in headerParams {
                 requestSerializer.setValue(headerParam.value, forHTTPHeaderField: headerParam.key)
                 
-                print(headerParam.key, "=" , headerParam.value)
+                logDebug(headerParam.key, "=" , headerParam.value)
             }
-            print("body = ",jsonPayload!)
+            logDebug("body = ",jsonPayload!)
             //print(requestSerializer.httpRequestHeaders, params)
         } catch  {
-            print(error)
+            logError(error)
             showError(error)
         }
     }

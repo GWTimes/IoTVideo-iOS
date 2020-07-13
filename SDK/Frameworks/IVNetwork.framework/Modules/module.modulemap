@@ -1,0 +1,11 @@
+framework module IVNetwork {
+  umbrella header "IVNetwork.h"
+
+  export *
+  module * { export * }
+}
+
+module IVNetwork.Swift {
+    header "IVNetwork-Swift.h"
+    requires objc
+}

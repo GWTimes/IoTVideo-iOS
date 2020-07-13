@@ -11,7 +11,9 @@ import UIKit
 public class IVDevToolsAssistant: UIView {
   
     public static let shared = IVDevToolsAssistant(frame: CGRect(x: -32, y: 100, width: 64, height: 64))
-        
+    
+    var isPinUp: Bool = false
+    
     lazy var btn: UIButton = {
         let btn = UIButton(frame: self.bounds)
         btn.layer.cornerRadius = self.bounds.size.width / 2
@@ -164,7 +166,10 @@ public class IVDevToolsAssistant: UIView {
         dispStyle = .suspend
         UIView.animate(withDuration: 0.3) {
             let W: CGFloat = UIScreen.main.bounds.width*0.9, H: CGFloat = W*3/4
-            self.frame = CGRect(x: UIScreen.main.bounds.width - W, y: 0, width: W, height: H)
+            self.frame = CGRect(x: (UIScreen.main.bounds.width - W)/2,
+                                y: (UIScreen.main.bounds.height - H)/2,
+                                width: W,
+                                height: H)
             self.tapGes.isEnabled = false
             self.panGes.isEnabled = true
         }
@@ -189,6 +194,10 @@ public class IVDevToolsAssistant: UIView {
     }
     
     @objc func panGestureRecognizer(_ gestureRecognizer: UIPanGestureRecognizer) {
+        if dispStyle == .suspend, isPinUp  {
+            return
+        }
+        
         switch gestureRecognizer.state {
         case .began:
             self.active = true

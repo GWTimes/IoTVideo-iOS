@@ -162,26 +162,48 @@ IVMessageMgr.sharedInstance.takeAction(ofDevice: deviceId, path: actionPath, jso
 
 **2. 将下载并解压得到的IoTVideo相关Framework添加到工程中, 并添加相应依赖库**
 
+
+> ⚠️重要说明：SDK中的IoTVideo.framework和Demo中的IJKMediaFramework.framework皆依赖于FFmpeg库，为方便开发者能自定义FFmpeg库同时避免多个FFmpeg库代码冲突，自`v1.1(ebb)`版本起IoTVideo.framework将FFmpeg库分离出来，由开发者在APP工程中导入。此外，我们提供了一份基于`ff3.4`的FFmpeg库(非GPL)，位于`Demo/IotVideoDemo/IotVideoDemo/Frameworks/ffmpeg/lib`，仅供开发者参考使用，也可另行编译（注：自行编译的FFmpeg版本应考虑接口兼容问题）。
+>
+
 必选库：
 
-- IoTVideo.framework   // 核心库
-- IVVAS.framework      // 增值服务相关
+- IoTVideo.framework (静态库)   // 核心库     
+    - 依赖FFmpeg库 (必须)
+- IVVAS.framework (静态库)      // 增值服务库
+- IVNetwork.framework (静态库)  // 网络库
+
+可选库：
+
+- IJKMediaFramework.framework（静态库）// 用于播放云回放的m3u8文件，
+    - 依赖FFmpeg库 (必须)
+    - 依赖SSL库（可选）
 
 依赖库：
 
   - AudioToolbox.framework   
   - VideoToolbox.framework   
-  - CoreMedia.framework       
+  - CoreMedia.framework 
+  - FFmpeg库 (必须)
+    - libavutil.a     
+    - libavfilter.a     
+    - libavcodec.a     
+    - libavformat.a     
+    - libswresample.a     
+    - libswscale.a
+  - SSL库（可选）
+    - libcrypto.a
+    - libssl.a
+  - libc++.tbd
+  - libz.tbd
+  - libbz2.tbd
+  - libiconv.tbd
 
-可选库：
-
-- IJKMediaFramework.framework     // 用于播放云回放的m3u8文件
-
-![](https://note.youdao.com/yws/api/group/108650997/file/899753505?method=download&inline=true&version=1&shareToken=8F06C8A52D714120BF05F3646BE15F4F)
+![](https://note.youdao.com/yws/api/group/108650997/file/900729043?method=download&inline=true&version=1&shareToken=8EEC2178C08E464184C1A09B6363FEE3)
 
 
 
-**3. ⚠️注意： 需要设置TATGETS -> Build Phases -> Embed Frameworks为 Embed & sign，或者Xcode11后可在General -> Frameworks,Libraries,and Embedded Content 设置 Embed&Sign**
+**3. ⚠️注意： v1.0(da7)及之前版本需要设置TATGETS -> Build Phases -> Embed Frameworks为 Embed & sign，或者Xcode11后可在General -> Frameworks,Libraries,and Embedded Content 设置 Embed&Sign**
 
  ![image](https://note.youdao.com/yws/api/group/108650997/file/898850154?method=download&inline=true&version=2&shareToken=13D2636806184BB1931F4809D2A4C8F0)
 
@@ -289,21 +311,28 @@ IVNetConfig.subscribeDevice(withToken: "********", deviceId: deviceId)
 ```swift
 import IoTVideo.IVNetConfig
 
-// 1.向服务器请求配网ID
+// 1.连接设备热点,获取设备信息
+let dev = IVNetConfig.lan.getDeviceList().first()
 
-// 2.连接设备热点
+
+// 2.向服务器请求配网Token
+IVNetConfig.getToken { (token, error) in
+            
+}
 
 // 3.发送配网信息
-IVNetConfig.lan.sendWifiName("********", wifiPwd: "********", toDevice: "********") { (success, error) in
+IVNetConfig.lan.sendWifiName("***", wifiPassword: "***", token: token, toDevice: dev.deviceID) { (success, error) in
     if success {
-        // 发送成功
+       //发送成功，开始监听事件通知
     } else {
-        // 发送失败
+       //发送失败
     }
 }
     
-// 4.等待设备配网成功通知...
-//参考消息管理中的事件通知，配网成功： topic EVENT_SYS/NetCfg_OK
+// 4.等待设备配网成功通知,拿到结果后可调用 IVNetConfig.unregisterDeviceOnline(),销毁监听
+IVNetConfig.registerDeviceOnlineCallback { (devId, error) in {
+    
+}
 
 // 5.绑定设备
 
@@ -321,35 +350,28 @@ IVNetConfig.subscribeDevice(withToken: "********", deviceId: deviceId)
 ```swift
 import IoTVideo.IVNetConfig
 
-// 1、生成二维码 分为自定协议生成(见1.2.1)和使用SDK内置协议生成（见1.2.2）
 
-// 1.1 获取配网token
-IVNetConfig.qrCode.getToken { (token, error) in
+// 1. 获取配网token
+IVNetConfig.getToken { (token, error) in
             
 }
 
-// 1.2.1 使用得到的配网token加上wifi信息按自定协议生成二维码
+// 2. 生成二维码 使用得到的配网token加上wifi信息
+let image = IVNetConfig.qrCode.createQRCode(withWifiName: ssid,
+                                            wifiPassword: password,
+                                                   token: token)
 
-// 1.2.2 使用SDK内置协议 直接生成二维码图片（内部调用了获取配网token接口，二维码协议请参考 IVQRCodeDef.h）
-IVNetConfig.qrCode.createQRCode(withWifiName: wifiName, wifipwd: wifiPwd, qrSize: size, completionHandler: { (image, error)  in
-     // get the image
- })
- 
- //或使用下方API进行额外的语言及时区的传输
- //langugae: 语言 默认 0 中文 可参考 IV_QR_CODE_LANGUAGE 枚举同时需要固件支持设置多语言
- //timeZone: 时区（单位分钟） 默认 480 即北京时区28800/60 
-IVNetConfig.qrCode.createQRCode(withWifiName: wifiName, wifipwd: wifiPwd, language:0, timeZone: 480, qrSize: size, completionHandler: { (image, error)  in
-     // get the image
- })
 
-// 2.用户使用设备扫描二维码....
+// 3.用户使用设备扫描二维码....
 
-// 3.等待设备配网成功通知...
-//参考消息管理中的事件通知，配网成功： topic EVENT_SYS/NetCfg_OK
+// 4.等待设备配网成功通知, 拿到结果后可调用 IVNetConfig.unregisterDeviceOnline(),销毁监听
+IVNetConfig.registerDeviceOnlineCallback { (devId, error) in {
+    
+}
 
-// 4.绑定设备
+// 5.绑定设备
 
-// 5.订阅设备
+// 6.订阅设备
 IVNetConfig.subscribeDevice(withToken: "********", deviceId: deviceId)
 
 ```
@@ -562,6 +584,43 @@ open var videoView: (UIView & IVVideoRenderable)?
 open func getVideoFrame(_ vframe: UnsafeMutablePointer<IVVideoFrame>) -> Bool
 ```
 
+##### 自定义数据传输
+
+- 接收数据
+
+```swift
+/// 连接代理
+public protocol IVConnectionDelegate : NSObjectProtocol {
+    /// 收到数据
+    /// @param connection 连接实例
+    /// @param data 数据
+    func connection(_ connection: IVConnection, didReceive data: Data)
+}
+```
+
+- 发送数据
+
+> 说明：`#define MAX_DATA_SIZE 64000`
+
+```swift
+
+/// 通道连接（抽象类，不要直接实例化，请使用其派生类: IVLivePlayer / IVPlaybackPlayer / IVMonitorPlayer / IVTransmission）
+open class IVConnection : NSObject {
+    
+    /// 开始连接
+    open func connect() -> Bool
+
+    /// 断开连接
+    open func disconnect() -> Bool
+    
+    /// 发送自定义数据
+    ///
+    /// 需要与设备建立专门的连接通道，适用于较大数据传输、实时性要求较高的场景，如多媒体数据传输。
+    /// @param data 要发送的数据，data.length不能超过`MAX_PKG_BYTES`
+    /// @return 发送是否成功
+    open func send(_ data: Data) -> Bool
+}
+```
 
 # 消息管理
 
@@ -656,36 +715,41 @@ IVMessageMgr.sharedInstance.takeAction(ofDevice: deviceId, path: path, json: jso
 
 ## 高级功能
 
-##### 1.透传数据给设备
+# 1.透传数据给设备
+
+- 说明：`#define MAX_DATA_SIZE 30000`
 
 ```swift
 /// 透传数据给设备（无数据回传）
-/// 使用在不需要数据回传的场景，如发送控制指令
+///
+/// 不需要建立通道连接，数据经由服务器转发，适用于实时性不高、数据小于`MAX_DATA_SIZE`、不需要回传的场景，如控制指令。
 /// @note 完成回调条件：收到ACK 或 消息超时
 /// @param deviceId 设备ID
-/// @param data 数据内容
+/// @param data 数据内容，data.length不能超过`MAX_DATA_SIZE`
 /// @param completionHandler 完成回调
-func sendData(toDevice deviceId: String, data: Data, withoutResponse completionHandler: IVMsgDataCallback? = nil)
+open func sendData(toDevice deviceId: String, data: Data, withoutResponse completionHandler: IVMsgDataCallback? = nil)
 
 
 /// 透传数据给设备（有数据回传）
-/// 使用在预期有数据回传的场景，如获取信息
+///
+/// 不需要建立通道连接，数据经由服务器转发，适用于实时性不高、数据小于`MAX_DATA_SIZE`、需要回传的场景，如获取信息。
 /// @note 完成回调条件：收到ACK错误、消息超时 或 有数据回传
 /// @param deviceId 设备ID
-/// @param data 数据内容
+/// @param data 数据内容，data.length不能超过`MAX_DATA_SIZE`
 /// @param completionHandler 完成回调
-func sendData(toDevice deviceId: String, data: Data, withResponse completionHandler: IVMsgDataCallback? = nil)
+open func sendData(toDevice deviceId: String, data: Data, withResponse completionHandler: IVMsgDataCallback? = nil)
 
 
 /// 透传数据给设备
-/// 可使用在需要数据回传的场景，如获取信息
-/// @note 可以等待有数据回传时才完成回调, 如忽略数据回传可简单使用`sendDataToDevice:data:completionHandler:`代替。
+///
+/// 不需要建立通道连接，数据经由服务器转发，适用于实时性要求不高，数据小于`MAX_DATA_SIZE`的场景，如控制指令、获取信息。
+/// @note 相关接口 @c `sendDataToDevice:data:withoutResponse:`、`sendDataToDevice:data:withResponse:`。
 /// @param deviceId 设备ID
-/// @param data 数据内容
+/// @param data 数据内容，data.length不能超过`MAX_DATA_SIZE`
 /// @param timeout 自定义超时时间，默认超时时间可使用@c `IVMsgTimeoutAuto`
 /// @param expectResponse 【YES】预期有数据回传 ；【NO】忽略数据回传
 /// @param completionHandler 完成回调
-func sendData(toDevice deviceId: String, data: Data, timeout: TimeInterval, expectResponse: Bool, completionHandler: IVMsgDataCallback? = nil)
+open func sendData(toDevice deviceId: String, data: Data, timeout: TimeInterval, expectResponse: Bool, completionHandler: IVMsgDataCallback? = nil)
 
 ```
 
@@ -694,15 +758,37 @@ func sendData(toDevice deviceId: String, data: Data, timeout: TimeInterval, expe
 ```swift
 /// 透传数据给服务器
 /// @param url 服务器路径
-/// @param data 数据内容
+/// @param data 数据内容，data.length不能超过`MAX_DATA_SIZE`
 /// @param completionHandler 完成回调
-func sendData(toServer url: String, data: Data?, completionHandler: IVMsgDataCallback? = nil)
+open func sendData(toServer url: String, data: Data?, completionHandler: IVMsgDataCallback? = nil)
 
 
 /// 透传数据给服务器
 /// @param url 服务器路径
-/// @param data 数据内容
+/// @param data 数据内容，data.length不能超过`MAX_DATA_SIZE`
 /// @param timeout 超时时间
 /// @param completionHandler 完成回调
-func sendData(toServer url: String, data: Data?, timeout: TimeInterval, completionHandler: IVMsgDataCallback? = nil)
+open func sendData(toServer url: String, data: Data?, timeout: TimeInterval, completionHandler: IVMsgDataCallback? = nil)
+
+```
+
+# SDK LOG输出
+1. 设置代理,设置日志输出等级
+```swift
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) {
+    
+    IoTVideo.sharedInstance.delegate = self
+    IoTVideo.sharedInstance.logLevel = .DEBUG
+    
+    ...
+}
+```
+
+2. 遵守 `IoTVideoDelegate`协议，输出SDK LOG
+```swift
+extension AppDelegate: IoTVideoDelegate {
+    func didOutputLogMessage(_ message: String, level: IVLogLevel, file: String, func: String, line: Int32) {
+        print("\(Date()) <\(file):\(line)> \(`func`): \(message)")
+    }
+}
 ```

@@ -17,11 +17,12 @@ struct IVDemoNetwork {
     /// 绑定设备
     /// - Parameters:
     ///   - deviceId: 设备id
+    ///   - role: 用户角色
     ///   - forceBind: 默认true 是否踢掉之前的主人，true：踢掉；false：不踢掉。当role为owner时，可以不填
     ///   - responseHandler: 回调
-    static func addDevice(_ deviceId: String, forceBind: Bool = true, responseHandler: IVDemoNetworkResponseHandler) {
+    static func addDevice(_ deviceId: String, role: IVRole = .owner, forceBind: Bool = true, responseHandler: IVDemoNetworkResponseHandler) {
         let accessId = UserDefaults.standard.string(forKey: demo_accessId)!
-        IVTencentNetwork.shared.addDevice(accessId: accessId, deviceId: deviceId, role: .owner, forceBind: forceBind){ (json, error) in
+        IVTencentNetwork.shared.addDevice(accessId: accessId, deviceId: deviceId, role: role, forceBind: forceBind){ (json, error) in
             guard let json = IVDemoNetwork.handlerError(json, error) else {
                 responseHandler?(nil, error)
                 return
@@ -66,16 +67,18 @@ struct IVDemoNetwork {
                 for device in data {
                     let deviceModel = IVDeviceModel(devId: device["Tid"].stringValue,
                                                     deviceName: device["DeviceName"].stringValue,
-                                                    shareType: IVDeviceShareType(rawValue: device["Role"].stringValue) ?? .owner)
+                                                    shareType: IVRole(rawValue: device["Role"].stringValue) ?? .owner)
                     newUserDeviceList.append(deviceModel)
                     
                     IVMessageMgr.sharedInstance.readProperty(ofDevice: deviceModel.devId!, path: "ProReadonly._online") { (json, error) in
                         if let json = json {
-                            deviceModel.online = JSON(parseJSON: json).value("stVal")?.boolValue
+                            deviceModel.online = JSON(parseJSON: json)["stVal"].boolValue
                         }
                         responseHandler?(newUserDeviceList, nil)
                     }
                 }
+            } else {
+                responseHandler?(newUserDeviceList, nil)
             }
         }
     }
@@ -158,7 +161,7 @@ extension IVDemoNetwork {
         let json = JSON(parseJSON: json!)
         if let errorCode = json["Response"]["Error"]["Code"].string {
             let errMsg = "\(errorCode) : \(json["Response"]["Error"]["Message"].stringValue)"
-            print(errMsg)
+            logError(errMsg)
             ivHud(errMsg)
             return nil
         }

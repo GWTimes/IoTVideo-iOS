@@ -10,28 +10,31 @@
 #import "IVAVDefine.h"
 
 /// 编解码器注册协议
-@protocol IVAVCodecRegister <NSObject>
-- (void)registerWithHeader:(IVAVHeader)header;
+@protocol IVAVCodecable <NSObject>
+
+@property (nonatomic, assign, readonly) uint32_t channel;
+
+- (void)registerWithHeader:(IVAVHeader)header channel:(uint32_t)channel;
 - (void)unregister;
 @end
 
 /// 视频解码器协议
-@protocol IVVideoDecodable <IVAVCodecRegister>
+@protocol IVVideoDecodable <IVAVCodecable>
 - (int)decodeVideoPacket:(IVVideoPacket *)inPacket outFrame:(IVVideoFrame *)outFrame;
 @end
 
 /// 视频编码器协议
-@protocol IVVideoEncodable <IVAVCodecRegister>
+@protocol IVVideoEncodable <IVAVCodecable>
 - (int)encodeVideoFrame:(IVVideoFrame *)inFrame outPacket:(IVVideoPacket *)outPacket;
 @end
 
 /// 音频解码器协议
-@protocol IVAudioDecodable <IVAVCodecRegister>
+@protocol IVAudioDecodable <IVAVCodecable>
 - (int)decodeAudioPacket:(IVAudioPacket *)inPacket outFrame:(IVAudioFrame *)outFrame;
 @end
 
 /// 音频编码器协议
-@protocol IVAudioEncodable <IVAVCodecRegister>
+@protocol IVAudioEncodable <IVAVCodecable>
 - (int)encodeAudioFrame:(IVAudioFrame *)inFrame outPacket:(IVAudioPacket *)outPacket;
 @end
 

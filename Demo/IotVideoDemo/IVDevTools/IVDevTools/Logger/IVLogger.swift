@@ -25,8 +25,8 @@ import Foundation
         case .error:    return "[E]💔"
         case .warning:  return "[W]⚠️"
         case .info:     return "[I]💙"
-        case .debug:    return ""
-        case .verbose:  return ""
+        case .debug:    return "[D]🔨"
+        case .verbose:  return "[T]"
         }
     }
 }
@@ -59,7 +59,7 @@ fileprivate class Log: NSObject {
     
     // 2019-05-17 08:30:53.004 [D] <BaseViewController.m:22> -[BaseViewController dealloc] 控制器销毁 MineController
     override var description: String {
-        let location = (line > 0 ? "<\(file):\(line)>" : "<\(file)>")
+        let location = (file.isEmpty ? "" : (line > 0 ? "<\(file):\(line)>" : "<\(file)>"))
         
         switch (level) {
         case .fatal, .error, .warning:
@@ -121,6 +121,7 @@ fileprivate class Log: NSObject {
     private static var eventObserver: ((IVLogger.Type) -> Void)? = nil
     
     @objc public static func register(_ eventObserver: ((IVLogger.Type) -> Void)? = nil) {
+        IVFileLogger.shared.autoLoggingStandardOutput()
         self.eventObserver = eventObserver
         registerCrashHandler { (crashLog) in
             log(.fatal, message: crashLog)

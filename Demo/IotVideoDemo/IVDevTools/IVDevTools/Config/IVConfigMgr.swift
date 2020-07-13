@@ -29,11 +29,13 @@ public class IVConfigMgr: NSObject {
         
 //        1157493686468 腾讯测试
         
-        return [Config(name: "测试服务器", key: "IOT_HOST_TYPE", value: "0", enable: false),
-                Config(name: "正式服务器", key: "IOT_HOST_TYPE", value: "1", enable: true),
-                Config(name: "PID 103", key: "IOT_PID", value: "440234147841", enable: true),
-                Config(name: "PID 107", key: "IOT_PID", value: "461708984449", enable: false),
-                Config(name: "PID 腾讯测试", key: "IOT_PID", value: "1157493686468", enable: false)]
+        return [
+            Config(name: "TEST_ID_g", key: "IOT_TEST_SECRECT_ID", value: "AKIDwmOmvryLcolStUw2vc4JI1hHfpkShJOS", enable: false),
+            Config(name: "TEST_KEY_g", key: "IOT_TEST_SECRECT_KEY", value: "zmJbfXBZlkkV1IMBk9OSGtIannUwCCwR", enable: false),
+            
+            Config(name: "TEST_ID_zc", key: "IOT_TEST_SECRECT_ID", value: "AKIDJI7i39Df3CG5qM9jY7SiksuocFeov3HF", enable: false),
+            Config(name: "TEST_KEY_zc", key: "IOT_TEST_SECRECT_KEY", value: "ylJbecMp2zh8PRO5VllVyA7TbUAdrqaC", enable: false),
+        ]
     }() {
         didSet {
             let data = try? JSONEncoder().encode(allConfigs)

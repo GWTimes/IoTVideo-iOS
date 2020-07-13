@@ -82,7 +82,7 @@ typedef void(^IVQRCodeScanCallback)(NSString * _Nullable scanResult);
 /// 需要使用本类扫描解析本类生成的二维码
 /// @param token 分享的token
 /// @param size 二维码大小
-+ (UIImage *)createShareDeviceQRCodeWithToken:(NSString *)token QRSize:(CGSize)size;
+//+ (UIImage *)createShareDeviceQRCodeWithToken:(NSString *)token QRSize:(CGSize)size;
 
 
 @end

@@ -52,9 +52,9 @@ class IVLogSettingViewController: UITableViewController {
         }
         get {
             if let lv = UserDefaults.standard.value(forKey: kLogLevelKey) as? Int {
-                return Level(rawValue: lv) ?? .info
+                return Level(rawValue: lv) ?? .debug
             } else {
-                return .info
+                return .debug
             }
         }
     }

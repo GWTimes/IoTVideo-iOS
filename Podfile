@@ -18,8 +18,6 @@ end
 
 target 'IoTVideo' do
   project './SDK/IoTVideo/IoTVideo.xcodeproj'
-##  pod 'AFNetworking', '~> 3.0'
-##pod 'Then',          '~> 2.4.0'
 end
 
 target 'IVNetwork' do

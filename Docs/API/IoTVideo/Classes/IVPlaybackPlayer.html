@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>IVPlaybackPlayer Class Reference</title>
+
+	<link rel="stylesheet" href="../css/style.css">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1.4">
+	<meta name="generator" content="appledoc 2.2.1 (build 1334)">
+</head>
+<body class="appledoc">
+	<header>
+		<div class="container" class="hide-in-xcode">
+			
+			<h1 id="library-title">
+				<a href="../index.html">IoTVideo </a>
+			</h1>
+
+			<p id="developer-home">
+				<a href="../index.html">tencentcs</a>
+			</p>
+			
+		</div>
+	</header>
+
+	<aside>
+		<div class="container">
+			<nav>
+				<ul id="header-buttons" role="toolbar">
+					<li><a href="../index.html">Index</a></li>
+<li><a href="../hierarchy.html">Hierarchy</a></li>
+
+					<li id="on-this-page" role="navigation">
+						<label>
+							On This Page
+
+							<div class="chevron">
+								<div class="chevy chevron-left"></div>
+								<div class="chevy chevron-right"></div>
+							</div>
+
+							<select id="jump-to">
+	<option value="top">Jump To&#133;</option>
+	
+	<option value="overview">Overview</option>
+	
+
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+
+	
+	
+	<optgroup label="Properties">
+		
+		<option value="//api/name/playbackItem">playbackItem</option>
+		
+	</optgroup>
+	
+
+	
+	<optgroup label="Class Methods">
+		
+		<option value="//api/name/getPlaybackListOfDevice:pageIndex:countPerPage:startTime:endTime:completionHandler:">+ getPlaybackListOfDevice:pageIndex:countPerPage:startTime:endTime:completionHandler:</option>
+		
+	</optgroup>
+	
+
+	
+	<optgroup label="Instance Methods">
+		
+		<option value="//api/name/initWithDeviceId:">- initWithDeviceId:</option>
+		
+		<option value="//api/name/initWithDeviceId:playbackItem:seekToTime:">- initWithDeviceId:playbackItem:seekToTime:</option>
+		
+		<option value="//api/name/initWithDeviceId:sourceId:">- initWithDeviceId:sourceId:</option>
+		
+		<option value="//api/name/initWithDeviceId:sourceId:playbackItem:seekToTime:">- initWithDeviceId:sourceId:playbackItem:seekToTime:</option>
+		
+		<option value="//api/name/pause">- pause</option>
+		
+		<option value="//api/name/resume">- resume</option>
+		
+		<option value="//api/name/seekToTime:playbackItem:">- seekToTime:playbackItem:</option>
+		
+		<option value="//api/name/setPlaybackItem:seekToTime:">- setPlaybackItem:seekToTime:</option>
+		
+	</optgroup>
+	
+	
+</select>
+						</label>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</aside>
+
+	<article>
+		<div id="overview_contents" class="container">
+			<div id="content">
+				<main role="main">
+					<h1 class="title">IVPlaybackPlayer Class Reference</h1>
+
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<th>Inherits from</th>
+	<td><a href="../Classes/IVPlayer.html">IVPlayer</a> : <a href="../Classes/IVConnection.html">IVConnection</a> : NSObject</td>
+</tr><tr>
+	<th>Declared in</th>
+	<td>IVPlaybackPlayer.h</td>
+</tr>
+						</tbody></table></div>
+					
+
+                    
+					
+					<div class="section section-overview">
+						<a title="Overview" name="overview"></a>
+						<h2 class="subtitle subtitle-overview">Overview</h2>
+						<p>回放播放器</p>
+					</div>
+					
+					
+
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						
+
+						
+						
+
+						<div class="task-list">
+							<div class="section-method">
+	<a name="//api/name/initWithDeviceId:" title="initWithDeviceId:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/initWithDeviceId:">&ndash;&nbsp;initWithDeviceId:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>创建空播放器</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (nullable instancetype)initWithDeviceId:(NSString *)<em>deviceId</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>deviceId</code></th>
+						<td><p>设备ID</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVPlaybackPlayer.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/initWithDeviceId:sourceId:" title="initWithDeviceId:sourceId:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/initWithDeviceId:sourceId:">&ndash;&nbsp;initWithDeviceId:sourceId:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>创建空播放器</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (nullable instancetype)initWithDeviceId:(NSString *)<em>deviceId</em> sourceId:(uint16_t)<em>sourceId</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>deviceId</code></th>
+						<td><p>设备ID</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>sourceId</code></th>
+						<td><p>源ID</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVPlaybackPlayer.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/initWithDeviceId:playbackItem:seekToTime:" title="initWithDeviceId:playbackItem:seekToTime:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/initWithDeviceId:playbackItem:seekToTime:">&ndash;&nbsp;initWithDeviceId:playbackItem:seekToTime:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>创建播放器同时设置回放参数</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (nullable instancetype)initWithDeviceId:(NSString *)<em>deviceId</em> playbackItem:(IVPlaybackItem *)<em>item</em> seekToTime:(NSTimeInterval)<em>time</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>deviceId</code></th>
+						<td><p>设备ID</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>item</code></th>
+						<td><p>播放的文件(可跨文件)</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>time</code></th>
+						<td><p>指定播放起始时间点（秒），取值范围<code></code>playbackItem<code>.startTime &gt;= time &lt;= </code>playbackItem<code>.endTime</code></p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVPlaybackPlayer.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/initWithDeviceId:sourceId:playbackItem:seekToTime:" title="initWithDeviceId:sourceId:playbackItem:seekToTime:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/initWithDeviceId:sourceId:playbackItem:seekToTime:">&ndash;&nbsp;initWithDeviceId:sourceId:playbackItem:seekToTime:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>创建播放器同时设置回放参数</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (nullable instancetype)initWithDeviceId:(NSString *)<em>deviceId</em> sourceId:(uint16_t)<em>sourceId</em> playbackItem:(IVPlaybackItem *)<em>item</em> seekToTime:(NSTimeInterval)<em>time</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>deviceId</code></th>
+						<td><p>设备ID</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>sourceId</code></th>
+						<td><p>源ID</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>item</code></th>
+						<td><p>播放的文件(可跨文件)</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>time</code></th>
+						<td><p>指定播放起始时间点（秒），取值范围<code></code>playbackItem<code>.startTime &gt;= time &lt;= </code>playbackItem<code>.endTime</code></p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVPlaybackPlayer.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/getPlaybackListOfDevice:pageIndex:countPerPage:startTime:endTime:completionHandler:" title="getPlaybackListOfDevice:pageIndex:countPerPage:startTime:endTime:completionHandler:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/getPlaybackListOfDevice:pageIndex:countPerPage:startTime:endTime:completionHandler:">+&nbsp;getPlaybackListOfDevice:pageIndex:countPerPage:startTime:endTime:completionHandler:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>获取一页回放文件列表
+请根据实际情况合理设置查询时间范围和分页，时间跨度太大可能会增加设备查询时间（一般建议设置为三天以内, 即当天、前一天和后一天）</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (void)getPlaybackListOfDevice:(NSString *)<em>deviceId</em> pageIndex:(uint32_t)<em>pageIndex</em> countPerPage:(uint32_t)<em>countPerPage</em> startTime:(NSTimeInterval)<em>startTime</em> endTime:(NSTimeInterval)<em>endTime</em> completionHandler:(PlaybackListCallback)<em>completionHandler</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>deviceId</code></th>
+						<td><p>设备ID</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>pageIndex</code></th>
+						<td><p>页码索引，获取指定页码的回放文件（ pageIndex从0开始递增）</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>countPerPage</code></th>
+						<td><p>在[startTime, endTime]时间范围内按每页countPerPage个文件查询，每次返回一页的数据</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>startTime</code></th>
+						<td><p>开始时间戳（秒）</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>endTime</code></th>
+						<td><p>结束时间戳（秒）</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>completionHandler</code></th>
+						<td><p>结果回调</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVPlaybackPlayer.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/setPlaybackItem:seekToTime:" title="setPlaybackItem:seekToTime:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/setPlaybackItem:seekToTime:">&ndash;&nbsp;setPlaybackItem:seekToTime:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>(未播放前)设置回放参数.</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)setPlaybackItem:(IVPlaybackItem *)<em>item</em> seekToTime:(NSTimeInterval)<em>time</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>item</code></th>
+						<td><p>播放的文件(可跨文件).</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>time</code></th>
+						<td><p>指定播放起始时间点（秒），取值范围<code></code>playbackItem<code>.startTime &gt;= time &lt;= </code>playbackItem<code>.endTime</code>.</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<div class="note"><p><strong>Note:</strong> 应在文件尚未播放时使用，需手动调用<code>play</code>开始播放.</p></div>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVPlaybackPlayer.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/seekToTime:playbackItem:" title="seekToTime:playbackItem:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/seekToTime:playbackItem:">&ndash;&nbsp;seekToTime:playbackItem:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>(已播放后)跳到指定文件和时间播放</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)seekToTime:(NSTimeInterval)<em>time</em> playbackItem:(IVPlaybackItem *)<em>item</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>time</code></th>
+						<td><p>指定播放起始时间点（秒），取值范围<code></code>playbackItem<code>.startTime &gt;= time &lt;= </code>playbackItem<code>.endTime</code></p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>item</code></th>
+						<td><p>播放的文件(可跨文件)</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<div class="note"><p><strong>Note:</strong> 应在文件正在播放时使用, 无需再手动调用<code>play</code>开始播放</p></div>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVPlaybackPlayer.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/playbackItem" title="playbackItem"></a>
+	<h3 class="method-title"><code><a href="#//api/name/playbackItem">&nbsp;&nbsp;playbackItem</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>当前回放的文件。</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nullable, readonly) IVPlaybackItem *playbackItem</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<div class="note"><p><strong>Note:</strong> 当前回放时间通过<a href="../Classes/IVPlayer.html#//api/name/pts"><code>[IVPlayer pts]</code></a>获取</p></div>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVPlaybackPlayer.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/pause" title="pause"></a>
+	<h3 class="method-title"><code><a href="#//api/name/pause">&ndash;&nbsp;pause</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>暂停</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)pause</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVPlaybackPlayer.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/resume" title="resume"></a>
+	<h3 class="method-title"><code><a href="#//api/name/resume">&ndash;&nbsp;resume</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>恢复</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)resume</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVPlaybackPlayer.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+						</div>
+						
+					</div>
+					
+					
+
+                    
+                    
+          
+				</main>
+
+				<footer>
+					<div class="footer-copyright">
+						
+						<p class="copyright">Copyright &copy; 2020 tencentcs. All rights reserved. Updated: 2020-07-07</p>
+						
+						
+						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>
+						
+					</div>
+				</footer>
+			</div>
+		</div>
+	</article>
+
+	<script src="../js/script.js"></script>
+</body>
+</html>

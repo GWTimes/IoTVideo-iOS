@@ -10,24 +10,41 @@ import Foundation
 import IoTVideo
 import SwiftyJSON
 
+
 //具体API请求
 extension IVTencentNetwork {
     //注册
-    func register(tmpSecretID: String, tmpSecretKey: String, token: String, userName: String, responseHandler: IVTencentNetworkResponseHandler) {
-        IVTencentNetwork.shared.secretKey = tmpSecretKey
-        IVTencentNetwork.shared.secretId = tmpSecretID
-        IVTencentNetwork.shared.token = token
+//    func register(tmpSecretID: String, tmpSecretKey: String, token: String, userName: String, responseHandler: IVTencentNetworkResponseHandler) {
+//        IVTencentNetwork.shared.secretKey = tmpSecretKey
+//        IVTencentNetwork.shared.secretId = tmpSecretID
+//        IVTencentNetwork.shared.token = token
+//        
+//        UserDefaults.standard.do {
+//            $0.setValue(tmpSecretID, forKey: demo_secretId)
+//            $0.setValue(tmpSecretKey, forKey: demo_secretKey)
+//            $0.setValue(token, forKey: demo_loginToken)
+//        }
+//        
+//        IVTencentNetwork.shared.token = token
+//        self.request(methodType: .POST,
+//                     action: "CreateAppUsr",
+//                     params: ["CunionId": userName],
+//                     response: responseHandler)
+//    }
+    
+    func register(account: TXAccount, responseHandler: IVTencentNetworkResponseHandler) {
+        IVTencentNetwork.shared.secretKey = account.secretKey
+        IVTencentNetwork.shared.secretId = account.secretId
+        IVTencentNetwork.shared.token = account.tempToken
         
         UserDefaults.standard.do {
-            $0.setValue(tmpSecretID, forKey: demo_secretId)
-            $0.setValue(tmpSecretKey, forKey: demo_secretKey)
-            $0.setValue(token, forKey: demo_loginToken)
+            $0.setValue(account.secretId, forKey: demo_secretId)
+            $0.setValue(account.secretKey, forKey: demo_secretKey)
+            $0.setValue(account.tempToken, forKey: demo_loginToken)
         }
-        
-        IVTencentNetwork.shared.token = token
         self.request(methodType: .POST,
                      action: "CreateAppUsr",
-                     params: ["CunionId": userName],
+                     params: ["CunionId": account.userName],
                      response: responseHandler)
     }
     
@@ -53,7 +70,7 @@ extension IVTencentNetwork {
     //绑定设备
     //role: .owner 主人绑定设备
     //role: .guest 绑定别人分享的设备
-    //forceBid: 默认true 是否踢掉之前的主人，true：踢掉；false：不踢掉。当role为owner时，可以不填
+    //forceBid: 默认true 是否踢掉之前的主人，true：踢掉；false：不踢掉。当role为guest时，可以不填
     func addDevice(accessId: String, deviceId: String, role: IVRole, forceBind: Bool = true, responseHandler: IVTencentNetworkResponseHandler) {
         self.request(methodType: .POST,
                      action: "CreateBinding",
@@ -110,3 +127,12 @@ extension IVTencentNetwork {
     }
 }
 
+
+//正常登陆：腾讯控制台获取的 id,key和用户名
+//临时授权登陆：腾讯控制台获取的 零时id,key,token和用户名
+struct TXAccount {
+    @Trimmed var userName: String
+    @Trimmed var secretId: String
+    @Trimmed var secretKey: String
+    @Trimmed var tempToken: String
+}

@@ -27,7 +27,7 @@
         <!--IoT Video Demo-->
         <scene sceneID="Xge-My-cBz">
             <objects>
-                <viewController id="boi-H1-T35" customClass="IVLoginViewController" customModule="IotVideoDemoTX" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="boi-H1-T35" customClass="IVLoginViewController" customModule="IotVideoDemo" customModuleProvider="target" propertyAccessControl="all" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="t3A-M1-txL">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -129,7 +129,7 @@
                                     <constraint firstAttribute="height" constant="44" id="pSy-rQ-IoS"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
-                                <state key="normal" title="登录">
+                                <state key="normal" title="登录/注册">
                                     <color key="titleColor" red="0.97405088699999998" green="0.97405088699999998" blue="0.97405088699999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>

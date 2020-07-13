@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="78r-ZH-ju3">
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--数据传输-->
+        <scene sceneID="IKn-Hb-xgK">
+            <objects>
+                <viewController storyboardIdentifier="Transmission" title="数据传输" id="78r-ZH-ju3" customClass="IVTransmissionViewController" customModule="IotVideoDemo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="LTB-UM-m0U">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="jhx-rS-aEx">
+                                <rect key="frame" x="8" y="8" width="304" height="552"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="wWB-ed-pbM">
+                                        <rect key="frame" x="0.0" y="0.0" width="304" height="180"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1. 文本传输" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9b9-fC-DGD">
+                                                <rect key="frame" x="0.0" y="0.0" width="304" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="YkH-hz-tS8"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="点击编辑待发送文本" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="aUG-Ea-zH0">
+                                                <rect key="frame" x="0.0" y="20" width="304" height="40"/>
+                                                <color key="backgroundColor" red="0.93572864779999998" green="0.93572864779999998" blue="0.93572864779999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="40" id="dgv-En-1cR"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                            </textField>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uMM-Yy-uL6">
+                                                <rect key="frame" x="0.0" y="60" width="304" height="40"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UOB-mb-0Ot">
+                                                        <rect key="frame" x="102" y="2.5" width="100" height="35"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="35" id="HGv-V6-1Jq"/>
+                                                            <constraint firstAttribute="width" constant="100" id="fYc-Cd-8fe"/>
+                                                        </constraints>
+                                                        <state key="normal" title="发送文本"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="sendTextClicked:" destination="78r-ZH-ju3" eventType="touchUpInside" id="pcY-tM-O4l"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="UOB-mb-0Ot" firstAttribute="centerX" secondItem="uMM-Yy-uL6" secondAttribute="centerX" id="9LT-AZ-uff"/>
+                                                    <constraint firstAttribute="height" constant="40" id="EP8-LV-eXc"/>
+                                                    <constraint firstItem="UOB-mb-0Ot" firstAttribute="centerY" secondItem="uMM-Yy-uL6" secondAttribute="centerY" id="WO9-Kd-oUx"/>
+                                                </constraints>
+                                                <viewLayoutGuide key="safeArea" id="LCT-8y-NaG"/>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设备回传文本" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Nc-SL-yUc">
+                                                <rect key="frame" x="0.0" y="100" width="304" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="ihz-bU-DSm"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="BIN-Zy-qbl">
+                                                <rect key="frame" x="0.0" y="120" width="304" height="60"/>
+                                                <color key="backgroundColor" red="0.93572864783596876" green="0.93572864783596876" blue="0.93572864783596876" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="60" id="lin-Ma-s6U"/>
+                                                </constraints>
+                                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="10"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </textView>
+                                        </subviews>
+                                    </stackView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="75D-4j-dQz">
+                                        <rect key="frame" x="0.0" y="190" width="304" height="1"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="1" id="UbI-lX-AKl"/>
+                                        </constraints>
+                                    </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="RBE-ok-LM0">
+                                        <rect key="frame" x="0.0" y="201" width="304" height="351"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2. 图片传输" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lq3-Js-q6V">
+                                                <rect key="frame" x="0.0" y="0.0" width="304" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="ccd-cM-LA3"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="jBk-wK-mOh">
+                                                <rect key="frame" x="0.0" y="20" width="304" height="100"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="headTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eJK-B2-G3S">
+                                                        <rect key="frame" x="0.0" y="0.0" width="151" height="100"/>
+                                                        <state key="normal" image="timg.jpeg"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="selImgClicked:" destination="78r-ZH-ju3" eventType="touchUpInside" id="48S-Je-qL4"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="headTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="167-hL-eHm">
+                                                        <rect key="frame" x="153" y="0.0" width="151" height="100"/>
+                                                        <color key="backgroundColor" red="0.93572864779999998" green="0.93572864779999998" blue="0.93572864779999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <state key="normal" image="timg-2.jpeg"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="selImgClicked:" destination="78r-ZH-ju3" eventType="touchUpInside" id="Ek2-be-xg3"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="100" id="MS9-SW-qIl"/>
+                                                </constraints>
+                                            </stackView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="点击选中待发送图片" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UcI-lJ-Zxg">
+                                                <rect key="frame" x="0.0" y="120" width="304" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="bnA-kN-dS5"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ssa-ri-Pnq">
+                                                <rect key="frame" x="0.0" y="140" width="304" height="40"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lme-yE-cVi">
+                                                        <rect key="frame" x="102" y="2.5" width="100" height="35"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="100" id="0wE-Fw-S80"/>
+                                                            <constraint firstAttribute="height" constant="35" id="yGP-ZK-a2z"/>
+                                                        </constraints>
+                                                        <state key="normal" title="发送图片"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                        <connections>
+                                                            <action selector="sendImgClicked:" destination="78r-ZH-ju3" eventType="touchUpInside" id="Wbn-Dr-Jbf"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="lme-yE-cVi" firstAttribute="centerY" secondItem="Ssa-ri-Pnq" secondAttribute="centerY" id="2wE-qd-1Wp"/>
+                                                    <constraint firstAttribute="height" constant="40" id="42r-X1-Mgi"/>
+                                                    <constraint firstItem="lme-yE-cVi" firstAttribute="centerX" secondItem="Ssa-ri-Pnq" secondAttribute="centerX" id="tnr-tC-vIw"/>
+                                                </constraints>
+                                                <viewLayoutGuide key="safeArea" id="Ca9-ep-eGL"/>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="设备回传图片" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5Em-A3-5ga">
+                                                <rect key="frame" x="0.0" y="180" width="304" height="20"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="L4Y-Yj-CFk"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vrw-qa-lxt">
+                                                <rect key="frame" x="0.0" y="200" width="304" height="151"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="暂无回传图片" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="doL-7X-v8q">
+                                                        <rect key="frame" x="118.5" y="69" width="67.5" height="13.5"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oEL-wE-Y6h">
+                                                        <rect key="frame" x="0.0" y="0.0" width="304" height="151"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                <integer key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                        </userDefinedRuntimeAttributes>
+                                                    </imageView>
+                                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="nhR-kz-r4y">
+                                                        <rect key="frame" x="194" y="65.5" width="20" height="20"/>
+                                                    </activityIndicatorView>
+                                                </subviews>
+                                                <color key="backgroundColor" red="0.93572864779999998" green="0.93572864779999998" blue="0.93572864779999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="oEL-wE-Y6h" secondAttribute="trailing" id="ECJ-Y9-5UN"/>
+                                                    <constraint firstItem="oEL-wE-Y6h" firstAttribute="leading" secondItem="Vrw-qa-lxt" secondAttribute="leading" id="EIj-cj-eej"/>
+                                                    <constraint firstItem="oEL-wE-Y6h" firstAttribute="top" secondItem="Vrw-qa-lxt" secondAttribute="top" id="Jj6-qE-kTa"/>
+                                                    <constraint firstItem="nhR-kz-r4y" firstAttribute="leading" secondItem="doL-7X-v8q" secondAttribute="trailing" constant="8" id="KLH-pY-9zb"/>
+                                                    <constraint firstItem="doL-7X-v8q" firstAttribute="centerY" secondItem="Vrw-qa-lxt" secondAttribute="centerY" id="kXP-YH-a3O"/>
+                                                    <constraint firstItem="nhR-kz-r4y" firstAttribute="centerY" secondItem="doL-7X-v8q" secondAttribute="centerY" id="mcB-cp-Ado"/>
+                                                    <constraint firstAttribute="bottom" secondItem="oEL-wE-Y6h" secondAttribute="bottom" id="qjO-wf-zPY"/>
+                                                    <constraint firstItem="doL-7X-v8q" firstAttribute="centerX" secondItem="Vrw-qa-lxt" secondAttribute="centerX" id="zVt-f3-31n"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="10"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="jhx-rS-aEx" firstAttribute="top" secondItem="R0B-kE-qC9" secondAttribute="top" constant="8" id="861-54-1h6"/>
+                            <constraint firstItem="R0B-kE-qC9" firstAttribute="trailing" secondItem="jhx-rS-aEx" secondAttribute="trailing" constant="8" id="VAK-Dt-UEJ"/>
+                            <constraint firstItem="R0B-kE-qC9" firstAttribute="bottom" secondItem="jhx-rS-aEx" secondAttribute="bottom" constant="8" id="ahJ-P0-zaI"/>
+                            <constraint firstItem="jhx-rS-aEx" firstAttribute="leading" secondItem="R0B-kE-qC9" secondAttribute="leading" constant="8" id="cK2-1J-GQa"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="R0B-kE-qC9"/>
+                    </view>
+                    <connections>
+                        <outlet property="imgVindicator" destination="nhR-kz-r4y" id="PuD-T9-RsQ"/>
+                        <outlet property="rcvImgV" destination="oEL-wE-Y6h" id="Icx-wN-oGG"/>
+                        <outlet property="rcvProgLabel" destination="doL-7X-v8q" id="bDX-Ek-ihb"/>
+                        <outlet property="rcvTextV" destination="BIN-Zy-qbl" id="UVe-wa-pfX"/>
+                        <outlet property="sendImgBtn" destination="lme-yE-cVi" id="KoT-vL-L5p"/>
+                        <outlet property="sendTextBtn" destination="UOB-mb-0Ot" id="jXl-Wf-Q8e"/>
+                        <outlet property="textField" destination="aUG-Ea-zH0" id="roI-l0-g55"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Lyq-yr-0FW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-436.23188405797106" y="-165.40178571428569"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="timg-2.jpeg" width="1200" height="800"/>
+        <image name="timg.jpeg" width="1920" height="1200"/>
+    </resources>
+</document>

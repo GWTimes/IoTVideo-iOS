@@ -12,6 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface IVNetworkSign : NSObject
 
+/// MD5 散列
+/// @param str 需要散列字符串
++ (NSString *)MD5WithString:(NSString *)str;
+
 /// sha256 散列
 /// @param str 需要散列字符串
 + (NSString *)SHA256WithString:(NSString *)str;

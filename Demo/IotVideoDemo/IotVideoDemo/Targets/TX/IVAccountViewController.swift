@@ -10,7 +10,7 @@ import UIKit
 import IoTVideo
 
 class IVAccountViewController: UITableViewController {
-        
+    
     let accountInfo = [
         "userName" : UserDefaults.standard.string(forKey: demo_userName) ?? "(空)",
         "accessID" : IoTVideo.sharedInstance.accessId ?? "(空)",
@@ -20,7 +20,7 @@ class IVAccountViewController: UITableViewController {
         "secretID" : IVTencentNetwork.shared.secretId,
         "Token" : IVTencentNetwork.shared.token
     ]
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -57,23 +57,10 @@ class IVAccountViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         if indexPath.section == 0 {
             let cell = tableView.cellForRow(at: indexPath)
-            let pasteboard = UIPasteboard.general
-            pasteboard.string = cell?.detailTextLabel?.text
+            UIPasteboard.general.string = cell?.detailTextLabel?.text
             ivHud("\(cell!.textLabel!.text!) 已复制")
         } else {
-            DispatchQueue.global().async {
-                IoTVideo.sharedInstance.unregister()
-            }
-            UserDefaults.standard.do {
-                $0.removeObject(forKey: demo_accessToken)
-                $0.removeObject(forKey: demo_accessId)
-                $0.removeObject(forKey: demo_expireTime)
-            }
-            let board = UIStoryboard(name: "IVLogin", bundle: nil)
-            let loginVC = board.instantiateViewController(withIdentifier: "LogNav") as! UINavigationController
-            loginVC.modalPresentationStyle = .fullScreen
-            topVC()?.present(loginVC, animated: true, completion: nil)
-            self.navigationController?.popToRootViewController(animated: false)
+            IVNotiPost(.logout(by: .user))
         }
     }
 }
