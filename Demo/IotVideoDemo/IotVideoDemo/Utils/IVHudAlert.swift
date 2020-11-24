@@ -7,8 +7,9 @@
 //
 
 import UIKit
+#if IoTVideo
 import MBProgressHUD
-
+#endif
 
 func safe_main_async(_ execute: @escaping () -> Void) {
     if Thread.isMainThread {
@@ -20,27 +21,36 @@ func safe_main_async(_ execute: @escaping () -> Void) {
     }
 }
 
-func ivHud(_ msg: String?, icon: String? = nil,inView view: UIView? = nil, isMask mask: Bool = false, delay: Double = 1.5)  {
-    safe_main_async({
-        guard let showView = view ?? UIApplication.shared.windows.last else {return}
-        let hud = MBProgressHUD.showAdded(to: showView, animated: true)
-        hud.label.text = msg
-        hud.label.numberOfLines = 0
-        if let icon = icon {
-            hud.customView = UIImageView(image: UIImage(named: icon))
-            hud.mode = .customView
-        } else {
-            hud.mode = .text
+@discardableResult
+func ivHud(_ msg: String?, icon: String? = nil,inView view: UIView? = nil, isMask mask: Bool = false, delay: Double = 1.5) -> MBProgressHUD  {
+    
+    if !Thread.current.isMainThread {
+        var obj: MBProgressHUD!
+        DispatchQueue.main.sync {
+            obj = ivHud(msg, icon:icon, inView: view, isMask: mask, delay: delay)
         }
-        if mask {
-            hud.backgroundView.color = UIColor(white: 0, alpha: 0.4)
-            hud.isUserInteractionEnabled = true
-        } else {
-            hud.isUserInteractionEnabled = true
-        }
-        hud.removeFromSuperViewOnHide = true
-        hud.hide(animated: true, afterDelay: delay)
-    })
+        return obj
+    }
+    
+    let showView = view ?? UIApplication.shared.keyWindow!
+    let hud = MBProgressHUD.showAdded(to: showView, animated: true)
+    hud.label.text = msg
+    hud.label.numberOfLines = 0
+    if let icon = icon {
+        hud.customView = UIImageView(image: UIImage(named: icon))
+        hud.mode = .customView
+    } else {
+        hud.mode = .text
+    }
+    if mask {
+        hud.backgroundView.color = UIColor(white: 0, alpha: 0.4)
+        hud.isUserInteractionEnabled = true
+    } else {
+        hud.isUserInteractionEnabled = true
+    }
+    hud.removeFromSuperViewOnHide = true
+    hud.hide(animated: true, afterDelay: delay)
+    return hud
 }
 
 func ivLoadingHud(_ msg: String? = nil, inView view: UIView? = nil,  isMask mask: Bool = false) -> MBProgressHUD {
@@ -59,7 +69,7 @@ func ivLoadingHud(_ msg: String? = nil, inView view: UIView? = nil,  isMask mask
         hud.backgroundView.color = UIColor(white: 0, alpha: 0.4)
         hud.isUserInteractionEnabled = true
     } else {
-        hud.isUserInteractionEnabled = true
+        hud.isUserInteractionEnabled = false
     }
     hud.removeFromSuperViewOnHide = true
     return hud

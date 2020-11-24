@@ -51,9 +51,9 @@ struct IVModel<T>: Codable where T: Codable {
 }
 
 struct IVArrayModel<T: Codable>: Codable {
-    var data: [T?]?
     var code: Int = 0
     var msg: String?
+    var data: [T?]?
 }
 
 extension JSON {
@@ -79,18 +79,33 @@ extension JSON {
     
     /// 读取服务器推送的状态更新
     /// - Parameters:
-    ///   - value: 具体值的字段 例如 stVal 或 ctVal
+    ///   - value: 具体值的字段 例如 stVal 或 ctVal ,当层则直接是值
     ///   - property: 是哪个属性的值 例如 _online
     ///   - path: 服务器返回 有时候完整的，有时候是部分的，直接传进来就好
     /// - Returns: 返回的 JSON
-    func ivValue(_ value: String, property: String, path: String) -> JSON? {
+    func ivValue(_ value: String, property: String, path: String = "") -> JSON? {
         if path.contains(property) {
-            return self[value].ivExists()
+            if let value = self[value].ivExists() {
+                return value
+            }
+            if let readonlyValue = self["stVal"][value].ivExists() {
+                return readonlyValue
+            }
+            return self["setVal"][value].ivExists()
         } else {
-            let paths = ["ProReadonly","Action","ProConst"]
+            let paths = ["ProReadonly","Action","ProConst","ProWritable","ProUser"]
+            if paths.contains(path) {
+                if self[path].exists() {
+                    if let value = self[path].value(property + "." + value)?.ivExists() {
+                        return value
+                    }
+                }
+            }
             for path in paths {
                 if self[path].exists() {
-                    return self[path].value(property + "." + value)?.ivExists()
+                    if let value = self[path].value(property + "." + value)?.ivExists() {
+                        return value
+                    }
                 }
             }
             return self.value(property + "." + value)?.ivExists()

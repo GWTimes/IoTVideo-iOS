@@ -22,6 +22,7 @@ class IVMsgOtaVC: UIViewController, IVDeviceAccessable {
             self.newVersionLabel.text = newVersion
         }
     }
+    var currVersion: String = ""
     
     var dataSource = [[String: AnyHashable]]()
     var jsonData = [String: AnyHashable]()
@@ -30,7 +31,7 @@ class IVMsgOtaVC: UIViewController, IVDeviceAccessable {
         super.viewDidLoad()
 
         updatePersentProgress.transform = CGAffineTransform(scaleX: 1.0, y: 2.5)
-
+        
         requestNewIoTModel()
         addUpdateObserver()
     }
@@ -71,27 +72,22 @@ class IVMsgOtaVC: UIViewController, IVDeviceAccessable {
     
     //MARK: 查询更新信息
     @IBAction func searchNewVersion(_ sender: Any) {
-        guard let Action = jsonData["Action"] as? [String: AnyHashable],
-            let searchTextDic = Action["_otaVersion"] as? [String: AnyHashable] else {
+        guard let Action = jsonData["ProConst"] as? [String: AnyHashable],
+            let _versionInfo = Action["_versionInfo"] as? [String: AnyHashable],
+            let swVer = _versionInfo["swVer"] as? String else {
                 showAlert(msg: "物模型为空")
                 return
         }
 
+        currVersion = swVer
+        
         let hud = ivLoadingHud()
         
         //获取最新的查询服务器版本的json,此处为开发实时适配物模型的变更做的工作
         //开发者使用时物模型应该已经稳定，可以直接使用如:
         // "{\"stVal\":\"\"}" 这样的json字符串直接查询，具体需要根据对应物模型文档
         // Action._otaVersion 的 stVal 填空字符串即为查询可升级的最新固件版本号
-        var searchTextJson = ""
-        do {
-            let searchTextData = try JSONSerialization.data(withJSONObject: searchTextDic, options: [])
-            searchTextJson = String(data:searchTextData, encoding: .utf8) ?? ""
-        } catch let error {
-            logWarning(error)
-        }
-        
-        IVMessageMgr.sharedInstance.takeAction(ofDevice: self.device.deviceID, path: "Action._otaVersion", json: searchTextJson) { (json, err) in
+        IVMessageMgr.sharedInstance.takeAction(ofDevice: self.device.deviceID, path: "Action._otaVersion", json: "{\"stVal\":\"\"}") { (json, err) in
             hud.hide()
             
             if let err = err {
@@ -114,26 +110,25 @@ class IVMsgOtaVC: UIViewController, IVDeviceAccessable {
                 
                 var newVersion = ""
                 
-                if let new = JSON(parseJSON: propertyModel.json)["ctlVal"].string  { //兼容旧版本
-                    newVersion = new
-                }
-                
                 if let new = JSON(parseJSON: propertyModel.json)["stVal"].string {
                     newVersion = new
                 }
                 
                 guard !newVersion.isEmpty else {
-                    //                showAlert(msg: "当前无可升级版本")
-                    ivHud("当前无可升级版本")
+                    ivHud("查询失败，请重试")
                     return
                 }
                 
-                self.newVersion = newVersion
-                self.handNewVersion()
+                if newVersion > self.currVersion {
+                    self.newVersion = newVersion
+                    self.handNewVersion()
+                } else {
+                    ivHud("无可升级版本")
+                }
             }
             
             // 更新进度
-            if propertyModel.path == "ProReadonly._otaUpgrade" || propertyModel.path == "Action._otaUpgrade" {
+            if propertyModel.path == "Action._otaUpgrade" {
                 guard let persent = JSON(parseJSON: propertyModel.json)["stVal"].int else {
                     logWarning("OTA升级进度解析失败")
                     return
@@ -173,11 +168,7 @@ class IVMsgOtaVC: UIViewController, IVDeviceAccessable {
             var upgradeTextJson = ""
             do {
                 var upgradeTextDic = (self.jsonData["Action"] as! [String: AnyHashable])["_otaUpgrade"] as! [String: AnyHashable]
-                if let _ = upgradeTextDic["ctlVal"] as? Int {
-                    upgradeTextDic["ctlVal"] = 1 //设置升级标志位 旧
-                } else {
-                    upgradeTextDic["stVal"] = 1 //设置升级标志位 新
-                }
+                upgradeTextDic["stVal"] = 1 //设置升级标志位 新
                 
                 let upgradeTextData = try JSONSerialization.data(withJSONObject: upgradeTextDic, options: [])
                 upgradeTextJson = String(data: upgradeTextData, encoding: .utf8) ?? ""

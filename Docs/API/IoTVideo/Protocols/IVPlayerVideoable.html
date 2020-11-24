@@ -58,11 +58,17 @@
 		
 		<option value="//api/name/cameraPosition">cameraPosition</option>
 		
+		<option value="//api/name/encHeader">encHeader</option>
+		
 		<option value="//api/name/frameRate">frameRate</option>
 		
 		<option value="//api/name/isCameraOpening">isCameraOpening</option>
 		
 		<option value="//api/name/previewLayer">previewLayer</option>
+		
+		<option value="//api/name/videoCapture">videoCapture</option>
+		
+		<option value="//api/name/videoEncoder">videoEncoder</option>
 		
 	</optgroup>
 	
@@ -99,7 +105,7 @@
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
 	<th>Conforms to</th>
-	<td>NSObject</td>
+	<td><a href="../Protocols/IVVideoCaptureDelegate.html">IVVideoCaptureDelegate</a></td>
 </tr><tr>
 	<th>Declared in</th>
 	<td>IVPlayer.h</td>
@@ -112,7 +118,7 @@
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>播放器视频通话协议</p>
+						<p>播放器可视频协议</p>
 					</div>
 					
 					
@@ -128,6 +134,129 @@
 
 						<div class="task-list">
 							<div class="section-method">
+	<a name="//api/name/encHeader" title="encHeader"></a>
+	<h3 class="method-title"><code><a href="#//api/name/encHeader">&nbsp;&nbsp;encHeader</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>对讲和视频通话时APP端使用的流媒体信息头, 由对应采集器和编码器参数组合而成, 建立连接时会发送给设备。</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readonly) IVAVHeader encHeader</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVPlayer.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/videoCapture" title="videoCapture"></a>
+	<h3 class="method-title"><code><a href="#//api/name/videoCapture">&nbsp;&nbsp;videoCapture</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>视频采集器, 默认为 <a href="../Classes/IVVideoCapture.html"><code>IVVideoCapture</code></a></p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, readwrite) id&lt;IVVideoCapturable&gt; videoCapture</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVPlayer.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/videoEncoder" title="videoEncoder"></a>
+	<h3 class="method-title"><code><a href="#//api/name/videoEncoder">&nbsp;&nbsp;videoEncoder</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>视频编码器, 默认为 <a href="../Classes/IVVideoEncoder.html"><code>IVVideoEncoder</code></a></p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, readwrite) id&lt;IVVideoEncodable&gt; videoEncoder</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVPlayer.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/previewLayer" title="previewLayer"></a>
 	<h3 class="method-title"><code><a href="#//api/name/previewLayer">&nbsp;&nbsp;previewLayer</a></code>
 <span class="task-item-suffix">required method</span></h3>
@@ -180,12 +309,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>镜头位置，默认IVCameraPositionFront</p>
+				<p>镜头位置</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readonly) IVCameraPosition cameraPosition</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readwrite) IVCameraPosition cameraPosition</code></div>
 
 		    
 			
@@ -267,7 +396,7 @@
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign) int frameRate</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readwrite) int frameRate</code></div>
 
 		    
 			
@@ -429,7 +558,7 @@
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2020 tencentcs. All rights reserved. Updated: 2020-07-07</p>
+						<p class="copyright">Copyright &copy; 2020 tencentcs. All rights reserved. Updated: 2020-11-04</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>

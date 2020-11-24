@@ -13,12 +13,31 @@ import SwiftyJSON
 class IVLANDeviceTableVC: UITableViewController {
     
     var dataSource: [IVLANDevice] = []
+    var timer: Timer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         dataSource = IVNetConfig.lan.getDeviceList()
+        timer = Timer.iv_scheduledTimer(withTimeInterval: 2.0, repeats: true, block: { [weak self](tim) in
+            self?.dataSource = IVNetConfig.lan.getDeviceList()
+            self?.tableView.reloadData()
+        })
+    }
+        
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        timer.fireDate = .distantPast
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        timer.fireDate = .distantFuture
+    }
+    
+    deinit {
+        timer.invalidate()
+    }
+        
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -50,7 +69,7 @@ class IVLANDeviceTableVC: UITableViewController {
             let bind = UIAlertAction(title: "普通绑定", style: .default) { (_) in
                 let hud = ivLoadingHud()
                 
-                IVDemoNetwork.addDevice(dev.deviceID,  forceBind: false, responseHandler: { (data, error) in
+                IVDemoNetwork.addDevice(dev.deviceID, forceBind: false, options: dev.reserve, responseHandler: { (data, error) in
                     hud.hide()
                     if data == nil { return }
                     IVNotiPost(.deviceListChange(by: .add))
@@ -60,7 +79,7 @@ class IVLANDeviceTableVC: UITableViewController {
             
             let forseBind = UIAlertAction(title: "强制绑定（踢掉原主人）", style: .default) { (_) in
                 let hud = ivLoadingHud()
-                IVDemoNetwork.addDevice(dev.deviceID, forceBind: true, responseHandler: { (data, error) in
+                IVDemoNetwork.addDevice(dev.deviceID, forceBind: true, options: dev.reserve, responseHandler: { (data, error) in
                     hud.hide()
                     if data == nil { return }
                     IVNotiPost(.deviceListChange(by: .add))
@@ -71,7 +90,7 @@ class IVLANDeviceTableVC: UITableViewController {
             let share = UIAlertAction(title: "分享该设备", style: .default) { _ in
                 let hud = ivLoadingHud()
                 
-                IVDemoNetwork.addDevice(dev.deviceID, role: .guest, forceBind: true, responseHandler: { (data, error) in
+                IVDemoNetwork.addDevice(dev.deviceID, role: .guest, forceBind: true, options: dev.reserve, responseHandler: { (data, error) in
                     hud.hide()
                     if data == nil { return }
                     IVNotiPost(.deviceListChange(by: .add))

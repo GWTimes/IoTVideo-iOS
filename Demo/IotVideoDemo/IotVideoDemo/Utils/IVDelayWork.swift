@@ -71,5 +71,16 @@ class IVDelayWork: Any {
             DispatchQueue.main.async { work(succ) }
         }
     }
+    
+    public static func cancelTask(withKey key: String) {
+        if Thread.isMainThread {
+            workItems[key] = nil
+        } else {
+            DispatchQueue.main.sync {
+                self.workItems[key] = nil
+            }
+        }
+    }
+
 }
 

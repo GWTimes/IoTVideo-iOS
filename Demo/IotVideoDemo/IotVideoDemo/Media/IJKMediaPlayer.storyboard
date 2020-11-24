@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dWz-ae-rsO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dWz-ae-rsO">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -81,27 +81,39 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cFL-db-TiO" userLabel="Timeline View" customClass="IVTimelineView" customModule="IotVideoDemo" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="277" width="414" height="84"/>
+                                <rect key="frame" x="0.0" y="277" width="414" height="120"/>
                                 <color key="backgroundColor" red="0.97405088699999998" green="0.97405088699999998" blue="0.97405088699999998" alpha="0.74836793660000001" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="84" id="r8q-lx-jsh"/>
+                                    <constraint firstAttribute="height" constant="120" id="r8q-lx-jsh"/>
                                 </constraints>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="OYa-gF-VQL">
+                                <rect key="frame" x="0.0" y="397" width="414" height="499"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="dWz-ae-rsO" id="8NQ-cB-e5j"/>
+                                    <outlet property="delegate" destination="dWz-ae-rsO" id="IaI-eX-llZ"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="secondarySystemGroupedBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="OYa-gF-VQL" firstAttribute="top" secondItem="cFL-db-TiO" secondAttribute="bottom" id="0HY-GX-bVt"/>
+                            <constraint firstItem="OYa-gF-VQL" firstAttribute="trailing" secondItem="UUX-2A-ARP" secondAttribute="trailing" id="4Xx-Y4-omv"/>
                             <constraint firstAttribute="trailing" secondItem="cFL-db-TiO" secondAttribute="trailing" id="7jk-G8-gaU"/>
                             <constraint firstItem="1OA-cX-VrR" firstAttribute="top" secondItem="9sZ-sK-z4z" secondAttribute="bottom" constant="30" id="CJE-jj-utA"/>
                             <constraint firstAttribute="trailing" secondItem="en2-ii-0h3" secondAttribute="trailing" id="Qov-FU-vj7"/>
                             <constraint firstItem="1OA-cX-VrR" firstAttribute="centerX" secondItem="9sZ-sK-z4z" secondAttribute="centerX" id="QzK-Av-o1p"/>
                             <constraint firstItem="en2-ii-0h3" firstAttribute="leading" secondItem="UUX-2A-ARP" secondAttribute="leading" id="To3-e6-A44"/>
                             <constraint firstItem="en2-ii-0h3" firstAttribute="top" secondItem="UUX-2A-ARP" secondAttribute="top" id="YQs-5L-LaB"/>
+                            <constraint firstItem="OYa-gF-VQL" firstAttribute="leading" secondItem="UUX-2A-ARP" secondAttribute="leading" id="bPO-j7-8JC"/>
                             <constraint firstItem="cFL-db-TiO" firstAttribute="top" secondItem="zYN-kW-vTh" secondAttribute="bottom" id="byg-Lt-P7w"/>
                             <constraint firstItem="zYN-kW-vTh" firstAttribute="trailing" secondItem="UUX-2A-ARP" secondAttribute="trailing" id="dm9-Uz-g9x"/>
                             <constraint firstItem="cFL-db-TiO" firstAttribute="top" secondItem="en2-ii-0h3" secondAttribute="bottom" id="gdb-uf-okO"/>
                             <constraint firstItem="9sZ-sK-z4z" firstAttribute="centerY" secondItem="en2-ii-0h3" secondAttribute="centerY" id="jjw-QX-Mt2"/>
                             <constraint firstItem="cFL-db-TiO" firstAttribute="leading" secondItem="Wx7-1K-tNG" secondAttribute="leading" id="kUy-X3-4hj"/>
                             <constraint firstItem="9sZ-sK-z4z" firstAttribute="centerX" secondItem="en2-ii-0h3" secondAttribute="centerX" id="qEb-7r-lHS"/>
+                            <constraint firstAttribute="bottom" secondItem="OYa-gF-VQL" secondAttribute="bottom" id="s0o-yP-nua"/>
                             <constraint firstItem="zYN-kW-vTh" firstAttribute="leading" secondItem="UUX-2A-ARP" secondAttribute="leading" id="x6h-Ew-fMT"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="UUX-2A-ARP"/>
@@ -109,6 +121,7 @@
                     <navigationItem key="navigationItem" id="K1L-0D-TlS"/>
                     <connections>
                         <outlet property="activityIndicatorView" destination="9sZ-sK-z4z" id="Yq8-C3-jfc"/>
+                        <outlet property="alarmList" destination="OYa-gF-VQL" id="AgT-fz-JU2"/>
                         <outlet property="playBtn" destination="KrQ-8q-wLW" id="LPl-11-V4Y"/>
                         <outlet property="seekTimeLabel" destination="1OA-cX-VrR" id="rVB-Cp-HrH"/>
                         <outlet property="timelineView" destination="cFL-db-TiO" id="ym6-EQ-fca"/>
@@ -117,7 +130,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZHS-UA-3DI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1477" y="58"/>
+            <point key="canvasLocation" x="1476.8115942028987" y="57.589285714285708"/>
         </scene>
     </scenes>
     <resources>

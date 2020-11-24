@@ -37,3 +37,33 @@ extension Date {
     }
 }
 
+
+
+protocol IVPointer {
+    var rawPointer: UnsafeRawPointer { get }
+}
+
+extension IVPointer where Self: Any {
+    var rawPointer: UnsafeRawPointer {
+        return unsafeBitCast(self, to: UnsafeRawPointer.self)
+    }
+}
+
+extension IVPointer where Self: AnyObject {
+    var rawPointer: UnsafeRawPointer {
+        return UnsafeRawPointer(Unmanaged.passUnretained(self).toOpaque())
+    }
+}
+
+extension NSObject: IVPointer {}
+
+extension CGPoint: IVPointer {}
+extension CGRect: IVPointer {}
+extension CGSize: IVPointer {}
+extension CGVector: IVPointer {}
+
+#if os(iOS) || os(tvOS)
+  extension UIEdgeInsets: IVPointer {}
+  extension UIOffset: IVPointer {}
+  extension UIRectEdge: IVPointer {}
+#endif

@@ -25,75 +25,63 @@ import Foundation
         case .error:    return "[E]💔"
         case .warning:  return "[W]⚠️"
         case .info:     return "[I]💙"
-        case .debug:    return "[D]🔨"
-        case .verbose:  return "[T]"
+        case .debug:    return "[D]"
+        case .verbose:  return "[V]"
         }
     }
 }
 
 fileprivate class Log: NSObject {
-    var date: Date
     var level: Level
+    var tag: String
     var message: String
     var file: String
     var function: String
     var line: Int
-    
-    var dateDesc: String {
-        return Log.dateFormatter.string(from: date)
-    }
+    var dateDesc: String
     
     convenience override init() {
-        self.init(date: Date(), level: .verbose, message: "", file: "", function: "", line: 0)
+        self.init(date: Date(), tag: "APP", level: .verbose, message: "", file: "", function: "", line: 0)
     }
     
-    init(date: Date, level: Level, message: String, file: String, function: String, line: Int) {
-        self.date   = date
-        self.level  = level
-        self.message   = message
-        self.file   = file
-        self.function = function
-        self.line   = line
+    init(date: Date, tag: String, level: Level, message: String, file: String, function: String, line: Int) {
+        self.dateDesc   = Log.dateFormatter.string(from: date)
+        self.tag        = tag
+        self.level      = level
+        self.message    = message
+        self.file       = file
+        self.function   = function
+        self.line       = line
         super.init()
     }
     
-    // 2019-05-17 08:30:53.004 [D] <BaseViewController.m:22> -[BaseViewController dealloc] 控制器销毁 MineController
+    // 08:30:53.004 控制器销毁 MineController <BaseViewController.m:22> -[BaseViewController dealloc]
     override var description: String {
-        let location = (file.isEmpty ? "" : (line > 0 ? "<\(file):\(line)>" : "<\(file)>"))
-        
+        let linestr = (line > 0 ? "L\(line)" : "")
+
         switch (level) {
         case .fatal, .error, .warning:
-            // 18:01:40.917 [F]📵 <BaseViewController.m:22> -[viewDidLoad:] set current ListSrv to 119.29.231.112.
-            return String(format: "%@ %@ %@ %@ %@", dateDesc, level.description, location, function, message)
-            
+            let location = (line > 0 ? "[\(file):\(line) \(function)]" : "")
+            return String(format: "%@ [%@] %@ %@ %@", dateDesc, tag, level.description, message, location)
         case .info:
-            // 18:01:40.917 [I]💙 <BaseViewController.m:22> set current ListSrv to 119.29.231.112.
-            return String(format: "%@ %@ %@ %@", dateDesc, level.description, location, message)
-            
-        case .debug:
-            // 18:01:40.917 <BaseViewController.m:22> set current ListSrv to 119.29.231.112.
-            return String(format: "%@ %@ %@", dateDesc, location, message)
-            
-        case .verbose:
-            // 08:30:53.004 set current ListSrv to 119.29.231.112.
-            return String(format: "%@ %@", dateDesc, message)
-            
+            return String(format: "%@ [%@] %@ %@ %@", dateDesc, tag, level.description, message, linestr)
+        case .debug, .verbose:
+            return String(format: "%@ [%@] %@ %@",    dateDesc, tag, message, linestr)
         default:
             return ""
         }
-        
     }
 
     static func == (lhs: Log, rhs: Log) -> Bool {
-        return lhs.date == rhs.date
+        return lhs.dateDesc == rhs.dateDesc
     }
     
     static func < (lhs: Log, rhs: Log) -> Bool {
-        return lhs.date < rhs.date
+        return lhs.dateDesc < rhs.dateDesc
     }
     
     static func > (lhs: Log, rhs: Log) -> Bool {
-        return lhs.date > rhs.date
+        return lhs.dateDesc > rhs.dateDesc
     }
     
     private static let dateFormatter: DateFormatter = {
@@ -124,17 +112,17 @@ fileprivate class Log: NSObject {
         IVFileLogger.shared.autoLoggingStandardOutput()
         self.eventObserver = eventObserver
         registerCrashHandler { (crashLog) in
-            log(.fatal, message: crashLog)
+            log(level: .fatal, message: crashLog)
         }
     }
 
-    @objc public static func log(_ level: Level = .debug, path: String = #file, function: String = #function, line: Int = #line, message: String = "") {
+    @objc public static func log(_ tag: String = "APP", level: Level = .debug, path: String = #file, function: String = #function, line: Int = #line, message: String = "") {
         // 级别限制
         if level.rawValue > logLevel.rawValue { return }
         
         // 模型转换
         let fileName = (path as NSString).lastPathComponent
-        let log = Log(date: Date(), level: level, message: message, file: fileName, function: function, line: line)
+        let log = Log(date: Date(), tag: tag, level: level, message: message, file: fileName, function: function, line: line)
         let logDesc = log.description
         
         if level == .fatal {

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JJa-xL-XG1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JJa-xL-XG1">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -30,7 +29,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="cd7-Zy-1Xm">
-                                            <rect key="frame" x="320" y="7" width="74" height="30"/>
+                                            <rect key="frame" x="277" y="7" width="117" height="30"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UET-TJ-UG7">
                                                     <rect key="frame" x="0.0" y="0.0" width="31" height="30"/>
@@ -50,6 +49,15 @@
                                                         <action selector="actionSender:" destination="HhA-nz-XiE" eventType="touchUpInside" id="f28-yt-qMS"/>
                                                     </connections>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nIv-XV-v3i">
+                                                    <rect key="frame" x="86" y="0.0" width="31" height="30"/>
+                                                    <state key="normal" title="删除">
+                                                        <color key="titleColor" red="0.0" green="0.43137254899999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="deleteSender:" destination="HhA-nz-XiE" eventType="touchUpInside" id="BuQ-F3-pEW"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                         </stackView>
                                     </subviews>
@@ -62,6 +70,7 @@
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="actionButton" destination="TYY-mj-VrV" id="VJj-QM-E6r"/>
+                                    <outlet property="deleteButton" destination="nIv-XV-v3i" id="PR4-u1-iJ5"/>
                                     <outlet property="getButton" destination="UET-TJ-UG7" id="jYl-uX-oy4"/>
                                     <outlet property="nameLabel" destination="ZbQ-Al-rmc" id="NrB-6r-oEz"/>
                                 </connections>

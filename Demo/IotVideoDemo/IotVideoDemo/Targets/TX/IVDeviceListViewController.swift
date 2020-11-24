@@ -8,7 +8,7 @@
 
 import UIKit
 import SwiftyJSON
-import IoTVideo.IVMessageMgr
+import IoTVideo
 
 class IVDeviceListViewController: UITableViewController {
     
@@ -17,9 +17,10 @@ class IVDeviceListViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        loadDeviceList()
+        self.title = using_test_web_host ? "设备列表(测试服)" : "用户设备列表"
+        addDeviceView?.isHidden = false
         addRefreshControl()
+        loadDeviceList()
         addObserverForDeviceOnline()
         addObserverForDeviceListChange()
         addLongPressGesture()
@@ -31,6 +32,37 @@ class IVDeviceListViewController: UITableViewController {
         
         let hud = ivLoadingHud()
         
+        if let expireTime = UserDefaults.standard.value(forKey:  demo_expireTime) as? Int {
+            if Int(Date().timeIntervalSince1970) > expireTime {
+                if let nav = self.navigationController as? IVNavigationViewController {
+                    nav.jumpToLoginView()
+                }
+            }
+        }
+        
+        // 匿名Token 登录
+        if let loginType = UserDefaults.standard.value(forKey: demo_loginType) as? Int, loginType == 1, let tid = UserDefaults.standard.value(forKey: demo_AnonymousDev) as? String {
+            
+            addDeviceView?.isHidden = true
+            
+            let deviceModel = IVDeviceModel(devId: tid, deviceName: "匿名设备", shareType: .guest)
+            
+            IVMessageMgr.sharedInstance.readProperty(ofDevice: deviceModel.devId!, path: "ProReadonly._online") { (json, error) in
+                if let json = json {
+                    deviceModel.online = JSON(parseJSON: json)["stVal"].intValue
+                }
+                userDeviceList = [IVDevice(deviceModel)]
+                DispatchQueue.main.async {
+                    self.addDeviceView?.isHidden = !userDeviceList.isEmpty
+                    self.tableView.reloadData()
+                    hud.hide()
+                    self.refresh.endRefreshing()
+                }
+            }
+            return
+        }
+        
+        // 正常登录
         IVDemoNetwork.deviceList { (data, error) in
             hud.hide()
             guard let data = data else {
@@ -69,7 +101,7 @@ class IVDeviceListViewController: UITableViewController {
             
             if let dev = userDeviceList.first(where: { $0.deviceID == propertyModel.deviceId }),
                 let online = JSON(parseJSON: propertyModel.json).ivValue("stVal", property: "_online", path: propertyModel.path) {
-                dev.online = online.boolValue
+                dev.online = online.intValue
                 self.tableView.reloadData()
             }
         }
@@ -109,6 +141,15 @@ class IVDeviceListViewController: UITableViewController {
         }
     }
     
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier == "addDevice" {
+            if let loginType = UserDefaults.standard.value(forKey: demo_loginType) as? Int, loginType == 1 {
+                return false
+            }
+        }
+        return true 
+    }
+    
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -124,19 +165,17 @@ extension IVDeviceListViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "IVDeviceCell", for: indexPath) as! IVDeviceCell
         
         let device = userDeviceList[indexPath.row]
-        let isOnline = device.online
-        let titleColor = isOnline ? UIColor(rgb: 0x3D7AFF) : .darkGray
-        let subColor = isOnline ? UIColor(rgb: 0x3D7AFF) : .darkGray
+        let color: UIColor = (device.online == 1 ? UIColor(rgb: 0x3D7AFF) : (device.online == 2 ? .orange : .darkGray))
         
         cell.deviceIdLabel.text = device.deviceID
-        cell.deviceIdLabel.textColor = titleColor
+        cell.deviceIdLabel.textColor = color
         cell.deviceNameLabel.text = device.deviceName
-        cell.deviceNameLabel.textColor = titleColor
-        cell.onlineLabel.text = isOnline ? "在线" : "离线"
-        cell.onlineLabel.textColor = subColor
-        cell.onlineIcon.isHighlighted = isOnline
+        cell.deviceNameLabel.textColor = color
+        cell.onlineLabel.text = (device.online == 1 ? "在线" : (device.online == 2 ? "休眠" : "离线"))
+        cell.onlineLabel.textColor = color
+        cell.onlineIcon.isHighlighted = (device.online == 1)
         cell.deviceRoleLabel.text = device.shareType.rawValue
-        cell.deviceRoleLabel.textColor = subColor
+        cell.deviceRoleLabel.textColor = color
         
         return cell
     }

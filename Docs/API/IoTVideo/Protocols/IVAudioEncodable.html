@@ -48,13 +48,37 @@
 
 	
 	
+	<option value="tasks">Tasks</option>
+	
 	
 
 	
 	
+	<optgroup label="Properties">
+		
+		<option value="//api/name/audioCodecOption">audioCodecOption</option>
+		
+		<option value="//api/name/audioType">audioType</option>
+		
+		<option value="//api/name/sampleNumPerFrame">sampleNumPerFrame</option>
+		
+	</optgroup>
+	
 
 	
 
+	
+	<optgroup label="Instance Methods">
+		
+		<option value="//api/name/encodeAudioFrame:outPacket:">- encodeAudioFrame:outPacket:</option>
+		
+		<option value="//api/name/registerForChannel:">- registerForChannel:</option>
+		
+		<option value="//api/name/setupWithAudioType:sampleRate:audioMode:bitWidth:">- setupWithAudioType:sampleRate:audioMode:bitWidth:</option>
+		
+		<option value="//api/name/unregister">- unregister</option>
+		
+	</optgroup>
 	
 	
 </select>
@@ -75,10 +99,10 @@
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
 	<th>Conforms to</th>
-	<td><a href="../Protocols/IVAVCodecable.html">IVAVCodecable</a></td>
+	<td>NSObject</td>
 </tr><tr>
 	<th>Declared in</th>
-	<td>IVAVCodecable.h</td>
+	<td>IVAudioEncodable.h</td>
 </tr>
 						</tbody></table></div>
 					
@@ -95,6 +119,323 @@
 
 					
 					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						
+
+						
+						
+
+						<div class="task-list">
+							<div class="section-method">
+	<a name="//api/name/audioType" title="audioType"></a>
+	<h3 class="method-title"><code><a href="#//api/name/audioType">&nbsp;&nbsp;audioType</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>音频编码格式</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readwrite) IVAudioCodecType audioType</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVAudioEncodable.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/audioCodecOption" title="audioCodecOption"></a>
+	<h3 class="method-title"><code><a href="#//api/name/audioCodecOption">&nbsp;&nbsp;audioCodecOption</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>音频编码格式的细分类型</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readonly) uint8_t audioCodecOption</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVAudioEncodable.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/sampleNumPerFrame" title="sampleNumPerFrame"></a>
+	<h3 class="method-title"><code><a href="#//api/name/sampleNumPerFrame">&nbsp;&nbsp;sampleNumPerFrame</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>每帧数据里的采样数</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readonly) uint32_t sampleNumPerFrame</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVAudioEncodable.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/registerForChannel:" title="registerForChannel:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/registerForChannel:">&ndash;&nbsp;registerForChannel:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>注册</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)registerForChannel:(uint32_t)<em>channel</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>channel</code></th>
+						<td><p>通道ID</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<div class="note"><p><strong>Note:</strong> 建立连接成功时调用</p></div>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVAudioEncodable.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/unregister" title="unregister"></a>
+	<h3 class="method-title"><code><a href="#//api/name/unregister">&ndash;&nbsp;unregister</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>注销</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)unregister</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVAudioEncodable.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/encodeAudioFrame:outPacket:" title="encodeAudioFrame:outPacket:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/encodeAudioFrame:outPacket:">&ndash;&nbsp;encodeAudioFrame:outPacket:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>编码</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)encodeAudioFrame:(IVAudioFrame *)<em>inFrame</em> outPacket:(IVAudioPacket *)<em>outPacket</em></code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVAudioEncodable.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/setupWithAudioType:sampleRate:audioMode:bitWidth:" title="setupWithAudioType:sampleRate:audioMode:bitWidth:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/setupWithAudioType:sampleRate:audioMode:bitWidth:">&ndash;&nbsp;setupWithAudioType:sampleRate:audioMode:bitWidth:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>设置相关参数</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)setupWithAudioType:(IVAudioCodecType)<em>audioType</em> sampleRate:(uint32_t)<em>sampleRate</em> audioMode:(IVAudioSoundMode)<em>audioMode</em> bitWidth:(uint8_t)<em>bitWidth</em></code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVAudioEncodable.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+						</div>
+						
+					</div>
+					
 					
 
                     
@@ -105,7 +446,7 @@
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2020 tencentcs. All rights reserved. Updated: 2020-07-07</p>
+						<p class="copyright">Copyright &copy; 2020 tencentcs. All rights reserved. Updated: 2020-11-04</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>

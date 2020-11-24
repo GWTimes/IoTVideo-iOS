@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "IVPlayer.h"
 #import <AVFoundation/AVFoundation.h>
+
 NS_ASSUME_NONNULL_BEGIN
 
 /// 回放文件
@@ -29,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) uint32_t  pageIndex;
 /// 总页数
 @property (nonatomic, assign) uint32_t  totalPage;
-// /回放文件数组
+/// 回放文件数组
 @property (nonatomic, strong) NSArray<IVPlaybackItem *> *items;
 @end
 
@@ -62,19 +63,22 @@ typedef void (^PlaybackListCallback)(IVPlaybackPage *_Nullable page, NSError *_N
 - (nullable instancetype)initWithDeviceId:(NSString *)deviceId sourceId:(uint16_t)sourceId playbackItem:(IVPlaybackItem *)item seekToTime:(NSTimeInterval)time;
 
 /// 获取一页回放文件列表
-/// 请根据实际情况合理设置查询时间范围和分页，时间跨度太大可能会增加设备查询时间（一般建议设置为三天以内, 即当天、前一天和后一天）
+/// 该方法要求设备SDK版本大于`v1.2(xxxx)`
 /// @param deviceId 设备ID
 /// @param pageIndex 页码索引，获取指定页码的回放文件（ pageIndex从0开始递增）
-/// @param countPerPage 在[startTime, endTime]时间范围内按每页countPerPage个文件查询，每次返回一页的数据
+/// @param countPerPage 在[startTime, endTime]时间范围内按每页`countPerPage`个文件查询，每次返回一页的数据，该值由APP设置，取值范围[1, 3200]
 /// @param startTime 开始时间戳（秒）
 /// @param endTime 结束时间戳（秒）
+/// @param filterType 过滤文件类型, nil为不过滤
 /// @param completionHandler 结果回调
-+ (void)getPlaybackListOfDevice:(NSString *)deviceId
-                      pageIndex:(uint32_t)pageIndex
-                   countPerPage:(uint32_t)countPerPage
-                      startTime:(NSTimeInterval)startTime
-                        endTime:(NSTimeInterval)endTime
-              completionHandler:(PlaybackListCallback)completionHandler;
+/// @note ⚠️请根据实际情况合理设置查询时间范围和分页，`时间跨度太长`或`每页数量过大`会增加设备查询时间， 建议[startTime, endTime]区间不超过24小时 或 countPerPage不超过1440个文件.
++ (void)getPlaybackListV2OfDevice:(NSString *)deviceId
+                        pageIndex:(uint32_t)pageIndex
+                     countPerPage:(uint32_t)countPerPage
+                        startTime:(NSTimeInterval)startTime
+                          endTime:(NSTimeInterval)endTime
+                       filterType:(nullable NSString *)filterType
+                completionHandler:(PlaybackListCallback)completionHandler;
 
 /// (未播放前)设置回放参数.
 /// @note 应在文件尚未播放时使用，需手动调用`play`开始播放.
@@ -98,6 +102,26 @@ typedef void (^PlaybackListCallback)(IVPlaybackPage *_Nullable page, NSError *_N
 /// 恢复
 - (void)resume;
 
+
+#pragma mark - Deprecated
+
+/// 获取一页回放文件列表
+/// @param deviceId 设备ID
+/// @param pageIndex 页码索引，获取指定页码的回放文件（ pageIndex从0开始递增）
+/// @param countPerPage 在[startTime, endTime]时间范围内按每页`countPerPage`个文件查询，每次返回一页的数据，该值由APP设置，取值范围[1, 900]
+/// @param startTime 开始时间戳（秒）
+/// @param endTime 结束时间戳（秒）
+/// @param completionHandler 结果回调
+/// @note ⚠️请根据实际情况合理设置查询时间范围和分页，`时间跨度太长`或`每页数量过大`会增加设备查询时间， 建议[startTime, endTime]区间不超过12小时 或 countPerPage不超过720个文件.
+/// @deprecated Use `-getPlaybackListV2OfDevice:pageIndex:countPerPage:startTime:endTime:completionHandler:` instead.
++ (void)getPlaybackListOfDevice:(NSString *)deviceId
+                      pageIndex:(uint32_t)pageIndex
+                   countPerPage:(uint32_t)countPerPage
+                      startTime:(NSTimeInterval)startTime
+                        endTime:(NSTimeInterval)endTime
+              completionHandler:(PlaybackListCallback)completionHandler API_DEPRECATED("Use -getPlaybackListV2OfDevice:pageIndex:countPerPage:startTime:endTime:filterType:completionHandler: instead", ios(2.0,9.0));
+
 @end
 
 NS_ASSUME_NONNULL_END
+

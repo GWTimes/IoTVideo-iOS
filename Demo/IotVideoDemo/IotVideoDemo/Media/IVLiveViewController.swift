@@ -21,11 +21,7 @@ class IVLiveViewController: IVDevicePlayerViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         livePlayer = IVLivePlayer(deviceId: device.deviceID)
-        if let livePlayer = livePlayer {
-            previewView.layer.addSublayer(livePlayer.previewLayer)
-        }
     }
         
     override func viewDidAppear(_ animated: Bool) {
@@ -40,6 +36,10 @@ class IVLiveViewController: IVDevicePlayerViewController {
             return;
         }
         
+        if let livePlayer = livePlayer {
+            previewView.layer.addSublayer(livePlayer.previewLayer)
+        }
+
         livePlayer?.openCamera()
     }
     

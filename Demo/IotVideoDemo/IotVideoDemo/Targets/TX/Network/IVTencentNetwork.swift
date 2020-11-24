@@ -21,7 +21,14 @@ public typealias IVTencentNetworkResponseHandler = ((_ json: String?, _ error: N
 public class IVTencentNetwork: AFHTTPSessionManager {
 //    private var host = "http://cvm.tencentcloudapi.com"
 //    private var host = "http://14.22.4.147:80/"
-    private var host = "https://iotvideo.tencentcloudapi.com/"
+    private var host: String = {
+        if using_test_web_host {
+            return "https://test-iotvideotencentcloudapi.cloudlinks.cn:20443"
+        } else {
+            return "https://iotvideo.tencentcloudapi.com/"
+        }
+    }()
+    
     var secretId  = ""
     var secretKey = ""
     var token = ""
@@ -51,11 +58,11 @@ extension IVTencentNetwork {
         
         let success = {(task: URLSessionTask, json: Any?) -> () in
             if json == nil {
-                response?(nil, NSError(domain: "", code: 997, userInfo: nil))
+                response?(nil, NSError(domain: "", code: 997, userInfo: [NSLocalizedDescriptionKey : json]))
                 return
             }
             if let json = json, let jsonObj = json as? [String: Any], let code:Int = jsonObj["code"] as? Int, code != 0 { //code 不等于0时，返回错误信息
-                response?(nil, NSError(domain: "", code: 998, userInfo: nil))
+                response?(nil, NSError(domain: "", code: 998, userInfo: [NSLocalizedDescriptionKey : json]))
                 return
             }
             if let jsonData = try? JSONSerialization.data(withJSONObject: json!, options: []) {
@@ -63,7 +70,7 @@ extension IVTencentNetwork {
                 logInfo(action + ": \n" + String(str ?? "http call back empty"))
                 response?(str! as String, nil)
             } else {
-                response?(nil, NSError(domain: "", code: 999, userInfo: nil))
+                response?(nil, NSError(domain: "", code: 999, userInfo: [NSLocalizedDescriptionKey : json]))
             }
         }
         let failure = {(task: URLSessionTask?, error: Error) -> () in

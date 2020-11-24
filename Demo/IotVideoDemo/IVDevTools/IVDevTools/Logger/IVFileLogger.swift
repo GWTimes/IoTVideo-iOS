@@ -66,6 +66,21 @@ class IVFileLogger: NSObject {
 
     var maxFileCount = IVLogSettingViewController.maxLogFiles
 
+    /// 设备型号
+    private var modelIdentifier: String {
+        var systemInfo = utsname()
+        
+        uname(&systemInfo)
+        
+        let machineMirror = Mirror(reflecting: systemInfo.machine)
+        
+        let identifier = machineMirror.children.reduce("") { identifier, element in
+            guard let value = element.value as? Int8, value != 0 else { return identifier }
+            return identifier + String(UnicodeScalar(UInt8(value)))
+        }
+        return identifier
+    }
+
     func getDeviceInfo() -> String {
         let fmt = DateFormatter()
         fmt.dateFormat = "yyyy-MM-dd HH:mm:ss.SSS"
@@ -76,7 +91,9 @@ class IVFileLogger: NSObject {
         
         return """
                 > date:     \(datetime)
-                > device:   \(dev.name)(\(dev.systemName) \(dev.systemVersion))
+                > name:     \(dev.name)
+                > model:    \(modelIdentifier)
+                > OS:       \(dev.systemName) \(dev.systemVersion)
                 > pakege:   \(appVersion)(\(Bundle.main.bundleIdentifier ?? "?"))
                 > lang:     \(Locale.preferredLanguages.first ?? "?")
                 > IDFV:     \(dev.identifierForVendor?.uuidString ?? "?")

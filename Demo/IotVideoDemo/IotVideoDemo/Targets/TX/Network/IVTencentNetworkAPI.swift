@@ -58,6 +58,33 @@ extension IVTencentNetwork {
                      response: responseHandler)
     }
     
+    // 匿名登录
+    // 首次登录 tid 必填
+    // 续租token, oldAccessToken 必填
+    func AnonymousLogin(tid: String?, oldAccessToken: String?, ttlMinutes: Int = 1440,responseHandler:IVTencentNetworkResponseHandler)  {
+        var ttl = 1440
+        if ttlMinutes > 1440 {
+            ttl = 1440
+        }
+        if ttlMinutes < 1 {
+            ttl = 1
+        }
+        
+        var params = [String: Any]()
+        if tid != nil {
+            params["Tid"] = tid!
+        }
+        if oldAccessToken != nil {
+            params["OldAccessToken"] = oldAccessToken
+        }
+        params["TtlMinutes"] = ttl
+        
+        self.request(methodType: .POST,
+                     action: "CreateAnonymousAccessToken",
+                     params: params,
+                     response: responseHandler)
+    }
+    
     //获取设备列表
     func deviceList(responseHandler: IVTencentNetworkResponseHandler) {
         let accessId = UserDefaults.standard.string(forKey: demo_accessId)!
@@ -115,21 +142,29 @@ extension IVTencentNetwork {
                      response: responseHandler)
     }
     
+    func queryBuyedCloudStoragePackage(serviceId: String, responseHandler: IVTencentNetworkResponseHandler) {
+        self.request(methodType: .POST,
+                     action: "DescribeStorageService",
+                     params: ["ServiceId": serviceId,
+                              "GetFinishedOrder": false],
+                     response: responseHandler)
+    }
     
     func buyCloudStoragePackage(packageID: String, deviceId: String, responseHandler: IVTencentNetworkResponseHandler) {
-        let accessId = UserDefaults.standard.string(forKey: demo_accessId)!
+//        let accessId = UserDefaults.standard.string(forKey: demo_accessId)!
         self.request(methodType: .POST,
-                     action: "CreateStorage",
+                     action: "CreateStorageService",
                      params: ["PkgId": packageID,
                               "Tid": deviceId,
-                              "UserTag": accessId],
+                              "OrderCount": 1,
+                              "StorageRegion": "ap-guangzhou"],
                      response: responseHandler)
     }
 }
 
 
 //正常登陆：腾讯控制台获取的 id,key和用户名
-//临时授权登陆：腾讯控制台获取的 零时id,key,token和用户名
+//临时授权登陆：腾讯控制台获取的 临时id,key,token和用户名
 struct TXAccount {
     @Trimmed var userName: String
     @Trimmed var secretId: String

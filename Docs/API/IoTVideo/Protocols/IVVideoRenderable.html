@@ -54,13 +54,25 @@
 
 	
 	
+	<optgroup label="Properties">
+		
+		<option value="//api/name/isRendering">isRendering</option>
+		
+		<option value="//api/name/videoView">videoView</option>
+		
+	</optgroup>
+	
 
 	
 
 	
 	<optgroup label="Instance Methods">
 		
-		<option value="//api/name/player:renderVideoFrame:">- player:renderVideoFrame:</option>
+		<option value="//api/name/startRenderingWithAVHeader:channel:dataSource:">- startRenderingWithAVHeader:channel:dataSource:</option>
+		
+		<option value="//api/name/stopRendering">- stopRendering</option>
+		
+		<option value="//api/name/takeScreenshot:">- takeScreenshot:</option>
 		
 	</optgroup>
 	
@@ -86,7 +98,7 @@
 	<td>NSObject</td>
 </tr><tr>
 	<th>Declared in</th>
-	<td>IVPlayer.h</td>
+	<td>IVVideoRenderable.h</td>
 </tr>
 						</tbody></table></div>
 					
@@ -112,8 +124,8 @@
 
 						<div class="task-list">
 							<div class="section-method">
-	<a name="//api/name/player:renderVideoFrame:" title="player:renderVideoFrame:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/player:renderVideoFrame:">&ndash;&nbsp;player:renderVideoFrame:</a></code>
+	<a name="//api/name/videoView" title="videoView"></a>
+	<h3 class="method-title"><code><a href="#//api/name/videoView">&nbsp;&nbsp;videoView</a></code>
 <span class="task-item-suffix">required method</span></h3>
 
 	<div class="method-info">
@@ -123,12 +135,53 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>视频渲染代理</p>
+				<p>视频画面</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (void)player:(IVPlayer *)<em>player</em> renderVideoFrame:(IVVideoFrame *)<em>videoFrame</em></code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, readonly) UIView *videoView</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVVideoRenderable.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/takeScreenshot:" title="takeScreenshot:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/takeScreenshot:">&ndash;&nbsp;takeScreenshot:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>视频画面截图</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)takeScreenshot:(void ( ^ ) ( UIImage *_Nullable image ))<em>completionHandler</em></code></div>
 
 		    
 			
@@ -137,13 +190,8 @@
 				<table class="argument-def parameter-def">
 				
 					<tr>
-						<th scope="row" class="argument-name"><code>player</code></th>
-						<td><p>播放器实例</p></td>
-					</tr>
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>videoFrame</code></th>
-						<td><p>要渲染的视频帧</p></td>
+						<th scope="row" class="argument-name"><code>completionHandler</code></th>
+						<td><p>完成回调</p></td>
 					</tr>
 				
 				</table>
@@ -163,7 +211,152 @@
 			
 			<div class="method-subsection declared-in-section">
 				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">IVPlayer.h</code></p>
+				<p><code class="declared-in-ref">IVVideoRenderable.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/isRendering" title="isRendering"></a>
+	<h3 class="method-title"><code><a href="#//api/name/isRendering">&nbsp;&nbsp;isRendering</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>是否正在运行</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readonly) BOOL isRendering</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVVideoRenderable.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/startRenderingWithAVHeader:channel:dataSource:" title="startRenderingWithAVHeader:channel:dataSource:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/startRenderingWithAVHeader:channel:dataSource:">&ndash;&nbsp;startRenderingWithAVHeader:channel:dataSource:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>开始运行</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)startRenderingWithAVHeader:(IVAVHeader)<em>avheader</em> channel:(uint32_t)<em>channel</em> dataSource:(id&lt;IVVideoRenderDataSource&gt;)<em>dataSource</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>avheader</code></th>
+						<td><p>流媒体信息头</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>channel</code></th>
+						<td><p>通道ID</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>dataSource</code></th>
+						<td><p>数据源</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVVideoRenderable.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/stopRendering" title="stopRendering"></a>
+	<h3 class="method-title"><code><a href="#//api/name/stopRendering">&ndash;&nbsp;stopRendering</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>停止运行</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)stopRendering</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVVideoRenderable.h</code></p>
 			</div>
 			
 			
@@ -184,7 +377,7 @@
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2020 tencentcs. All rights reserved. Updated: 2020-07-07</p>
+						<p class="copyright">Copyright &copy; 2020 tencentcs. All rights reserved. Updated: 2020-11-04</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>

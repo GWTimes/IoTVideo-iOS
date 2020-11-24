@@ -7,17 +7,28 @@
 //
 
 import UIKit
+import IoTVideo.IVConnection
 
 class IVDeviceMgrViewController: UITableViewController, IVDeviceAccessable, UITextFieldDelegate {
     var device: IVDevice!
+    
     @IBOutlet weak var devSrcNumTF: UITextField!
+    @IBOutlet weak var avconfigTF: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if let index = userDeviceList.firstIndex(where: { $0.deviceID == device.deviceID }) {
             device = userDeviceList[index]
         }
-        devSrcNumTF.text = "\(device.sourceNum)"
+        if let num = UserDefaults.standard.value(forKey: "\(device.deviceID)sourceNum") as? Int {
+            device.sourceNum = num
+            devSrcNumTF.text = "\(num)"
+        }
+
+        if let cfg = UserDefaults.standard.value(forKey: "\(device.deviceID)avconfig") as? String {
+            device.avconfig = cfg
+            avconfigTF.text = device.avconfig
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -26,7 +37,18 @@ class IVDeviceMgrViewController: UITableViewController, IVDeviceAccessable, UITe
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        device.sourceNum = Int(textField.text ?? textField.placeholder!) ?? 1
+        if textField == devSrcNumTF {
+            var num = Int(textField.text ?? textField.placeholder!) ?? 1
+            if num < 1 { num = 1 }
+            if num > 99 { num = 99 }
+            textField.text = "\(num)"
+            device.sourceNum = num
+            UserDefaults.standard.set(num, forKey: "\(device.deviceID)sourceNum")
+        } else if textField == avconfigTF {
+            let cfg = textField.text ?? ""
+            device.avconfig = cfg
+            UserDefaults.standard.set(cfg, forKey: "\(device.deviceID)avconfig")
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

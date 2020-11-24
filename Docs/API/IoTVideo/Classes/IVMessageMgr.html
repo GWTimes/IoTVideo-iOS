@@ -70,11 +70,21 @@
 	
 	<optgroup label="Instance Methods">
 		
+		<option value="//api/name/addPropertyOfDevice:path:json:completionHandler:">- addPropertyOfDevice:path:json:completionHandler:</option>
+		
+		<option value="//api/name/addPropertyOfDevice:path:json:timeout:completionHandler:">- addPropertyOfDevice:path:json:timeout:completionHandler:</option>
+		
+		<option value="//api/name/deletePropertyOfDevice:path:completionHandler:">- deletePropertyOfDevice:path:completionHandler:</option>
+		
+		<option value="//api/name/deletePropertyOfDevice:path:timeout:completionHandler:">- deletePropertyOfDevice:path:timeout:completionHandler:</option>
+		
 		<option value="//api/name/readPropertyOfDevice:path:completionHandler:">- readPropertyOfDevice:path:completionHandler:</option>
 		
 		<option value="//api/name/readPropertyOfDevice:path:timeout:completionHandler:">- readPropertyOfDevice:path:timeout:completionHandler:</option>
 		
 		<option value="//api/name/sendDataToDevice:data:timeout:expectResponse:completionHandler:">- sendDataToDevice:data:timeout:expectResponse:completionHandler:</option>
+		
+		<option value="//api/name/sendDataToDevice:data:timeout:multiRspHandler:">- sendDataToDevice:data:timeout:multiRspHandler:</option>
 		
 		<option value="//api/name/sendDataToDevice:data:withResponse:">- sendDataToDevice:data:withResponse:</option>
 		
@@ -678,6 +688,278 @@
 		</div>
 	</div>
 </div><div class="section-method">
+	<a name="//api/name/addPropertyOfDevice:path:json:completionHandler:" title="addPropertyOfDevice:path:json:completionHandler:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/addPropertyOfDevice:path:json:completionHandler:">&ndash;&nbsp;addPropertyOfDevice:path:json:completionHandler:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>新增与已有的自定义重复时，会直接覆盖</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)addPropertyOfDevice:(NSString *)<em>deviceId</em> path:(NSString *)<em>path</em> json:(NSString *)<em>json</em> completionHandler:(nullable IVMsgJSONCallback)<em>completionHandler</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>deviceId</code></th>
+						<td><p>设备ID</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>path</code></th>
+						<td><p>路径（ProUser.xxx）不得以 &ldquo;_"开头</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>json</code></th>
+						<td><p>内容（JSON的具体字符串）</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>completionHandler</code></th>
+						<td><p>完成回调</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVMessageMgr.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/addPropertyOfDevice:path:json:timeout:completionHandler:" title="addPropertyOfDevice:path:json:timeout:completionHandler:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/addPropertyOfDevice:path:json:timeout:completionHandler:">&ndash;&nbsp;addPropertyOfDevice:path:json:timeout:completionHandler:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>新增与已有的自定义重复时，会直接覆盖</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)addPropertyOfDevice:(NSString *)<em>deviceId</em> path:(NSString *)<em>path</em> json:(NSString *)<em>json</em> timeout:(NSTimeInterval)<em>timeout</em> completionHandler:(nullable IVMsgJSONCallback)<em>completionHandler</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>deviceId</code></th>
+						<td><p>设备ID</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>path</code></th>
+						<td><p>路径（ProUser.xxx）不得以 &ldquo;_"开头</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>json</code></th>
+						<td><p>内容（JSON的具体字符串）</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>timeout</code></th>
+						<td><p>超时时间</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>completionHandler</code></th>
+						<td><p>完成回调</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVMessageMgr.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/deletePropertyOfDevice:path:completionHandler:" title="deletePropertyOfDevice:path:completionHandler:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/deletePropertyOfDevice:path:completionHandler:">&ndash;&nbsp;deletePropertyOfDevice:path:completionHandler:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>删除 自定义用户物模型</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)deletePropertyOfDevice:(NSString *)<em>deviceId</em> path:(NSString *)<em>path</em> completionHandler:(nullable IVMsgJSONCallback)<em>completionHandler</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>deviceId</code></th>
+						<td><p>设备ID</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>path</code></th>
+						<td><p>路径（ProUser.xxx）只能删除自定义新增的内容</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>completionHandler</code></th>
+						<td><p>完成回调</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVMessageMgr.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/deletePropertyOfDevice:path:timeout:completionHandler:" title="deletePropertyOfDevice:path:timeout:completionHandler:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/deletePropertyOfDevice:path:timeout:completionHandler:">&ndash;&nbsp;deletePropertyOfDevice:path:timeout:completionHandler:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>删除 自定义用户物模型</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)deletePropertyOfDevice:(NSString *)<em>deviceId</em> path:(NSString *)<em>path</em> timeout:(NSTimeInterval)<em>timeout</em> completionHandler:(nullable IVMsgJSONCallback)<em>completionHandler</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>deviceId</code></th>
+						<td><p>设备ID</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>path</code></th>
+						<td><p>路径（ProUser.xxx）只能删除自定义新增的内容</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>timeout</code></th>
+						<td><p>超时时间</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>completionHandler</code></th>
+						<td><p>完成回调</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVMessageMgr.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/sendDataToDevice:data:withoutResponse:" title="sendDataToDevice:data:withoutResponse:"></a>
 	<h3 class="method-title"><code><a href="#//api/name/sendDataToDevice:data:withoutResponse:">&ndash;&nbsp;sendDataToDevice:data:withoutResponse:</a></code>
 </h3>
@@ -892,6 +1174,79 @@
 		</div>
 	</div>
 </div><div class="section-method">
+	<a name="//api/name/sendDataToDevice:data:timeout:multiRspHandler:" title="sendDataToDevice:data:timeout:multiRspHandler:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/sendDataToDevice:data:timeout:multiRspHandler:">&ndash;&nbsp;sendDataToDevice:data:timeout:multiRspHandler:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>不需要建立通道连接，数据经由服务器转发，适用于实时性不高、数据小于<code>MAX_DATA_SIZE</code>、需要多次回传的场景，如获取信息。</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)sendDataToDevice:(NSString *)<em>deviceId</em> data:(NSData *)<em>data</em> timeout:(NSTimeInterval)<em>timeout</em> multiRspHandler:(nullable IVMsgMultiRspCallback)<em>multiRspHandler</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>deviceId</code></th>
+						<td><p>设备ID</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>data</code></th>
+						<td><p>数据内容，data.length不能超过<code>MAX_DATA_SIZE</code></p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>timeout</code></th>
+						<td><p>自定义超时时间，默认超时时间可使用@c <code>IVMsgTimeoutAuto</code></p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>multiRspHandler</code></th>
+						<td><p>多次回调处理, 调用方应在结束回调时设置<code>*finished=YES</code>以移除回调监听</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<div class="note"><p><strong>Note:</strong> 完成回调条件：收到ACK错误、消息超时 或 有数据回传</p></div>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVMessageMgr.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/sendDataToServer:data:completionHandler:" title="sendDataToServer:data:completionHandler:"></a>
 	<h3 class="method-title"><code><a href="#//api/name/sendDataToServer:data:completionHandler:">&ndash;&nbsp;sendDataToServer:data:completionHandler:</a></code>
 </h3>
@@ -1037,7 +1392,7 @@
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2020 tencentcs. All rights reserved. Updated: 2020-07-07</p>
+						<p class="copyright">Copyright &copy; 2020 tencentcs. All rights reserved. Updated: 2020-11-04</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>

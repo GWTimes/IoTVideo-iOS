@@ -66,7 +66,7 @@ class IVNavigationViewController: UINavigationController {
 
 extension IVNavigationViewController: IVMessageDelegate {
     func didReceiveEvent(_ event: String, topic: String) {
-        logInfo("事件通知 \(topic) \n \(event)")
+        logInfo("事件通知 \(event)")
         view.makeToast("事件通知 \(topic) \n \(event)", duration: 2, position: .top)
 
         IVNotiPost(.receiveEvent(IVReceiveEvent(event: event, topic: topic)))

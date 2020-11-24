@@ -12,7 +12,7 @@ import Foundation
 extension Notification {
     /// 设备在线状态变化
     /// - Parameter online: 在线状态
-    static func deviceOnline(_ online: Bool) -> Self {
+    static func deviceOnline(_ online: Int) -> Self {
         return Notification(name: .ivDeviceOnline, object: nil, userInfo: [IVNotiBody: online])
     }
     
@@ -31,7 +31,14 @@ extension Notification {
     /// 收到服务器属性更新
     /// - Parameter property: 属性
     static func updateProperty(_ property: IVUpdateProperty) -> Self {
-        return Notification(name: .iVMessageDidUpdateProperty, object: nil, userInfo: [IVNotiBody: property])
+        // 后面单独字段给oc使用
+        var json = [String: Any]()
+        if !property.json.isEmpty {
+            let data = property.json.data(using: .utf8)
+            json = try! JSONSerialization.jsonObject(with: data!, options: .mutableContainers) as! [String: Any]
+        }
+        
+        return Notification(name: .iVMessageDidUpdateProperty, object: nil, userInfo: [IVNotiBody: property, "deviceId": property.deviceId,"path": property.path, "json": json])
     }
     
     /// 登出

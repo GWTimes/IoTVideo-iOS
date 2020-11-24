@@ -10,46 +10,49 @@ import UIKit
 import IoTVideo.IVMessageMgr
 import SwiftyJSON
 
+
 class IVCloudStorageViewController: IVDeviceAccessableTVC {
+    @IBOutlet weak var currentPkg: UILabel!
+    @IBOutlet weak var endTime: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.resetDes()
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        if indexPath.row == 0 {  // "031400005e05dd490dfbc385ebd1a7e4"
-            IVMessageMgr.sharedInstance.readProperty(ofDevice: device.deviceID, path: "ProWritable._cloudStoage") { (json, error) in
-                if let error = error {
-                    showAlert(msg: "查询失败 \(error)")
-                    return
+    override func viewDidAppear(_ animated: Bool) {
+        getCurrentPgk()
+    }
+    
+    private func getCurrentPgk() {
+        IVMessageMgr.sharedInstance.readProperty(ofDevice: device.deviceID, path: "ProWritable._cloudStoage") { (json, error) in
+            if let error = error {
+                logError("查询云存状态失败",error)
+                self.resetDes()
+                return
+            }
+            
+            if let json = json,
+               let utcExpire = JSON(parseJSON: json).value("setVal.utcExpire")?.doubleValue, let serviceType = JSON(parseJSON: json).value("setVal.serviceType")?.intValue {
+                if Date().timeIntervalSince1970 < utcExpire {
+                    let fmt = DateFormatter()
+                    fmt.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    let expireString = fmt.string(from: Date(timeIntervalSince1970: utcExpire))
+                    self.endTime.text = expireString
+                    self.currentPkg.text = serviceType == 1 ? "全时云存":"事件云存"
                 }
-                
-                var message = ""
-                if let json = json,
-                    let utcExpire = JSON(parseJSON: json).value("setVal.utcExpire")?.doubleValue {
-                    if Date().timeIntervalSince1970 < utcExpire {
-                        let fmt = DateFormatter()
-                        fmt.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                        let expireString = fmt.string(from: Date(timeIntervalSince1970: utcExpire))
-                        message = "当前套餐有效期截止\(expireString)，新套餐将在当前套餐到期时自动生效。"
-                    }
-                }
-                
-                IVPopupView(title: "您确定购买云存套餐吗？", message: message, input: nil, actions: [.cancel(), .confirm({ (_) in
-                    let hud = ivLoadingHud()
-                    IVDemoNetwork.buyCloudStoragePackage("yc1m3d", deviceId: self.device.deviceID) { (data, err) in
-                        hud.hide()
-                        guard let _ = data else {
-                            return
-                        }
-                        ivHud("购买成功")
-                    }
-                })]).show()
-
+            } else {
+                self.resetDes()
             }
         }
     }
     
+    func resetDes() {
+        DispatchQueue.main.async {
+            self.currentPkg.text = "暂无可用套餐"
+            self.endTime.text = ""
+        }
+    }
 }
+
+

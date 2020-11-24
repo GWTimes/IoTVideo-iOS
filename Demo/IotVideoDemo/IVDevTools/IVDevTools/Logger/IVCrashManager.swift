@@ -39,25 +39,26 @@ private func registerSignalHandler() {
 }
 
 private func uncaughtExceptionHandler(exception: NSException) {
-    let arr = exception.callStackSymbols
-    let reason = exception.reason
-    let name = exception.name.rawValue
-    var crash = String()
-    crash += "UncaughtException:\r\n"
-    crash = crash.appendingFormat("imageOffset:0x%0x\r\n", imageOffset())
-    crash += "\r\n Name:\(name) \r\n Thread:\(String(describing: Thread.current.name)) \r\n Reason:\(String(describing: reason)) \r\n \(arr.joined(separator: "\r\n")) \r\n\r\n"
-    
+    let crash: String = """
+                        UncaughtException:
+                        ImageOffset: \(String(format: "0x%0x", imageOffset()))
+                        ExceptionName: \(exception.name.rawValue)
+                        ExceptionReason: \(String(describing: exception.reason))
+                        CurrentThread: \(String(describing: Thread.current.name)) (\(Thread.current.threadDictionary))
+                        UserInfo: \(exception.userInfo as Any)
+                        CallStack: \(exception.callStackSymbols.joined(separator: "\r\n"))
+                        """
     crashHandler?(crash)
     ori_uncaughtExceptionHandler?(exception)
 }
 
 private func signalCrashHandler(signal:Int32) -> Void {
-    var mstr = String()
-    mstr += "SignalCrash:\(signal)\r\n"
-    
-    mstr = mstr.appendingFormat("imageOffset:0x%0x\r\n", imageOffset())
-    mstr += Thread.callStackSymbols.joined(separator: "\r\n")
-    
+    let mstr = """
+               SignalCrash: \(signal)
+               ImageOffset: \(String(format: "0x%0x", imageOffset()))
+               CurrentThread: \(String(describing: Thread.current.name)) (\(Thread.current.threadDictionary))
+               CallStack: \(Thread.callStackSymbols.joined(separator: "\r\n"))
+               """
     crashHandler?(mstr)
     exit(signal)
 }

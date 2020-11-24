@@ -15,8 +15,10 @@
 		D5E4B3E923975C8600DDA80A /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5E4B3E823975C8600DDA80A /* VideoToolbox.framework */; };
 		EA57B961247E3CA70098E48D /* timg-2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = EA57B95F247E3CA70098E48D /* timg-2.jpeg */; };
 		EA57B962247E3CA70098E48D /* timg.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = EA57B960247E3CA70098E48D /* timg.jpeg */; };
+		EA6C0CB624F77F5A0048CD02 /* IVDatelineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6C0CB124F77F580048CD02 /* IVDatelineView.swift */; };
+		EA6C0CB724F77F5A0048CD02 /* IVCalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6C0CB424F77F590048CD02 /* IVCalendarView.swift */; };
+		EA6C0CB824F77F5A0048CD02 /* IVTimelineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA6C0CB524F77F590048CD02 /* IVTimelineViewModel.swift */; };
 		EAA56046245AEE1500FBDBC8 /* IoTVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAA56043245AEE1500FBDBC8 /* IoTVideo.framework */; };
-		EAA56047245AEE1500FBDBC8 /* IVNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAA56044245AEE1500FBDBC8 /* IVNetwork.framework */; };
 		EAA56048245AEE1500FBDBC8 /* IVVAS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAA56045245AEE1500FBDBC8 /* IVVAS.framework */; };
 		EAA5604A245AEE3700FBDBC8 /* IJKMediaFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAA56049245AEE3700FBDBC8 /* IJKMediaFramework.framework */; };
 		EAA56101245AEED700FBDBC8 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = EAA56100245AEED700FBDBC8 /* libz.tbd */; };
@@ -37,7 +39,6 @@
 		EABF653524B46E3000DC56E1 /* IVString.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF633D24B46E2F00DC56E1 /* IVString.swift */; };
 		EABF653624B46E3000DC56E1 /* IVPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF633E24B46E2F00DC56E1 /* IVPopupView.swift */; };
 		EABF653724B46E3000DC56E1 /* IVView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF633F24B46E2F00DC56E1 /* IVView.swift */; };
-		EABF653824B46E3000DC56E1 /* IVCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF634024B46E2F00DC56E1 /* IVCalendar.swift */; };
 		EABF653924B46E3000DC56E1 /* IVFoundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF634124B46E2F00DC56E1 /* IVFoundation.swift */; };
 		EABF653A24B46E3000DC56E1 /* IVDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF634224B46E2F00DC56E1 /* IVDevice.swift */; };
 		EABF653B24B46E3000DC56E1 /* IVKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF634324B46E2F00DC56E1 /* IVKeychain.swift */; };
@@ -101,6 +102,7 @@
 		EABF65F924B46E3000DC56E1 /* IVMonitorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EABF653124B46E3000DC56E1 /* IVMonitorViewController.swift */; };
 		EABF65FA24B46E3000DC56E1 /* IJKMediaPlayer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EABF653224B46E3000DC56E1 /* IJKMediaPlayer.storyboard */; };
 		EABF65FB24B46E3000DC56E1 /* IVTransmission.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EABF653324B46E3000DC56E1 /* IVTransmission.storyboard */; };
+		EADB60D2255509F40015189F /* IVAnonymousLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADB60CF255509F40015189F /* IVAnonymousLoginViewController.swift */; };
 		EAE34C71241B1C1800865A8A /* IVNavigationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE34C37241B1C1800865A8A /* IVNavigationViewController.swift */; };
 		EAF055FE23CC237300432559 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EAF055BB23CC237300432559 /* Assets.xcassets */; };
 		EAF0560C23CC237300432559 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EAF055CB23CC237300432559 /* LaunchScreen.storyboard */; };
@@ -152,8 +154,10 @@
 		DD572BAB8010505F98B3D510 /* Pods-IotVideoDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-IotVideoDemo.debug.xcconfig"; path = "../../../Pods/Target Support Files/Pods-IotVideoDemo/Pods-IotVideoDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		EA57B95F247E3CA70098E48D /* timg-2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "timg-2.jpeg"; sourceTree = "<group>"; };
 		EA57B960247E3CA70098E48D /* timg.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = timg.jpeg; sourceTree = "<group>"; };
+		EA6C0CB124F77F580048CD02 /* IVDatelineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IVDatelineView.swift; sourceTree = "<group>"; };
+		EA6C0CB424F77F590048CD02 /* IVCalendarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IVCalendarView.swift; sourceTree = "<group>"; };
+		EA6C0CB524F77F590048CD02 /* IVTimelineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IVTimelineViewModel.swift; sourceTree = "<group>"; };
 		EAA56043245AEE1500FBDBC8 /* IoTVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IoTVideo.framework; path = ../../SDK/Frameworks/IoTVideo.framework; sourceTree = "<group>"; };
-		EAA56044245AEE1500FBDBC8 /* IVNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IVNetwork.framework; path = ../../SDK/Frameworks/IVNetwork.framework; sourceTree = "<group>"; };
 		EAA56045245AEE1500FBDBC8 /* IVVAS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IVVAS.framework; path = ../../SDK/Frameworks/IVVAS.framework; sourceTree = "<group>"; };
 		EAA56049245AEE3700FBDBC8 /* IJKMediaFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IJKMediaFramework.framework; path = IotVideoDemo/Frameworks/IJKMediaFramework.framework; sourceTree = "<group>"; };
 		EAA56100245AEED700FBDBC8 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
@@ -172,7 +176,6 @@
 		EABF633D24B46E2F00DC56E1 /* IVString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IVString.swift; sourceTree = "<group>"; };
 		EABF633E24B46E2F00DC56E1 /* IVPopupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IVPopupView.swift; sourceTree = "<group>"; };
 		EABF633F24B46E2F00DC56E1 /* IVView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IVView.swift; sourceTree = "<group>"; };
-		EABF634024B46E2F00DC56E1 /* IVCalendar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IVCalendar.swift; sourceTree = "<group>"; };
 		EABF634124B46E2F00DC56E1 /* IVFoundation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IVFoundation.swift; sourceTree = "<group>"; };
 		EABF634224B46E2F00DC56E1 /* IVDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IVDevice.swift; sourceTree = "<group>"; };
 		EABF634324B46E2F00DC56E1 /* IVKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IVKeychain.swift; sourceTree = "<group>"; };
@@ -237,6 +240,7 @@
 		EABF653124B46E3000DC56E1 /* IVMonitorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IVMonitorViewController.swift; sourceTree = "<group>"; };
 		EABF653224B46E3000DC56E1 /* IJKMediaPlayer.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = IJKMediaPlayer.storyboard; sourceTree = "<group>"; };
 		EABF653324B46E3000DC56E1 /* IVTransmission.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = IVTransmission.storyboard; sourceTree = "<group>"; };
+		EADB60CF255509F40015189F /* IVAnonymousLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IVAnonymousLoginViewController.swift; sourceTree = "<group>"; };
 		EAE34C37241B1C1800865A8A /* IVNavigationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IVNavigationViewController.swift; sourceTree = "<group>"; };
 		EAF055AD23CC233200432559 /* IVDevTools.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IVDevTools.xcodeproj; path = IVDevTools/IVDevTools.xcodeproj; sourceTree = "<group>"; };
 		EAF055B923CC237300432559 /* IotVideoDemo-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IotVideoDemo-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -257,21 +261,20 @@
 				EAA56105245AEEE900FBDBC8 /* libbz2.tbd in Frameworks */,
 				EAA56103245AEEE100FBDBC8 /* libiconv.tbd in Frameworks */,
 				EAA56101245AEED700FBDBC8 /* libz.tbd in Frameworks */,
-				EAA56047245AEE1500FBDBC8 /* IVNetwork.framework in Frameworks */,
+				EAA56046245AEE1500FBDBC8 /* IoTVideo.framework in Frameworks */,
+				EAA56048245AEE1500FBDBC8 /* IVVAS.framework in Frameworks */,
 				EAB78DAA23CC3E81004B130E /* IVDevTools.framework in Frameworks */,
 				D5E4B3E723975C7A00DDA80A /* CoreMedia.framework in Frameworks */,
 				EAA5604A245AEE3700FBDBC8 /* IJKMediaFramework.framework in Frameworks */,
 				D5E4B3E923975C8600DDA80A /* VideoToolbox.framework in Frameworks */,
-				EAA56048245AEE1500FBDBC8 /* IVVAS.framework in Frameworks */,
 				D5E4B3E523975C7200DDA80A /* AudioToolbox.framework in Frameworks */,
-				EAA56046245AEE1500FBDBC8 /* IoTVideo.framework in Frameworks */,
 				9B3DA75C9528BB7110B59A1E /* Pods_IotVideoDemo.framework in Frameworks */,
 				D59BF32223A27B1E007270B1 /* WoodPeckeriOS.framework in Frameworks */,
+				EAA56114245AEF8C00FBDBC8 /* libavfilter.a in Frameworks */,
 				EAA56119245AEF8C00FBDBC8 /* libswscale.a in Frameworks */,
 				EAA56116245AEF8C00FBDBC8 /* libavformat.a in Frameworks */,
 				EAA56113245AEF8C00FBDBC8 /* libavutil.a in Frameworks */,
 				EAA56117245AEF8C00FBDBC8 /* libswresample.a in Frameworks */,
-				EAA56114245AEF8C00FBDBC8 /* libavfilter.a in Frameworks */,
 				EAA56115245AEF8C00FBDBC8 /* libavcodec.a in Frameworks */,
 				EAA56118245AEF8C00FBDBC8 /* libssl.a in Frameworks */,
 				EAA56112245AEF8C00FBDBC8 /* libcrypto.a in Frameworks */,
@@ -291,7 +294,6 @@
 				EAA56100245AEED700FBDBC8 /* libz.tbd */,
 				EAA56049245AEE3700FBDBC8 /* IJKMediaFramework.framework */,
 				EAA56043245AEE1500FBDBC8 /* IoTVideo.framework */,
-				EAA56044245AEE1500FBDBC8 /* IVNetwork.framework */,
 				EAA56045245AEE1500FBDBC8 /* IVVAS.framework */,
 				EAF055AD23CC233200432559 /* IVDevTools.xcodeproj */,
 				D5E4B3E823975C8600DDA80A /* VideoToolbox.framework */,
@@ -361,11 +363,13 @@
 		EABF633B24B46E2F00DC56E1 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				EA6C0CB424F77F590048CD02 /* IVCalendarView.swift */,
+				EA6C0CB124F77F580048CD02 /* IVDatelineView.swift */,
+				EA6C0CB524F77F590048CD02 /* IVTimelineViewModel.swift */,
 				EABF633C24B46E2F00DC56E1 /* IVWifiTool.swift */,
 				EABF633D24B46E2F00DC56E1 /* IVString.swift */,
 				EABF633E24B46E2F00DC56E1 /* IVPopupView.swift */,
 				EABF633F24B46E2F00DC56E1 /* IVView.swift */,
-				EABF634024B46E2F00DC56E1 /* IVCalendar.swift */,
 				EABF634124B46E2F00DC56E1 /* IVFoundation.swift */,
 				EABF634224B46E2F00DC56E1 /* IVDevice.swift */,
 				EABF634324B46E2F00DC56E1 /* IVKeychain.swift */,
@@ -429,6 +433,7 @@
 		EABF636724B46E2F00DC56E1 /* TX */ = {
 			isa = PBXGroup;
 			children = (
+				EADB60CF255509F40015189F /* IVAnonymousLoginViewController.swift */,
 				EABF636824B46E2F00DC56E1 /* IVCloudStorages.storyboard */,
 				EABF636924B46E2F00DC56E1 /* IVDeviceListViewController.swift */,
 				EABF636A24B46E2F00DC56E1 /* IVAccountViewController.swift */,
@@ -688,6 +693,7 @@
 				EABF655D24B46E3000DC56E1 /* IVDeviceListViewController.swift in Sources */,
 				EABF655724B46E3000DC56E1 /* IVAPAddDeviceVC.swift in Sources */,
 				EABF654524B46E3000DC56E1 /* IVNotification.swift in Sources */,
+				EA6C0CB824F77F5A0048CD02 /* IVTimelineViewModel.swift in Sources */,
 				EABF654724B46E3000DC56E1 /* IVTimelineView.swift in Sources */,
 				EABF655224B46E3000DC56E1 /* IVQRCodeAddDevice.swift in Sources */,
 				EABF654624B46E3000DC56E1 /* IVControl.swift in Sources */,
@@ -715,6 +721,8 @@
 				EABF656124B46E3000DC56E1 /* IVDeviceMgrViewController.swift in Sources */,
 				EABF654C24B46E3000DC56E1 /* IVCrypto.swift in Sources */,
 				EABF653424B46E3000DC56E1 /* IVWifiTool.swift in Sources */,
+				EA6C0CB624F77F5A0048CD02 /* IVDatelineView.swift in Sources */,
+				EADB60D2255509F40015189F /* IVAnonymousLoginViewController.swift in Sources */,
 				EABF653A24B46E3000DC56E1 /* IVDevice.swift in Sources */,
 				EABF656224B46E3000DC56E1 /* IoTAppDelegate.swift in Sources */,
 				EABF654D24B46E3000DC56E1 /* IVToast.swift in Sources */,
@@ -724,9 +732,9 @@
 				EABF65F824B46E3000DC56E1 /* IVDevicePlayerViewController.swift in Sources */,
 				EABF65F224B46E3000DC56E1 /* IVPlaybackViewController.swift in Sources */,
 				EABF653524B46E3000DC56E1 /* IVString.swift in Sources */,
+				EA6C0CB724F77F5A0048CD02 /* IVCalendarView.swift in Sources */,
 				EABF65F724B46E3000DC56E1 /* IJKMediaViewController.swift in Sources */,
 				EABF654024B46E3000DC56E1 /* IVButton.swift in Sources */,
-				EABF653824B46E3000DC56E1 /* IVCalendar.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -869,18 +877,20 @@
 				CODE_SIGN_ENTITLEMENTS = IotVideoDemo/IotVideoDemo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 41;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = C3MLE46F3M;
 				ENABLE_BITCODE = NO;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				"EXCLUDED_SOURCE_FILE_NAMES[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(SRCROOT)/../../SDK/Frameworks",
 					"$(PROJECT_DIR)/IotVideoDemo",
 					"$(PROJECT_DIR)/IotVideoDemo/Frameworks",
-					"$(PROJECT_DIR)/IotVideoDemo/Targets/YS/Frameworks",
 				);
 				"GCC_PREPROCESSOR_DEFINITIONS[arch=*]" = (
 					"$(inherited)",
@@ -902,6 +912,7 @@
 					"$(PROJECT_DIR)/IotVideoDemo/Targets/YS/Frameworks/P2PLib/x264/lib",
 				);
 				MARKETING_VERSION = 1.0.1;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D IoTVideo";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tencentcs.IotVideoDemo;
 				PRODUCT_NAME = IotVideoDemo;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -909,6 +920,8 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "";
+				"VALID_ARCHS[sdk=iphonesimulator*]" = x86_64;
 			};
 			name = Debug;
 		};
@@ -921,17 +934,19 @@
 				CODE_SIGN_ENTITLEMENTS = IotVideoDemo/IotVideoDemo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 27;
+				CURRENT_PROJECT_VERSION = 41;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = C3MLE46F3M;
 				ENABLE_BITCODE = NO;
+				EXCLUDED_ARCHS = "";
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
+				"EXCLUDED_SOURCE_FILE_NAMES[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(SRCROOT)/../../SDK/Frameworks",
 					"$(PROJECT_DIR)/IotVideoDemo",
 					"$(PROJECT_DIR)/IotVideoDemo/Frameworks",
-					"$(PROJECT_DIR)/IotVideoDemo/Targets/YS/Frameworks",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/IotVideoDemo/Targets/TX/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -949,12 +964,15 @@
 					"$(PROJECT_DIR)/IotVideoDemo/Targets/YS/Frameworks/P2PLib/x264/lib",
 				);
 				MARKETING_VERSION = 1.0.1;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS -D IoTVideo";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tencentcs.IotVideoDemo;
 				PRODUCT_NAME = IotVideoDemo;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/IotVideoDemo/IotVideoDemo-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = "";
+				"VALID_ARCHS[sdk=iphonesimulator*]" = x86_64;
 			};
 			name = Release;
 		};

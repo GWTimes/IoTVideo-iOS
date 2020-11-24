@@ -11,8 +11,6 @@
 #ifndef IVLog_h
 #define IVLog_h
 
-NS_ASSUME_NONNULL_BEGIN
-
 typedef NS_ENUM(NSUInteger, IVLogLevel) {
     /// 不打印日志
     IVLogLevel_OFF   = 0,
@@ -29,15 +27,5 @@ typedef NS_ENUM(NSUInteger, IVLogLevel) {
     /// 跟踪
     IVLogLevel_TRACE = 6,
 };
-
-/// 日志输出回调
-/// @param level  日志级别, 详见IVLogLevel
-/// @param file  文件名
-/// @param function  函数名
-/// @param line  行号
-/// @param message  日志信息
-typedef void(^IVLogCallback)(int level, NSString *file, NSString *function, int line, NSString *message);
-
-NS_ASSUME_NONNULL_END
 
 #endif /* IVLog_h */

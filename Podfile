@@ -12,13 +12,14 @@ target 'IotVideoDemo' do
   pod 'MBProgressHUD',          '~> 1.1.0'
   pod 'AFNetworking',           '~> 3.0'
   pod 'SwiftyJSON',             '~> 4.0'
+  pod 'SDWebImage',             '~> 5.0.0'
   pod 'SnapKit',                '~> 4.2.0'
   pod 'Then',                   '~> 2.4.0'
 end
 
-target 'IoTVideo' do
-  project './SDK/IoTVideo/IoTVideo.xcodeproj'
-end
+#target 'IoTVideo' do
+#  project './SDK/IoTVideo/IoTVideo.xcodeproj'
+#end
 
 target 'IVNetwork' do
   project './SDK/IVNetwork/IVNetwork.xcodeproj'

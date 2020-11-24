@@ -48,7 +48,11 @@ class IVAccountViewController: UITableViewController {
             let infoDictionary = Bundle.main.infoDictionary {
             let appVersion = infoDictionary["CFBundleShortVersionString"] as! String
             let appBuild = infoDictionary["CFBundleVersion"] as! String
-            return "APP V\(appVersion)(\(appBuild)) \t SDK V\(IoTVideo.sdkVersion)"
+            return """
+                    APP V\(appVersion)(\(appBuild))
+                    SDK V\(IoTVideo.sdkVersion)
+                    CompileDate \(kIoTVideoCompileDate)
+                    """
         }
         return nil
     }

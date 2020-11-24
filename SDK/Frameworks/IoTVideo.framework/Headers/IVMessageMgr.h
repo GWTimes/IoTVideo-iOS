@@ -12,8 +12,12 @@ NS_ASSUME_NONNULL_BEGIN
 
 #define IVMsgTimeoutAuto  0.0
 
+/// 单次JSON响应回调
 typedef void(^IVMsgJSONCallback)(NSString * _Nullable json, NSError * _Nullable error);
+/// 单次数据响应回调
 typedef void(^IVMsgDataCallback)(NSData * _Nullable data, NSError * _Nullable error);
+/// 多次数据响应回调  ⚠️不需要响应或结束响应后请设置 `*finished = YES`移除响应监听！
+typedef void(^IVMsgMultiRspCallback)(NSData * _Nullable data, NSError * _Nullable error, BOOL *finished);
 
 @class IVMessageMgr;
 
@@ -26,11 +30,16 @@ typedef void(^IVMsgDataCallback)(NSData * _Nullable data, NSError * _Nullable er
 /// @param topic 请参照物模型定义
 - (void)didReceiveEvent:(NSString *)event topic:(NSString *)topic;
 
-/// 接收到只读属性消息（ProReadonly）
+/// 接收到只读属性消息（ProReadonly.xxx.stVal / Action.xxx.stVal）
 /// @param json 内容（JSON的具体字符串）
 /// @param path 路径（JSON的叶子节点）
 /// @param deviceId 设备ID
 - (void)didUpdateProperty:(NSString *)json path:(NSString *)path deviceId:(NSString *)deviceId;
+
+/// 接收到设备发起的透传数据
+/// @param data 数据
+/// @param deviceId 设备ID
+- (void)didReceivePassthroughData:(NSData *)data deviceId:(NSString *)deviceId;
 
 @end
 
@@ -113,10 +122,54 @@ typedef void(^IVMsgDataCallback)(NSData * _Nullable data, NSError * _Nullable er
                    timeout:(NSTimeInterval)timeout
          completionHandler:(nullable IVMsgJSONCallback)completionHandler;
 
+/// 新增 自定义用户物模型
+///
+/// 新增与已有的自定义重复时，会直接覆盖
+/// @param deviceId 设备ID
+/// @param path 路径（ProUser.xxx）不得以 "_"开头
+/// @param json 内容（JSON的具体字符串）
+/// @param completionHandler 完成回调
+- (void)addPropertyOfDevice:(NSString *)deviceId
+                       path:(NSString *)path
+                       json:(NSString *)json
+          completionHandler:(nullable IVMsgJSONCallback)completionHandler;
+
+/// 新增 自定义用户物模型
+///
+/// 新增与已有的自定义重复时，会直接覆盖
+/// @param deviceId 设备ID
+/// @param path 路径（ProUser.xxx）不得以 "_"开头
+/// @param json 内容（JSON的具体字符串）
+/// @param timeout 超时时间
+/// @param completionHandler 完成回调
+- (void)addPropertyOfDevice:(NSString *)deviceId
+                       path:(NSString *)path
+                       json:(NSString *)json
+                    timeout:(NSTimeInterval)timeout
+          completionHandler:(nullable IVMsgJSONCallback)completionHandler;
+
+/// 删除 自定义用户物模型
+/// @param deviceId 设备ID
+/// @param path 路径（ProUser.xxx）只能删除自定义新增的内容
+/// @param completionHandler 完成回调
+- (void)deletePropertyOfDevice:(NSString *)deviceId
+                          path:(NSString *)path
+             completionHandler:(nullable IVMsgJSONCallback)completionHandler;
+
+/// 删除 自定义用户物模型
+/// @param deviceId 设备ID
+/// @param path 路径（ProUser.xxx）只能删除自定义新增的内容
+/// @param timeout 超时时间
+/// @param completionHandler 完成回调
+- (void)deletePropertyOfDevice:(NSString *)deviceId
+                          path:(NSString *)path
+                       timeout:(NSTimeInterval)timeout
+             completionHandler:(nullable IVMsgJSONCallback)completionHandler;
 
 #pragma mark - 透传消息方法
 
 #define MAX_DATA_SIZE 30000
+
 
 /// 透传数据给设备（无数据回传）
 ///
@@ -129,8 +182,7 @@ typedef void(^IVMsgDataCallback)(NSData * _Nullable data, NSError * _Nullable er
                     data:(NSData *)data
          withoutResponse:(nullable IVMsgDataCallback)completionHandler;
 
-
-/// 透传数据给设备（有数据回传）
+/// 透传数据给设备（单次数据回传）
 ///
 /// 不需要建立通道连接，数据经由服务器转发，适用于实时性不高、数据小于`MAX_DATA_SIZE`、需要回传的场景，如获取信息。
 /// @note 完成回调条件：收到ACK错误、消息超时 或 有数据回传
@@ -140,7 +192,6 @@ typedef void(^IVMsgDataCallback)(NSData * _Nullable data, NSError * _Nullable er
 - (void)sendDataToDevice:(NSString *)deviceId
                     data:(NSData *)data
             withResponse:(nullable IVMsgDataCallback)completionHandler;
-
 
 /// 透传数据给设备
 ///
@@ -156,6 +207,19 @@ typedef void(^IVMsgDataCallback)(NSData * _Nullable data, NSError * _Nullable er
                  timeout:(NSTimeInterval)timeout
           expectResponse:(BOOL)expectResponse
        completionHandler:(nullable IVMsgDataCallback)completionHandler;
+
+/// 透传数据给设备（可多次数据回传）
+///
+/// 不需要建立通道连接，数据经由服务器转发，适用于实时性不高、数据小于`MAX_DATA_SIZE`、需要多次回传的场景，如获取信息。
+/// @note 完成回调条件：收到ACK错误、消息超时 或 有数据回传
+/// @param deviceId 设备ID
+/// @param data 数据内容，data.length不能超过`MAX_DATA_SIZE`
+/// @param timeout 自定义超时时间，默认超时时间可使用@c `IVMsgTimeoutAuto`
+/// @param multiRspHandler 多次回调处理, 调用方应在结束回调时设置`*finished=YES`以移除回调监听
+- (void)sendDataToDevice:(NSString *)deviceId
+                    data:(NSData *)data
+                 timeout:(NSTimeInterval)timeout
+         multiRspHandler:(nullable IVMsgMultiRspCallback)multiRspHandler;
 
 
 /// 透传数据给服务器
@@ -176,6 +240,23 @@ typedef void(^IVMsgDataCallback)(NSData * _Nullable data, NSError * _Nullable er
                     data:(nullable NSData *)data
                  timeout:(NSTimeInterval)timeout
        completionHandler:(nullable IVMsgDataCallback)completionHandler;
+
+#pragma mark - 离线推送
+/// 注册SDK离线推送
+/// @param pushId 推送ID 如极光推送的`registrationID`
+/// @param secrectId 从官网获取 的 secrectId
+- (void)registerRemoteNotificationsWithPushId:(NSString *)pushId completionHandler:(nullable IVMsgJSONCallback)completionHandler;
+
+/// 注册SDK离线推送
+/// @param pushId 推送ID 如极光推送的`registrationID`
+/// @param language 推送语言（默认中文zh_cn）
+/// @param zone 时区秒 （默认设备当前时区）
+/// @param appVersion app版本号
+/// @param osVersion 操作系统版本
+- (void)registerRemoteNotificationsWithPushId:(NSString *)pushId language:(nullable NSString *)language timeZone:(NSInteger)zone appVersion:(nullable NSString *)appVersion completionHandler:(nullable IVMsgJSONCallback)completionHandler;
+
+/// 反注册SDK离线推送
+- (void)unregisterRemoteNotification:(nullable IVMsgJSONCallback)completionHandler;
 
 @end
 

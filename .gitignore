@@ -7,9 +7,7 @@
 Demo/*
 !Demo/IotVideoDemo
 SDK/*
-!SDK/Frameworks/IoTVideo.framework
-!SDK/Frameworks/IVNetwork.framework
-!SDK/Frameworks/IVVAS.framework
+!SDK/Frameworks
 GW
 SRV
 YS

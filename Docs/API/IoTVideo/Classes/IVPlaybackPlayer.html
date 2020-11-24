@@ -66,6 +66,8 @@
 		
 		<option value="//api/name/getPlaybackListOfDevice:pageIndex:countPerPage:startTime:endTime:completionHandler:">+ getPlaybackListOfDevice:pageIndex:countPerPage:startTime:endTime:completionHandler:</option>
 		
+		<option value="//api/name/getPlaybackListV2OfDevice:pageIndex:countPerPage:startTime:endTime:filterType:completionHandler:">+ getPlaybackListV2OfDevice:pageIndex:countPerPage:startTime:endTime:filterType:completionHandler:</option>
+		
 	</optgroup>
 	
 
@@ -380,8 +382,8 @@
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/getPlaybackListOfDevice:pageIndex:countPerPage:startTime:endTime:completionHandler:" title="getPlaybackListOfDevice:pageIndex:countPerPage:startTime:endTime:completionHandler:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/getPlaybackListOfDevice:pageIndex:countPerPage:startTime:endTime:completionHandler:">+&nbsp;getPlaybackListOfDevice:pageIndex:countPerPage:startTime:endTime:completionHandler:</a></code>
+	<a name="//api/name/getPlaybackListV2OfDevice:pageIndex:countPerPage:startTime:endTime:filterType:completionHandler:" title="getPlaybackListV2OfDevice:pageIndex:countPerPage:startTime:endTime:filterType:completionHandler:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/getPlaybackListV2OfDevice:pageIndex:countPerPage:startTime:endTime:filterType:completionHandler:">+&nbsp;getPlaybackListV2OfDevice:pageIndex:countPerPage:startTime:endTime:filterType:completionHandler:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -392,12 +394,12 @@
 			
 			<div class="method-subsection brief-description">
 				<p>获取一页回放文件列表
-请根据实际情况合理设置查询时间范围和分页，时间跨度太大可能会增加设备查询时间（一般建议设置为三天以内, 即当天、前一天和后一天）</p>
+该方法要求设备SDK版本大于<code>v1.2(xxxx)</code></p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>+ (void)getPlaybackListOfDevice:(NSString *)<em>deviceId</em> pageIndex:(uint32_t)<em>pageIndex</em> countPerPage:(uint32_t)<em>countPerPage</em> startTime:(NSTimeInterval)<em>startTime</em> endTime:(NSTimeInterval)<em>endTime</em> completionHandler:(PlaybackListCallback)<em>completionHandler</em></code></div>
+			<div class="method-subsection method-declaration"><code>+ (void)getPlaybackListV2OfDevice:(NSString *)<em>deviceId</em> pageIndex:(uint32_t)<em>pageIndex</em> countPerPage:(uint32_t)<em>countPerPage</em> startTime:(NSTimeInterval)<em>startTime</em> endTime:(NSTimeInterval)<em>endTime</em> filterType:(nullable NSString *)<em>filterType</em> completionHandler:(PlaybackListCallback)<em>completionHandler</em></code></div>
 
 		    
 			
@@ -417,7 +419,7 @@
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>countPerPage</code></th>
-						<td><p>在[startTime, endTime]时间范围内按每页countPerPage个文件查询，每次返回一页的数据</p></td>
+						<td><p>在[startTime, endTime]时间范围内按每页<code>countPerPage</code>个文件查询，每次返回一页的数据，该值由APP设置，取值范围[1, 3200]</p></td>
 					</tr>
 				
 					<tr>
@@ -428,6 +430,11 @@
 					<tr>
 						<th scope="row" class="argument-name"><code>endTime</code></th>
 						<td><p>结束时间戳（秒）</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>filterType</code></th>
+						<td><p>过滤文件类型, nil为不过滤</p></td>
 					</tr>
 				
 					<tr>
@@ -443,6 +450,11 @@
 
 			
 
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<div class="note"><p><strong>Note:</strong> ⚠️请根据实际情况合理设置查询时间范围和分页，<code>时间跨度太长</code>或<code>每页数量过大</code>会增加设备查询时间， 建议[startTime, endTime]区间不超过24小时 或 countPerPage不超过1440个文件.</p></div>
+			</div>
 			
 
 			
@@ -712,6 +724,89 @@
 			
 		</div>
 	</div>
+</div><div class="section-method">
+	<a name="//api/name/getPlaybackListOfDevice:pageIndex:countPerPage:startTime:endTime:completionHandler:" title="getPlaybackListOfDevice:pageIndex:countPerPage:startTime:endTime:completionHandler:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/getPlaybackListOfDevice:pageIndex:countPerPage:startTime:endTime:completionHandler:">+&nbsp;getPlaybackListOfDevice:pageIndex:countPerPage:startTime:endTime:completionHandler:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>获取一页回放文件列表 (<b class="deprecated">Deprecated:</b><span class="deprecated"> Use <code>-getPlaybackListV2OfDevice:pageIndex:countPerPage:startTime:endTime:completionHandler:</code> instead.</span>)</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>+ (void)getPlaybackListOfDevice:(NSString *)<em>deviceId</em> pageIndex:(uint32_t)<em>pageIndex</em> countPerPage:(uint32_t)<em>countPerPage</em> startTime:(NSTimeInterval)<em>startTime</em> endTime:(NSTimeInterval)<em>endTime</em> completionHandler:(PlaybackListCallback)<em>completionHandler</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>deviceId</code></th>
+						<td><p>设备ID</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>pageIndex</code></th>
+						<td><p>页码索引，获取指定页码的回放文件（ pageIndex从0开始递增）</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>countPerPage</code></th>
+						<td><p>在[startTime, endTime]时间范围内按每页<code>countPerPage</code>个文件查询，每次返回一页的数据，该值由APP设置，取值范围[1, 900]</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>startTime</code></th>
+						<td><p>开始时间戳（秒）</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>endTime</code></th>
+						<td><p>结束时间戳（秒）</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>completionHandler</code></th>
+						<td><p>结果回调</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<div class="note"><p><strong>Note:</strong> ⚠️请根据实际情况合理设置查询时间范围和分页，<code>时间跨度太长</code>或<code>每页数量过大</code>会增加设备查询时间， 建议[startTime, endTime]区间不超过12小时 或 countPerPage不超过720个文件.</p></div>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVPlaybackPlayer.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
 </div>
 						</div>
 						
@@ -727,7 +822,7 @@
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2020 tencentcs. All rights reserved. Updated: 2020-07-07</p>
+						<p class="copyright">Copyright &copy; 2020 tencentcs. All rights reserved. Updated: 2020-11-04</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>

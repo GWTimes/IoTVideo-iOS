@@ -42,20 +42,19 @@ typedef NS_ENUM(NSInteger, IVConnStatus) {
 
 /// 连接错误
 typedef NS_ENUM(NSUInteger, IVConnError) {
-    /// 超过最大通道个数
+    /// APP端超过最大通道个数, 见`MAX_CONNECTION_NUM`
     IVConnError_ExceedsMaxNumber  = 21020,
-    /// 重复的连接通道
+    /// 重复的连接通道, 已存在相同`deviceId + sourceId`
     IVConnError_Duplicate         = 21021,
     /// 建立连接失败
     IVConnError_ConnectFailed     = 21022,
     /// 连接已断开/连接失败
     IVConnError_Disconnected      = 21023,
-    /// 超出最大数据长度
+    /// 超出最大数据长度, 见`MAX_PKG_BYTES`
     IVConnError_ExceedsMaxLength  = 21024,
     /// 当前连接暂不可用
     IVConnError_NotAvailableNow   = 21025,
 };
-
 
 @class IVConnection;
 
@@ -77,7 +76,7 @@ typedef NS_ENUM(NSUInteger, IVConnError) {
 
 /// 收到错误
 /// @param connection 连接实例
-/// @param error 错误
+/// @param error 错误, 见`IVConnError` / [`IVError`、`IVLinkStatus`]
 - (void)connection:(IVConnection *)connection didReceiveError:(NSError *)error;
 
 /// 收到数据
@@ -88,7 +87,8 @@ typedef NS_ENUM(NSUInteger, IVConnError) {
 @end
 
 
-/// 通道连接（抽象类，不要直接实例化，请使用其派生类: IVLivePlayer / IVPlaybackPlayer / IVMonitorPlayer / IVTransmission）
+/// 通道连接
+/// @note IVConnection为抽象基类，请勿直接实例化，应使用其派生类:IVLivePlayer、IVPlaybackPlayer、IVMonitorPlayer和IVTransmission
 @interface IVConnection: NSObject
 
 /// 连接代理
@@ -110,14 +110,16 @@ typedef NS_ENUM(NSUInteger, IVConnError) {
 @property (nonatomic, assign, readonly) IVConnStatus connStatus;
 
 /// 开始连接
-- (BOOL)connect;
+/// 该方法较耗时, 建议在子线程执行
+- (void)connect;
 
 /// 断开连接
-- (BOOL)disconnect;
+- (void)disconnect;
 
 /// 发送自定义数据
 ///
 /// 需要与设备建立专门的连接通道，适用于较大数据传输、实时性要求较高的场景，如多媒体数据传输。
+/// 接收到设备端发来的数据见`-[IVConnectionDelegate connection:didReceiveData:]`
 /// @param data 要发送的数据，data.length不能超过`MAX_PKG_BYTES`
 /// @return 发送是否成功
 - (BOOL)sendData:(NSData *)data;

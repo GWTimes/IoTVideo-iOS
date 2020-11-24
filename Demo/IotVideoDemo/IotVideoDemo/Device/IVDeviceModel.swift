@@ -16,12 +16,14 @@ class IVDevice: NSObject {
     var deviceName: String = ""
     var serialNumber: String = ""
     var version: String = ""
+    var sdkVer: String = ""
     var macAddr: String = ""
     var shareType: IVRole = .owner
-    var online: Bool = false
+    var online: Int = 0 // 0 offline, 1 online, 2 sleep
     var ipAddr: String = ""
     var sourceNum: Int = 1 // 源个数
-    
+    var avconfig: String = "" // -ar:[8000|16000|xx] -aenc:[aac|amr] -vr:[16|20|xx]
+
     init(_ device: IVDeviceModel) {
         self.deviceID = device.devId ?? ""
         self.productID = ""
@@ -30,7 +32,7 @@ class IVDevice: NSObject {
         self.version = ""
         self.macAddr = ""
         self.shareType = device.shareType
-        self.online = device.online ?? false
+        self.online = device.online ?? 0
         self.ipAddr = ""
     }
 
@@ -42,7 +44,7 @@ class IVDevice: NSObject {
         self.version = device.version
         self.macAddr = device.macAddr
         self.shareType = .owner
-        self.online = true
+        self.online = 1
         self.ipAddr = device.ipAddr
     }
 }
@@ -56,10 +58,10 @@ class IVDeviceModel: Codable {
     var deviceName: String?
     var deviceType: String?
     
-    var online: Bool? = false {
+    var online: Int? = 0 {
         didSet {
-            logInfo("Device: \(devId ?? "???") Online:\(online ?? false)")
-            IVNotiPost(.deviceOnline(online ?? false))
+            logInfo("Device: \(devId ?? "???") Online:\(online ?? 0)")
+            IVNotiPost(.deviceOnline(online ?? 0))
         }
     }
     
@@ -70,7 +72,7 @@ class IVDeviceModel: Codable {
         self.url = ""
         self.deviceName = deviceName
         self.deviceType = ""
-        self.online = false
+        self.online = 0
     }
     
     init(_ device: IVDevice) {
@@ -80,7 +82,7 @@ class IVDeviceModel: Codable {
         self.url = ""
         self.deviceName = device.deviceName
         self.deviceType = ""
-        self.online = false
+        self.online = 0
     }
     
     convenience init(_ device: IVLANDevice) {
@@ -104,19 +106,52 @@ enum IVRole: String, Codable {
 }
 
 
-struct PlayListData: Codable {
-    var palyList = [IVCSPlaybackItem]()
+struct IVCSPlayListInfo: Codable {
+    var list: [IVCSPlaybackItem]?
 }
 
-struct IVCSPlaybackItem: Codable {
-    var starttime: Int = 0
-    var endtime: Int = 0
-    var m3u8Url: String?
+class IVCSPlaybackItem: Codable {
+    var start: Int = 0
+    var end: Int = 0
+    var url: URL? = nil
+    
+    init(start: Int, end: Int) {
+        self.start = start
+        self.end = end
+    }
 }
 
-struct IVCSMarkItem: Codable {
-    var dateTime: Int = 0
-    var playable: Bool = false
+struct IVCSMarkItems: Codable {
+    var list: [IVCSMarkItem] = []
+}
+
+typealias IVCSMarkItem = Int
+
+//struct IVCSMarkItem: Codable {
+//    var dateTime: Int = 0
+//}
+
+struct IVCSPlayInfo: Codable {
+    var startTime: Int = 0
+    var endTime: Int = 0
+    var url: String?
+    // 播放结束标记， 表示此次播放是否把需要播放的文件播完，没有则需以返回的 endtime 为基准再次请求。false 表示未播放完，true 表示播放完成
+    var endflag: Bool = true
+}
+
+struct IVCSEventsInfo: Codable {
+    var imgUrlPrefix: String? // 图片及缩略图下载地址前缀
+    var list: [IVCSEvent]?
+}
+
+struct IVCSEvent: Codable {
+    var alarmId: String    // 事件id
+    var firstAlarmType: Int // 告警触发时的告警类型
+    var alarmType: Int // 告警有效时间内触发过的告警类型
+    var startTime: Int
+    var endTime: Int
+    var imgUrlSuffix: String? // 告警图片下载地址后缀
+    var thumbUrlSuffix: String? // 告警图片下载地址后缀
 }
 
 class IVDeviceAccessableTVC : UITableViewController, IVDeviceAccessable {

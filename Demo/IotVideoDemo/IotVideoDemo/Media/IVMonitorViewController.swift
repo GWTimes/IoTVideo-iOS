@@ -22,13 +22,53 @@ class IVMonitorViewController: IVDevicePlayerViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-                
+        definitionSegment.selectedSegmentIndex = UserDefaults.standard.integer(forKey: "definitionSegment.selectedSegmentIndex")
+
         monitorPlayer = IVMonitorPlayer(deviceId: device.deviceID, sourceId: UInt16(self.sourceID))
         monitorPlayer?.definition = IVVideoDefinition(rawValue: IVVideoDefinition.RawValue(definitionSegment.selectedSegmentIndex)) ?? .high
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        monitorPlayer?.play()
+    }
+    
     @IBAction func definitionSegmentChanged(_ sender: UISegmentedControl) {
-        monitorPlayer?.definition = IVVideoDefinition(rawValue: IVVideoDefinition.RawValue(sender.selectedSegmentIndex)) ?? .high
+        UserDefaults.standard.set(definitionSegment.selectedSegmentIndex, forKey: "definitionSegment.selectedSegmentIndex")
+        let defn = IVVideoDefinition(rawValue: IVVideoDefinition.RawValue(sender.selectedSegmentIndex)) ?? .high
+        if device.sdkVer.isEmpty {
+            IVMessageMgr.sharedInstance.readProperty(ofDevice: device.deviceID, path: "ProConst._versionInfo.sdkVer") { [weak self](json, err) in
+                guard let json = json?.replacingOccurrences(of: "\"", with: ""), err == nil else { return }
+                self?.device.sdkVer = json
+                self?.monitorPlayer?.setVideoDefinition(defn, sdkVer: json)
+            }
+        } else {
+            monitorPlayer?.setVideoDefinition(defn, sdkVer: device.sdkVer)
+        }
+    }
+        
+    override func player(_ player: IVPlayer, didUpdate status: IVPlayerStatus) {
+        super.player(player, didUpdate: status)
+        DispatchQueue.main.async {[weak self] in
+            guard let `self` = self else { return }
+            self.definitionSegment?.isEnabled = (status != .preparing && status != .stopping)
+        }
+    }
+}
+
+extension IVMonitorPlayer {
+    
+    func setVideoDefinition(_ defn: IVVideoDefinition, sdkVer: String) {
+        // 切换清晰度
+        self.definition = defn
+        
+        // ⚠️如果设备端sdkVer版本小于`16.18.4718`需要额外执行stop()再play()
+        if sdkVer < "16.18.4718" {
+            self.stop()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.play() // 延时是为了防止play先到达设备
+            }
+        }
     }
 }
 
@@ -38,8 +78,8 @@ class IVMultiMonitorViewController: IVDeviceAccessableVC {
     
     @IBOutlet weak var collectionView: UICollectionView!
 
-    var selectMode: Bool = false
-    
+    private var selectMode: Bool = false
+
     lazy var allDevsSrcs: [(srcId: Int, dev: IVDevice)] = {
         var alldevices = userDeviceList
         if !alldevices.contains(where: { $0.deviceID == device.deviceID }) {
@@ -52,12 +92,13 @@ class IVMultiMonitorViewController: IVDeviceAccessableVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.allowsMultipleSelection = true
+        collectionView.collectionViewLayout.invalidateLayout()
+        self.automaticallyAdjustsScrollViewInsets = false
         splitViewBtn.isEnabled = (allDevsSrcs.count > 1)
     }
 
@@ -93,10 +134,14 @@ class IVMultiMonitorViewController: IVDeviceAccessableVC {
 
             dataSource = seldevsrcs.sorted(by: { $0.srcId < $1.srcId })
             splitViewBtn.title = "分屏"
+        
+            let ori: UIDeviceOrientation = dataSource.count > 3 ? .landscapeLeft : .portrait
+            UIDevice.setOrientation(ori)
         } else {
             dataSource = allDevsSrcs
             splitViewBtn.title = "✅"
         }
+        
         selectMode.toggle()
         collectionView.reloadData()
         collectionView.collectionViewLayout.invalidateLayout()
@@ -140,9 +185,11 @@ extension IVMultiMonitorViewController: UICollectionViewDelegateFlowLayout {
             let splitCols = (dataSource.count < 4 ? 1 : 2)
             let roundNum = round(CGFloat(dataSource.count) / CGFloat(splitCols))
             if collectionView.bounds.height > collectionView.bounds.width {
-                return CGSize(width: collectionView.bounds.width / CGFloat(splitCols)  - 0.5, height: collectionView.bounds.height / roundNum  - 0.5)
+                return CGSize(width: collectionView.bounds.width / CGFloat(splitCols) - (dataSource.count > 3 ? 1 : 0),
+                              height: collectionView.bounds.height / roundNum - (dataSource.count > 1 ? 1 : 0))
             } else {
-                return CGSize(width: collectionView.bounds.width / roundNum  - 0.5, height: collectionView.bounds.height / CGFloat(splitCols)  - 0.5)
+                return CGSize(width: collectionView.bounds.width / roundNum - (dataSource.count > 1 ? 1 : 0),
+                              height: collectionView.bounds.height / CGFloat(splitCols) - (dataSource.count > 3 ? 1 : 0))
             }
         }
     }
@@ -152,11 +199,11 @@ extension IVMultiMonitorViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.5
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 0.5
+        return 0
     }
 }
 
@@ -179,7 +226,7 @@ class IVMultiMonitorCell: UICollectionViewCell {
                 vc.view!.autoresizingMask = [.flexibleWidth, .flexibleHeight]
                 vc.view!.frame = self.contentView.bounds
                 self.contentView.addSubview(vc.view)
-                vc.monitorPlayer?.play()
+//                vc.monitorPlayer?.play()
             }
         }
     }

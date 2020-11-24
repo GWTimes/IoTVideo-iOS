@@ -58,15 +58,17 @@
 		
 		<option value="//api/name/audioDecoder">audioDecoder</option>
 		
-		<option value="//api/name/audioEncoder">audioEncoder</option>
+		<option value="//api/name/audioRender">audioRender</option>
+		
+		<option value="//api/name/avRecorder">avRecorder</option>
 		
 		<option value="//api/name/avheader">avheader</option>
-		
-		<option value="//api/name/customAudioRender">customAudioRender</option>
 		
 		<option value="//api/name/definition">definition</option>
 		
 		<option value="//api/name/delegate">delegate</option>
+		
+		<option value="//api/name/handsFree">handsFree</option>
 		
 		<option value="//api/name/isRecording">isRecording</option>
 		
@@ -76,11 +78,9 @@
 		
 		<option value="//api/name/status">status</option>
 		
-		<option value="//api/name/syncAudio">syncAudio</option>
-		
 		<option value="//api/name/videoDecoder">videoDecoder</option>
 		
-		<option value="//api/name/videoEncoder">videoEncoder</option>
+		<option value="//api/name/videoRender">videoRender</option>
 		
 		<option value="//api/name/videoView">videoView</option>
 		
@@ -92,19 +92,15 @@
 	
 	<optgroup label="Instance Methods">
 		
-		<option value="//api/name/getAudioFrame:">- getAudioFrame:</option>
-		
-		<option value="//api/name/getVideoFrame:">- getVideoFrame:</option>
-		
 		<option value="//api/name/play">- play</option>
 		
 		<option value="//api/name/prepare">- prepare</option>
 		
-		<option value="//api/name/startRecord:completionHandler:">- startRecord:completionHandler:</option>
+		<option value="//api/name/startRecording:completionHandler:">- startRecording:completionHandler:</option>
 		
 		<option value="//api/name/stop">- stop</option>
 		
-		<option value="//api/name/stopRecord">- stopRecord</option>
+		<option value="//api/name/stopRecording">- stopRecording</option>
 		
 		<option value="//api/name/takeScreenshot:">- takeScreenshot:</option>
 		
@@ -131,6 +127,9 @@
 	<th>Inherits from</th>
 	<td><a href="../Classes/IVConnection.html">IVConnection</a> : NSObject</td>
 </tr><tr>
+	<th>Conforms to</th>
+	<td><a href="../Protocols/IVAudioRenderDataSource.html">IVAudioRenderDataSource</a><br /><a href="../Protocols/IVVideoRenderDataSource.html">IVVideoRenderDataSource</a></td>
+</tr><tr>
 	<th>Declared in</th>
 	<td>IVPlayer.h</td>
 </tr>
@@ -142,7 +141,7 @@
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>核心播放器（抽象类，不要直接实例化，请使用其派生类: <a href="../Classes/IVLivePlayer.html">IVLivePlayer</a> / <a href="../Classes/IVPlaybackPlayer.html">IVPlaybackPlayer</a> / IVMonitorPlayer）</p>
+						<p>核心播放器</p><div class="note"><p><strong>Note:</strong> IVPlayer为抽象基类，请勿直接实例化，应使用其派生类:IVLivePlayer、IVPlaybackPlayer和<a href="../Classes/IVMonitorPlayer.html">IVMonitorPlayer</a></p></div>
 					</div>
 					
 					
@@ -199,8 +198,8 @@
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/status" title="status"></a>
-	<h3 class="method-title"><code><a href="#//api/name/status">&nbsp;&nbsp;status</a></code>
+	<a name="//api/name/avheader" title="avheader"></a>
+	<h3 class="method-title"><code><a href="#//api/name/avheader">&nbsp;&nbsp;avheader</a></code>
 </h3>
 
 	<div class="method-info">
@@ -210,12 +209,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>播放器状态</p>
+				<p>接收到设备端端的流媒体信息头</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readonly) IVPlayerStatus status</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readonly) IVAVHeader avheader</code></div>
 
 		    
 			
@@ -240,8 +239,8 @@
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/avheader" title="avheader"></a>
-	<h3 class="method-title"><code><a href="#//api/name/avheader">&nbsp;&nbsp;avheader</a></code>
+	<a name="//api/name/videoView" title="videoView"></a>
+	<h3 class="method-title"><code><a href="#//api/name/videoView">&nbsp;&nbsp;videoView</a></code>
 </h3>
 
 	<div class="method-info">
@@ -251,12 +250,53 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>流媒体信息头</p>
+				<p>视频画面</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readonly) IVAVHeader avheader</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, readonly) UIView *videoView</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVPlayer.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/status" title="status"></a>
+	<h3 class="method-title"><code><a href="#//api/name/status">&nbsp;&nbsp;status</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>播放器状态</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readonly) IVPlayerStatus status</code></div>
 
 		    
 			
@@ -333,7 +373,7 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>视频清晰度</p>
+				<p>视频清晰度, set方法内部会触发发送切换分辨率指令给设备</p>
 			</div>
 			
 		    
@@ -404,6 +444,49 @@
 		</div>
 	</div>
 </div><div class="section-method">
+	<a name="//api/name/handsFree" title="handsFree"></a>
+	<h3 class="method-title"><code><a href="#//api/name/handsFree">&nbsp;&nbsp;handsFree</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>免提， 默认YES, 有外设时无效
+@li YES 没有外设时外放声音
+@li NO  没有外设时听筒处播放声音</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readwrite) BOOL handsFree</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVPlayer.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/prepare" title="prepare"></a>
 	<h3 class="method-title"><code><a href="#//api/name/prepare">&ndash;&nbsp;prepare</a></code>
 </h3>
@@ -415,7 +498,7 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>(可选) 预连接，获取流媒体信息头</p>
+				<p>预连接(可选)</p>
 			</div>
 			
 		    
@@ -429,6 +512,11 @@
 
 			
 
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<div class="note"><p><strong>Note:</strong> 设备会发送流媒体信息头，但不会发送音视频数据</p></div>
+			</div>
 			
 
 			
@@ -471,6 +559,11 @@
 			
 
 			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<div class="note"><p><strong>Note:</strong> 设备会发送流媒体信息头，接着发送音视频数据</p></div>
+			</div>
+			
 
 			
 
@@ -497,7 +590,7 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>停止播放，断开连接</p>
+				<p>停止播放</p>
 			</div>
 			
 		    
@@ -511,6 +604,11 @@
 
 			
 
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<div class="note"><p><strong>Note:</strong> 该操作APP将与设备断开连接</p></div>
+			</div>
 			
 
 			
@@ -538,7 +636,7 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>视频画面截图</p>
+				<p>截图</p>
 			</div>
 			
 		    
@@ -553,110 +651,11 @@
 				
 					<tr>
 						<th scope="row" class="argument-name"><code>completionHandler</code></th>
-						<td><p>完成回调</p></td>
+						<td><p>截图回调</p></td>
 					</tr>
 				
 				</table>
 			</div>
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">IVPlayer.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/startRecord:completionHandler:" title="startRecord:completionHandler:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/startRecord:completionHandler:">&ndash;&nbsp;startRecord:completionHandler:</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>开始录像</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>- (void)startRecord:(NSString *)<em>savePath</em> completionHandler:(void ( ^ ) ( NSString *_Nullable savePath , NSError *_Nullable error ))<em>completionHandler</em></code></div>
-
-		    
-			
-			<div class="method-subsection arguments-section parameters">
-				<h4 class="method-subtitle parameter-title">Parameters</h4>
-				<table class="argument-def parameter-def">
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>savePath</code></th>
-						<td><p>录像文件路径</p></td>
-					</tr>
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>completionHandler</code></th>
-						<td><p>完成回调</p></td>
-					</tr>
-				
-				</table>
-			</div>
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">IVPlayer.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/stopRecord" title="stopRecord"></a>
-	<h3 class="method-title"><code><a href="#//api/name/stopRecord">&ndash;&nbsp;stopRecord</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>停止录像</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>- (void)stopRecord</code></div>
-
-		    
 			
 
 			
@@ -720,8 +719,8 @@
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/videoDecoder" title="videoDecoder"></a>
-	<h3 class="method-title"><code><a href="#//api/name/videoDecoder">&nbsp;&nbsp;videoDecoder</a></code>
+	<a name="//api/name/startRecording:completionHandler:" title="startRecording:completionHandler:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/startRecording:completionHandler:">&ndash;&nbsp;startRecording:completionHandler:</a></code>
 </h3>
 
 	<div class="method-info">
@@ -731,14 +730,31 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>视频解码器。⚠️已内置，如无必要 请勿修改</p>
+				<p>开始录像</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nullable) id&lt;IVVideoDecodable&gt; videoDecoder</code></div>
+			<div class="method-subsection method-declaration"><code>- (void)startRecording:(NSString *)<em>savePath</em> completionHandler:(void ( ^ ) ( NSString *_Nullable savePath , NSError *_Nullable error ))<em>completionHandler</em></code></div>
 
 		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>savePath</code></th>
+						<td><p>录像文件路径</p></td>
+					</tr>
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>completionHandler</code></th>
+						<td><p>完成回调</p></td>
+					</tr>
+				
+				</table>
+			</div>
 			
 
 			
@@ -761,8 +777,8 @@
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/videoEncoder" title="videoEncoder"></a>
-	<h3 class="method-title"><code><a href="#//api/name/videoEncoder">&nbsp;&nbsp;videoEncoder</a></code>
+	<a name="//api/name/stopRecording" title="stopRecording"></a>
+	<h3 class="method-title"><code><a href="#//api/name/stopRecording">&ndash;&nbsp;stopRecording</a></code>
 </h3>
 
 	<div class="method-info">
@@ -772,12 +788,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>视频编码器。⚠️已内置，如无必要 请勿修改</p>
+				<p>停止录像</p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nullable) id&lt;IVVideoEncodable&gt; videoEncoder</code></div>
+			<div class="method-subsection method-declaration"><code>- (void)stopRecording</code></div>
 
 		    
 			
@@ -813,53 +829,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>音频解码器。⚠️已内置，如无必要 请勿修改</p>
+				<p>音频解码器, 默认为 <a href="../Classes/IVAudioDecoder.html"><code>IVAudioDecoder</code></a></p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nullable) id&lt;IVAudioDecodable&gt; audioDecoder</code></div>
-
-		    
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">IVPlayer.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/audioEncoder" title="audioEncoder"></a>
-	<h3 class="method-title"><code><a href="#//api/name/audioEncoder">&nbsp;&nbsp;audioEncoder</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>音频编码器。⚠️已内置，如无必要 请勿修改</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nullable) id&lt;IVAudioEncodable&gt; audioEncoder</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, readwrite) id&lt;IVAudioDecodable&gt; audioDecoder</code></div>
 
 		    
 			
@@ -884,8 +859,8 @@
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/videoView" title="videoView"></a>
-	<h3 class="method-title"><code><a href="#//api/name/videoView">&nbsp;&nbsp;videoView</a></code>
+	<a name="//api/name/audioRender" title="audioRender"></a>
+	<h3 class="method-title"><code><a href="#//api/name/audioRender">&nbsp;&nbsp;audioRender</a></code>
 </h3>
 
 	<div class="method-info">
@@ -895,13 +870,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>视频渲染器。⚠️已内置，如无必要 请勿修改
-仅当<code>syncAudio=YES</code>时有效。</p>
+				<p>音频渲染器, 默认为 <code>IVAudioRender</code></p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, nullable) UIView&lt;IVVideoRenderable&gt; *videoView</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, readwrite) id&lt;IVAudioRenderable&gt; audioRender</code></div>
 
 		    
 			
@@ -926,8 +900,8 @@
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/customAudioRender" title="customAudioRender"></a>
-	<h3 class="method-title"><code><a href="#//api/name/customAudioRender">&nbsp;&nbsp;customAudioRender</a></code>
+	<a name="//api/name/videoDecoder" title="videoDecoder"></a>
+	<h3 class="method-title"><code><a href="#//api/name/videoDecoder">&nbsp;&nbsp;videoDecoder</a></code>
 </h3>
 
 	<div class="method-info">
@@ -937,13 +911,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>自定义音频渲染。⚠️已内置，如无必要 请勿修改
-通过<a href="#//api/name/getAudioFrame:"><code>getAudioFrame:</code></a>获取并渲染，⚠️内置音频渲染器将失效。</p>
+				<p>视频解码器, 默认为 <a href="../Classes/IVVideoDecoder.html"><code>IVVideoDecoder</code></a></p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readwrite) BOOL customAudioRender</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, readwrite) id&lt;IVVideoDecodable&gt; videoDecoder</code></div>
 
 		    
 			
@@ -968,8 +941,8 @@
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/syncAudio" title="syncAudio"></a>
-	<h3 class="method-title"><code><a href="#//api/name/syncAudio">&nbsp;&nbsp;syncAudio</a></code>
+	<a name="//api/name/videoRender" title="videoRender"></a>
+	<h3 class="method-title"><code><a href="#//api/name/videoRender">&nbsp;&nbsp;videoRender</a></code>
 </h3>
 
 	<div class="method-info">
@@ -979,14 +952,12 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>视频向音频对齐(由音频播放单元驱动)，默认YES。⚠️如无必要 请勿修改
-[YES] 执行<a href="#//api/name/play"><code>play</code></a>后，SDK会自动根据当前音频的pts返回对应的视频帧，见<code>UIView</code>IVVideoRenderable<code> *</code>videoView<code></code>；
-[NO]  执行<a href="#//api/name/play"><code>play</code></a>后，SDK不会自动返回视频帧，需由开发者通过<a href="#//api/name/getVideoFrame:"><code>getVideoFrame:</code></a>获取并做音视频对齐；</p>
+				<p>视频渲染器, 默认为<a href="../Classes/IVVideoRender.html"><code>IVVideoRender</code></a></p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readwrite) BOOL syncAudio</code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, readwrite) id&lt;IVVideoRenderable&gt; videoRender</code></div>
 
 		    
 			
@@ -1011,8 +982,8 @@
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/getAudioFrame:" title="getAudioFrame:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/getAudioFrame:">&ndash;&nbsp;getAudioFrame:</a></code>
+	<a name="//api/name/avRecorder" title="avRecorder"></a>
+	<h3 class="method-title"><code><a href="#//api/name/avRecorder">&nbsp;&nbsp;avRecorder</a></code>
 </h3>
 
 	<div class="method-info">
@@ -1022,106 +993,20 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>获取PCM音频数据, 建议由音频播放单元驱动（例如在playbackCallback中调用该方法）</p>
+				<p>音视频录制器, 默认为<a href="../Classes/IVAVRecorder.html"><code>IVAVRecorder</code></a></p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (BOOL)getAudioFrame:(IVAudioFrame *)<em>aframe</em></code></div>
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, readwrite) id&lt;IVAVRecordable&gt; avRecorder</code></div>
 
 		    
 			
-			<div class="method-subsection arguments-section parameters">
-				<h4 class="method-subtitle parameter-title">Parameters</h4>
-				<table class="argument-def parameter-def">
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>aframe</code></th>
-						<td><p>[IN][OUT]用于接收音频帧数据</p></td>
-					</tr>
-				
-				</table>
-			</div>
-			
-
-			
-			<div class="method-subsection return">
-				<h4 class="method-subtitle parameter-title">Return Value</h4>
-				<p>[YES]成功，[NO]失败</p>
-			</div>
-			
-
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<div class="note"><p><strong>Note:</strong> aframe入参时 <code>aframe-&gt;data</code>不可为NULL，aframe->size`不可为0；</p></div>
-			</div>
-			
 
 			
 
 			
 
-			
-			<div class="method-subsection declared-in-section">
-				<h4 class="method-subtitle">Declared In</h4>
-				<p><code class="declared-in-ref">IVPlayer.h</code></p>
-			</div>
-			
-			
-		</div>
-	</div>
-</div><div class="section-method">
-	<a name="//api/name/getVideoFrame:" title="getVideoFrame:"></a>
-	<h3 class="method-title"><code><a href="#//api/name/getVideoFrame:">&ndash;&nbsp;getVideoFrame:</a></code>
-</h3>
-
-	<div class="method-info">
-		<div class="pointy-thing"></div>
-
-		<div class="method-info-container">
-			
-			
-			<div class="method-subsection brief-description">
-				<p>获取YUV视频数据
-仅当<code>syncAudio=NO</code>时有效。</p>
-			</div>
-			
-		    
-
-			<div class="method-subsection method-declaration"><code>- (BOOL)getVideoFrame:(IVVideoFrame *)<em>vframe</em></code></div>
-
-		    
-			
-			<div class="method-subsection arguments-section parameters">
-				<h4 class="method-subtitle parameter-title">Parameters</h4>
-				<table class="argument-def parameter-def">
-				
-					<tr>
-						<th scope="row" class="argument-name"><code>vframe</code></th>
-						<td><p>[IN][OUT]用于接收视频帧数据</p></td>
-					</tr>
-				
-				</table>
-			</div>
-			
-
-			
-			<div class="method-subsection return">
-				<h4 class="method-subtitle parameter-title">Return Value</h4>
-				<p>[YES]成功，[NO]失败</p>
-			</div>
-			
-
-			
-
-			
-			<div class="method-subsection discussion-section">
-				<h4 class="method-subtitle">Discussion</h4>
-				<div class="note"><p><strong>Note:</strong> vframe入参时 <code>vframe-&gt;data[i]</code>不可为NULL，vframe->linesize[i]`不可为0；</p></div>
-			</div>
 			
 
 			
@@ -1152,7 +1037,7 @@
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2020 tencentcs. All rights reserved. Updated: 2020-07-07</p>
+						<p class="copyright">Copyright &copy; 2020 tencentcs. All rights reserved. Updated: 2020-11-04</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>

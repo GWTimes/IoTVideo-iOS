@@ -9,17 +9,23 @@
 import Foundation
 
 class IVObservable<T> {
-    typealias Observer = (T) -> Void
-    var observer: Observer?
+    typealias Action = ((new: T, old: T)) -> Void
     
-    func observe(_ observer: Observer?) {
-        self.observer = observer
-//        observer?(value)
+    private var actions: [Action] = []
+    
+    func addObserve(_ action: @escaping Action) {
+        self.actions.append(action)
     }
     
+    func observe(_ action: @escaping Action) {
+        self.actions = [action]
+    }
+        
     var value: T {
         didSet {
-            observer?(value)
+            actions.forEach { action in
+                action((value, oldValue))
+            }
         }
     }
     

@@ -36,8 +36,30 @@
 ```swift
 import IoTVideo
 
-IoTVideo.sharedInstance.setup(launchOptions: launchOptions)
+func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) {
+    // 初始化
+    IoTVideo.sharedInstance.setup(launchOptions: launchOptions)
+    // 设置代理
+    IoTVideo.sharedInstance.delegate = self
+    // 设置日志等级
+    IoTVideo.sharedInstance.logLevel = .DEBUG
+    
+    ...
+}
+
+/// IoTVideoDelegate协议
+extension AppDelegate: IoTVideoDelegate {
+    func didUpdate(_ linkStatus: IVLinkStatus) {
+        print("sdkLinkStatus: \(linkStatus.rawValue)")
+    }
+    
+    func didOutputLogMessage(_ message: String, level: IVLogLevel, file: String, func: String, line: Int32) {
+        print("\(Date()) <\(file):\(line)> \(`func`): \(message)")
+    }
+}
+
 ```
+
 
 ### 2、注册
 
@@ -90,6 +112,9 @@ import IoTVideo
 
 // 1.创建监控播放器
 let monitorPlayer = IVMonitorPlayer(deviceId: device.deviceID)
+// 如果是多源设备(NVR)，创建监控播放器时应指定源ID，例如"2"
+// let monitorPlayer = IVMonitorPlayer(deviceId: device.deviceID, sourceId: 2)
+
 // 2.设置播放器代理（回调）
 monitorPlayer.delegate = self
 // 3.添加播放器渲染图层
@@ -141,7 +166,6 @@ IVMessageMgr.sharedInstance.takeAction(ofDevice: deviceId, path: actionPath, jso
 }
 ```
 
-
 > 详见[【消息管理】](#消息管理)
 
 
@@ -164,20 +188,18 @@ IVMessageMgr.sharedInstance.takeAction(ofDevice: deviceId, path: actionPath, jso
 
 
 > ⚠️重要说明：SDK中的IoTVideo.framework和Demo中的IJKMediaFramework.framework皆依赖于FFmpeg库，为方便开发者能自定义FFmpeg库同时避免多个FFmpeg库代码冲突，自`v1.1(ebb)`版本起IoTVideo.framework将FFmpeg库分离出来，由开发者在APP工程中导入。此外，我们提供了一份基于`ff3.4`的FFmpeg库(非GPL)，位于`Demo/IotVideoDemo/IotVideoDemo/Frameworks/ffmpeg/lib`，仅供开发者参考使用，也可另行编译（注：自行编译的FFmpeg版本应考虑接口兼容问题）。
->
 
 必选库：
 
 - IoTVideo.framework (静态库)   // 核心库     
-    - 依赖FFmpeg库 (必须)
+  - 依赖FFmpeg库 (必须)
 - IVVAS.framework (静态库)      // 增值服务库
-- IVNetwork.framework (静态库)  // 网络库
 
 可选库：
 
 - IJKMediaFramework.framework（静态库）// 用于播放云回放的m3u8文件，
-    - 依赖FFmpeg库 (必须)
-    - 依赖SSL库（可选）
+  - 依赖FFmpeg库 (必须)
+  - 依赖SSL库（可选）
 
 依赖库：
 
@@ -199,7 +221,7 @@ IVMessageMgr.sharedInstance.takeAction(ofDevice: deviceId, path: actionPath, jso
   - libbz2.tbd
   - libiconv.tbd
 
-![](https://note.youdao.com/yws/api/group/108650997/file/900729043?method=download&inline=true&version=1&shareToken=8EEC2178C08E464184C1A09B6363FEE3)
+![](https://note.youdao.com/yws/api/group/108650997/file/905721786?method=download&inline=true&version=1&shareToken=40D9119DB53148FFAB19556DACCC79EE)
 
 
 
@@ -300,7 +322,7 @@ let dev = deviceList[0]
 
 // 3.绑定设备
 
-// 4.订阅设备
+// 4.订阅设备 token 来自绑定设备结果的  AccessToken 字段
 IVNetConfig.subscribeDevice(withToken: "********", deviceId: deviceId)
 ```
 
@@ -336,7 +358,7 @@ IVNetConfig.registerDeviceOnlineCallback { (devId, error) in {
 
 // 5.绑定设备
 
-// 6.订阅设备
+// 6.订阅设备 token 来自绑定设备结果的  AccessToken 字段
 IVNetConfig.subscribeDevice(withToken: "********", deviceId: deviceId)
 ```
 
@@ -371,7 +393,7 @@ IVNetConfig.registerDeviceOnlineCallback { (devId, error) in {
 
 // 5.绑定设备
 
-// 6.订阅设备
+// 6.订阅设备 token 来自绑定设备结果的  AccessToken 字段
 IVNetConfig.subscribeDevice(withToken: "********", deviceId: deviceId)
 
 ```
@@ -443,15 +465,23 @@ PlaybackPlayer是基于IVPlayer派生的回放播放器，主要增加以下功�
 
 ##### 1.创建播放器实例
 
+*⚠️ 注意：如果是多源设备(NVR)，创建播放器时应指定源ID，例如"2"*
+
 ```swift
 import IoTVideo
 
 // 监控播放器
 let monitorPlayer = IVMonitorPlayer(deviceId: device.deviceID)
+// let monitorPlayer = IVMonitorPlayer(deviceId: device.deviceID, sourceId: 2) //For NVR
+
 // 音视频通话播放器
 let livePlayer = IVLivePlayer(deviceId: device.deviceID)
+//let livePlayer = IVLivePlayer(deviceId: device.deviceID, sourceId: 2) //For NVR
+
 // 回放播放器
 let playbackPlayer = IVPlaybackPlayer(deviceId: device.deviceID, playbackItem: item, seekToTime: time)
+//let playbackPlayer = IVPlaybackPlayer(deviceId: device.deviceID, playbackItem: item, seekToTime: time, sourceId: 2) //For NVR
+
 ```
 
 *⚠️注意：以下使用`xxxxPlayer`泛指支持该功能的播放器*
@@ -479,7 +509,7 @@ xxxxPlayer.videoView?.frame   = videoView.bounds
 ##### 5.预连接（可选），获取流媒体头信息
 
 ```swift
-xxxxPlayer.prepare()
+xxxxPlayer.prepare() //【可选】
 ```
 
 ##### 6.开始播放，启动推拉流、渲染模块
@@ -491,8 +521,8 @@ xxxxPlayer.play()
 ##### 7.开启/关闭语音对讲（只支持MonitorPlayer/LivePlayer）
 
 ```swift
-xxxxPlayer.startTalk()
-xxxxPlayer.stopTalk()
+xxxxPlayer.startTalking()
+xxxxPlayer.stopTalking()
 ```
 
 ##### 8.开启/切换/关闭摄像头（只支持LivePlayer）
@@ -529,81 +559,102 @@ xxxxPlayer.stop()
 
 ## 高级功能
 
-> ⚠️注意：音视频编解码及渲染已默认由核心播放器实现。如无必要，无需另行实现。
+##### 自定义音视频编码、解码、渲染、采集等功能模块
 
-##### 自定义音视频编解码
+> ⚠️注意：音视频编解码及渲染等已默认由核心播放器实现。如无必要，无需另行实现。
 
-可选实现并赋值给核心播放器（IVPlayer）中的以下音视频编解码器即可自定义编解码器：
-
-```swift
-/// 视频解码
-open var videoDecoder: IVVideoDecodable?
-/// 视频编码
-open var videoEncoder: IVVideoEncodable?
-/// 音频解码
-open var audioDecoder: IVAudioDecodable?
-/// 音频编码
-open var audioEncoder: IVAudioEncodable?
-```
-
-##### 自定义音视频渲染
-
-- 获取PCM音频数据
+播放器默认使用内置采集器、编解码器、渲染器等功能模块，但允许开发者在开始播放前对内置功能模块进行某些参数修改，也可根据对应模块的协议自定义实现并赋值给播放器以覆盖内置功能模块。
 
 ```swift
-/// 获取PCM音频数据, 建议由音频播放单元驱动（例如在playbackCallback中调用该方法）
-/// @param aframe [IN][OUT]用于接收音频帧数据
-/// @note aframe入参时 `aframe->data`不可为NULL，aframe->size`不可为0；
-/// @return [YES]成功，[NO]失败
-open func getAudioFrame(_ aframe: UnsafeMutablePointer<IVAudioFrame>) -> Bool
+// 基础播放器可自定义模块
+class IVPlayer {
+	/// 音频解码器, 默认实现为 `IVAudioDecoder`
+    open var audioDecoder: (Any & IVAudioDecodable)?
+	/// 视频解码器, 默认实现为 `IVVideoDecoder`
+     open var videoDecoder: (Any & IVVideoDecodable)?
+	/// 音频渲染器, 默认实现为 `IVAudioRender`
+    open var audioRender: (Any & IVAudioRenderable)?
+	/// 视频渲染器, 默认实现为`IVVideoRender`
+    open var videoRender: (Any & IVVideoRenderable)?
+	/// 音视频录制器, 默认实现为`IVAVRecorder`
+    open var avRecorder: (Any & IVAVRecordable)?
+}
+
+// 可对讲播放器可自定义模块
+public protocol IVPlayerTalkable {    
+	/// 音频采集器, 默认实现为 `IVAudioCapture`
+    open var audioCapture: (Any & IVAudioCapturable)
+	/// 音频编码器, 默认实现为 `IVAudioEncoder`
+    open var audioEncoder: (Any & IVAudioEncodable)
+}
+
+// 可视频播放器可自定义模块
+protocol IVPlayerVideoable {
+    /// 视频采集器, 默认实现为 `IVVideoCapture`
+    open var videoCapture: (Any & IVVideoCapturable)?
+    /// 视频编码器, 默认实现为 `IVVideoEncoder`
+    open var videoEncoder: (Any & IVVideoEncodable)?
+}
 ```
 
-
-- 获取YUV视频数据
-
->方式一：通过回调获取视频帧
+- swift示例如下:
 
 ```swift
-/// 视频渲染器
-/// 视频渲染器，默认为内置渲染器。 ⚠️如无必要 请勿修改
-/// 仅当`syncAudio=YES`时有效。
-/// @see 参见`IVVideoRenderable`
-open var videoView: (UIView & IVVideoRenderable)?
+class MyAudioEncoder: IVAudioEncodable { ... }
+class MyAudioDecoder: IVAudioDecodable { ... }
+class MyVideoRender: IVVideoRenderable { ... }
 
+// 自定义功能模块
+if let player = xxxxPlayer as? IVPlayerTalkable {
+    // player.audioEncoder.audioType = .AMR // 默认AAC
+    // player.audioEncoder = MyAudioEncoder() // 自定义audioEncoder
+    player.audioCapture.sampleRate = 16000 // 默认8000
+}
+if let player = xxxxPlayer as? IVPlayerVideoable {
+    // player.videoEncoder.videoType = .H264 // 默认H264
+    player.videoCapture.definition = .mid // 默认low
+}
+// player.videoRender = MyVideoRender() // 自定义videoRender
+// player.audioDecoder = MyAudioDecoder() // 自定义audioDecoder
+// ....
+
+// 开始播放
+xxxxPlayer.play()
 ```
 
+更多信息见SDK中的如下路径的内置实现及其协议：
 
->方式二：手动获取视频帧
+- 内置实现
+  - <IoTVideo/IVAudioDecoder.h> // AudioDecode
+  - <IoTVideo/IVAudioEncoder.h> // AudioEncode
+  - <IoTVideo/IVVideoDecoder.h> // VideoDecode
+  - <IoTVideo/IVVideoEncoder.h> // VideoEncode
+  - <IoTVideo/IVVideoCapture.h> // VideoCapture
+  - <IoTVideo/IVAVRecorder.h>   // AudioRecorder + VideoRecorder
+  - <IoTVideo/IVVideoRender.h>  // VideoRender
+  - <IoTVideo/IVAudioUnit.h>    // AudioRender + AudioCapture
 
-```swift
-/// 获取YUV视频数据
-/// 仅当`syncAudio=NO`时有效。
-/// @param vframe [IN][OUT]用于接收视频帧数据
-/// @note vframe入参时 `vframe->data[i]`不可为NULL，vframe->linesize[i]`不可为0；
-/// @return [YES]成功，[NO]失败
-open func getVideoFrame(_ vframe: UnsafeMutablePointer<IVVideoFrame>) -> Bool
-```
+- 相关协议
+  - <IoTVideo/IVAVRecordable.h  >
+  - <IoTVideo/IVAudioEncodable.h>
+  - <IoTVideo/IVVideoDecodable.h>
+  - <IoTVideo/IVAudioCapturable.h>
+  - <IoTVideo/IVAudioRenderable.h>
+  - <IoTVideo/IVVideoEncodable.h>
+  - <IoTVideo/IVAudioDecodable.h >
+  - <IoTVideo/IVVideoCapturable.h>
+  - <IoTVideo/IVVideoRenderable.h>
+
 
 ##### 自定义数据传输
 
-- 接收数据
-
-```swift
-/// 连接代理
-public protocol IVConnectionDelegate : NSObjectProtocol {
-    /// 收到数据
-    /// @param connection 连接实例
-    /// @param data 数据
-    func connection(_ connection: IVConnection, didReceive data: Data)
-}
-```
+此功能允许用户在建立通道连接之后传输自定义数据，例如硬件模块开关、交互指令、额外的多媒体信息等。
 
 - 发送数据
 
 > 说明：`#define MAX_DATA_SIZE 64000`
 
 ```swift
-
 /// 通道连接（抽象类，不要直接实例化，请使用其派生类: IVLivePlayer / IVPlaybackPlayer / IVMonitorPlayer / IVTransmission）
 open class IVConnection : NSObject {
     
@@ -621,6 +672,19 @@ open class IVConnection : NSObject {
     open func send(_ data: Data) -> Bool
 }
 ```
+
+- 接收数据
+
+```swift
+/// 连接代理
+public protocol IVConnectionDelegate : NSObjectProtocol {
+    /// 收到数据
+    /// @param connection 连接实例
+    /// @param data 数据
+    func connection(_ connection: IVConnection, didReceive data: Data)
+}
+```
+
 
 # 消息管理
 
@@ -664,7 +728,9 @@ class MyViewController: UIViewController, IVMessageDelegate {
 }
 ```
 
-##### 3.读取属性
+##### 2.读取属性
+
+`path`为空字符串`""`则表示获取完整物模型
 
 ```swift
 import IoTVideo.IVMessageMgr
@@ -679,7 +745,7 @@ IVMessageMgr.sharedInstance.readProperty(ofDevice: deviceId, path: path) { (json
 }
 ```
 
-##### 4.设置属性
+##### 3.设置属性
 
 ```swift
 import IoTVideo.IVMessageMgr
@@ -691,25 +757,142 @@ let path = "ProWritable._logLevel"
 // 模型参数的字符串
 let json = "{\"setVal\":0}"
 
+// 或
+let path = "ProWritable._logLevel.setVal"
+let json = "0" //代表整型
+let json = "\"value\"" // 代表字符串
+
 IVMessageMgr.sharedInstance.writeProperty(ofDevice: deviceId, path: path, json: json) { (json, error) in
     // do something here    
 }
 ```
 
-##### 5.执行动作
+##### 4.执行动作
 
 ```swift
 import IoTVideo.IVMessageMgr
 
-// 设备ID的字符串
 let deviceId = dev.deviceId
-// 模型路径的字符串
 let path = "Action.cameraOn"
-// 模型参数的字符串
 let json = "{\"ctlVal\":1}"
 
 IVMessageMgr.sharedInstance.takeAction(ofDevice: deviceId, path: path, json: json) { (json, error) in
     // do something here    
+}
+```
+
+#### 5. 用户自定义属性
+
+
+##### 5.1 新增用户自定义属性
+
+ - 禁止使用"\_"开头，"_"为内置物模型使用（使用了会报错：8605）
+ - 重复新增会直接覆盖已经存在的自定义用户物模型
+
+```swift
+import IoTVideo.IVMessageMgr
+
+let deviceId = dev.deviceId
+// 新增的用户属性
+let subPath = "userPro1" 
+let path = "ProUser." + subPath
+let json = "{\"key\":\"value\"}"
+
+IVMessageMgr.sharedInstance.addProperty(ofDevice: deviceId, path: path, json: json) { (json, error) in
+    // do something here
+}
+```
+
+##### 5.2 删除用户自定义属性
+
+```swift
+import IoTVideo.IVMessageMgr
+
+let deviceId = dev.deviceId
+let path = "ProUser.userPro1"
+
+IVMessageMgr.sharedInstance.deleteProperty(ofDevice: deviceId, path: path) { (json, error) in
+    // do something here
+}
+```
+
+##### 5.3 修改用户物模型
+
+与 3.设置属性 同一个API，注意 `path` 和 `json` 的细微差别
+|        修改值        | 内容 | 可用示例 |
+| :----------------: | :--------: | :--------: |
+ProWritable  | 读写属性 | `path = ProWritable.xxx json = "{\"setVal\":\"value\"}"` <br> 或字符串：`path = Prowritable.xxx.setVal json = "\"value\""` <br> 
+ProUser | 自定义用户属性| `path = ProWritable.xxx.val json = "{\"key\":\"value\"}"`
+ProUser | 内 置 用 户 属性| `path = "ProUser._buildIn.val.xxx" json = "value" `
+
+```swift
+import IoTVideo.IVMessageMgr
+
+let deviceId = dev.deviceId
+
+// 1、用户自定义的ProUser属性 实例: 
+// "testProUser":{"t":1600048390,"val":{"testKey":"testValue"}}
+
+// path 必须拼接为 ProUser.xxx.val 
+let path = "ProUser.testProUser.val" 
+let json = "{\"testKey\":\"newTestValue\"}"
+
+IVMessageMgr.sharedInstance.writeProperty(ofDevice: deviceId, path: path, json: json) { (json, error) in
+    // do something here    
+}
+
+// 2、系统内置的ProUser属性 实例：
+// "_buildIn":{"t":1599731880,"val":{"almEvtPushEna":0,"nickName":"testName"}
+
+// path必须拼接为 ProUser._buildIn.val._xxx 
+let path = "ProUser._buildIn.val.nickName"
+let json = "\"newNickName\""
+
+IVMessageMgr.sharedInstance.writeProperty(ofDevice: deviceId, path: path, json: json) { (json, error) in
+    // do something here    
+}
+```
+
+## 设备管理  IVDeviceMgr
+#### 1、查询设备固件版本号
+不通过物模型查询最新版本号，当设备离线时也可用
+```swift
+/// 查询设备新固件版本信息
+/// @param deviceid 设备id
+/// @param responseHandler 回调
+open class func queryDeviceNewVersionWidthDevieId(_ deviceId: String, responseHandler: @escaping IVNetworkResponseHandler)
+
+/// 查询设备新固件版本信息
+/// @param deviceid 设备id
+/// @param currentVersion 当前版本号 nil: 默认为当前版本号 当针对特定版本的升级时为必填
+/// @param language 语言 nil：默认系统语言
+/// @param responseHandler 回调
+open class func queryDeviceNewVersionWidthDevieId(_ deviceid: String, currentVersion: String?, language: String?, responseHandler: @escaping
+IVNetworkResponseHandler)
+```
+
+示例
+```swift
+import IoTVideo.IVDeviceMgr
+
+IVDeviceMgr.queryDeviceNewVersionWidthDevieId("xxxx") { (json, error) in
+    // do something here    
+}
+
+
+IVDeviceMgr.queryDeviceNewVersionWidthDevieId("xxxx", currentVersion:"1.0.0", language:"en") { (json, error) in
+    // do something here    
+}
+
+json: 示例
+{
+"code": 0,
+"msg": "Success",
+"data": {
+	"downUrl": "xxxxxxxxx", 
+	"version": "xxxxxxxxx", //版本号
+	"upgDescs": "xxxxxxxxx" //升级描述
+    }
 }
 ```
 
@@ -772,23 +955,254 @@ open func sendData(toServer url: String, data: Data?, timeout: TimeInterval, com
 
 ```
 
-# SDK LOG输出
-1. 设置代理,设置日志输出等级
-```swift
-func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?) {
-    
-    IoTVideo.sharedInstance.delegate = self
-    IoTVideo.sharedInstance.logLevel = .DEBUG
-    
-    ...
-}
-```
+# 增值服务
 
-2. 遵守 `IoTVideoDelegate`协议，输出SDK LOG
+使用前提，设备已开通云存
+
+#### 视频相关
+- 查询存在云存的日期信息
+- 获取回放文件列表
+- 获取回放 m3u8 播放地址
+####  事件相关
+- 获取事件列表
+- 删除事件（可批量）
+##### 1.查询存在云存的日期信息
+
 ```swift
-extension AppDelegate: IoTVideoDelegate {
-    func didOutputLogMessage(_ message: String, level: IVLogLevel, file: String, func: String, line: Int32) {
-        print("\(Date()) <\(file):\(line)> \(`func`): \(message)")
+/// 获取云存视频可播放日期信息
+/// - 用于终端用户在云存页面中对云存服务时间内的日期进行标注，区分出是否有云存视频文件。
+/// @param deviceId 设备id
+/// @param timezone 相对于0时区的秒数，例如东八区28800
+/// @param responseHandler 回调
+- (void)getVideoDateListWithDeviceId:(NSString *)deviceId timezone:(NSInteger)timezone responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
+```
+返回结果：json 示例
+```
+{
+    "code":0,
+    "msg":"Success",
+    "data":{
+        "list":[
+            1600653494
+        ]
     }
 }
 ```
+
+##### 2. 获取回放文件列表
+```objc
+/// 获取回放文件列表
+/// - 获取云存列表，用于对时间轴渲染
+/// @param deviceId 设备id
+/// @param startTime 开始UTC时间,单位秒
+/// @param endTime 结束UTC时间,单位秒 超过一天只返回一天
+/// @param responseHandler 回调
+- (void)getVideoPlayListWithDeviceId:(NSString *)deviceId startTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
+```
+返回结果：json 示例
+```swift
+{
+    "msg":"Success",
+    "code":0,
+    "data":{
+        "list":[
+            {
+                "start":1601285768,
+                "end":1601285776
+            },
+            {
+                "start":1601285780,
+                "end":1601285800
+            }
+        ]
+    },
+}
+```
+##### 3.获取回放 m3u8 播放地址
+
+```swift
+/// 获取回放 m3u8 播放地址
+/// @param deviceId 设备id
+/// @param startTime 开始UTC时间,单位秒
+/// @param endTime 结束UTC时间,单位秒 填 0 则默认播放到最新为止
+/// @param responseHandler 回调
+/// json： endflag boolean 播放结束标记， 表示此次播放是否把需要播放的文件播完，没有则需以返回的 endtime 为基准再次请求。false 表示未播放完，true 表示播放完成
+- (void)getVideoPlayAddressWithDeviceId:(NSString *)deviceId startTime:(NSTimeInterval)startTime endTiem:(NSTimeInterval)endTime responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
+```
+返回结果：json 示例
+```swift
+{
+    "code":0,
+    "msg":"Success",
+    "data":{
+        "endTime":1601289368,
+        "endflag":true,
+        "startTime":1601285768,
+        "url":"http://lcb.iotvideo.tencentcs.com/timeshift/live/00000101000e00fc000000000000000007000000b2860100/timeshift.m3u8?starttime=20200928173608&endtime=20200928183608"
+    }
+}
+```
+对应data 结构：
+参数名称|类型   |描述
+--------|-------|-----
+url     |string |m3u8文件地址
+startTime|int64 |此处播放m3u8文件播放开始时间
+endTime |int64  |此次m3u8文件播放结束时间
+endflag |boolean|播放结束标记， 表示此次请求结果的m3u8能否把需要播放的时间内的文件播完，<br> 不能则需以返回的 `endtime` 为基准再次请求。<br>`false` 表示未播放完，`true` 表示播放完成
+
+
+##### 4.获取事件列表
+```swift
+/// 获取事件列表
+/// @param deviceId 设备id
+/// @param startTime 事件告警开始UTC时间,单位秒
+/// @param endTime 事件告警结束UTC时间，当为0时，默认当天的23点59分59秒
+/// @param pageNum 分页查询，第几页
+/// @param pageSize 分页查询，单页数量
+/// @param responseHandler 回调 json
+- (void)getEventListWithDeviceId:(NSString *)deviceId startTime:(NSTimeInterval)startTime endTime:(NSTimeInterval)endTime pageNum:(NSInteger)pageNum pageSize:(NSInteger)pageSize responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
+```
+返回结果：json 示例
+```
+{
+    "requestId":"xxxxxx",
+    "code":0,
+    "msg":"Success",
+    "data":{
+        "imgUrlPrefix":"xxxxx",
+        "thumbUrlSuffix":"&xxxx",
+        "list":[
+            {
+                "alarmId":"xxxx",
+                "firstAlarmType":1,
+                "alarmType":1,
+                "startTime":1600653494,
+                "endTime":1600653495,
+                "imgUrlSuffix":"xxxxx"
+            }
+        ]
+    }
+}
+
+// 图片下载地址为 imgUrl = imgUrlPrefix + imgUrlSuffix
+// 缩略图下载地址为 thumbUrl = imgUrlPrefix + imgUrlSuffix + thumbUrlSuffix
+```
+对应 json 结构：
+
+参数名称      |类型    |描述
+--------------|--------|-----
+alarmId       |string  |事件id
+firstAlarmType|int64   |告警触发时的告警类型
+alarmType     |int64   |告警有效时间内触发过的告警类型
+startTime     |int64   |告警触发时间, utc时间，单位秒
+endTime       |int64   |告警结束时间, utc时间，单位秒
+imgUrlPrefix  |string  |告警图片下载地址前缀缀
+imgUrlSuffix  |string  |告警图片下载地址后缀
+thumbUrlSuffix|string  |告警图片缩略图下载地址后缀
+##### 5. 事件删除
+```swift
+/// 事件删除
+/// @param deviceId 设备id
+/// @param eventIds 事件 id 数组
+/// @param responseHandler 回调
+- (void)deleteEventsWithDeviceId:(NSString *)deviceId eventIds:(NSArray<NSString *> *)eventIds responseHandler:(IVNetworkResponseHandler _Nullable)responseHandler;
+```
+
+具体使用示例请参考：demo 内`IJKMediaViewController.swift`
+
+# 错误码
+
+- 公共错误码
+
+| 错误码区间分布 | 错误描述           |
+| :------------: | ------------------ |
+|  8000 - 8499   | Asrv错误           |
+|  8500 - 8699   | Csrv错误(对接Asrv) |
+|  8799 - 9999   | 预留错误           |
+| 10000 - 10999  | 通用错误           |
+| 11000 - 11999  | 产品/设备相关错误  |
+| 12000 - 12999  | 用户相关错误       |
+| 13000 - 13999  | 客户相关错误       |
+| 14000 - 14999  | 云存相关错误       |
+| 15000 - 15999  | UPG相关错误        |
+| 16000 - 16999  | 帮助中心错误       |
+| 17000 - 17999  | 第三方调用错误     |
+| 20000 - 20999  | P2P错误            |
+| 21000 - 21999  | iOS SDK错误        |
+| 22000 - 22999  | Android SDK错误    |
+| 23000 - 23999  | PC SDK错误         |
+| 24000 - 24999  | DEV SDK错误        |
+
+
+- 连接错误码
+
+|         IVConnError          | 错误码 | 错误描述                             |
+| :--------------------------: | :----: | ------------------------------------ |
+| IVConnError_ExceedsMaxNumber | 21020  | 连接通道已达上限(MAX_CONNECTION_NUM) |
+|    IVConnError_Duplicate     | 21021  | 连接通道已存在                       |
+|  IVConnError_ConnectFailed   | 21022  | 建立连接失败                         |
+|   IVConnError_Disconnected   | 21023  | 连接已断开/未连接                    |
+| IVConnError_ExceedsMaxLength | 21024  | 数据长度超出上限(MAX_PKG_BYTES)      |
+| IVConnError_NotAvailableNow  | 21025  | 当前连接暂不可用/SDK离线             |
+
+- 播放器错误码
+
+|            IVPlayerError             | 错误码 | 错误描述                         |
+| :----------------------------------: | :----: | -------------------------------- |
+|  IVPlayerError_NoRespondsToSelector  | 21030  | 方法选择器无响应、未实现协议方法 |
+|    IVPlayerError_InvalidParameter    | 21031  | 参数错误                         |
+|   IVPlayerError_PlaybackListEmpty    | 21032  | 录像列表为空                     |
+|    IVPlayerError_PlaybackDataErr     | 21033  | 录像列表数据异常                 |
+|   IVPlayerError_RecorderIsRunning    | 21034  | 正在录制                         |
+| IVPlayerError_VideoResolutionChanged | 21035  | 视频分辨率已改变                 |
+| IVPlayerError_EncoderNotAvailableNow | 21036  | 编码器暂不可用                   |
+|   IVPlayerError_PlaybackListVerErr   | 21037  | 不支持的录像列表版本             |
+
+-  消息管理错误码
+
+|         IVMessageError          | 错误码 | 错误描述                        |
+| :-----------------------------: | :----: | ------------------------------- |
+|    IVMessageError_duplicate     | 21000  | 消息重复/正在发送               |
+|    IVMessageError_sendFailed    | 21001  | 消息发送失败                    |
+|     IVMessageError_timeout      | 21002  | 消息响应超时                    |
+|  IVMessageError_GetGdmDataErr   | 21003  | 获取物模型失败                  |
+|  IVMessageError_RcvGdmDataErr   | 21004  | 接收物模型失败                  |
+|  IVMessageError_SendPassSrvErr  | 21005  | 透传数据给服务器失败            |
+|  IVMessageError_SendPassDevErr  | 21006  | 透传数据给设备失败              |
+| IVMessageError_NotFoundCallback | 21007  | 没有找到回调/已超时             |
+| IVMessageError_ExceedsMaxLength | 21008  | 消息长度超出上限(MAX_DATA_SIZE) |
+
+- P2P错误码
+
+|                     TermErr                      | 错误码 | 错误描述                             |
+| :----------------------------------------------: | :----: | ------------------------------------ |
+|          TermErr_msg_send_peer_timeout           | 20001  | 消息发送给对方超时                   |
+|            TermErr_msg_calling_hangup            | 20002  | 普通挂断消息                         |
+|         TermErr_msg_calling_send_timeout         | 20003  | calling消息发送超时                  |
+|         TermErr_msg_calling_no_srv_addr          | 20004  | 服务器未分配转发地址                 |
+|      TermErr_msg_calling_handshake_timeout       | 20005  | 握手超时                             |
+|         TermErr_msg_calling_token_error          | 20006  | 设备端token校验失败                  |
+|         TermErr_msg_calling_all_chn_busy         | 20007  | 监控通道数满                         |
+|      TermErr_msg_calling_timeout_disconnect      | 20008  | 超时断开                             |
+|        TermErr_msg_calling_no_find_dst_id        | 20009  | 未找到目的id                         |
+|      TermErr_msg_calling_check_token_error       | 20010  | token校验出错                        |
+|        TermErr_msg_calling_dev_is_disable        | 20011  | 设备已经禁用                         |
+|        TermErr_msg_calling_duplicate_call        | 20012  | 重复呼叫                             |
+|        TermErr_msg_gdm_handle_processing         | 20100  | 设备正在处理中                       |
+|      TermErr_msg_gdm_handle_leaf_path_error      | 20101  | 设备端校验叶子路径非法               |
+|      TermErr_msg_gdm_handle_parse_json_fail      | 20102  | 设备端解析JSON出错                   |
+|           TermErr_msg_gdm_handle_fail            | 20103  | 设备处理ACtion失败                   |
+|     TermErr_msg_gdm_handle_no_cb_registered      | 20104  | 设备未注册相应的ACtion回调函数       |
+| TermErr_msg_gdm_handle_buildin_prowritable_error | 20105  | 设备不允许通过局域网修改内置可写对象 |
+
+
+- 常见服务器错误码
+
+|              ASrvErr              | 错误码 | 错误描述                         |
+| :-------------------------------: | :----: | -------------------------------- |
+|         ASrv_dst_offline          |  8000  | 目标离线                         |
+|         ASrv_dst_notexsit         |  8002  | 目标不存在                       |
+|      ASrv_dst_error_relation      |  8003  | 非法关系链                       |
+|  ASrv_binderror_dev_usr_has_bind  |  8022  | 设备已经绑定此用户               |
+| ASrv_binderror_dev_has_bind_other |  8023  | 设备已经绑定其他用户             |
+| ASrv_binderror_customer_diffrent  |  8024  | 设备的客户ID与用户的客户ID不一致 |

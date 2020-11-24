@@ -12,6 +12,9 @@ import UserNotifications
 import IVDevTools
 import IQKeyboardManagerSwift
 
+// 是否使用测试服
+let using_test_web_host = IVConfigMgr.allConfigs.first(where: { $0.enable && $0.key == IVOptionKey.hostWeb.rawValue })?.value == "TEST"
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

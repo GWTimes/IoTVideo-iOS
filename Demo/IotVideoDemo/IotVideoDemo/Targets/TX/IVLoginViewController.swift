@@ -20,6 +20,7 @@ class IVLoginViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = (using_test_web_host ? "登录（测试服）" : "登录（正式服）")
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -38,7 +39,7 @@ class IVLoginViewController: UIViewController, UITextFieldDelegate {
         let hud = ivLoadingHud(isMask: true)
         
         //正常登陆：腾讯控制台获取的 id,key和用户名
-        //临时授权登陆：腾讯控制台获取的 零时id,key,token和用户名
+        //临时授权登陆：腾讯控制台获取的 临时id,key,token和用户名
         let account = TXAccount(userName: userNameTF.text ?? "",
                                 secretId: tmpSecretIDTF.text ?? "",
                                 secretKey: tmpSecretKeyTF.text ?? "",
@@ -74,6 +75,7 @@ class IVLoginViewController: UIViewController, UITextFieldDelegate {
                                 $0.set(accessId, forKey: demo_accessId)
                                 $0.set(expireTime, forKey: demo_expireTime)
                                 $0.set(self?.userNameTF.text ?? "", forKey: demo_userName)
+                                $0.set(0, forKey: demo_loginType)
                             }
                             
                             IVNotiPost(.deviceListChange(by: .reload))

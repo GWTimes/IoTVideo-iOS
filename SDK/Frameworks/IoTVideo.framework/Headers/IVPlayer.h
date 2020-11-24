@@ -10,24 +10,15 @@
 #import "IVAVDefine.h"
 #import <AVFoundation/AVFoundation.h>
 #import <AudioToolbox/AudioToolbox.h>
-#import "IVAVCodecable.h"
+
+#import "IVAVUtils.h"
+
 #import "IVMessageMgr.h"
 #import "IVConnection.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @class IVPlayer;
-
-/// 视频渲染器协议
-@protocol IVVideoRenderable <NSObject>
-
-/// 视频渲染代理
-/// @param player 播放器实例
-/// @param videoFrame 要渲染的视频帧
-- (void)player:(IVPlayer *)player renderVideoFrame:(IVVideoFrame *)videoFrame;
-
-@end
-
 
 /// 播放器代理协议
 @protocol IVPlayerDelegate <IVConnectionDelegate>
@@ -44,9 +35,19 @@ NS_ASSUME_NONNULL_BEGIN
 /// @param PTS 时间戳
 - (void)player:(IVPlayer *)player didUpdatePTS:(NSTimeInterval)PTS;
 
+/// SD卡回放文件播放结束
+/// @param player 播放器实例
+/// @param startTime 当前播放结束的文件的开始时间
+- (void)player:(IVPlayer *)player didFinishPlaybackFile:(NSTimeInterval)startTime;
+
+/// 观众人数变更
+/// @param player 播放器实例
+/// @param audience 观众人数
+- (void)player:(IVPlayer *)player didUpdateAudience:(NSInteger)audience;
+
 /// 播放错误回调
 /// @param player 播放器实例
-/// @param error 错误实例
+/// @param error 错误实例, 见 @c `IVPlayerError`
 - (void)player:(IVPlayer *)player didReceiveError:(NSError *)error;
 
 /// 音视频头信息回调
@@ -56,35 +57,55 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+/// 播放器可对讲协议
+@protocol IVPlayerTalkable <IVAudioCaptureDelegate>
 
-/// 播放器对讲协议
-@protocol IVPlayerTalkable <NSObject>
+/// 对讲和视频通话时APP端使用的流媒体信息头, 由对应采集器和编码器参数组合而成, 建立连接时会发送给设备。
+@property (nonatomic, assign, readonly) IVAVHeader encHeader;
+
+/// 音频采集器, 默认为 `IVAudioCapture`
+@property (nonatomic, strong, readwrite) id<IVAudioCapturable> audioCapture;
+
+/// 音频编码器, 默认为 `IVAudioEncoder`
+@property (nonatomic, strong, readwrite) id<IVAudioEncodable> audioEncoder;
 
 /// 是否正在对讲
 @property (nonatomic, assign, readonly) BOOL isTalking;
 
 /// 开启对讲
-- (void)startTalk;
+/// 开启后APP开始发送音频数据，若开启前后需发送其他通信数据，如唤醒设备扬声器等，请使用`发送自定义数据`方法，参见`-[IVConnection sendData:]`
+- (void)startTalking;
 
 /// 关闭对讲
-- (void)stopTalk;
+/// 关闭后APP停止发送音频数据，若关闭前后需发送其他通信数据，如关闭设备扬声器等，请使用`发送自定义数据`方法，参见`-[IVConnection sendData:]`
+- (void)stopTalking;
 
 @end
 
 
-/// 播放器视频通话协议
-@protocol IVPlayerVideoable <NSObject>
+/// 播放器可视频协议
+@protocol IVPlayerVideoable <IVVideoCaptureDelegate>
+
+/// 对讲和视频通话时APP端使用的流媒体信息头, 由对应采集器和编码器参数组合而成, 建立连接时会发送给设备。
+@property (nonatomic, assign, readonly) IVAVHeader encHeader;
+
+/// 视频采集器, 默认为 `IVVideoCapture`
+@property (nonatomic, strong, readwrite) id<IVVideoCapturable> videoCapture;
+
+/// 视频编码器, 默认为 `IVVideoEncoder`
+@property (nonatomic, strong, readwrite) id<IVVideoEncodable> videoEncoder;
+
 /// 摄像头预览图层
 @property (nonatomic, strong, readonly) CALayer *previewLayer;
 
-/// 镜头位置，默认IVCameraPositionFront
-@property (nonatomic, assign, readonly) IVCameraPosition cameraPosition;
+/// 镜头位置
+@property (nonatomic, assign, readwrite) IVCameraPosition cameraPosition;
 
 /// 是否正在开启摄像头
 @property (nonatomic, assign, readonly) BOOL isCameraOpening;
 
 /// 视频帧率，默认16
-@property (nonatomic, assign) int frameRate;
+@property (nonatomic, assign, readwrite) int frameRate;
 
 /// 启动摄像头
 - (void)openCamera;
@@ -98,93 +119,81 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 
-/// 核心播放器（抽象类，不要直接实例化，请使用其派生类: IVLivePlayer / IVPlaybackPlayer / IVMonitorPlayer）
-@interface IVPlayer : IVConnection
+/// 核心播放器
+/// @note IVPlayer为抽象基类，请勿直接实例化，应使用其派生类:IVLivePlayer、IVPlaybackPlayer和IVMonitorPlayer
+@interface IVPlayer : IVConnection <IVAudioRenderDataSource, IVVideoRenderDataSource>
 
 /// 播放器代理
 @property (nonatomic, weak, nullable) id<IVPlayerDelegate> delegate;
 
+/// 接收到设备端端的流媒体信息头
+@property (nonatomic, assign, readonly) IVAVHeader avheader;
+
+/// 视频画面
+@property (nonatomic, strong, readonly) UIView *videoView;
+
 /// 播放器状态
 @property (nonatomic, assign, readonly) IVPlayerStatus status;
-
-/// 流媒体信息头
-@property (nonatomic, assign, readonly) IVAVHeader avheader;
 
 /// 当前播放时间戳（秒）
 @property (nonatomic, assign, readonly) NSTimeInterval pts;
 
-/// 视频清晰度
+/// 视频清晰度, set方法内部会触发发送切换分辨率指令给设备
 @property (nonatomic, assign, readwrite) IVVideoDefinition definition;
 
 /// 静音，  默认NO（即允许播放声音）
 @property (nonatomic, assign, readwrite) BOOL mute;
 
+/// 免提， 默认YES, 有外设时无效
+/// @li YES 没有外设时外放声音
+/// @li NO  没有外设时听筒处播放声音
+@property (nonatomic, assign, readwrite) BOOL handsFree;
 
-#pragma mark - 播放控制
+#pragma mark - 控制
 
-/// (可选) 预连接，获取流媒体信息头
+/// 预连接(可选)
+/// @note 设备会发送流媒体信息头，但不会发送音视频数据
 - (void)prepare;
 
 /// 开始播放
+/// @note 设备会发送流媒体信息头，接着发送音视频数据
 - (void)play;
 
-/// 停止播放，断开连接
+/// 停止播放
+/// @note 该操作APP将与设备断开连接
 - (void)stop;
 
-#pragma mark - 截图/录像
-
-/// 视频画面截图
-/// @param completionHandler 完成回调
+/// 截图
+/// @param completionHandler 截图回调
 - (void)takeScreenshot:(void(^)(UIImage * _Nullable image))completionHandler;
-
-/// 开始录像
-/// @param savePath 录像文件路径
-/// @param completionHandler 完成回调
-- (void)startRecord:(NSString *)savePath completionHandler:(void(^)(NSString * _Nullable savePath, NSError * _Nullable error))completionHandler;
-
-/// 停止录像
-- (void)stopRecord;
 
 /// 是否正在录像
 @property (nonatomic, assign, readonly) BOOL isRecording;
 
+/// 开始录像
+/// @param savePath 录像文件路径
+/// @param completionHandler 完成回调
+- (void)startRecording:(NSString *)savePath completionHandler:(void(^)(NSString * _Nullable savePath, NSError * _Nullable error))completionHandler;
 
-#pragma mark - 高级功能【可选】
+/// 停止录像
+- (void)stopRecording;
 
-/// 视频解码器。⚠️已内置，如无必要 请勿修改
-@property (nonatomic, strong, nullable) id<IVVideoDecodable> videoDecoder;
-/// 视频编码器。⚠️已内置，如无必要 请勿修改
-@property (nonatomic, strong, nullable) id<IVVideoEncodable> videoEncoder;
-/// 音频解码器。⚠️已内置，如无必要 请勿修改
-@property (nonatomic, strong, nullable) id<IVAudioDecodable> audioDecoder;
-/// 音频编码器。⚠️已内置，如无必要 请勿修改
-@property (nonatomic, strong, nullable) id<IVAudioEncodable> audioEncoder;
+#pragma mark - 解码器/渲染器/录制器
 
-/// 视频渲染器。⚠️已内置，如无必要 请勿修改
-/// 仅当`syncAudio=YES`时有效。
-@property (nonatomic, strong, nullable) UIView<IVVideoRenderable> *videoView;
+/// 音频解码器, 默认为 `IVAudioDecoder`
+@property (nonatomic, strong, readwrite) id<IVAudioDecodable> audioDecoder;
 
-/// 自定义音频渲染。⚠️已内置，如无必要 请勿修改
-/// 通过`getAudioFrame:`获取并渲染，⚠️内置音频渲染器将失效。
-@property (nonatomic, assign, readwrite) BOOL customAudioRender;
+/// 音频渲染器, 默认为 `IVAudioRender`
+@property (nonatomic, strong, readwrite) id<IVAudioRenderable> audioRender;
 
-/// 视频向音频对齐(由音频播放单元驱动)，默认YES。⚠️如无必要 请勿修改
-/// [YES] 执行`play`后，SDK会自动根据当前音频的pts返回对应的视频帧，见`UIView<IVVideoRenderable> *videoView`；
-/// [NO]  执行`play`后，SDK不会自动返回视频帧，需由开发者通过`getVideoFrame:`获取并做音视频对齐；
-@property (nonatomic, assign, readwrite) BOOL syncAudio;
+/// 视频解码器, 默认为 `IVVideoDecoder`
+@property (nonatomic, strong, readwrite) id<IVVideoDecodable> videoDecoder;
 
-/// 获取PCM音频数据, 建议由音频播放单元驱动（例如在playbackCallback中调用该方法）
-/// @param aframe [IN][OUT]用于接收音频帧数据
-/// @note aframe入参时 `aframe->data`不可为NULL，aframe->size`不可为0；
-/// @return [YES]成功，[NO]失败
-- (BOOL)getAudioFrame:(IVAudioFrame *)aframe;
+/// 视频渲染器, 默认为`IVVideoRender`
+@property (nonatomic, strong, readwrite) id<IVVideoRenderable> videoRender;
 
-/// 获取YUV视频数据
-/// 仅当`syncAudio=NO`时有效。
-/// @param vframe [IN][OUT]用于接收视频帧数据
-/// @note vframe入参时 `vframe->data[i]`不可为NULL，vframe->linesize[i]`不可为0；
-/// @return [YES]成功，[NO]失败
-- (BOOL)getVideoFrame:(IVVideoFrame *)vframe;
+/// 音视频录制器, 默认为`IVAVRecorder`
+@property (nonatomic, strong, readwrite) id<IVAVRecordable> avRecorder;
 
 @end
 

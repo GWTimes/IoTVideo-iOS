@@ -27,14 +27,9 @@ public class IVConfigMgr: NSObject {
 //        直接修改默认值： PS 只给 IoTVideoDemo使用， 其他项目请还原
 //        return []
         
-//        1157493686468 腾讯测试
-        
-        return [
-            Config(name: "TEST_ID_g", key: "IOT_TEST_SECRECT_ID", value: "AKIDwmOmvryLcolStUw2vc4JI1hHfpkShJOS", enable: false),
-            Config(name: "TEST_KEY_g", key: "IOT_TEST_SECRECT_KEY", value: "zmJbfXBZlkkV1IMBk9OSGtIannUwCCwR", enable: false),
-            
-            Config(name: "TEST_ID_zc", key: "IOT_TEST_SECRECT_ID", value: "AKIDJI7i39Df3CG5qM9jY7SiksuocFeov3HF", enable: false),
-            Config(name: "TEST_KEY_zc", key: "IOT_TEST_SECRECT_KEY", value: "ylJbecMp2zh8PRO5VllVyA7TbUAdrqaC", enable: false),
+        return [            
+            Config(name: "TEST_P2P", key: "IOT_HOST_P2P", value: "TEST", enable: false),
+            Config(name: "TEST_WEB", key: "IOT_HOST_WEB", value: "TEST", enable: false)
         ]
     }() {
         didSet {

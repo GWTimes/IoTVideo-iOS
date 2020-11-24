@@ -48,13 +48,33 @@
 
 	
 	
+	<option value="tasks">Tasks</option>
+	
 	
 
 	
 	
+	<optgroup label="Properties">
+		
+		<option value="//api/name/videoType">videoType</option>
+		
+	</optgroup>
+	
 
 	
 
+	
+	<optgroup label="Instance Methods">
+		
+		<option value="//api/name/encodeVideoFrame:outPacket:">- encodeVideoFrame:outPacket:</option>
+		
+		<option value="//api/name/registerForChannel:">- registerForChannel:</option>
+		
+		<option value="//api/name/setupWithVideoType:size:pixFmt:frameRate:">- setupWithVideoType:size:pixFmt:frameRate:</option>
+		
+		<option value="//api/name/unregister">- unregister</option>
+		
+	</optgroup>
 	
 	
 </select>
@@ -75,10 +95,10 @@
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
 	<th>Conforms to</th>
-	<td><a href="../Protocols/IVAVCodecable.html">IVAVCodecable</a></td>
+	<td>NSObject</td>
 </tr><tr>
 	<th>Declared in</th>
-	<td>IVAVCodecable.h</td>
+	<td>IVVideoEncodable.h</td>
 </tr>
 						</tbody></table></div>
 					
@@ -95,6 +115,241 @@
 
 					
 					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						
+
+						
+						
+
+						<div class="task-list">
+							<div class="section-method">
+	<a name="//api/name/videoType" title="videoType"></a>
+	<h3 class="method-title"><code><a href="#//api/name/videoType">&nbsp;&nbsp;videoType</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>视频编码格式</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readwrite) IVVideoCodecType videoType</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVVideoEncodable.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/registerForChannel:" title="registerForChannel:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/registerForChannel:">&ndash;&nbsp;registerForChannel:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>注册</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)registerForChannel:(uint32_t)<em>channel</em></code></div>
+
+		    
+			
+			<div class="method-subsection arguments-section parameters">
+				<h4 class="method-subtitle parameter-title">Parameters</h4>
+				<table class="argument-def parameter-def">
+				
+					<tr>
+						<th scope="row" class="argument-name"><code>channel</code></th>
+						<td><p>通道ID</p></td>
+					</tr>
+				
+				</table>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection discussion-section">
+				<h4 class="method-subtitle">Discussion</h4>
+				<div class="note"><p><strong>Note:</strong> 建立连接成功时调用</p></div>
+			</div>
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVVideoEncodable.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/unregister" title="unregister"></a>
+	<h3 class="method-title"><code><a href="#//api/name/unregister">&ndash;&nbsp;unregister</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>注销</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)unregister</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVVideoEncodable.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/encodeVideoFrame:outPacket:" title="encodeVideoFrame:outPacket:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/encodeVideoFrame:outPacket:">&ndash;&nbsp;encodeVideoFrame:outPacket:</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>编码</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (BOOL)encodeVideoFrame:(IVVideoFrame *)<em>inFrame</em> outPacket:(IVVideoPacket *)<em>outPacket</em></code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVVideoEncodable.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/setupWithVideoType:size:pixFmt:frameRate:" title="setupWithVideoType:size:pixFmt:frameRate:"></a>
+	<h3 class="method-title"><code><a href="#//api/name/setupWithVideoType:size:pixFmt:frameRate:">&ndash;&nbsp;setupWithVideoType:size:pixFmt:frameRate:</a></code>
+</h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>设置相关参数</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>- (void)setupWithVideoType:(IVVideoCodecType)<em>videoType</em> size:(CGSize)<em>videoSize</em> pixFmt:(IVPixelFormatType)<em>pixFmt</em> frameRate:(int)<em>frameRate</em></code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVVideoEncodable.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+						</div>
+						
+					</div>
+					
 					
 
                     
@@ -105,7 +360,7 @@
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2020 tencentcs. All rights reserved. Updated: 2020-07-07</p>
+						<p class="copyright">Copyright &copy; 2020 tencentcs. All rights reserved. Updated: 2020-11-04</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>

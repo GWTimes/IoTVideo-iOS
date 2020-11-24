@@ -56,6 +56,12 @@
 	
 	<optgroup label="Properties">
 		
+		<option value="//api/name/audioCapture">audioCapture</option>
+		
+		<option value="//api/name/audioEncoder">audioEncoder</option>
+		
+		<option value="//api/name/encHeader">encHeader</option>
+		
 		<option value="//api/name/isTalking">isTalking</option>
 		
 	</optgroup>
@@ -66,9 +72,9 @@
 	
 	<optgroup label="Instance Methods">
 		
-		<option value="//api/name/startTalk">- startTalk</option>
+		<option value="//api/name/startTalking">- startTalking</option>
 		
-		<option value="//api/name/stopTalk">- stopTalk</option>
+		<option value="//api/name/stopTalking">- stopTalking</option>
 		
 	</optgroup>
 	
@@ -91,7 +97,7 @@
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
 	<th>Conforms to</th>
-	<td>NSObject</td>
+	<td><a href="../Protocols/IVAudioCaptureDelegate.html">IVAudioCaptureDelegate</a></td>
 </tr><tr>
 	<th>Declared in</th>
 	<td>IVPlayer.h</td>
@@ -104,7 +110,7 @@
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>播放器对讲协议</p>
+						<p>播放器可对讲协议</p>
 					</div>
 					
 					
@@ -120,6 +126,129 @@
 
 						<div class="task-list">
 							<div class="section-method">
+	<a name="//api/name/encHeader" title="encHeader"></a>
+	<h3 class="method-title"><code><a href="#//api/name/encHeader">&nbsp;&nbsp;encHeader</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>对讲和视频通话时APP端使用的流媒体信息头, 由对应采集器和编码器参数组合而成, 建立连接时会发送给设备。</p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, assign, readonly) IVAVHeader encHeader</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVPlayer.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/audioCapture" title="audioCapture"></a>
+	<h3 class="method-title"><code><a href="#//api/name/audioCapture">&nbsp;&nbsp;audioCapture</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>音频采集器, 默认为 <code>IVAudioCapture</code></p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, readwrite) id&lt;IVAudioCapturable&gt; audioCapture</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVPlayer.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
+	<a name="//api/name/audioEncoder" title="audioEncoder"></a>
+	<h3 class="method-title"><code><a href="#//api/name/audioEncoder">&nbsp;&nbsp;audioEncoder</a></code>
+<span class="task-item-suffix">required method</span></h3>
+
+	<div class="method-info">
+		<div class="pointy-thing"></div>
+
+		<div class="method-info-container">
+			
+			
+			<div class="method-subsection brief-description">
+				<p>音频编码器, 默认为 <a href="../Classes/IVAudioEncoder.html"><code>IVAudioEncoder</code></a></p>
+			</div>
+			
+		    
+
+			<div class="method-subsection method-declaration"><code>@property (nonatomic, strong, readwrite) id&lt;IVAudioEncodable&gt; audioEncoder</code></div>
+
+		    
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+
+			
+			<div class="method-subsection declared-in-section">
+				<h4 class="method-subtitle">Declared In</h4>
+				<p><code class="declared-in-ref">IVPlayer.h</code></p>
+			</div>
+			
+			
+		</div>
+	</div>
+</div><div class="section-method">
 	<a name="//api/name/isTalking" title="isTalking"></a>
 	<h3 class="method-title"><code><a href="#//api/name/isTalking">&nbsp;&nbsp;isTalking</a></code>
 <span class="task-item-suffix">required method</span></h3>
@@ -161,8 +290,8 @@
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/startTalk" title="startTalk"></a>
-	<h3 class="method-title"><code><a href="#//api/name/startTalk">&ndash;&nbsp;startTalk</a></code>
+	<a name="//api/name/startTalking" title="startTalking"></a>
+	<h3 class="method-title"><code><a href="#//api/name/startTalking">&ndash;&nbsp;startTalking</a></code>
 <span class="task-item-suffix">required method</span></h3>
 
 	<div class="method-info">
@@ -172,12 +301,13 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>开启对讲</p>
+				<p>开启对讲
+开启后APP开始发送音频数据，若开启前后需发送其他通信数据，如唤醒设备扬声器等，请使用<code>发送自定义数据</code>方法，参见<a href="../Classes/IVConnection.html#//api/name/sendData:"><code>[IVConnection sendData:]</code></a></p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (void)startTalk</code></div>
+			<div class="method-subsection method-declaration"><code>- (void)startTalking</code></div>
 
 		    
 			
@@ -202,8 +332,8 @@
 		</div>
 	</div>
 </div><div class="section-method">
-	<a name="//api/name/stopTalk" title="stopTalk"></a>
-	<h3 class="method-title"><code><a href="#//api/name/stopTalk">&ndash;&nbsp;stopTalk</a></code>
+	<a name="//api/name/stopTalking" title="stopTalking"></a>
+	<h3 class="method-title"><code><a href="#//api/name/stopTalking">&ndash;&nbsp;stopTalking</a></code>
 <span class="task-item-suffix">required method</span></h3>
 
 	<div class="method-info">
@@ -213,12 +343,13 @@
 			
 			
 			<div class="method-subsection brief-description">
-				<p>关闭对讲</p>
+				<p>关闭对讲
+关闭后APP停止发送音频数据，若关闭前后需发送其他通信数据，如关闭设备扬声器等，请使用<code>发送自定义数据</code>方法，参见<a href="../Classes/IVConnection.html#//api/name/sendData:"><code>[IVConnection sendData:]</code></a></p>
 			</div>
 			
 		    
 
-			<div class="method-subsection method-declaration"><code>- (void)stopTalk</code></div>
+			<div class="method-subsection method-declaration"><code>- (void)stopTalking</code></div>
 
 		    
 			
@@ -257,7 +388,7 @@
 				<footer>
 					<div class="footer-copyright">
 						
-						<p class="copyright">Copyright &copy; 2020 tencentcs. All rights reserved. Updated: 2020-07-07</p>
+						<p class="copyright">Copyright &copy; 2020 tencentcs. All rights reserved. Updated: 2020-11-04</p>
 						
 						
 						<p class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.2.1 (build 1334)</a>.</p>

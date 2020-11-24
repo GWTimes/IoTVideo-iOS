@@ -434,7 +434,7 @@ private extension IVPopupView {
                 make.width.equalTo(self).multipliedBy(UIApplication.shared.statusBarOrientation.isPortrait ? 0.8 : 0.5)
                 if willShow {
                     make.centerX.equalTo(self)
-                    make.bottom.equalTo(self).offset(-endFrame.height)
+                    make.bottom.equalTo(self).offset(-endFrame.height - 10)
                 } else {
                     make.center.equalTo(self)
                 }
@@ -563,6 +563,14 @@ extension IVPopupAction {
 
     @objc static func accept(_ handler: ((IVPopupView)->Void)? = nil) -> IVPopupAction {
         return IVPopupAction(title: "接受", style: .default, handler: handler)
+    }
+
+    @objc static func `continue`(_ handler: ((IVPopupView)->Void)? = nil) -> IVPopupAction {
+        return IVPopupAction(title: "继续", style: .default, handler: handler)
+    }
+
+    @objc static func quit(_ handler: ((IVPopupView)->Void)? = nil) -> IVPopupAction {
+        return IVPopupAction(title: "退出", style: .default, handler: handler)
     }
 }
 

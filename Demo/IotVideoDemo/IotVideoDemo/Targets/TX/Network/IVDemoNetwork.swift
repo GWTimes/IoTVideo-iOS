@@ -14,13 +14,27 @@ public typealias IVDemoNetworkResponseHandler = ((_ data: Any?, _ error: Error?)
 
 struct IVDemoNetwork {
     
+    /// 云存套餐ID
+    public static let cloudStoragePkgs = ["yc1m3d": "全时3天存储月套餐",
+                                          "yc1m7d": "全时7天存储月套餐",
+                                          "yc1m30d": "全时30天存储月套餐",
+                                          "yc1y3d": "全时3天存储年套餐",
+                                          "yc1y7d": "全时7天存储年套餐",
+                                          "yc1y30d": "全时30天存储年套餐餐",
+                                          "ye1m3d": "事件3天存储月套餐",
+                                          "ye1m7d": "事件7天存储月套餐",
+                                          "ye1m30d": "事件30天存储月套餐",
+                                          "ye1y3d": "事件3天存储年套餐",
+                                          "ye1y7d": "事件7天存储年套餐",
+                                          "ye1y30d": "事件30天存储年套餐"]
+    
     /// 绑定设备
     /// - Parameters:
     ///   - deviceId: 设备id
     ///   - role: 用户角色
     ///   - forceBind: 默认true 是否踢掉之前的主人，true：踢掉；false：不踢掉。当role为owner时，可以不填
     ///   - responseHandler: 回调
-    static func addDevice(_ deviceId: String, role: IVRole = .owner, forceBind: Bool = true, responseHandler: IVDemoNetworkResponseHandler) {
+    static func addDevice(_ deviceId: String, role: IVRole = .owner, forceBind: Bool = true, options: Any? = nil, responseHandler: IVDemoNetworkResponseHandler) {
         let accessId = UserDefaults.standard.string(forKey: demo_accessId)!
         IVTencentNetwork.shared.addDevice(accessId: accessId, deviceId: deviceId, role: role, forceBind: forceBind){ (json, error) in
             guard let json = IVDemoNetwork.handlerError(json, error) else {
@@ -62,8 +76,11 @@ struct IVDemoNetwork {
                 return
             }
             
+//            var newUserDeviceList: [IVDeviceModel] = [IVDeviceModel(devId: "429565449076740", deviceName: "测试", shareType: .guest)]
+//            var newUserDeviceList: [IVDeviceModel] = [IVDeviceModel(devId: "031400005ebfdb9c56f0227d54544b8a", deviceName: "测试", shareType: .guest)]
+
             var newUserDeviceList: [IVDeviceModel] = []
-            if let data = json["Response"]["Data"].array {
+            if let data = json["Response"]["Data"].array, !data.isEmpty {
                 for device in data {
                     let deviceModel = IVDeviceModel(devId: device["Tid"].stringValue,
                                                     deviceName: device["DeviceName"].stringValue,
@@ -72,7 +89,7 @@ struct IVDemoNetwork {
                     
                     IVMessageMgr.sharedInstance.readProperty(ofDevice: deviceModel.devId!, path: "ProReadonly._online") { (json, error) in
                         if let json = json {
-                            deviceModel.online = JSON(parseJSON: json)["stVal"].boolValue
+                            deviceModel.online = JSON(parseJSON: json)["stVal"].intValue
                         }
                         responseHandler?(newUserDeviceList, nil)
                     }
@@ -138,12 +155,35 @@ struct IVDemoNetwork {
         }
     }
     
-    static func buyCloudStoragePackage(_ packageID: String, deviceId: String, responseHandler: IVDemoNetworkResponseHandler) {
-        IVTencentNetwork.shared.buyCloudStoragePackage(packageID: packageID, deviceId: deviceId) { (json, error) in
-            guard let _ = IVDemoNetwork.handlerError(json, error) else {
+ 
+    static func queryBuyedCloudStoragePackage(serviceId: String, responseHandler: IVDemoNetworkResponseHandler) {
+        IVTencentNetwork.shared.queryBuyedCloudStoragePackage(serviceId: serviceId) { (json, error) in
+            guard let resJson = IVDemoNetwork.handlerError(json, error) else {
                 responseHandler?(nil, error)
                 return
             }
+           
+            if let data = resJson["Data"].array, let pkg = data.first(where: {$0["Status"].intValue == 1}) {
+                let res = ["pkgName": cloudStoragePkgs[pkg["PkgId"].stringValue],
+                           "startTime": "\(pkg["StartTime"].intValue)",
+                           "endTime": "\(pkg["EndTime"].intValue)"]
+                responseHandler?(res, nil)
+            } else {
+                responseHandler?(nil, error)
+            }
+            
+            responseHandler?(resJson, error)
+        }
+    }
+    
+    static func buyCloudStoragePackage(_ packageID: String, deviceId: String, responseHandler: IVDemoNetworkResponseHandler) {
+        IVTencentNetwork.shared.buyCloudStoragePackage(packageID: packageID, deviceId: deviceId) { (json, error) in
+            guard let resJson = IVDemoNetwork.handlerError(json, error) else {
+                responseHandler?(nil, error)
+                return
+            }
+            logInfo(json)
+            
             responseHandler?(true, error)
         }
     }

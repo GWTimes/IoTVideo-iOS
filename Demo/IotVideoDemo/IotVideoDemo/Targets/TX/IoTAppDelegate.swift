@@ -10,11 +10,19 @@ import Foundation
 import IoTVideo
 import IVDevTools
 
+
 extension AppDelegate {
     func setupIoTVideo(_ launchOptions: [UIApplication.LaunchOptionsKey: Any]?)  {
-        IoTVideo.sharedInstance.options[.appVersion] = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
-        IoTVideo.sharedInstance.options[.appPkgName] = Bundle.main.bundleIdentifier!
-        
+        IoTVideo.sharedInstance.options = [
+            .appVersion: Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String,
+            .appPkgName : Bundle.main.bundleIdentifier!,
+        ]
+        if let hostWeb = IVConfigMgr.allConfigs.first(where: { $0.enable && $0.key == IVOptionKey.hostWeb.rawValue })?.value {
+            IoTVideo.sharedInstance.options[.hostWeb] = hostWeb
+        }
+        if let hostP2P = IVConfigMgr.allConfigs.first(where: { $0.enable && $0.key == IVOptionKey.hostP2P.rawValue })?.value {
+            IoTVideo.sharedInstance.options[.hostP2P] = hostP2P
+        }
         IoTVideo.sharedInstance.setup(launchOptions: launchOptions)
         IoTVideo.sharedInstance.delegate = self
         IoTVideo.sharedInstance.logLevel = IVLogLevel(rawValue: logLevel) ?? .DEBUG
@@ -35,8 +43,7 @@ extension AppDelegate: IoTVideoDelegate {
         }
     }
     
-    func didOutputLogMessage(_ message: String, level: IVLogLevel, file: String, func: String, line: Int32) {
-        let lv = Level(rawValue: Int(level.rawValue))!
-        IVLogger.log(lv, path: file, function: `func`, line: Int(line), message: message)
-    }
+    func didOutputPrettyLogMessage(_ message: String) {
+        IVLogger.logMessage(message)
+    }    
 }

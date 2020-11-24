@@ -33,27 +33,31 @@ import IoTVideo
 //}
 
 func logFatal(path: String = #file, function: String = #function, line: Int = #line, _ items: Any...) {
-    IVLogger.log(.fatal, path: path, function: function, line: line, message: message(items))
+    IVLogger.log("APP", level: .fatal, path: path, function: function, line: line, message: message(items))
 }
 
 func logError(path: String = #file, function: String = #function, line: Int = #line, _ items: Any...) {
-    IVLogger.log(.error, path: path, function: function, line: line, message: message(items))
+    IVLogger.log("APP", level: .error, path: path, function: function, line: line, message: message(items))
 }
 
 func logWarning(path: String = #file, function: String = #function, line: Int = #line, _ items: Any...) {
-    IVLogger.log(.warning, path: path, function: function, line: line, message: message(items))
+    IVLogger.log("APP", level: .warning, path: path, function: function, line: line, message: message(items))
 }
 
 func logInfo(path: String = #file, function: String = #function, line: Int = #line, _ items: Any...) {
-    IVLogger.log(.info, path: path, function: function, line: line, message: message(items))
+    IVLogger.log("APP", level: .info, path: path, function: function, line: line, message: message(items))
 }
 
-func logDebug(path: String = #file, function: String = #function, line: Int = #line, _ items: Any...) {
-    IVLogger.log(.debug, path: path, function: function, line: line, message: message(items))
+func logDebug(path: String = #file, function: String = #function, line: Int = #line, _ items: Any?...) {
+    IVLogger.log("APP", level: .debug, path: path, function: function, line: line, message: message(items))
 }
 
 func logVerbose(path: String = #file, function: String = #function, line: Int = #line, _ items: Any...) {
-    IVLogger.log(.verbose, path: path, function: function, line: line, message: message(items))
+    IVLogger.log("APP", level: .verbose, path: path, function: function, line: line, message: message(items))
+}
+
+func logMessage(_ message: String?) {
+    IVLogger.logMessage(message)
 }
 
 var devToolsAssistant: IVDevToolsAssistant {

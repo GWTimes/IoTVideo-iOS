@@ -8,7 +8,7 @@
 
 #import "IVQRCodeNetConfig.h"
 #import "IVQRCodeHelper.h"
-#import "IVCommUtils.h"
+#import "IVUtils_internal.h"
 #import "iot_video_link_def.h"
 #import "IVNetConfig_internal.h"
 
@@ -17,7 +17,7 @@
 
 
 - (UIImage *)createQRCodeWithWifiName:(NSString *)name wifiPassword:(NSString *)pwd token:(NSString *)token {
-    return [self createQRCodeWithWifiName:name wifiPassword:pwd language:IVNetConfigLanguageCN token:token extraInfo:nil QRSize:CGSizeMake(1024, 1024)];
+    return [self createQRCodeWithWifiName:name wifiPassword:pwd language:IVLanguageCodeCN token:token extraInfo:nil QRSize:CGSizeMake(1024, 1024)];
 }
 
 - (UIImage *)createQRCodeWithWifiName:(NSString *)name wifiPassword:(NSString *)pwd language:(IVNetConfigLanguage)language token:(NSString *)token extraInfo:(NSDictionary<NSString *,NSString *> *)extraInfo QRSize:(CGSize)size {
